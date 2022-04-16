@@ -242,12 +242,19 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error 
 }
 
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_open_registry(
-     cnc_conversion_registry** __p_out_registry, cnc_conversion_heap* __p_heap,
+     cnc_conversion_registry** __p_out_registry, cnc_conversion_heap* __p_original_heap,
      cnc_registry_options __registry_options) ZTD_NOEXCEPT_IF_CXX_I_ {
-	size_t __available_space = (::std::numeric_limits<size_t>::max)();
-	size_t __necessary_space = 0;
-	size_t __used_space      = 0;
-	void* __target           = nullptr;
+	size_t __available_space      = (::std::numeric_limits<size_t>::max)();
+	size_t __necessary_space      = 0;
+	size_t __used_space           = 0;
+	void* __target                = nullptr;
+	cnc_conversion_heap* __p_heap = __p_original_heap;
+	cnc_conversion_heap __default_heap { nullptr, __cnc_default_allocate, __cnc_default_reallocate,
+		__cnc_default_expand_allocation, __cnc_default_shrink_allocation,
+		__cnc_default_deallocate };
+	if (__p_heap == nullptr) {
+		__p_heap = &__default_heap;
+	}
 	::ztd::cnc::__cnc_detail::__align(alignof(cnc_conversion_registry),
 	     sizeof(cnc_conversion_registry), __target, __available_space, __necessary_space);
 	__target = static_cast<void*>(__p_heap->allocate(

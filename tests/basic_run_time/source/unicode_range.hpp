@@ -40,7 +40,7 @@
 #include <vector>
 
 inline namespace ztd_cnc_tests {
-	std::vector<ztd_char32_t> make_full_unicode_range() noexcept {
+	inline std::vector<ztd_char32_t> make_full_unicode_range() noexcept {
 		std::vector<ztd_char32_t> data;
 		for (ztd_char32_t expected_c = 0; expected_c < __ztd_idk_detail_last_unicode_code_point;
 		     ++expected_c) {
@@ -52,18 +52,18 @@ inline namespace ztd_cnc_tests {
 		return data;
 	}
 
-	const std::vector<ztd_char32_t>& full_unicode_range() noexcept {
+	inline const std::vector<ztd_char32_t>& full_unicode_range() noexcept {
 		static const auto range = make_full_unicode_range();
 		return range;
 	}
 
-	std::vector<ztd_char32_t> make_basic_source_range() noexcept {
+	inline std::vector<ztd_char32_t> make_basic_source_range() noexcept {
 		std::vector<ztd_char32_t> data(ztd::tests::u32_basic_source_character_set.begin(),
 		     ztd::tests::u32_basic_source_character_set.end());
 		return data;
 	}
 
-	const std::vector<ztd_char32_t>& basic_source_range() noexcept {
+	inline const std::vector<ztd_char32_t>& basic_source_range() noexcept {
 		static const auto range = make_basic_source_range();
 		return range;
 	}

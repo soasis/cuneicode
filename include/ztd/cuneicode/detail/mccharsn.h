@@ -103,14 +103,9 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 /// @param[in, out] __p_state A pointer to the conversion state. If this is `nullptr`, a
 /// value-initialized (`= {0}` or similar) cnc_mcstate_t is used.
 ///
-/// @remarks This function will create an automatic storage duration `cnc_mcstate_t` object,
-/// initialize it to the initial shift sequence, and then use it with this function if @p __p_state
-/// is `nullptr`. This object is not recoverable in any way and is not shared, and therefore should
-/// only be used if the end-user is sure there is no state to the encoding they are working with
-/// (e.g., conversions between Unicode Transformation Formats (UTFs). It is **NOT** recommended to
-/// use this with the execution encoding and wide execution encodings, which may have shift state
-/// and could lead to invalid reads of later data without that shift state information from the
-/// `cnc_mcstate_t` object.)
+/// @remarks
+/// The documentation for the type ↔ encoding mapping can be found in the @ref
+/// design-naming-encoding.table "naming design documentation".
 //////
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtomcsn(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len, const char** __p_src,

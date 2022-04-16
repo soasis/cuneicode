@@ -30,8 +30,8 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/conv.h>
-
 #include <ztd/cuneicode/mcchar.h>
+
 #include <ztd/cuneicode/detail/conv_id.hpp>
 #include <ztd/cuneicode/detail/align.hpp>
 #include <ztd/cuneicode/detail/err.hpp>
@@ -146,8 +146,8 @@ namespace {
 		     &__source_count, &__source, __p_state);
 		// always update all relevant counts
 		// and pointers, whether or not there is an actual error
-		size_t __bytes_written = (__initial_dest_count - __dest_count) / sizeof(_DestChar);
-		size_t __bytes_read    = (__initial_source_count - __source_count) / sizeof(_SourceChar);
+		size_t __bytes_written = (__initial_dest_count - __dest_count) * sizeof(_DestChar);
+		size_t __bytes_read    = (__initial_source_count - __source_count) * sizeof(_SourceChar);
 		*__p_bytes_in          = reinterpret_cast<const unsigned char*>(__source);
 		*__p_bytes_in_count -= static_cast<size_t>(__bytes_read);
 		if (!__is_counting) {
@@ -183,8 +183,8 @@ namespace {
 		     &__source_count, &__source, __p_state);
 		// always update all relevant counts
 		// and pointers, whether or not there is an actual error
-		size_t __bytes_written = (__initial_dest_count - __dest_count) / sizeof(_DestChar);
-		size_t __bytes_read    = (__initial_source_count - __source_count) / sizeof(_SourceChar);
+		size_t __bytes_written = (__initial_dest_count - __dest_count) * sizeof(_DestChar);
+		size_t __bytes_read    = (__initial_source_count - __source_count) * sizeof(_SourceChar);
 		*__p_bytes_in          = reinterpret_cast<const unsigned char*>(__source);
 		*__p_bytes_in_count -= static_cast<size_t>(__bytes_read);
 		if (!__is_counting) {
@@ -710,7 +710,7 @@ cnc_open_error __cnc_add_default_registry_entries(
 	return CNC_OPEN_ERROR_OKAY;
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_new(
+ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion** __p_out_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__from == nullptr) {
@@ -721,11 +721,11 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error 
 	}
 	size_t __from_size = ::ztd::c_string_ptr_size(__from);
 	size_t __to_size   = ::ztd::c_string_ptr_size(__to);
-	return cnc_new_n(
+	return cnc_conv_new_n(
 	     __registry, __from_size, __from, __to_size, __to, __p_out_conversion, __p_info);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_new_n(
+ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_n(
      cnc_conversion_registry* __registry, size_t __from_size, const ztd_char8_t* __from,
      size_t __to_size, const ztd_char8_t* __to, cnc_conversion** __p_out_conversion,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
@@ -779,7 +779,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error 
 	}
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_open(
+ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion** __p_out_conversion, size_t* __p_available_space, unsigned char* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
@@ -791,11 +791,11 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error 
 	}
 	size_t __from_size = ::ztd::c_string_ptr_size(__from);
 	size_t __to_size   = ::ztd::c_string_ptr_size(__to);
-	return ::cnc_open_n(__registry, __from_size, __from, __to_size, __to, __p_out_conversion,
+	return ::cnc_conv_open_n(__registry, __from_size, __from, __to_size, __to, __p_out_conversion,
 	     __p_available_space, __space, __p_info);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_open_n(
+ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_n(
      cnc_conversion_registry* __registry, size_t __from_size, const ztd_char8_t* __from,
      size_t __to_size, const ztd_char8_t* __to, cnc_conversion** __p_out_conversion,
      size_t* __p_available_space, void* __space,
@@ -850,65 +850,15 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error 
 	}
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_close(
+ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_close(
      cnc_conversion* __conversion) ZTD_NOEXCEPT_IF_CXX_I_ {
 	__conversion->__close_function(__conversion);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_delete(
+ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_delete(
      cnc_conversion* __conversion) ZTD_NOEXCEPT_IF_CXX_I_ {
-	::cnc_close(__conversion);
+	::cnc_conv_close(__conversion);
 	const cnc_conversion_heap& __heap = __conversion->__registry->__heap;
 	__heap.deallocate(static_cast<unsigned char*>(static_cast<void*>(__conversion)),
 	     __conversion->__size, alignof(cnc_conversion), __heap.user_data);
-}
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv(
-     cnc_conversion* __conversion, size_t* __p_bytes_out_count, unsigned char** __p_bytes_out,
-     size_t* __p_bytes_in_count, const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
-	void* __state = static_cast<void*>(__conversion + 1);
-	return __conversion->__multi_conversion_function(__conversion, __p_bytes_out_count,
-	     __p_bytes_out, __p_bytes_in_count, __p_bytes_in, __state);
-}
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid(
-     cnc_conversion* __conversion, size_t* __p_bytes_in_count,
-     const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
-	void* __state = static_cast<void*>(__conversion + 1);
-	return __conversion->__multi_conversion_function(
-	            __conversion, nullptr, nullptr, __p_bytes_in_count, __p_bytes_in, __state)
-	     != CNC_MCERROR_OKAY;
-}
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_size(
-     cnc_conversion* __conversion, size_t* __p_bytes_out_count, size_t* __p_bytes_in_count,
-     const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
-	void* __state = static_cast<void*>(__conversion + 1);
-	return __conversion->__multi_conversion_function(
-	     __conversion, __p_bytes_out_count, nullptr, __p_bytes_in_count, __p_bytes_in, __state);
-}
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_single(
-     cnc_conversion* __conversion, size_t* __p_bytes_out_count, unsigned char** __p_bytes_out,
-     size_t* __p_bytes_in_count, const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
-	void* __state = static_cast<void*>(__conversion + 1);
-	return __conversion->__single_conversion_function(__conversion, __p_bytes_out_count,
-	     __p_bytes_out, __p_bytes_in_count, __p_bytes_in, __state);
-}
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid_single(
-     cnc_conversion* __conversion, size_t* __p_bytes_in_count,
-     const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
-	void* __state = static_cast<void*>(__conversion + 1);
-	return __conversion->__single_conversion_function(
-	            __conversion, nullptr, nullptr, __p_bytes_in_count, __p_bytes_in, __state)
-	     == CNC_MCERROR_OKAY;
-}
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_size_single(
-     cnc_conversion* __conversion, size_t* __p_bytes_out_count, size_t* __p_bytes_in_count,
-     const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
-	void* __state = static_cast<void*>(__conversion + 1);
-	return __conversion->__single_conversion_function(
-	     __conversion, __p_bytes_out_count, nullptr, __p_bytes_in_count, __p_bytes_in, __state);
 }

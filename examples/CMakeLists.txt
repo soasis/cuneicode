@@ -28,3 +28,4 @@
 # =============================================================================
 
 add_subdirectory(cconv)
+add_subdirectory(documentation)

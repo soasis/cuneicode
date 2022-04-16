@@ -31,7 +31,7 @@
 Registry-Based Conversions: Resource Handles
 ============================================
 
-:cpp:type:`cnc_conversion` is first and foremost a handle to a resource. It must be opened/created like one, and destroyed like one. The ``*_new`` flavor of functions perform the allocation automatically using the :doc:`associated registry's heap </api/registry>`. The ``*_open`` flavor fo functions let the user pass in an area of memory (or probe to find out the exact area of memory) to open the handle into. The ``*_open`` flavor of functions is for particularly advanced users who want maximum control over where the type is placed and allocated and is much more complicated to use: users are recommended to use :cpp:func:`cnc_new` and :cpp:func:`cnc_new_n` where appropriate to save on precision handling and hassle.
+:cpp:type:`cnc_conversion` is first and foremost a handle to a resource. It must be opened/created like one, and destroyed like one. The ``*_new`` flavor of functions perform the allocation automatically using the :doc:`associated registry's heap </api/registry>`. The ``*_open`` flavor fo functions let the user pass in an area of memory (or probe to find out the exact area of memory) to open the handle into. The ``*_open`` flavor of functions is for particularly advanced users who want maximum control over where the type is placed and allocated and is much more complicated to use: users are recommended to use :cpp:func:`cnc_conv_new` and :cpp:func:`cnc_conv_new_n` where appropriate to save on precision handling and hassle.
 
 
 
@@ -40,14 +40,14 @@ Registry-Based Conversions: Resource Handles
 
 .. doxygentypedef:: cnc_conversion
 
-.. doxygenfunction:: cnc_open
+.. doxygenfunction:: cnc_conv_open
 
-.. doxygenfunction:: cnc_open_n
+.. doxygenfunction:: cnc_conv_open_n
 
-.. doxygenfunction:: cnc_new
+.. doxygenfunction:: cnc_conv_new
 
-.. doxygenfunction:: cnc_new_n
+.. doxygenfunction:: cnc_conv_new_n
 
-.. doxygenfunction:: cnc_close
+.. doxygenfunction:: cnc_conv_close
 
-.. doxygenfunction:: cnc_delete
+.. doxygenfunction:: cnc_conv_delete

@@ -86,6 +86,11 @@ typedef enum cnc_mcerror {
 } cnc_mcerror;
 
 //////
+/// @brief Returns a string representing the error code's name.
+ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerror_to_str(
+     cnc_mcerror err);
+
+//////
 /// @}
 //////
 

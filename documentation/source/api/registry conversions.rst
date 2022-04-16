@@ -31,19 +31,23 @@
 Registry-Based Conversions
 ==========================
 
-There are two categories of conversion, as discussed in the :doc:`design </design>`. Single conversion, and bulk conversion. The single conversions only do one unit of :doc:`indivisible work </design/indivisible work>`. The bulk functions repeatedly perform :doc:`one unit of indivisible work </design/indivisible work>`.
+There are two categories of conversion, as discussed in the :doc:`design </design>`. Single conversion, and bulk conversion. The single conversions only do one unit of :doc:`indivisible work </design/indivisible>`. The bulk functions repeatedly perform :doc:`one unit of indivisible work </design/indivisible>`.
 
 ``cnc_conversion`` Conversion Functions
 ---------------------------------------
 
 .. doxygenfunction:: cnc_conv
 
-.. doxygenfunction:: cnc_conv_size
+.. doxygenfunction:: cnc_conv_count
 
 .. doxygenfunction:: cnc_conv_is_valid
 
-.. doxygenfunction:: cnc_conv_single
+.. doxygenfunction:: cnc_conv_unbounded
 
-.. doxygenfunction:: cnc_conv_single_size
+.. doxygenfunction:: cnc_conv_one
 
-.. doxygenfunction:: cnc_conv_single_is_valid
+.. doxygenfunction:: cnc_conv_one_count
+
+.. doxygenfunction:: cnc_conv_one_is_valid
+
+.. doxygenfunction:: cnc_conv_one_unbounded

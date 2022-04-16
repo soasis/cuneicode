@@ -53,8 +53,8 @@ inline constexpr bool __encoding_name_code_unit_predicate(char __value) noexcept
 }
 
 struct __cnc_registry_entry {
-	cnc_conversion_function* __single_conversion_function;
 	cnc_conversion_function* __multi_conversion_function;
+	cnc_conversion_function* __single_conversion_function;
 	cnc_open_function* __open_function;
 	cnc_close_function* __close_function;
 };

@@ -39,6 +39,7 @@ The mapping of the prefix/suffix and the name is listed below:
 	:widths: auto
 	:header-rows: 1
 	:stub-columns: 1
+	:name: design-naming-encoding.table
 
 	* - \*ffix Name
 	  - Type

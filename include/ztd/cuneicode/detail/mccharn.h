@@ -67,14 +67,8 @@
 /// @param[in, out] __p_src A pointer to the pointer of the input buffer. If this or the pointer
 /// within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is returned.
 ///
-/// @remarks This function will create an automatic storage duration `cnc_mcstate_t` object,
-/// initialize it to the initial shift sequence, and then pass it to the restartable version of this
-/// function. This object is not recoverable in any way and is not shared, and therefore should only
-/// be used if the end-user is sure there is no state to the encoding they are working with (e.g.,
-/// conversions between Unicode Transformation Formats (UTFs). It is **NOT** recommended to use this
-/// with the execution encoding and wide execution encodings, which may have shift state and could
-/// lead to invalid reads of later data without that shift state information from the
-/// `cnc_mcstate_t` object.)
+/// @remarks The documentation for the `type` to encoding mapping can be found in the @ref
+/// design-naming-encoding.table "naming design documentation".
 //////
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcntomcn(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,

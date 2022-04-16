@@ -48,6 +48,7 @@ Finally, to make sure this library is capable of scaling and does not have users
 .. toctree::
 	:maxdepth: 1
 
+	design/indivisible
 	design/function
 	design/naming
 	design/single
