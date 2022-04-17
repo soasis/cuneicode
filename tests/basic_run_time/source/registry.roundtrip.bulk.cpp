@@ -35,6 +35,7 @@
 
 #include <iterator>
 #include <algorithm>
+#include <cstring>
 
 namespace {
 
