@@ -27,16 +27,12 @@
 #
 # =============================================================================
 
-FILE(GLOB_RECURSE ztd.cuneicode.examples.documentation.quick.simple.conversions-utf16.to.utf8.sources
+FILE(GLOB_RECURSE ztd.cuneicode.examples.documentation.quick.sources
 	LIST_DIRECTORIES FALSE
 	CONFIGURE_DEPENDS
 	source/**
 )
-add_executable(ztd.cuneicode.examples.documentation.quick.simple.conversions-utf16.to.utf8 ${ztd.cuneicode.examples.documentation.quick.simple.conversions-utf16.to.utf8.sources})
-add_executable(ztd::cuneicode::examples::cconv ALIAS ztd.cuneicode.examples.documentation.quick.simple.conversions-utf16.to.utf8)
-target_link_libraries(ztd.cuneicode.examples.documentation.quick.simple.conversions-utf16.to.utf8
-	PRIVATE
-	ztd::cuneicode
-)
-add_test(NAME ztd.cuneicode.examples.documentation.quick.simple.conversions-utf16.to.utf8
-	COMMAND ztd.cuneicode.examples.documentation.quick.simple.conversions-utf16.to.utf8)
+
+foreach(example_source_file ${ztd.cuneicode.examples.documentation.quick.sources})
+	ztd_cuneicode_example_simple(${example_source_file} "ztd.cuneicode.examples.documentation.quick")
+endforeach()

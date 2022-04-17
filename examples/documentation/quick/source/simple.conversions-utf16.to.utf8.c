@@ -33,19 +33,21 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 int main() {
 
 	const ztd_char16_t utf16_text[] = u"🥺🙏";
-	ztd_char8_t utf8_text[9];
+	ztd_char8_t utf8_text[9]        = { 0 };
 
+	// Now, actually output it
 	const ztd_char16_t* p_input = utf16_text;
 	ztd_char8_t* p_output       = utf8_text;
 	// ztd_c_array_size INCLUDES the null terminator in the size!
 	size_t input_size   = ztd_c_array_size(utf16_text);
 	size_t output_size  = ztd_c_array_size(utf8_text);
 	cnc_mcstate_t state = { 0 };
-
+	// call the function with the right parameters!
 	cnc_mcerror err = cnc_c16snrtoc8sn(
 	     // output first
 	     &output_size, &p_output,
@@ -53,13 +55,11 @@ int main() {
 	     &input_size, &p_input,
 	     // state parameter
 	     &state);
-
 	if (err != CNC_MCERROR_OKAY) {
 		const char* err_str = cnc_mcerror_to_str(err);
 		printf(
 		     "An (unexpected) error occurred and the conversion could not "
-		     "happen! Error string: "
-		     "%s\n",
+		     "happen! Error string: %s\n",
 		     err_str);
 		return 1;
 	}

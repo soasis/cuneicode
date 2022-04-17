@@ -27,5 +27,30 @@
 #
 # =============================================================================
 
+function (ztd_cuneicode_example_simple example_source_file example_prefix)
+	get_filename_component(example_name ${example_source_file} NAME_WLE)
+	get_filename_component(example_output_relative_dir ${example_source_file} DIRECTORY)
+	file(TO_CMAKE_PATH "${example_output_relative_dir}" example_output_relative_dir_name)
+	STRING(REGEX REPLACE "/" "." example_output_relative_dir_name "${example_output_relative_dir}")
+	set(example_output_name ${example_name})
+	set(example_name "${example_prefix}.${example_name}")
+	
+	add_executable(${example_name} ${example_source_file})
+	target_compile_options(${example_name}
+		PRIVATE
+		${--utf8-literal-encoding}
+		${--utf8-source-encoding}
+		${--disable-permissive}
+		${--warn-pedantic}
+		${--warn-all}
+		${--warn-extra}
+		${--warn-errors})
+	target_link_libraries(${example_name}
+		PRIVATE
+		ztd::cuneicode)
+	add_test(NAME ${example_name}
+		COMMAND ${example_name})
+endfunction(ztd_cuneicode_example_simple)
+
 add_subdirectory(cconv)
 add_subdirectory(documentation)
