@@ -35,7 +35,6 @@
 #include <ztd/idk/encoding_detection.hpp>
 
 #include <iostream>
-#include <clocale>
 
 int main(int argc, char* argv[]) {
 	std::cout << "=== Encoding Names ===" << std::endl;
