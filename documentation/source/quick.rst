@@ -1,7 +1,7 @@
 .. =============================================================================
 ..
 .. ztd.cuneicode
-.. Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+.. Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 .. Contact: opensource@soasis.org
 ..
 .. Commercial License Usage
@@ -55,7 +55,7 @@ To convert from UTF-16 to UTF-8, use the appropriately `c8` and `c16`-marked fre
 
 .. literalinclude:: ../../examples/documentation/quick/source/simple.conversions-utf16.to.utf8.c
 	:language: c
-	:start-after: // ============================================================================>
+	:start-after: // ============================================================================ //
 	:linenos:
 
 We use raw ``printf`` to print the UTF-8 text. It may not appear correctly on a terminal whose encoding which is not UTF-8, which may be the case for older Microsoft terminals, some Linux kernel configurations, and deliberately misconfigured Mac OSX terminals. There are also some other properties that can be gained from the use of the function:

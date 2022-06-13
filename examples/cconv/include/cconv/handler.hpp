@@ -1,7 +1,7 @@
 // =============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -25,7 +25,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================>
+// ============================================================================
+// //
 
 #ifndef ZTD_CUNEICODE_EXAMPLES_CCONV_HANDLER_HPP
 #define ZTD_CUNEICODE_EXAMPLES_CCONV_HANDLER_HPP
@@ -39,18 +40,18 @@
 struct byte_substitution_handler {
 	std::vector<unsigned char> substitution;
 
-	bool operator()(const cnc_conversion_info&, cnc_conversion*, size_t*, unsigned char**, size_t*,
-	     const unsigned char**) const noexcept;
+	bool operator()(const cnc_conversion_info&, cnc_conversion*, size_t*,
+	     unsigned char**, size_t*, const unsigned char**) const noexcept;
 };
 
 struct discard_handler {
-	bool operator()(const cnc_conversion_info&, cnc_conversion*, size_t*, unsigned char**, size_t*,
-	     const unsigned char**) const noexcept;
+	bool operator()(const cnc_conversion_info&, cnc_conversion*, size_t*,
+	     unsigned char**, size_t*, const unsigned char**) const noexcept;
 };
 
 struct fail_handler {
-	bool operator()(const cnc_conversion_info&, cnc_conversion*, size_t*, unsigned char**, size_t*,
-	     const unsigned char**) const noexcept;
+	bool operator()(const cnc_conversion_info&, cnc_conversion*, size_t*,
+	     unsigned char**, size_t*, const unsigned char**) const noexcept;
 };
 
 #endif // ZTD_CUNEICODE_EXAMPLES_CCONV_HANDLER_HPP

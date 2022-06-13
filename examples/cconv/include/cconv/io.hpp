@@ -1,7 +1,7 @@
 // =============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -25,7 +25,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================>
+// ============================================================================
+// //
 
 #ifndef ZTD_CUNEICODE_EXAMPLES_CCONV_IO_HPP
 #define ZTD_CUNEICODE_EXAMPLES_CCONV_IO_HPP
@@ -46,8 +47,9 @@ struct input_read {
 	std::optional<int> maybe_return_code;
 };
 
-input_read read_input_into(
-     std::vector<unsigned char>& data, const input_type& some_input, bool verbose, bool silent);
-std::optional<unsigned long long> parse_unsigned_integer(utf8string_view value, int base = 10);
+input_read read_input_into(std::vector<unsigned char>& data,
+     const input_type& some_input, bool verbose, bool silent);
+std::optional<unsigned long long> parse_unsigned_integer(
+     utf8string_view value, int base = 10);
 
 #endif // ZTD_CUNEICODE_EXAMPLES_CCONV_IO_HPP

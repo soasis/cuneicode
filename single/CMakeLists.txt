@@ -1,7 +1,7 @@
 # =============================================================================
 #
 # ztd.cuneicode
-# Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+# Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 # Contact: opensource@soasis.org
 #
 # Commercial License Usage
@@ -27,4 +27,3 @@
 # limitations under the License.
 #
 # ============================================================================>
-

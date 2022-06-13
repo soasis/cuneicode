@@ -1,7 +1,7 @@
 # =============================================================================
 #
 # ztd.cuneicode
-# Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+# Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 # Contact: opensource@soasis.org
 #
 # Commercial License Usage
@@ -99,11 +99,11 @@ if (ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		check_compiler_flag(warn-pedantic MSVC /permissive- GCC -pedantic)
 		check_compiler_flag(warn-all MSVC /W4 GCC -Wall)
 		check_compiler_flag(warn-errors MSVC /WX GCC -Werror)
-		check_compiler_flag(warn-extra GCC -Wextra CLANG -Wextra)
+		check_compiler_flag(warn-extra GCC -Wextra Clang -Wextra)
 		check_compiler_flag(utf8-literal-encoding MSVC /execution-charset:utf-8 GCC -fexec-charset=utf-8)
 		check_compiler_flag(utf8-source-encoding MSVC /source-charset:utf-8 GCC -finput-charset=utf-8)
-		check_compiler_flag(extra-constexpr-depth MSVC /constexpr:depth2147483647 GCC -fconstexpr-depth=2147483647 CLANG -fconstexpr-depth=2147483647)
-		check_compiler_flag(extra-constexpr-steps MSVC /constexpr:steps2147483647 GCC -fconstexpr-ops-limit=2147483647 CLANG -fconstexpr-steps=2147483647)
+		check_compiler_flag(extra-constexpr-depth MSVC /constexpr:depth2147483647 GCC -fconstexpr-depth=2147483647 Clang -fconstexpr-depth=2147483647)
+		check_compiler_flag(extra-constexpr-steps MSVC /constexpr:steps2147483647 GCC -fconstexpr-ops-limit=2147483647 Clang -fconstexpr-steps=2147483647)
 		check_compiler_flag(template-debugging-mode GCC -ftemplate-backtrace-limit=0)
 	endif()
 endif()

@@ -1,7 +1,7 @@
 // =============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -25,7 +25,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================>
+// ============================================================================
+// //
 
 #include <cconv/handler.hpp>
 
@@ -37,10 +38,12 @@
 #include <algorithm>
 
 bool byte_substitution_handler::operator()(const cnc_conversion_info& info,
-     cnc_conversion* conversion, size_t* p_output_size, unsigned char** p_output_data,
-     size_t* p_input_size, const unsigned char** p_input_data) const noexcept {
+     cnc_conversion* conversion, size_t* p_output_size,
+     unsigned char** p_output_data, size_t* p_input_size,
+     const unsigned char** p_input_data) const noexcept {
 	const std::string_view from_code(
-	     reinterpret_cast<const char*>(info.from_code_data), info.from_code_size);
+	     reinterpret_cast<const char*>(info.from_code_data),
+	     info.from_code_size);
 	if (p_input_size != nullptr && *p_input_size != 0) {
 		*p_input_size -= 1;
 	}
@@ -58,15 +61,18 @@ bool byte_substitution_handler::operator()(const cnc_conversion_info& info,
 			}
 		}
 	}
-	else if (const bool is_utf16 = ztd::is_encoding_name_equal(from_code, "utf16"),
-	         is_utf16_le         = ztd::is_encoding_name_equal(from_code, "utf16le");
-	         is_utf16 || is_utf16_le || ztd::is_encoding_name_equal(from_code, "utf16be")) {
-		const bool is_le
-		     = is_utf16_le || (is_utf16 && (ztd::endian::native == ztd::endian::little));
+	else if (const bool is_utf16
+	         = ztd::is_encoding_name_equal(from_code, "utf16"),
+	         is_utf16_le = ztd::is_encoding_name_equal(from_code, "utf16le");
+	         is_utf16 || is_utf16_le
+	         || ztd::is_encoding_name_equal(from_code, "utf16be")) {
+		const bool is_le = is_utf16_le
+		     || (is_utf16 && (ztd::endian::native == ztd::endian::little));
 		const bool is_be = (!is_utf16_le && !is_utf16)
 		     || (is_utf16 && (ztd::endian::native == ztd::endian::big));
 		ZTD_ASSERT_MESSAGE(
-		     "Must be one of big or little endian to properly read or serialize this UTF-16 "
+		     "Must be one of big or little endian to properly read or "
+		     "serialize this UTF-16 "
 		     "data.",
 		     is_le || is_be);
 		std::size_t skipped = 0;
@@ -115,8 +121,9 @@ bool byte_substitution_handler::operator()(const cnc_conversion_info& info,
 	return true;
 }
 
-bool discard_handler::operator()(const cnc_conversion_info& info, cnc_conversion* conversion,
-     size_t* p_output_size, unsigned char** p_output_data, size_t* p_input_size,
+bool discard_handler::operator()(const cnc_conversion_info& info,
+     cnc_conversion* conversion, size_t* p_output_size,
+     unsigned char** p_output_data, size_t* p_input_size,
      const unsigned char** p_input_data) const noexcept {
 	if (p_input_size != nullptr && *p_input_size != 0) {
 		*p_input_size -= 1;
@@ -127,8 +134,9 @@ bool discard_handler::operator()(const cnc_conversion_info& info, cnc_conversion
 	return true;
 }
 
-bool fail_handler::operator()(const cnc_conversion_info& info, cnc_conversion* conversion,
-     size_t* p_output_size, unsigned char** p_output_data, size_t* p_input_size,
+bool fail_handler::operator()(const cnc_conversion_info& info,
+     cnc_conversion* conversion, size_t* p_output_size,
+     unsigned char** p_output_data, size_t* p_input_size,
      const unsigned char** p_input_data) const noexcept {
 	return false;
 }

@@ -1,7 +1,7 @@
 // =============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -25,7 +25,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================>
+// ============================================================================
+// //
 
 #include <cconv/options.hpp>
 
@@ -35,7 +36,8 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 	std::size_t args_max_index = static_cast<std::size_t>(args_size - 1);
 	for (std::size_t arg_index = 1; arg_index < args_size; ++arg_index) {
 		std::string_view arg = argv[arg_index];
-		utf8string_view u8arg(reinterpret_cast<const ztd_char8_t*>(arg.data()), arg.size());
+		utf8string_view u8arg(
+		     reinterpret_cast<const ztd_char8_t*>(arg.data()), arg.size());
 		if (arg.size() < 1) {
 			continue;
 		}
@@ -43,13 +45,15 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 			if (arg == "-o" || arg == "--output-file") {
 				// next argument is the target
 				if (arg_index == args_max_index) {
-					return "[error] Output file option argument is missing an additional "
+					return "[error] Output file option argument is "
+					       "missing an additional "
 					       "argument specifying the encoding code.";
 				}
 				++arg_index;
 				std::string_view arg_value = argv[arg_index];
 				utf8string_view u8arg_value(
-				     reinterpret_cast<const ztd_char8_t*>(arg_value.data()), arg_value.size());
+				     reinterpret_cast<const ztd_char8_t*>(arg_value.data()),
+				     arg_value.size());
 				opt.maybe_output_file_name.emplace(u8arg_value);
 			}
 			else if (arg.find("-o=") == 0) {
@@ -82,7 +86,8 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				// next argument is the target
 				if (arg_index == args_max_index) {
 					std::string error
-					     = "[error] From encoding code option argument is missing an "
+					     = "[error] From encoding code option argument is "
+					       "missing an "
 					       "additional "
 					       "argument specifying the encoding code.";
 					return std::optional<std::string>(error);
@@ -90,7 +95,8 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				++arg_index;
 				std::string_view arg_value = argv[arg_index];
 				utf8string_view u8arg_value(
-				     reinterpret_cast<const ztd_char8_t*>(arg_value.data()), arg_value.size());
+				     reinterpret_cast<const ztd_char8_t*>(arg_value.data()),
+				     arg_value.size());
 				opt.from_code = u8arg_value;
 			}
 			else if (bool f_arg_shortform = arg.find("-f=") == 0;
@@ -102,13 +108,15 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 			else if (arg == "-t" || arg == "--to-code") {
 				// next argument is the target
 				if (arg_index == args_max_index) {
-					return "[error] To encoding code option argument is missing an additional "
+					return "[error] To encoding code option argument is "
+					       "missing an additional "
 					       "argument specifying the encoding code.";
 				}
 				++arg_index;
 				std::string_view arg_value = argv[arg_index];
 				utf8string_view u8arg_value(
-				     reinterpret_cast<const ztd_char8_t*>(arg_value.data()), arg_value.size());
+				     reinterpret_cast<const ztd_char8_t*>(arg_value.data()),
+				     arg_value.size());
 				opt.to_code = u8arg_value;
 			}
 			else if (bool t_arg_shortform = arg.find("-t=") == 0;
@@ -121,22 +129,28 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 			         c_arg_shortform || arg.find("--cache-size=") == 0) {
 				std::size_t remove_prefix = c_arg_shortform ? 3 : 13;
 				u8arg.remove_prefix(remove_prefix);
-				std::optional<unsigned long long> maybe_value = parse_unsigned_integer(u8arg);
+				std::optional<unsigned long long> maybe_value
+				     = parse_unsigned_integer(u8arg);
 				if (!maybe_value.has_value()) {
-					std::string error = "[error] Cache buffer size option argument \"";
-					error.append(u8arg.data(), u8arg.data() + u8arg.size());
-					error.append("\" is not a proper decimal positive integer value.");
+					std::string error
+					     = "[error] Cache buffer size option argument \"";
+					error.append(
+					     u8arg.data(), u8arg.data() + u8arg.size());
+					error.append(
+					     "\" is not a proper decimal positive integer "
+					     "value.");
 					return std::optional<std::string>(error);
 				}
-				opt.maybe_buffer_size.emplace(
-				     (std::max)(static_cast<std::size_t>(minimum_buffer_size),
-				          static_cast<std::size_t>(maybe_value.value())));
+				opt.maybe_buffer_size.emplace((std::max)(
+				     static_cast<std::size_t>(minimum_buffer_size),
+				     static_cast<std::size_t>(maybe_value.value())));
 			}
 			else if (arg.find("--cache-size") == 0 || arg.find("-c") == 0) {
 				// next argument is the target
 				if (arg_index == args_max_index) {
 					std::string error
-					     = "[error] Cache buffer size option argument is missing an "
+					     = "[error] Cache buffer size option argument is "
+					       "missing an "
 					       "additional "
 					       "argument specifying the cache size.";
 					return std::optional<std::string>(error);
@@ -144,18 +158,23 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				++arg_index;
 				std::string_view arg_value = argv[arg_index];
 				utf8string_view u8arg_value(
-				     reinterpret_cast<const ztd_char8_t*>(arg_value.data()), arg_value.size());
+				     reinterpret_cast<const ztd_char8_t*>(arg_value.data()),
+				     arg_value.size());
 				std::optional<unsigned long long> maybe_value
 				     = parse_unsigned_integer(u8arg_value);
 				if (!maybe_value.has_value()) {
-					std::string error = "[error] Cache buffer size option argument \"";
-					error.append(u8arg_value.data(), u8arg_value.data() + u8arg_value.size());
-					error.append("\" is not a proper decimal positive integer value.");
+					std::string error
+					     = "[error] Cache buffer size option argument \"";
+					error.append(u8arg_value.data(),
+					     u8arg_value.data() + u8arg_value.size());
+					error.append(
+					     "\" is not a proper decimal positive integer "
+					     "value.");
 					return std::optional<std::string>(error);
 				}
-				opt.maybe_buffer_size.emplace(
-				     (std::max)(static_cast<std::size_t>(minimum_buffer_size),
-				          static_cast<std::size_t>(maybe_value.value())));
+				opt.maybe_buffer_size.emplace((std::max)(
+				     static_cast<std::size_t>(minimum_buffer_size),
+				     static_cast<std::size_t>(maybe_value.value())));
 			}
 			else if (arg == "-d" || arg == "--discard-on-failure") {
 				opt.error_handler = discard_handler();
@@ -168,7 +187,8 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				// next argument is the target
 				if (arg_index == args_max_index) {
 					std::string error
-					     = "[error] Cache buffer size option argument is missing an "
+					     = "[error] Cache buffer size option argument is "
+					       "missing an "
 					       "additional "
 					       "argument specifying the cache size.";
 					return std::optional<std::string>(error);
@@ -180,11 +200,13 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				opt.error_handler = std::move(handler);
 			}
 			else if (bool b_arg_shortform = arg.find("-b=") == 0;
-			         b_arg_shortform || arg.find("--byte-substitution=") == 0) {
+			         b_arg_shortform
+			         || arg.find("--byte-substitution=") == 0) {
 				std::size_t remove_prefix = b_arg_shortform ? 3 : 20;
 				u8arg.remove_prefix(remove_prefix);
 				byte_substitution_handler handler {};
-				handler.substitution.assign(u8arg.data(), u8arg.data() + u8arg.size());
+				handler.substitution.assign(
+				     u8arg.data(), u8arg.data() + u8arg.size());
 				opt.error_handler = std::move(handler);
 			}
 			else {
@@ -201,7 +223,8 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 			}
 			else {
 				// interpret as a file
-				opt.input_files.push_back(utf8string(u8arg.data(), u8arg.size()));
+				opt.input_files.push_back(
+				     utf8string(u8arg.data(), u8arg.size()));
 			}
 		}
 	}

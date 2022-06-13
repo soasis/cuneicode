@@ -1,7 +1,7 @@
 // =============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================>
+// ============================================================================ //
 
 #include <ztd/cuneicode/version.h>
 
@@ -36,8 +36,8 @@
 #include <memory>
 
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c8snrtomcsn(
-     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len, const ztd_char8_t** __p_src,
-     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_maybe_dst == nullptr || *__p_maybe_dst == nullptr) {
 		if (__p_maybe_dst_len == nullptr) {
 			return ::ztd::cnc::__cnc_detail::__transcode<true, true, CNC_MC_MAX,
@@ -73,8 +73,8 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 }
 
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c8snrtomwcsn(
-     size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char8_t** __p_src,
-     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
+     size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_maybe_dst == nullptr || *__p_maybe_dst == nullptr) {
 		if (__p_maybe_dst_len == nullptr) {
 			return ::ztd::cnc::__cnc_detail::__transcode<true, true, CNC_MWC_MAX,

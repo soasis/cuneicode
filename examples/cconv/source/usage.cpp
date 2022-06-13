@@ -1,7 +1,7 @@
 // =============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -25,7 +25,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================>
+// ============================================================================
+// //
 
 #include <cconv/usage.hpp>
 #include <cconv/def.hpp>
@@ -53,13 +54,18 @@ void print_encoding_list(cnc_conversion_registry* p_registry) {
 	using user_data_t = std::set<encoding_data>;
 	user_data_t existing_conversions {};
 	cnc_conversion_registry_pair_function* on_pairing
-	     = [](size_t from_size, const ztd_char8_t* from, size_t to_size, const ztd_char8_t* to,
-	            void* user_data) {
-		       user_data_t& existing_conversions = *static_cast<user_data_t*>(user_data);
+	     = [](size_t from_size, const ztd_char8_t* from, size_t to_size,
+	            const ztd_char8_t* to, void* user_data) {
+		       user_data_t& existing_conversions
+		            = *static_cast<user_data_t*>(user_data);
 		       const encoding_data& from_it
-		            = *existing_conversions.insert({ utf8string_view(from, from_size) }).first;
+		            = *existing_conversions
+		                    .insert({ utf8string_view(from, from_size) })
+		                    .first;
 		       const encoding_data& to_it
-		            = *existing_conversions.insert({ utf8string_view(to, to_size) }).first;
+		            = *existing_conversions
+		                    .insert({ utf8string_view(to, to_size) })
+		                    .first;
 		       const_cast<encoding_data&>(from_it).from = true;
 		       const_cast<encoding_data&>(to_it).to     = true;
 	       };
@@ -136,10 +142,11 @@ void print_help(void) {
 
 void print_version(void) {
 	std::cout << "cconv v0.0.0"
-	          << "\t Inspired by a request from Tom Honermann about proving iconv compatibility."
+	          << "\t Inspired by a request from Tom Honermann about proving "
+	             "iconv compatibility."
 	          << std::endl
 	          << R"license(
-	Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+	Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 	Contact: opensource@soasis.org
 
 	Apache License Version 2 Usage

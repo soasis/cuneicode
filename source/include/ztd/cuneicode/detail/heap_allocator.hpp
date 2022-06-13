@@ -1,7 +1,7 @@
 // =============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================>
+// ============================================================================ //
 
 #pragma once
 
@@ -67,10 +67,10 @@ namespace ztd { namespace cnc {
 			}
 			__heap_allocator(cnc_conversion_heap* __p_heap_) noexcept : __p_heap(__p_heap_) {
 			}
-			__heap_allocator(const __heap_allocator&) noexcept = default;
-			__heap_allocator(__heap_allocator&&) noexcept      = default;
+			__heap_allocator(const __heap_allocator&) noexcept            = default;
+			__heap_allocator(__heap_allocator&&) noexcept                 = default;
 			__heap_allocator& operator=(const __heap_allocator&) noexcept = default;
-			__heap_allocator& operator=(__heap_allocator&&) noexcept = default;
+			__heap_allocator& operator=(__heap_allocator&&) noexcept      = default;
 			template <typename _RightTy>
 			__heap_allocator(const __heap_allocator<_RightTy>& __right) noexcept
 			: __p_heap(__right.__p_heap) {

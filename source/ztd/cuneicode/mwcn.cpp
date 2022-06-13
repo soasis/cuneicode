@@ -1,7 +1,7 @@
 // =============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2021-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================>
+// ============================================================================ //
 
 #include <ztd/cuneicode/version.h>
 
@@ -42,8 +42,8 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 	cnc_mcstate_t __substitute_state {};
 	if (__p_state == nullptr)
 		__p_state = &__substitute_state;
-	_ZTDC_CUNEICODE_SINGLE_N_DEST_TEMPLATE_BODY(ztd::cnc::__cnc_detail::__mwcnrtomcn, __p_maybe_dst_len,
-	     __p_maybe_dst, __p_src_len, __p_src, __p_state);
+	_ZTDC_CUNEICODE_SINGLE_N_DEST_TEMPLATE_BODY(ztd::cnc::__cnc_detail::__mwcnrtomcn,
+	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcntomcn(
@@ -55,13 +55,13 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 }
 
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcnrtomwcn(
-     size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len, const wchar_t** __p_src,
-     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
+     size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len,
+     const wchar_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __substitute_state {};
 	if (__p_state == nullptr)
 		__p_state = &__substitute_state;
-	_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state,
-	     decltype(&cnc_mwcnrtoc32n), &cnc_mwcnrtoc32n, decltype(&cnc_c32nrtomwcn),
+	_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
+	     __p_state, decltype(&cnc_mwcnrtoc32n), &cnc_mwcnrtoc32n, decltype(&cnc_c32nrtomwcn),
 	     &cnc_c32nrtomwcn);
 }
 
@@ -74,13 +74,14 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 }
 
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcnrtoc8n(
-     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len, const wchar_t** __p_src,
-     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
+     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len,
+     const wchar_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __substitute_state {};
 	if (__p_state == nullptr)
 		__p_state = &__substitute_state;
-	_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state,
-	     decltype(&cnc_mwcnrtoc32n), &cnc_mwcnrtoc32n, decltype(&cnc_c32nrtoc8n), &cnc_c32nrtoc8n);
+	_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
+	     __p_state, decltype(&cnc_mwcnrtoc32n), &cnc_mwcnrtoc32n, decltype(&cnc_c32nrtoc8n),
+	     &cnc_c32nrtoc8n);
 }
 
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcntoc8n(
@@ -105,8 +106,8 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 			     reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
 		}
 	}
-	_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state,
-	     decltype(&cnc_mwcnrtoc32n), &cnc_mwcnrtoc32n, decltype(&cnc_c32nrtoc16n),
+	_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
+	     __p_state, decltype(&cnc_mwcnrtoc32n), &cnc_mwcnrtoc32n, decltype(&cnc_c32nrtoc16n),
 	     &cnc_c32nrtoc16n);
 }
 
