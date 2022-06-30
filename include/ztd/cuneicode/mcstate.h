@@ -34,19 +34,19 @@
 
 #include <ztd/cuneicode/version.h>
 
-#if ZTD_IS_ON(ZTD_CXX_I_)
+#if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
 #else
 #include <stddef.h>
 #endif
-#if ZTD_IS_ON(ZTD_CWCHAR_I_)
+#if ZTD_IS_ON(ZTD_CWCHAR)
 #include <cwchar>
-#elif ZTD_IS_ON(ZTD_WCHAR_I_)
+#elif ZTD_IS_ON(ZTD_WCHAR)
 #include <wchar.h>
 #endif
-#if ZTD_IS_ON(ZTD_CUCHAR_I_)
+#if ZTD_IS_ON(ZTD_CUCHAR)
 #include <cuchar>
-#elif ZTD_IS_ON(ZTD_UCHAR_I_)
+#elif ZTD_IS_ON(ZTD_UCHAR)
 ZTD_EXTERN_C_OPEN_I_
 #include <uchar.h>
 ZTD_EXTERN_C_CLOSE_I_
@@ -64,8 +64,7 @@ ZTD_EXTERN_C_CLOSE_I_
 /// @remarks This is a complete object, but none of its members should be accessed or relied upon in
 /// any way, shape or form. If you do so, it is Undefined Behavior.
 typedef struct cnc_mcstate_t {
-#if ZTD_IS_ON(ZTD_CWCHAR_I_) || ZTD_IS_ON(ZTD_WCHAR_I_) || ZTD_IS_ON(ZTD_CUCHAR_I_) \
-     || ZTD_IS_ON(ZTD_UCHAR_I_)
+#if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
 	//////
 	/// @brief Private, do not access.
 	mbstate_t __state0;

@@ -38,10 +38,10 @@
 #include <ztd/cuneicode/detail/mccharn.h>
 #include <ztd/cuneicode/detail/mccharsn.h>
 
-#if ZTD_IS_ON(ZTD_CXX_I_)
+#if ZTD_IS_ON(ZTD_CXX)
 #include <ztd/cuneicode/detail/mcchar_generic.hpp>
 #endif // C++
-#if ZTD_IS_ON(ZTD_C_I_)
+#if ZTD_IS_ON(ZTD_C)
 #include <ztd/cuneicode/detail/mcchar_generic.h>
 #endif // C
 

@@ -37,7 +37,7 @@
 #include <ztd/cuneicode/mcerror.h>
 #include <ztd/idk/charN_t.h>
 
-#if ZTD_IS_ON(ZTD_CXX_I_)
+#if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
 #else
 #include <stddef.h>

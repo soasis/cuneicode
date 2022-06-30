@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#if ZTD_IS_ON(ZTD_CXX_I_)
+#if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
 #else
 #include <stddef.h>

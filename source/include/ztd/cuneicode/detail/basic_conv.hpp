@@ -42,7 +42,7 @@
 #include <cstring>
 #include <cstddef>
 
-#if ZTD_IS_ON(ZTD_LOCALE_DEPENDENT_WIDE_EXECUTION_I_)
+#if ZTD_IS_ON(ZTD_LOCALE_DEPENDENT_WIDE_EXECUTION)
 #include <langinfo.h>
 #endif // nl_langinfo
 
