@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_MCCHAR_H
 #define ZTD_CUNEICODE_MCCHAR_H
@@ -44,31 +44,6 @@
 #if ZTD_IS_ON(ZTD_C)
 #include <ztd/cuneicode/detail/mcchar_generic.h>
 #endif // C
-
-//////
-/// @addtogroup ztd_cuneicode_max_macros Maximum-Size Macros
-/// @{
-//////
-
-//////
-/// @brief The maximum size that can be output by a single `cnc_cxnrtomcn` function call.
-#define CNC_MC_MAX 64
-//////
-/// @brief The maximum size that can be output by a single `cnc_cxnrtomwcn` function call.
-#define CNC_MWC_MAX 32
-//////
-/// @brief The maximum size that can be output by a single `cnc_cxnrtoc32n` function call.
-#define CNC_C32_MAX 16
-//////
-/// @brief The maximum size that can be output by a single `cnc_cxnrtoc16n` function call.
-#define CNC_C16_MAX (CNC_C32_MAX * 2)
-//////
-/// @brief The maximum size that can be output by a single `cnc_cxnrtoc8n` function call.
-#define CNC_C8_MAX (CNC_C32_MAX * 4)
-
-//////
-/// @}
-//////
 
 //////
 /// @addtogroup ztd_cuneicode_generic_typed_conversions Generic Typed Conversion Functions

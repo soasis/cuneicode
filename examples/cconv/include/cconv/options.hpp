@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,8 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================
-// //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_EXAMPLES_CCONV_OPTIONS_HPP
 #define ZTD_CUNEICODE_EXAMPLES_CCONV_OPTIONS_HPP
@@ -40,17 +39,16 @@
 #include <vector>
 
 struct options {
-	using some_handler  = std::variant<discard_handler, fail_handler,
-          byte_substitution_handler>;
-	bool list_encodings = false;
-	bool show_version   = false;
-	bool verbose        = false;
-	bool show_help      = false;
+	using some_handler
+	     = std::variant<discard_handler, fail_handler, byte_substitution_handler>;
+	bool list_encodings                              = false;
+	bool show_version                                = false;
+	bool verbose                                     = false;
+	bool show_help                                   = false;
 	std::optional<utf8string> maybe_output_file_name = std::nullopt;
 	bool silent                                      = false;
-	utf8string from_code
-	     = reinterpret_cast<const ztd_char8_t*>(+u8"execution");
-	utf8string to_code = reinterpret_cast<const ztd_char8_t*>(+"utf-8");
+	utf8string from_code = reinterpret_cast<const ztd_char8_t*>(+u8"execution");
+	utf8string to_code   = reinterpret_cast<const ztd_char8_t*>(+"utf-8");
 	some_handler error_handler                   = discard_handler();
 	std::vector<input_type> input_files          = {};
 	std::optional<std::size_t> maybe_buffer_size = std::nullopt;

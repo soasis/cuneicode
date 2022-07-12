@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_REGISTRY_OPTIONS_H
 #define ZTD_CUNEICODE_REGISTRY_OPTIONS_H
@@ -47,7 +47,8 @@ typedef enum cnc_registry_options {
 	/// @brief No options.
 	CNC_REGISTRY_OPTIONS_NONE = 0,
 	//////
-	/// @brief Start with an empty registry that contains none of the platorm's default conversion
+	/// @brief Start with an empty registry that contains none of the platorm's default
+	/// conversion
 	/// entries.
 	CNC_REGISTRY_OPTIONS_EMPTY = 1,
 	//////

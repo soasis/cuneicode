@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,8 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================
-// //
+// ========================================================================= //
 
 #include <cconv/handler.hpp>
 
@@ -42,8 +41,7 @@ bool byte_substitution_handler::operator()(const cnc_conversion_info& info,
      unsigned char** p_output_data, size_t* p_input_size,
      const unsigned char** p_input_data) const noexcept {
 	const std::string_view from_code(
-	     reinterpret_cast<const char*>(info.from_code_data),
-	     info.from_code_size);
+	     reinterpret_cast<const char*>(info.from_code_data), info.from_code_size);
 	if (p_input_size != nullptr && *p_input_size != 0) {
 		*p_input_size -= 1;
 	}

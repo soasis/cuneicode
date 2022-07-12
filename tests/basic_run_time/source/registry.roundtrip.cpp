@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #include <catch2/catch.hpp>
 
@@ -295,9 +295,10 @@ namespace {
 	}
 } // namespace
 
-TEST_CASE("cuneicode/registry/roundtrip through c32",
+TEST_CASE(
      "check single conversion from one of the typical typed encodings to UTF-32 and back to the "
-     "typed encoding") {
+     "typed encoding, using the registry",
+     "[cuneicode][registry][roundtrip-c32][single]") {
 	cnc_conversion_registry* registry = NULL;
 	cnc_open_error reg_err            = cnc_new_registry(&registry, CNC_REGISTRY_OPTIONS_DEFAULT);
 	REQUIRE(reg_err == CNC_OPEN_ERROR_OKAY);

@@ -17,7 +17,7 @@
 # Version 2.0 (the "License"); you may not use this file except in compliance
 # with the License. You may obtain a copy of the License at
 #
-# 		https://www.apache.org/licenses/LICENSE-2.0
+# https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,7 +25,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# =============================================================================
+# =========================================================================== #
 
 file(GLOB_RECURSE ztd.cuneicode.tests.basic_run_time.sources
 	LIST_DIRECTORIES FALSE
@@ -33,7 +33,7 @@ file(GLOB_RECURSE ztd.cuneicode.tests.basic_run_time.sources
 	source/*.cpp)
 
 add_executable(ztd.cuneicode.tests.basic_run_time ${ztd.cuneicode.tests.basic_run_time.sources})
-set_target_properties(ztd.cuneicode.tests.basic_run_time PROPERTIES 
+set_target_properties(ztd.cuneicode.tests.basic_run_time PROPERTIES
 	VERSION ${PROJECT_VERSION}
 )
 target_compile_options(ztd.cuneicode.tests.basic_run_time
@@ -45,11 +45,11 @@ target_compile_options(ztd.cuneicode.tests.basic_run_time
 	${--warn-all}
 	${--warn-extra}
 	${--warn-errors})
-target_include_directories(ztd.cuneicode.tests.basic_run_time PRIVATE 
+target_include_directories(ztd.cuneicode.tests.basic_run_time PRIVATE
 	${CMAKE_CURRENT_SOURCE_DIR}/../include
 )
 target_link_libraries(ztd.cuneicode.tests.basic_run_time
-	PRIVATE 
+	PRIVATE
 	Catch2::Catch2
 	ztd::cuneicode)
 

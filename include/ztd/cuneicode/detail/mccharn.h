@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_DETAIL_MCCHARN_H
 #define ZTD_CUNEICODE_DETAIL_MCCHARN_H
@@ -54,21 +54,22 @@
 /// character type. Only performs one unit of indivisible work, or returns an error.
 ///
 /// @param[in, out] __p_maybe_dst_len A pointer to the size of the output buffer (in number of
-/// **elements**). If this is `nullptr`, then it will not update the count (and the output stream
-/// will automatically be considered large enough to handle all data, if
+/// **elements**). If this is `nullptr`, then it will not update the count (and the output
+/// stream will automatically be considered large enough to handle all data, if
 /// `__p_maybe_dst` is not `nullptr`).
 /// @param[in, out] __p_maybe_dst A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
 /// decrement the value pointed to by
 /// `__p_maybe_dst_len`).
 /// @param[in, out] __p_src_len A pointer to the size of the input buffer (in number of
-/// **elements**). If this is `nullptr` or points to a value equivalent to `0`, then the input is
-/// considered empty and CNC_MCERROR_OKAY is returned.
-/// @param[in, out] __p_src A pointer to the pointer of the input buffer. If this or the pointer
-/// within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is returned.
+/// **elements**). If this is `nullptr` or points to a value equivalent to `0`, then the input
+/// is considered empty and CNC_MCERROR_OKAY is returned.
+/// @param[in, out] __p_src A pointer to the pointer of the input buffer. If this or the
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// returned.
 ///
-/// @remarks The documentation for the `type` to encoding mapping can be found in the @ref
-/// design-naming-encoding.table "naming design documentation".
+/// @remarks The documentation for the `type` to encoding mapping can be found in the
+/// @verbatim embed:rst:inline :ref:`design-naming-encoding.table` @endverbatim .
 //////
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcntomcn(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,

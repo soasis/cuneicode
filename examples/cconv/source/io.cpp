@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,8 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================
-// //
+// ========================================================================= //
 
 #include <cconv/io.hpp>
 
@@ -82,14 +81,12 @@ input_read read_input_into(std::vector<unsigned char>& input,
 			     "this type is not processed in the visitor");
 			(void)arg;
 		}
-		std::istream& input_stream = maybe_input_stream.has_value()
-		     ? *maybe_input_stream
-		     : std::cin;
-		std::size_t input_read     = 0;
+		std::istream& input_stream
+		     = maybe_input_stream.has_value() ? *maybe_input_stream : std::cin;
+		std::size_t input_read = 0;
 		while (true) {
 			input.resize(input_read == 0 ? 1024 : (input.size() * 2));
-			const std::size_t requested_read_size
-			     = input.size() - input_read;
+			const std::size_t requested_read_size = input.size() - input_read;
 			input_stream.read(
 			     reinterpret_cast<char*>(input.data() + input_read),
 			     requested_read_size);

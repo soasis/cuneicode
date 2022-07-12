@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,8 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================
-// //
+// ========================================================================= //
 
 #include <cconv/options.hpp>
 
@@ -134,16 +133,15 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				if (!maybe_value.has_value()) {
 					std::string error
 					     = "[error] Cache buffer size option argument \"";
-					error.append(
-					     u8arg.data(), u8arg.data() + u8arg.size());
+					error.append(u8arg.data(), u8arg.data() + u8arg.size());
 					error.append(
 					     "\" is not a proper decimal positive integer "
 					     "value.");
 					return std::optional<std::string>(error);
 				}
-				opt.maybe_buffer_size.emplace((std::max)(
-				     static_cast<std::size_t>(minimum_buffer_size),
-				     static_cast<std::size_t>(maybe_value.value())));
+				opt.maybe_buffer_size.emplace(
+				     (std::max)(static_cast<std::size_t>(minimum_buffer_size),
+				          static_cast<std::size_t>(maybe_value.value())));
 			}
 			else if (arg.find("--cache-size") == 0 || arg.find("-c") == 0) {
 				// next argument is the target
@@ -172,9 +170,9 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 					     "value.");
 					return std::optional<std::string>(error);
 				}
-				opt.maybe_buffer_size.emplace((std::max)(
-				     static_cast<std::size_t>(minimum_buffer_size),
-				     static_cast<std::size_t>(maybe_value.value())));
+				opt.maybe_buffer_size.emplace(
+				     (std::max)(static_cast<std::size_t>(minimum_buffer_size),
+				          static_cast<std::size_t>(maybe_value.value())));
 			}
 			else if (arg == "-d" || arg == "--discard-on-failure") {
 				opt.error_handler = discard_handler();
@@ -200,8 +198,7 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				opt.error_handler = std::move(handler);
 			}
 			else if (bool b_arg_shortform = arg.find("-b=") == 0;
-			         b_arg_shortform
-			         || arg.find("--byte-substitution=") == 0) {
+			         b_arg_shortform || arg.find("--byte-substitution=") == 0) {
 				std::size_t remove_prefix = b_arg_shortform ? 3 : 20;
 				u8arg.remove_prefix(remove_prefix);
 				byte_substitution_handler handler {};

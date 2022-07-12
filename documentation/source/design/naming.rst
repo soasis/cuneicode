@@ -1,4 +1,4 @@
-.. =============================================================================
+.. ============================================================================
 ..
 .. ztd.cuneicode
 .. Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -26,7 +26,7 @@
 .. See the License for the specific language governing permissions and
 .. limitations under the License.
 ..
-.. =============================================================================>
+.. ========================================================================= ..
 
 Naming Design and Mapping
 =========================
@@ -41,7 +41,7 @@ The mapping of the prefix/suffix and the name is listed below:
 	:stub-columns: 1
 	:name: design-naming-encoding.table
 
-	* - \*ffix Name
+	* - Pre\Suffix Name
 	  - Type
 	  - Encoding Used
 	  - Max Output
@@ -66,16 +66,16 @@ The mapping of the prefix/suffix and the name is listed below:
 	  - :term:`UTF-32`
 	  - ``CNC_C32_MAX``
 	* - ``cx`` or ``xy``
-	  - Deduced from input/output
-	  - Deduced from input/output
-	  - Dependent on output
+	  - ``input``/``output``-deduced
+	  - ``input``/``output``-deduced
+	  - ``output``-dependent
 
 Those parts are as follows:
 
 - ``{prefix}`` - the prefix identifying what character set the function will be converting from.
 - ``s`` - if present, this denotes that this is a :doc:`bulk conversion </design/bulk>`; otherwise, it is a :doc:`single conversion </design/single>`.
 - ``n`` - if present, this is a function which will optionally take a count value to denote how much space, in number of **elements** (not bytes), is present in the source (input) data.
-- ``r`` - if present, this desnotes that this is a "restartable" function; i.e., that this funtion takes a state parameter and operates on no invisible state; otherwise, it is "non-restartable" and creates an automatic storage duration state object internally that will be discarded after the function completes.
+- ``r`` - if present, this denotes that this is a "restartable" function; i.e., that this function takes a state parameter and operates on no invisible state; otherwise, it is "non-restartable" and creates an automatic storage duration state object internally that will be discarded after the function completes.
 - ``to`` - present in all names, simply signifies the start of the next portion of the function name and is help as the English "to", as in "A to B" or "Beef to Buns".
 - ``{suffix}`` - the suffix identifying what character set the function will be converting to.
 - ``s`` - similar to above, if present, this denotes that the name is a :doc:`bulk conversion </design/bulk>`; otherwise, it is a :doc:`single conversion </design/single>`.

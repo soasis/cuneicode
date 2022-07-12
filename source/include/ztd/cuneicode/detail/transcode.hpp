@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #pragma once
 
@@ -34,6 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
+#include <ztd/cuneicode/max_output.h>
 #include <ztd/cuneicode/mcstate.h>
 
 #include <cassert>
@@ -175,6 +176,28 @@ namespace ztd { namespace cnc {
 			return ::ztd::cnc::__cnc_detail::__basic_transcode_one<false, false, __VA_ARGS__>( \
 			     _DL, _D, _SL, _S, _ST);                                                       \
 		}                                                                                       \
+	}
+
+#define _ZTDC_CUNEICODE_TRANSCODE_BODY(_DL, _D, _SL, _S, _ST, ...)                      \
+	if (_D == nullptr || *_D == nullptr) {                                             \
+		if (_DL == nullptr) {                                                         \
+			return ::ztd::cnc::__cnc_detail::__transcode<true, true, __VA_ARGS__>(   \
+			     _DL, _D, _SL, _S, _ST);                                             \
+		}                                                                             \
+		else {                                                                        \
+			return ::ztd::cnc::__cnc_detail::__transcode<true, false, __VA_ARGS__>(  \
+			     _DL, _D, _SL, _S, _ST);                                             \
+		}                                                                             \
+	}                                                                                  \
+	else {                                                                             \
+		if (_DL == nullptr) {                                                         \
+			return ::ztd::cnc::__cnc_detail::__transcode<false, true, __VA_ARGS__>(  \
+			     _DL, _D, _SL, _S, _ST);                                             \
+		}                                                                             \
+		else {                                                                        \
+			return ::ztd::cnc::__cnc_detail::__transcode<false, false, __VA_ARGS__>( \
+			     _DL, _D, _SL, _S, _ST);                                             \
+		}                                                                             \
 	}
 
 	} // namespace __cnc_detail

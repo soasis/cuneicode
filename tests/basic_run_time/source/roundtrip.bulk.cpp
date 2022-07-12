@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #include <catch2/catch.hpp>
 
@@ -327,9 +327,10 @@ namespace {
 
 } // namespace
 
-TEST_CASE("cuneicode/bulk roundtrip through c32",
+TEST_CASE(
      "check bulk conversion from one of the typical typed encodings to UTF-32 and back to the "
-     "typed encoding") {
+     "typed encoding, using direct functions",
+     "[cuneicode][direct][roundtrip-c32][bulk]") {
 	const auto& unicode_input      = full_unicode_range();
 	const auto& basic_source_input = basic_source_range();
 	SECTION("mc") {

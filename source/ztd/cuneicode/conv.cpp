@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,12 +25,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/conv.h>
 #include <ztd/cuneicode/mcchar.h>
+#include <ztd/cuneicode/max_output.h>
 
 #include <ztd/cuneicode/detail/conv_id.hpp>
 #include <ztd/cuneicode/detail/align.hpp>
@@ -38,6 +39,7 @@
 #include <ztd/cuneicode/detail/heap_allocator.hpp>
 #include <ztd/cuneicode/detail/conversion.hpp>
 #include <ztd/cuneicode/detail/registry.hpp>
+#include <ztd/cuneicode/detail/buffer_size.h>
 
 #include <ztd/idk/hash.hpp>
 #include <ztd/idk/size.hpp>

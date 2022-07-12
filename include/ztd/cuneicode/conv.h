@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_CONV_H
 #define ZTD_CUNEICODE_CONV_H
@@ -59,15 +59,17 @@
 /// @param[in] __registry The registry to use for opening the cnc_conversion handle.
 /// @param[in] __from A pointer to data encoded as UTF-8 representing the encoding to transcode
 /// from.
-/// @param[in] __to A pointer to data encoded as UTF-8 representing the encoding to transcode to.
+/// @param[in] __to A pointer to data encoded as UTF-8 representing the encoding to transcode
+/// to.
 /// @param[in, out] __p_out_conversion A pointer to the cnc_conversion handle to open.
-/// @param[in, out] __info A pointer to an already-created cnc_conversion_info that will be filled
-/// out with information regarding how the transcoding operation was opened, if it was successful.
+/// @param[in, out] __info A pointer to an already-created cnc_conversion_info that will be
+/// filled out with information regarding how the transcoding operation was opened, if it was
+/// successful.
 ///
-/// @remarks This call defers to calling cnc_conv_new_n after computing the length of the `__from`
-/// and
-/// `__to` parameters, if they are not `nullptr`. If either is `nullptr`, their size is assumed to
-/// be 0.
+/// @remarks This call defers to calling cnc_conv_new_n after computing the length of the
+/// `__from` and
+/// `__to` parameters, if they are not `nullptr`. If either is `nullptr`, their size is assumed
+/// to be 0.
 //////
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
@@ -385,13 +387,5 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 //////
 /// @}
 //////
-
-enum cnc_default {
-	CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE
-	= ((ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_) < 1)
-	     ? 512
-	     : (ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_),
-	CNC_DEFAULT_NAME_MAX_SIZE = 127,
-};
 
 #endif // ZTD_CUNEICODE_CONV_H

@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_MCSTATE_H
 #define ZTD_CUNEICODE_MCSTATE_H
@@ -61,8 +61,8 @@ ZTD_EXTERN_C_CLOSE_I_
 //////
 /// @brief The state for the typed conversion functions.
 ///
-/// @remarks This is a complete object, but none of its members should be accessed or relied upon in
-/// any way, shape or form. If you do so, it is Undefined Behavior.
+/// @remarks This is a complete object, but none of its members should be accessed or relied
+/// upon in any way, shape or form. If you do so, it is Undefined Behavior.
 typedef struct cnc_mcstate_t {
 #if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
 	//////

@@ -1,4 +1,4 @@
-// =============================================================================
+====
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -26,7 +26,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+=== //
 
 $(document).ready(function () {
 	$("em.property > span.pre:contains('inline')").hide();

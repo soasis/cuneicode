@@ -17,7 +17,7 @@
 # Version 2.0 (the "License"); you may not use this file except in compliance
 # with the License. You may obtain a copy of the License at
 #
-# 		https://www.apache.org/licenses/LICENSE-2.0
+# https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,18 +25,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# =============================================================================
+# =========================================================================== #
 
-function (ztd_cuneicode_example_simple example_source_file example_prefix)
-	get_filename_component(example_name ${example_source_file} NAME_WLE)
-	get_filename_component(example_output_relative_dir ${example_source_file} DIRECTORY)
-	file(TO_CMAKE_PATH "${example_output_relative_dir}" example_output_relative_dir_name)
-	STRING(REGEX REPLACE "/" "." example_output_relative_dir_name "${example_output_relative_dir}")
-	set(example_output_name ${example_name})
-	set(example_name "${example_prefix}.${example_name}")
-	
-	add_executable(${example_name} ${example_source_file})
-	target_compile_options(${example_name}
+function(ztd_cuneicode_example_options example_target)
+	target_compile_options(${example_target}
 		PRIVATE
 		${--utf8-literal-encoding}
 		${--utf8-source-encoding}
@@ -45,12 +37,26 @@ function (ztd_cuneicode_example_simple example_source_file example_prefix)
 		${--warn-all}
 		${--warn-extra}
 		${--warn-errors})
-	target_link_libraries(${example_name}
+	target_link_libraries(${example_target}
 		PRIVATE
 		ztd::cuneicode)
-	add_test(NAME ${example_name}
-		COMMAND ${example_name})
+	add_test(NAME ${example_target}
+		COMMAND ${example_target})
+endfunction(ztd_cuneicode_example_options)
+
+function(ztd_cuneicode_example_simple example_source_file example_prefix)
+	get_filename_component(example_name ${example_source_file} NAME_WLE)
+	get_filename_component(example_output_relative_dir ${example_source_file} DIRECTORY)
+	file(TO_CMAKE_PATH "${example_output_relative_dir}" example_output_relative_dir_name)
+	STRING(REGEX REPLACE "/" "." example_output_relative_dir_name "${example_output_relative_dir}")
+	set(example_output_name ${example_name})
+	set(example_name "${example_prefix}.${example_name}")
+
+	add_executable(${example_name} ${example_source_file})
+
+	ztd_cuneicode_example_options(${example_name})
 endfunction(ztd_cuneicode_example_simple)
 
 add_subdirectory(cconv)
 add_subdirectory(documentation)
+add_subdirectory(simdutf)

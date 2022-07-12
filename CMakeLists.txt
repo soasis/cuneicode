@@ -14,11 +14,10 @@
 #
 # Apache License Version 2 Usage
 # Alternatively, this file may be used under the terms of Apache License
-# Version 2.0 (the "License") for non-commercial use; you may not use this
-# file except in compliance with the License. You may obtain a copy of the
-# License at
+# Version 2.0 (the "License"); you may not use this file except in compliance
+# with the License. You may obtain a copy of the License at
 #
-# 		https://www.apache.org/licenses/LICENSE-2.0
+# https://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,11 +25,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# ============================================================================>
-
+# =========================================================================== #
 
 cmake_minimum_required(VERSION 3.16.0)
 cmake_policy(VERSION 3.16)
+
 # # Project kickstart
 # Includes a bunch of basic flags and utilities shared across projects
 # See more at the github repository link below
@@ -45,12 +44,12 @@ set(CMAKE_PROJECT_INCLUDE ${ZTD_CMAKE_PROJECT_PRELUDE})
 # informs about the project, gives a description, version and MOST IMPORTANTLY
 # the languages the project is going to use. Required.
 project(ztd.cuneicode
-  VERSION 0.0.0
-  DESCRIPTION "A spicy text library for C."
-  HOMEPAGE_URL "https://ztdcuneicode.readthedocs.io/en/latest/"
-  LANGUAGES C CXX)
+	VERSION 0.0.0
+	DESCRIPTION "A spicy text library for C."
+	HOMEPAGE_URL "https://ztdcuneicode.readthedocs.io/en/latest/"
+	LANGUAGES C CXX)
 
-if (ZTD_CUNEICODE_READTHEDOCS)
+if(ZTD_CUNEICODE_READTHEDOCS)
 	# ReadTheDocs seems unable to handle the include at the project level: something must be going wrong?
 	include(CheckCXXCompilerFlag)
 	include(CheckCCompilerFlag)
@@ -73,8 +72,8 @@ else()
 endif()
 
 # Modify bad flags / change defaults if we are the top level
-if (ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
-	if (CMAKE_SIZEOF_VOID_P EQUAL 4)
+if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
+	if(CMAKE_SIZEOF_VOID_P EQUAL 4)
 		set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/x86/${CMAKE_BUILD_TYPE}/lib")
 		set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/x86/${CMAKE_BUILD_TYPE}/bin")
 		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/x86/${CMAKE_BUILD_TYPE}/bin")
@@ -84,17 +83,18 @@ if (ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/x64/${CMAKE_BUILD_TYPE}/bin")
 	endif()
 
-	if (NOT DEFINED CMAKE_CXX_STANDARD)
+	if(NOT DEFINED CMAKE_CXX_STANDARD)
 		set(CMAKE_CXX_STANDARD 17)
 	endif()
 
-	if (NOT DEFINED CMAKE_C_STANDARD)
+	if(NOT DEFINED CMAKE_C_STANDARD)
 		set(CMAKE_C_STANDARD 23)
 	endif()
 
-	if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_TESTS OR ZTD_CUNEICODE_SCRATCH)
+	if(ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_TESTS OR ZTD_CUNEICODE_SCRATCH)
 		# normal flags
 		check_compiler_flag(disable-permissive MSVC /permissive- GCC -pedantic)
+
 		# Warning flags
 		check_compiler_flag(warn-pedantic MSVC /permissive- GCC -pedantic)
 		check_compiler_flag(warn-all MSVC /W4 GCC -Wall)
@@ -137,8 +137,8 @@ add_library(ztd.cuneicode ${ztd.cuneicode.sources})
 add_library(ztd::cuneicode ALIAS ztd.cuneicode)
 target_include_directories(ztd.cuneicode
 	PUBLIC
-		$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-		$<INSTALL_INTERFACE:include>)
+	$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+	$<INSTALL_INTERFACE:include>)
 target_link_libraries(ztd.cuneicode
 	PUBLIC
 	ztd::idk)
@@ -147,7 +147,8 @@ target_include_directories(ztd.cuneicode
 target_compile_definitions(ztd.cuneicode
 	PRIVATE _CRT_SECURE_NO_WARNINGS
 )
-if (ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
+
+if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 	target_compile_options(ztd.cuneicode PRIVATE
 		${--utf8-literal-encoding}
 		${--utf8-source-encoding}
@@ -158,6 +159,7 @@ if (ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		${--warn-errors}
 	)
 endif()
+
 target_sources(ztd.cuneicode PRIVATE ${ztd.cuneicode.includes})
 install(DIRECTORY include/
 	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
@@ -185,30 +187,32 @@ export(TARGETS ztd.cuneicode
 	FILE
 	"${CMAKE_CURRENT_BINARY_DIR}/cmake/ztd.cuneicode/ztd.cuneicode-targets.cmake")
 
-
-if (ZTD_CUNEICODE_GENERATE_SINGLE)
+if(ZTD_CUNEICODE_GENERATE_SINGLE)
 	add_subdirectory(single)
 endif()
 
 # # Benchmarks, Tests, Examples
-if (ZTD_CUNEICODE_TESTS)
+if(ZTD_CUNEICODE_TESTS)
 	include(CTest)
 	add_subdirectory(tests)
 endif()
 
-if (ZTD_CUNEICODE_DOCUMENTATION)
+if(ZTD_CUNEICODE_DOCUMENTATION)
 	add_subdirectory(documentation)
 endif()
-if (ZTD_CUNEICODE_BENCHMARKS)
+
+if(ZTD_CUNEICODE_BENCHMARKS)
 	add_subdirectory(benchmarks)
 endif()
-if (ZTD_CUNEICODE_EXAMPLES)
+
+if(ZTD_CUNEICODE_EXAMPLES)
 	add_subdirectory(examples)
 endif()
 
 # For quick debugging and development only: don't peek! 🙈
 mark_as_advanced(ZTD_CUNEICODE_SCRATCH)
-if (ZTD_CUNEICODE_SCRATCH)
+
+if(ZTD_CUNEICODE_SCRATCH)
 	add_executable(scratch main.cpp)
 	target_link_libraries(scratch PRIVATE ztd::cuneicode)
 	target_compile_options(scratch

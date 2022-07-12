@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,8 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================
-// //
+// ========================================================================= //
 
 #include <ztd/cuneicode.h>
 
@@ -110,8 +109,8 @@ int main(int argc, char* argv[]) {
 		}
 
 		// open the registry
-		std::unique_ptr<cnc_conversion_registry, cnc_registry_deleter>
-		     registry = nullptr;
+		std::unique_ptr<cnc_conversion_registry, cnc_registry_deleter> registry
+		     = nullptr;
 		{
 			cnc_conversion_registry* raw_registry = registry.get();
 			cnc_registry_options registry_options
@@ -150,21 +149,20 @@ int main(int argc, char* argv[]) {
 			     from_data, to_size, to_data, &raw_conversion, &info);
 			if (err != CNC_OPEN_ERROR_OKAY) {
 				if (!opt.silent) {
-					std::cerr
-					     << "[error] Could not open a conversion from \""
-					     << opt.from_code << "\" to \"" << opt.to_code
-					     << "\"." << std::endl;
+					std::cerr << "[error] Could not open a conversion from \""
+					          << opt.from_code << "\" to \"" << opt.to_code
+					          << "\"." << std::endl;
 				}
 				return exit_open_failure;
 			}
 			if (opt.verbose) {
-				std::cout << "[info] Opened a conversion from \""
-				          << utf8string_view(
-				                  info.from_code_data, info.from_code_size)
-				          << "\" to \""
-				          << utf8string_view(
-				                  info.to_code_data, info.to_code_size)
-				          << "\"";
+				std::cout
+				     << "[info] Opened a conversion from \""
+				     << utf8string_view(
+				             info.from_code_data, info.from_code_size)
+				     << "\" to \""
+				     << utf8string_view(info.to_code_data, info.to_code_size)
+				     << "\"";
 				if (info.is_indirect) {
 					std::cout << " (converting indirectly from \""
 					          << utf8string_view(info.from_code_data,
@@ -230,10 +228,9 @@ int main(int argc, char* argv[]) {
 		if (opt.verbose) {
 			std::cout << "[info] Writing to \"" << output_file_name << "\"."
 			          << std::endl;
-			std::cout << "[info] Attempting to convert from \""
-			          << opt.from_code << "\" to \"" << opt.to_code
-			          << "\" for " << opt.input_files.size() << " inputs."
-			          << std::endl;
+			std::cout << "[info] Attempting to convert from \"" << opt.from_code
+			          << "\" to \"" << opt.to_code << "\" for "
+			          << opt.input_files.size() << " inputs." << std::endl;
 		}
 
 		std::size_t buffer_size = opt.maybe_buffer_size.value_or(
@@ -243,13 +240,11 @@ int main(int argc, char* argv[]) {
 		unsigned char
 		     error_output[ZTD_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_] {};
 		unsigned char* const initial_error_output_data = error_output;
-		const size_t initial_error_output_size
-		     = ztd_c_array_size(error_output);
+		const size_t initial_error_output_size = ztd_c_array_size(error_output);
 		{
 			cnc_conversion* raw_conversion = conversion.get();
 			for (std::size_t i = 0; i < opt.input_files.size(); ++i) {
-				std::variant<utf8string, stdin_read_tag>&
-				     input_file_or_stdin
+				std::variant<utf8string, stdin_read_tag>& input_file_or_stdin
 				     = opt.input_files[i];
 				auto success = read_input_into(
 				     input, input_file_or_stdin, opt.verbose, opt.silent);
@@ -259,15 +254,14 @@ int main(int argc, char* argv[]) {
 				const utf8string& input_file_name = success.input_file_name;
 				if (opt.verbose) {
 					std::cout << "[info] Read " << input.size()
-					          << " bytes from \"" << input_file_name
-					          << "\"." << std::endl;
+					          << " bytes from \"" << input_file_name << "\"."
+					          << std::endl;
 				}
-				const unsigned char* const initial_input_data
-				     = input.data();
-				const size_t initial_input_size = input.size();
+				const unsigned char* const initial_input_data = input.data();
+				const size_t initial_input_size               = input.size();
 				total_input_read += initial_input_size;
-				const unsigned char* input_data = initial_input_data;
-				size_t input_size               = initial_input_size;
+				const unsigned char* input_data          = initial_input_data;
+				size_t input_size                        = initial_input_size;
 				unsigned char* const initial_output_data = output.data();
 				const std::size_t initial_output_size    = output.size();
 				for (; input_size > 0;) {
@@ -294,29 +288,27 @@ int main(int argc, char* argv[]) {
 					case CNC_MCERROR_INVALID_SEQUENCE: {
 						unsigned char* error_output_data
 						     = initial_error_output_data;
-						size_t error_output_size
-						     = initial_error_output_size;
-						auto handler_visitor = [&](auto&& arg) {
-							return arg(info, raw_conversion,
-							     &error_output_size, &error_output_data,
-							     &input_size, &input_data);
+						size_t error_output_size = initial_error_output_size;
+						auto handler_visitor     = [&](auto&& arg) {
+                                   return arg(info, raw_conversion,
+							         &error_output_size, &error_output_data,
+							         &input_size, &input_data);
 						};
 						// okay, handle it with the handler
 						bool can_continue_processing = std::visit(
 						     handler_visitor, opt.error_handler);
 						if (!can_continue_processing) {
 							if (!opt.silent) {
-								std::cerr
-								     << "[error] Could not convert "
-								        "input data from \""
-								     << opt.from_code << "\" to \""
-								     << opt.to_code << "\"."
-								     << std::endl;
+								std::cerr << "[error] Could not convert "
+								             "input data from \""
+								          << opt.from_code << "\" to \""
+								          << opt.to_code << "\"."
+								          << std::endl;
 							}
 							return exit_conversion_failure;
 						}
-						error_output_written = initial_error_output_size
-						     - error_output_size;
+						error_output_written
+						     = initial_error_output_size - error_output_size;
 					} break;
 					case CNC_MCERROR_OKAY:
 					case CNC_MCERROR_INSUFFICIENT_OUTPUT:
@@ -333,8 +325,7 @@ int main(int argc, char* argv[]) {
 					if (must_write_output) {
 						output_stream.write(reinterpret_cast<const char*>(
 						                         initial_output_data),
-						     static_cast<std::streamsize>(
-						          output_written));
+						     static_cast<std::streamsize>(output_written));
 						if (!output_stream) {
 							if (!opt.silent) {
 								std::cerr << "[error] Could not write "
@@ -355,18 +346,17 @@ int main(int argc, char* argv[]) {
 							return exit_file_write_failure;
 						}
 						if (opt.verbose) {
-							std::cout
-							     << "[info] Wrote " << output_written
-							     << " bytes of output to \""
-							     << output_file_name << "\" with "
-							     << input_size << " bytes left to read."
-							     << std::endl;
+							std::cout << "[info] Wrote " << output_written
+							          << " bytes of output to \""
+							          << output_file_name << "\" with "
+							          << input_size
+							          << " bytes left to read."
+							          << std::endl;
 						}
 					}
 					if (must_write_error_output) {
-						output_stream.write(
-						     reinterpret_cast<const char*>(
-						          initial_error_output_data),
+						output_stream.write(reinterpret_cast<const char*>(
+						                         initial_error_output_data),
 						     error_output_written);
 						if (!output_stream) {
 							if (!opt.silent) {
@@ -390,13 +380,12 @@ int main(int argc, char* argv[]) {
 							return exit_file_write_failure;
 						}
 						if (opt.verbose) {
-							std::cout << "[info] Wrote "
-							          << error_output_written
-							          << " bytes of error to \""
-							          << output_file_name << "\" with "
-							          << input_size
-							          << " bytes left to read."
-							          << std::endl;
+							std::cout
+							     << "[info] Wrote " << error_output_written
+							     << " bytes of error to \""
+							     << output_file_name << "\" with "
+							     << input_size << " bytes left to read."
+							     << std::endl;
 						}
 					}
 					total_output_written += combined_written;

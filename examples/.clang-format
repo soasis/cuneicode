@@ -2,4 +2,4 @@
 BasedOnStyle: InheritParentConfig
 
 # Overall Alignment
-ColumnLimit: 80
+ColumnLimit: 83

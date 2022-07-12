@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,8 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================
-// //
+// ========================================================================= //
 
 #include <ztd/cuneicode.h>
 
@@ -49,13 +48,10 @@ int main() {
 	size_t output_size  = ztd_c_array_size(utf8_text);
 	cnc_mcstate_t state = { 0 };
 	// call the function with the right parameters!
-	cnc_mcerror err = cnc_c16snrtoc8sn(
-	     // output first
-	     &output_size, &p_output,
-	     // input second
-	     &input_size, &p_input,
-	     // state parameter
-	     &state);
+	cnc_mcerror err = cnc_c16snrtoc8sn( // formatting
+	     &output_size, &p_output,       // output first
+	     &input_size, &p_input,         // input second
+	     &state);                       // state parameter
 	if (err != CNC_MCERROR_OKAY) {
 		const char* err_str = cnc_mcerror_to_str(err);
 		printf(

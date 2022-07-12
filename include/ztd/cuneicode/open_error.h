@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_OPEN_ERROR_H
 #define ZTD_CUNEICODE_OPEN_ERROR_H
@@ -62,7 +62,8 @@ typedef enum cnc_open_error {
 	/// resource.
 	CNC_OPEN_ERROR_INSUFFICIENT_OUTPUT = -2,
 	//////
-	/// @brief Returned when there is an invalid parameter passed in for creating the resource.
+	/// @brief Returned when there is an invalid parameter passed in for creating the
+	/// resource.
 	CNC_OPEN_ERROR_INVALID_PARAMETER = -3,
 	//////
 	/// @brief Returned when a heap-related or allocation-related failure occurred.

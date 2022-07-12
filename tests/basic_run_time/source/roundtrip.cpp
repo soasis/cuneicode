@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #include <catch2/catch.hpp>
 
@@ -347,9 +347,10 @@ namespace {
 	}
 } // namespace
 
-TEST_CASE("cuneicode/roundtrip through c32",
+TEST_CASE(
      "check single conversion from one of the typical typed encodings to UTF-32 and back to the "
-     "typed encoding") {
+     "typed encoding, using direct functions",
+     "[cuneicode][direct][roundtrip-c32][single]") {
 	SECTION("mc") {
 		compare_roundtrip_utf32<ztd_char_t, false>();
 		if (cnc_is_execution_encoding_unicode()) {

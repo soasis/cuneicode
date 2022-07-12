@@ -1,4 +1,4 @@
-.. =============================================================================
+.. ============================================================================
 ..
 .. ztd.cuneicode
 .. Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -26,7 +26,7 @@
 .. See the License for the specific language governing permissions and
 .. limitations under the License.
 ..
-.. =============================================================================>
+.. ========================================================================= ..
 
 Licenses, Thanks and Attribution
 =================================
@@ -43,7 +43,11 @@ We thank two people in particular:
 
 - Bruno Haible and Daiki Ueno; `iconv <https://savannah.gnu.org/projects/libiconv/>`_.
 
-Their work was groundbreaking when it first came about and employed similar concepts found in this library. We thank them for their efforts in moving Text Encoding, Unicode, and Systems Programming forward.
+Their work was groundbreaking when it first came about and employed similar concepts found in this library. We thank them for their efforts in moving Text Encoding, Unicode, and Systems Programming forward. We also appreciate the work of:
+
+- Unicode Consortium; the `Unicode Standard <http://www.unicode.org/versions/latest/>`_;
+- Unicode Consortium; the `ICU - International Components for Unicode Library <https://icu.unicode.org/>`_; and,
+- Henri Sivonen; the `encoding.rs library <https://docs.rs/encoding_rs/latest/encoding_rs/>`_.
 
 
 

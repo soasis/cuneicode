@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_REGISTRY_H
 #define ZTD_CUNEICODE_REGISTRY_H
@@ -56,9 +56,9 @@
 //////
 /// @brief A structure which tracks information about the final opened cnc_conversion handle.
 ///
-/// @remarks This structure is the only time the collection of cnc_conversion creating and opening
-/// functions will return information about whether or not it uses an indirect conversion and that
-/// conversion's properties.
+/// @remarks This structure is the only time the collection of cnc_conversion creating and
+/// opening functions will return information about whether or not it uses an indirect
+/// conversion and that conversion's properties.
 //////
 typedef struct cnc_conversion_info {
 	//////

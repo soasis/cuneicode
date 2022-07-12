@@ -1,4 +1,4 @@
-// =============================================================================
+// ============================================================================
 //
 // ztd.cuneicode
 // Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
@@ -25,7 +25,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// ============================================================================ //
+// ========================================================================= //
 
 #ifndef ZTD_CUNEICODE_DETAIL_MCCHARSN_H
 #define ZTD_CUNEICODE_DETAIL_MCCHARSN_H
@@ -51,32 +51,33 @@
 
 //////
 /// @brief Converts from the encoding given by `__p_src`'s character type to `__p_maybe_dst`'s
-/// character type. Performs one unit of indivisible work repeatedly, or stops with an error. Will
-/// always stop just before the last complete successful translation of input to output, or will
-/// read all input and point to the end if there were no errors.
+/// character type. Performs one unit of indivisible work repeatedly, or stops with an error.
+/// Will always stop just before the last complete successful translation of input to output,
+/// or will read all input and point to the end if there were no errors.
 ///
 /// @param[in, out] __p_maybe_dst_len A pointer to the size of the output buffer (in number of
-/// **elements**). If this is `nullptr`, then it will not update the count (and the output stream
-/// will automatically be considered large enough to handle all data, if
+/// **elements**). If this is `nullptr`, then it will not update the count (and the output
+/// stream will automatically be considered large enough to handle all data, if
 /// `__p_maybe_dst` is not `nullptr`).
 /// @param[in, out] __p_maybe_dst A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
 /// decrement the value pointed to by
 /// `__p_maybe_dst_len`).
 /// @param[in, out] __p_src_len A pointer to the size of the input buffer (in number of
-/// **elements**). If this is `nullptr` or points to a value equivalent to `0`, then the input is
-/// considered empty and CNC_MCERROR_OKAY is returned.
-/// @param[in, out] __p_src A pointer to the pointer of the input buffer. If this or the pointer
-/// within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is returned.
+/// **elements**). If this is `nullptr` or points to a value equivalent to `0`, then the input
+/// is considered empty and CNC_MCERROR_OKAY is returned.
+/// @param[in, out] __p_src A pointer to the pointer of the input buffer. If this or the
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// returned.
 ///
 /// @remarks This function will create an automatic storage duration `cnc_mcstate_t` object,
-/// initialize it to the initial shift sequence, and then pass it to the restartable version of this
-/// function. This object is not recoverable in any way and is not shared, and therefore should only
-/// be used if the end-user is sure there is no state to the encoding they are working with (e.g.,
-/// conversions between Unicode Transformation Formats (UTFs). It is **NOT** recommended to use this
-/// with the execution encoding and wide execution encodings, which may have shift state and could
-/// lead to invalid reads of later data without that shift state information from the
-/// `cnc_mcstate_t` object.)
+/// initialize it to the initial shift sequence, and then pass it to the restartable version of
+/// this function. This object is not recoverable in any way and is not shared, and therefore
+/// should only be used if the end-user is sure there is no state to the encoding they are
+/// working with (e.g., conversions between Unicode Transformation Formats (UTFs). It is
+/// **NOT** recommended to use this with the execution encoding and wide execution encodings,
+/// which may have shift state and could lead to invalid reads of later data without that shift
+/// state information from the `cnc_mcstate_t` object.)
 //////
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntomcsn(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
@@ -104,8 +105,8 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 /// value-initialized (`= {0}` or similar) cnc_mcstate_t is used.
 ///
 /// @remarks
-/// The documentation for the type ↔ encoding mapping can be found in the @ref
-/// design-naming-encoding.table "naming design documentation".
+/// The documentation for the type ↔ encoding mapping can be found in the
+/// @verbatim embed:rst:inline :ref:`design-naming-encoding.table` @endverbatim .
 //////
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtomcsn(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len, const char** __p_src,
