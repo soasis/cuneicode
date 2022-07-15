@@ -69,7 +69,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 	cnc_mcstate_t __substitute_state {};
 	if (__p_state == nullptr)
 		__p_state = &__substitute_state;
-	_ZTDC_CUNEICODE_SINGLE_N_DEST_TEMPLATE_BODY(ztd::cnc::__cnc_detail::__mcnrtomwcn,
+	_ZTDC_CUNEICODE_SINGLE_N_DEST_TEMPLATE_BODY(::cnc::__cnc_detail::__mcnrtomwcn,
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
@@ -139,7 +139,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 	cnc_mcstate_t __substitute_state {};
 	if (__p_state == nullptr)
 		__p_state = &__substitute_state;
-	_ZTDC_CUNEICODE_SINGLE_N_DEST_TEMPLATE_BODY(ztd::cnc::__cnc_detail::__mcnrtoc32n,
+	_ZTDC_CUNEICODE_SINGLE_N_DEST_TEMPLATE_BODY(::cnc::__cnc_detail::__mcnrtoc32n,
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 

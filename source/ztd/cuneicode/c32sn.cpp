@@ -40,24 +40,24 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_maybe_dst == nullptr || *__p_maybe_dst == nullptr) {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, true, CNC_MC_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, true, CNC_MC_MAX,
 			     decltype(&::cnc_c32nrtomcn), &::cnc_c32nrtomcn>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, false, CNC_MC_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, false, CNC_MC_MAX,
 			     decltype(&::cnc_c32nrtomcn), &::cnc_c32nrtomcn>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 	}
 	else {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, true, CNC_MC_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, true, CNC_MC_MAX,
 			     decltype(&::cnc_c32nrtomcn), &::cnc_c32nrtomcn>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, false, CNC_MC_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, false, CNC_MC_MAX,
 			     decltype(&::cnc_c32nrtomcn), &::cnc_c32nrtomcn>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
@@ -77,24 +77,24 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_maybe_dst == nullptr || *__p_maybe_dst == nullptr) {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, true, CNC_MWC_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, true, CNC_MWC_MAX,
 			     decltype(&::cnc_c32nrtomwcn), &::cnc_c32nrtomwcn>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, false, CNC_MWC_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, false, CNC_MWC_MAX,
 			     decltype(&::cnc_c32nrtomwcn), &::cnc_c32nrtomwcn>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 	}
 	else {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, true, CNC_MWC_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, true, CNC_MWC_MAX,
 			     decltype(&::cnc_c32nrtomwcn), &::cnc_c32nrtomwcn>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, false, CNC_MWC_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, false, CNC_MWC_MAX,
 			     decltype(&::cnc_c32nrtomwcn), &::cnc_c32nrtomwcn>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
@@ -114,24 +114,24 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_maybe_dst == nullptr || *__p_maybe_dst == nullptr) {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, true, CNC_C8_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, true, CNC_C8_MAX,
 			     decltype(&::cnc_c32nrtoc8n), &::cnc_c32nrtoc8n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, false, CNC_C8_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, false, CNC_C8_MAX,
 			     decltype(&::cnc_c32nrtoc8n), &::cnc_c32nrtoc8n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 	}
 	else {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, true, CNC_C8_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, true, CNC_C8_MAX,
 			     decltype(&::cnc_c32nrtoc8n), &::cnc_c32nrtoc8n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, false, CNC_C8_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, false, CNC_C8_MAX,
 			     decltype(&::cnc_c32nrtoc8n), &::cnc_c32nrtoc8n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
@@ -151,24 +151,24 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_maybe_dst == nullptr || *__p_maybe_dst == nullptr) {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, true, CNC_C16_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, true, CNC_C16_MAX,
 			     decltype(&::cnc_c32nrtoc16n), &::cnc_c32nrtoc16n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, false, CNC_C16_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, false, CNC_C16_MAX,
 			     decltype(&::cnc_c32nrtoc16n), &::cnc_c32nrtoc16n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 	}
 	else {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, true, CNC_C16_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, true, CNC_C16_MAX,
 			     decltype(&::cnc_c32nrtoc16n), &::cnc_c32nrtoc16n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, false, CNC_C16_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, false, CNC_C16_MAX,
 			     decltype(&::cnc_c32nrtoc16n), &::cnc_c32nrtoc16n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
@@ -188,24 +188,24 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_maybe_dst == nullptr || *__p_maybe_dst == nullptr) {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, true, CNC_C32_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, true, CNC_C32_MAX,
 			     decltype(&::cnc_c32nrtoc32n), &::cnc_c32nrtoc32n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<true, false, CNC_C32_MAX,
+			return ::cnc::__cnc_detail::__transcode<true, false, CNC_C32_MAX,
 			     decltype(&::cnc_c32nrtoc32n), &::cnc_c32nrtoc32n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 	}
 	else {
 		if (__p_maybe_dst_len == nullptr) {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, true, CNC_C32_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, true, CNC_C32_MAX,
 			     decltype(&::cnc_c32nrtoc32n), &::cnc_c32nrtoc32n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}
 		else {
-			return ::ztd::cnc::__cnc_detail::__transcode<false, false, CNC_C32_MAX,
+			return ::cnc::__cnc_detail::__transcode<false, false, CNC_C32_MAX,
 			     decltype(&::cnc_c32nrtoc32n), &::cnc_c32nrtoc32n>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 		}

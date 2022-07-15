@@ -34,8 +34,8 @@
 
 #include <ztd/idk/utf8_startup_hook.hpp>
 
-namespace ztd { namespace cnc { namespace tests {
+namespace cnc { namespace tests {
 	inline ztd::utf8_startup_hook utf8_startup {};
-}}} // namespace ztd::cnc::tests
+}} // namespace cnc::tests
 
 #endif // ZTD_CUNEICODE_TESTS_UTF8_STARTUP_HPP

@@ -29,25 +29,14 @@
 
 #pragma once
 
-#ifndef ZTD_CUNEICODE_SOURCE_DETAIL_EUC_HPP
-#define ZTD_CUNEICODE_SOURCE_DETAIL_EUC_HPP
+#ifndef ZTD_CUNEICODE_SOURCE_DETAIL_EUC_JP_IMPL_HPP
+#define ZTD_CUNEICODE_SOURCE_DETAIL_EUC_JP_IMPL_HPP
 
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/mcerror.h>
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32rtomwc_ibmeucjp(
-     size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len,
-     const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state);
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcrtoc32_ibmeucjp(
-     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
-     const wchar_t** __p_src, cnc_mcstate_t* __p_state);
+// TODO: EUC-JP can be used as the wide encoding in some systems, so it should be templated over the
+// code_unit type.
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32rtomwc_ibmeuctw(
-     size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len,
-     const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state);
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcrtoc32_ibmeuctw(
-     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
-     const wchar_t** __p_src, cnc_mcstate_t* __p_state);
-
-#endif // ZTD_CUNEICODE_SOURCE_DETAIL_EUC_HPP
+#endif // ZTD_CUNEICODE_SOURCE_DETAIL_EUC_JP_IMPL_HPP

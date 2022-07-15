@@ -28,10 +28,12 @@
 # =========================================================================== #
 
 # # Fetch dependencies
-# Google Benchmark
+# simdutf
+set(SIMDUTF_BENCHMARKS OFF CACHE INTERNAL "")
+set(SIMDUTF_TESTS OFF CACHE INTERNAL "")
 FetchContent_Declare(
 	simdutf
-	GIT_REPOSITORY https://github.com/simdutf/simdutf
+	GIT_REPOSITORY https://github.com/ThePhD/simdutf
 )
 FetchContent_MakeAvailable(simdutf)
 

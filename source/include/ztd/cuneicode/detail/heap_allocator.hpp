@@ -39,7 +39,7 @@
 #include <memory>
 #include <type_traits>
 
-namespace ztd { namespace cnc {
+namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_
 	namespace __cnc_detail {
 
@@ -86,13 +86,13 @@ namespace ztd { namespace cnc {
 			}
 
 			pointer allocate(size_type __requested_number_of_elements,
-				[[maybe_unused]] const_void_pointer hint = nullptr) {
+			     [[maybe_unused]] const_void_pointer hint = nullptr) {
 				size_type __requested_number_of_bytes
-					= __requested_number_of_elements * sizeof(value_type);
+				     = __requested_number_of_elements * sizeof(value_type);
 				size_type __actual_number_of_bytes;
 				__underlying_pointer __ptr = this->__p_heap->allocate(
-					__requested_number_of_bytes, static_cast<size_type>(this->alignment()),
-					&__actual_number_of_bytes, this->__p_heap->user_data);
+				     __requested_number_of_bytes, static_cast<size_type>(this->alignment()),
+				     &__actual_number_of_bytes, this->__p_heap->user_data);
 				if (__ptr == nullptr) {
 					throw std::bad_alloc();
 				}
@@ -101,22 +101,22 @@ namespace ztd { namespace cnc {
 
 			void deallocate(pointer __original, size_type __original_number_of_elements) {
 				size_type __original_number_of_bytes
-					= __original_number_of_elements * sizeof(value_type);
+				     = __original_number_of_elements * sizeof(value_type);
 				__p_heap->deallocate(__underlying_pointer(__original),
-					__original_number_of_bytes, static_cast<size_type>(this->alignment()),
-					this->__p_heap->user_data);
+				     __original_number_of_bytes, static_cast<size_type>(this->alignment()),
+				     this->__p_heap->user_data);
 			}
 
 			friend bool operator==(
-				const __heap_allocator& __left, const __heap_allocator& __right) noexcept {
+			     const __heap_allocator& __left, const __heap_allocator& __right) noexcept {
 				return __left.__p_heap == __right.__p_heap
-					&& cnc_conversion_heap_equals(__left.__p_heap, __right.__p_heap);
+				     && cnc_conversion_heap_equals(__left.__p_heap, __right.__p_heap);
 			}
 
 			friend bool operator!=(
-				const __heap_allocator& __left, const __heap_allocator& __right) noexcept {
+			     const __heap_allocator& __left, const __heap_allocator& __right) noexcept {
 				return __left.__p_heap != __right.__p_heap
-					|| cnc_conversion_heap_not_equals(__left.__p_heap, __right.__p_heap);
+				     || cnc_conversion_heap_not_equals(__left.__p_heap, __right.__p_heap);
 			}
 
 		private:
@@ -125,6 +125,6 @@ namespace ztd { namespace cnc {
 
 	} // namespace __cnc_detail
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_
-}} // namespace ztd::cnc
+} // namespace cnc
 
 #endif // ZTD_CUNEICODE_SOURCE_DETAIL_HEAP_ALLOCATOR_HPP

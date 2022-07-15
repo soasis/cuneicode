@@ -37,19 +37,19 @@
 #include <ztd/cuneicode/max_output.h>
 #include <ztd/cuneicode/mcstate.h>
 
-#include <cassert>
+#include <ztd/idk/assert.hpp>
 
-namespace ztd { namespace cnc {
+namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_
 
 	namespace __cnc_detail {
 
 		template <bool _IsCounting, bool _IsUnbounded, typename _FromFunc, _FromFunc __xsnrtoisn,
-			typename _ToFunc, _ToFunc __isnrtozsn, typename _IntermediateChar = ztd_char32_t,
-			size_t _IntermediateMax = CNC_C32_MAX, typename _SourceChar, typename _DestChar>
+		     typename _ToFunc, _ToFunc __isnrtozsn, typename _IntermediateChar = ztd_char32_t,
+		     size_t _IntermediateMax = CNC_C32_MAX, typename _SourceChar, typename _DestChar>
 		cnc_mcerror __basic_transcode_one(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
-			size_t* __p_src_len, const _SourceChar** __p_src,
-			cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const _SourceChar** __p_src,
+		     cnc_mcstate_t* __p_state) noexcept {
 			if (__p_src_len == nullptr || *__p_src_len < 1) {
 				// empty sources are just fine (returns 0)
 				return CNC_MCERROR_OKAY;
@@ -68,7 +68,7 @@ namespace ztd { namespace cnc {
 			_IntermediateChar* __intermediate_first = __intermediate;
 			size_t __intermediate_out_size_after    = _IntermediateMax;
 			cnc_mcerror __res_decode                = __xsnrtoisn(&__intermediate_out_size_after,
-				               &__intermediate_first, &__intermediate_src_len, &__intermediate_src, __p_state);
+			                    &__intermediate_first, &__intermediate_src_len, &__intermediate_src, __p_state);
 			switch (__res_decode) {
 			case CNC_MCERROR_INVALID_SEQUENCE:
 				// error, explode
@@ -87,12 +87,12 @@ namespace ztd { namespace cnc {
 			}
 
 			const size_t __intermediate_out_size
-				= _IntermediateMax - __intermediate_out_size_after;
+			     = _IntermediateMax - __intermediate_out_size_after;
 			const _IntermediateChar* __intermediate_input_first = __intermediate;
 			size_t __intermediate_input_size_after              = __intermediate_out_size;
 
 			cnc_mcerror __res_encode = __isnrtozsn(__p_maybe_dst_len, __p_maybe_dst,
-				&__intermediate_input_size_after, &__intermediate_input_first, __p_state);
+			     &__intermediate_input_size_after, &__intermediate_input_first, __p_state);
 			switch (__res_encode) {
 			case CNC_MCERROR_INVALID_SEQUENCE:
 				// error, rollback
@@ -115,10 +115,10 @@ namespace ztd { namespace cnc {
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, size_t _IntermediateMax, typename _Func,
-			_Func __xsnrtoysn, typename _SourceChar, typename _DestChar>
+		     _Func __xsnrtoysn, typename _SourceChar, typename _DestChar>
 		cnc_mcerror __transcode(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
-			size_t* __p_src_len, const _SourceChar** __p_src,
-			cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const _SourceChar** __p_src,
+		     cnc_mcstate_t* __p_state) noexcept {
 			if (__p_src_len == nullptr || *__p_src_len < 1) {
 				// empty sources are just fine (returns 0)
 				return CNC_MCERROR_OKAY;
@@ -141,7 +141,7 @@ namespace ztd { namespace cnc {
 
 			for (; __src_len > 0;) {
 				cnc_mcerror __res = __xsnrtoysn(
-					__p_maybe_dst_len, __p_maybe_dst, &__src_len, &__src, __p_state);
+				     __p_maybe_dst_len, __p_maybe_dst, &__src_len, &__src, __p_state);
 				switch (__res) {
 				case CNC_MCERROR_OKAY:
 					if (__src_len == 0) {
@@ -156,52 +156,65 @@ namespace ztd { namespace cnc {
 			return CNC_MCERROR_INVALID_SEQUENCE;
 		}
 
-#define _ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(_DL, _D, _SL, _S, _ST, ...)                            \
-	if (_D == nullptr || *_D == nullptr) {                                                       \
-		if (_DL == nullptr) {                                                                   \
-			return ::ztd::cnc::__cnc_detail::__basic_transcode_one<true, true, __VA_ARGS__>(   \
-			     _DL, _D, _SL, _S, _ST);                                                       \
-		}                                                                                       \
-		else {                                                                                  \
-			return ::ztd::cnc::__cnc_detail::__basic_transcode_one<true, false, __VA_ARGS__>(  \
-			     _DL, _D, _SL, _S, _ST);                                                       \
-		}                                                                                       \
-	}                                                                                            \
-	else {                                                                                       \
-		if (_DL == nullptr) {                                                                   \
-			return ::ztd::cnc::__cnc_detail::__basic_transcode_one<false, true, __VA_ARGS__>(  \
-			     _DL, _D, _SL, _S, _ST);                                                       \
-		}                                                                                       \
-		else {                                                                                  \
-			return ::ztd::cnc::__cnc_detail::__basic_transcode_one<false, false, __VA_ARGS__>( \
-			     _DL, _D, _SL, _S, _ST);                                                       \
-		}                                                                                       \
+#define _ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(_DL, _D, _SL, _S, _ST, ...)                       \
+	if (_D == nullptr || *_D == nullptr) {                                                  \
+		if (_DL == nullptr) {                                                              \
+			return ::cnc::__cnc_detail::__basic_transcode_one<true, true, __VA_ARGS__>(   \
+			     _DL, _D, _SL, _S, _ST);                                                  \
+		}                                                                                  \
+		else {                                                                             \
+			return ::cnc::__cnc_detail::__basic_transcode_one<true, false, __VA_ARGS__>(  \
+			     _DL, _D, _SL, _S, _ST);                                                  \
+		}                                                                                  \
+	}                                                                                       \
+	else {                                                                                  \
+		if (_DL == nullptr) {                                                              \
+			return ::cnc::__cnc_detail::__basic_transcode_one<false, true, __VA_ARGS__>(  \
+			     _DL, _D, _SL, _S, _ST);                                                  \
+		}                                                                                  \
+		else {                                                                             \
+			return ::cnc::__cnc_detail::__basic_transcode_one<false, false, __VA_ARGS__>( \
+			     _DL, _D, _SL, _S, _ST);                                                  \
+		}                                                                                  \
 	}
 
-#define _ZTDC_CUNEICODE_TRANSCODE_BODY(_DL, _D, _SL, _S, _ST, ...)                      \
-	if (_D == nullptr || *_D == nullptr) {                                             \
-		if (_DL == nullptr) {                                                         \
-			return ::ztd::cnc::__cnc_detail::__transcode<true, true, __VA_ARGS__>(   \
-			     _DL, _D, _SL, _S, _ST);                                             \
-		}                                                                             \
-		else {                                                                        \
-			return ::ztd::cnc::__cnc_detail::__transcode<true, false, __VA_ARGS__>(  \
-			     _DL, _D, _SL, _S, _ST);                                             \
-		}                                                                             \
-	}                                                                                  \
-	else {                                                                             \
-		if (_DL == nullptr) {                                                         \
-			return ::ztd::cnc::__cnc_detail::__transcode<false, true, __VA_ARGS__>(  \
-			     _DL, _D, _SL, _S, _ST);                                             \
-		}                                                                             \
-		else {                                                                        \
-			return ::ztd::cnc::__cnc_detail::__transcode<false, false, __VA_ARGS__>( \
-			     _DL, _D, _SL, _S, _ST);                                             \
-		}                                                                             \
+#define _ZTDC_CUNEICODE_TRANSCODE_BODY(_DL, _D, _SL, _S, _ST, ...)                 \
+	if (_D == nullptr || *_D == nullptr) {                                        \
+		if (_DL == nullptr) {                                                    \
+			return ::cnc::__cnc_detail::__transcode<true, true, __VA_ARGS__>(   \
+			     _DL, _D, _SL, _S, _ST);                                        \
+		}                                                                        \
+		else {                                                                   \
+			return ::cnc::__cnc_detail::__transcode<true, false, __VA_ARGS__>(  \
+			     _DL, _D, _SL, _S, _ST);                                        \
+		}                                                                        \
+	}                                                                             \
+	else {                                                                        \
+		if (_DL == nullptr) {                                                    \
+			return ::cnc::__cnc_detail::__transcode<false, true, __VA_ARGS__>(  \
+			     _DL, _D, _SL, _S, _ST);                                        \
+		}                                                                        \
+		else {                                                                   \
+			return ::cnc::__cnc_detail::__transcode<false, false, __VA_ARGS__>( \
+			     _DL, _D, _SL, _S, _ST);                                        \
+		}                                                                        \
 	}
+
+#define _ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE)                 \
+	if (__p_src == nullptr || *__p_src == nullptr) {                                   \
+		return CNC_MCERROR_OKAY;                                                      \
+	}                                                                                  \
+	ZTD_ASSERT(__p_src_len != nullptr);                                                \
+	const _SRC_TYPE*& __src = *__p_src;                                                \
+	size_t& __src_len       = *__p_src_len;                                            \
+	if (__src_len < 1) {                                                               \
+		return CNC_MCERROR_OKAY;                                                      \
+	}                                                                                  \
+	const bool _IsCounting  = __p_maybe_dst == nullptr || __p_maybe_dst[0] == nullptr; \
+	const bool _IsUnbounded = __p_maybe_dst_len == nullptr
 
 	} // namespace __cnc_detail
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_
-}} // namespace ztd::cnc
+} // namespace cnc
 
 #endif // ZTD_CUNEICODE_SOURCE_DETAIL_TRANSCODE_HPP

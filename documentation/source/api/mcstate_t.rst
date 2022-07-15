@@ -40,4 +40,4 @@ The state object is used during conversions to provide a place for the function 
 	An implementation may define encodings which are not UTF-8, UTF-16, or UTF-32 that **does** perform partial writes, such as a ``"UTF-8-partial"`` or ``"UTF-32-partial"``. But it shall not have the same ``LC_TYPE`` identifier as the UTF-8, UTF-16, or UTF-32 encodings.
 
 
-.. doxygenstruct:: cnc_mcstate_t
+.. doxygenunion:: cnc_mcstate_t

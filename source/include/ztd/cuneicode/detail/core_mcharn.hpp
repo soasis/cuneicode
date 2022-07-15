@@ -57,13 +57,13 @@ ZTD_EXTERN_C_CLOSE_I_
 #endif
 #include <cstring>
 
-namespace ztd { namespace cnc {
+namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_
 	namespace __cnc_detail {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c32nrtoc8n(size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
+		     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -104,28 +104,28 @@ namespace ztd { namespace cnc {
 				else if (__seq_len == 3) {
 					// 3 bytes
 					**__p_maybe_dst
-						= (ztd_char8_t)(((__c0 >> 0xC) & 0b00001111u) | 0b11100000u);
+					     = (ztd_char8_t)(((__c0 >> 0xC) & 0b00001111u) | 0b11100000u);
 					++*__p_maybe_dst;
 					**__p_maybe_dst
-						= (ztd_char8_t)(((__c0 >> 0x6) & 0b00111111u) | 0b10000000u);
+					     = (ztd_char8_t)(((__c0 >> 0x6) & 0b00111111u) | 0b10000000u);
 					++*__p_maybe_dst;
 					**__p_maybe_dst
-						= (ztd_char8_t)(((__c0 >> 0x0) & 0b00111111u) | 0b10000000u);
+					     = (ztd_char8_t)(((__c0 >> 0x0) & 0b00111111u) | 0b10000000u);
 					++*__p_maybe_dst;
 				}
 				else {
 					// 4 bytes
 					**__p_maybe_dst
-						= (ztd_char8_t)(((__c0 >> 0x12) & 0b00000111u) | 0b11110000u);
+					     = (ztd_char8_t)(((__c0 >> 0x12) & 0b00000111u) | 0b11110000u);
 					++*__p_maybe_dst;
 					**__p_maybe_dst
-						= (ztd_char8_t)(((__c0 >> 0x0C) & 0b00111111u) | 0b10000000u);
+					     = (ztd_char8_t)(((__c0 >> 0x0C) & 0b00111111u) | 0b10000000u);
 					++*__p_maybe_dst;
 					**__p_maybe_dst
-						= (ztd_char8_t)(((__c0 >> 0x06) & 0b00111111u) | 0b10000000u);
+					     = (ztd_char8_t)(((__c0 >> 0x06) & 0b00111111u) | 0b10000000u);
 					++*__p_maybe_dst;
 					**__p_maybe_dst
-						= (ztd_char8_t)(((__c0 >> 0x00) & 0b00111111u) | 0b10000000u);
+					     = (ztd_char8_t)(((__c0 >> 0x00) & 0b00111111u) | 0b10000000u);
 					++*__p_maybe_dst;
 				}
 			}
@@ -136,7 +136,7 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c32nrtoc16n(size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
+		     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -152,7 +152,7 @@ namespace ztd { namespace cnc {
 			}
 			ztd_char32_t __c0 = *__src;
 			if (__c0 > __ztd_idk_detail_last_unicode_code_point
-				|| __ztd_idk_detail_is_surrogate(__c0)) {
+			     || __ztd_idk_detail_is_surrogate(__c0)) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 
@@ -171,10 +171,10 @@ namespace ztd { namespace cnc {
 				if constexpr (!_IsCounting) {
 					ztd_char32_t __normal = __c0 - __ztd_idk_detail_normalizing_value;
 					ztd_char32_t __lead   = __ztd_idk_detail_first_lead_surrogate
-						+ ((__normal & __ztd_idk_detail_lead_surrogate_bitmask)
-						     >> __ztd_idk_detail_lead_shifted_bits);
+					     + ((__normal & __ztd_idk_detail_lead_surrogate_bitmask)
+					          >> __ztd_idk_detail_lead_shifted_bits);
 					ztd_char32_t __trail = __ztd_idk_detail_first_trail_surrogate
-						+ (__normal & __ztd_idk_detail_trail_surrogate_bitmask);
+					     + (__normal & __ztd_idk_detail_trail_surrogate_bitmask);
 					(*__p_maybe_dst)[0] = static_cast<ztd_char16_t>(__lead);
 					(*__p_maybe_dst)[1] = static_cast<ztd_char16_t>(__trail);
 					*__p_maybe_dst += 2;
@@ -189,7 +189,7 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c32nrtoc32n(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
+		     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -210,7 +210,7 @@ namespace ztd { namespace cnc {
 			}
 			ztd_char32_t __c0 = *__src;
 			if (__ztd_idk_detail_is_surrogate(__c0)
-				|| __c0 > __ztd_idk_detail_last_unicode_code_point) {
+			     || __c0 > __ztd_idk_detail_last_unicode_code_point) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			__src += 1;
@@ -227,15 +227,15 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c32nrtomcn(size_t* __p_maybe_dst_len, char** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char32_t** __p_src,
-			cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const ztd_char32_t** __p_src,
+		     cnc_mcstate_t* __p_state) noexcept {
 			if constexpr ((sizeof(ztd_char_t) == sizeof(ztd_char8_t))
-				&& (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
+			     && (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
 				if (ztdc_is_execution_encoding_utf8()) {
-					return ::ztd::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded,
-						_SourceChecks>(__p_maybe_dst_len,
-						reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len, __p_src,
-						__p_state);
+					return ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded,
+					     _SourceChecks>(__p_maybe_dst_len,
+					     reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len, __p_src,
+					     __p_state);
 				}
 			}
 #if ZTD_IS_ON(ZTD_UCHAR) || ZTD_IS_ON(ZTD_CUCHAR)
@@ -257,11 +257,11 @@ namespace ztd { namespace cnc {
 			for (size_t __src_idx = 0; __src_idx < __max_accumulated_writeouts; ++__src_idx) {
 				const ztd_char32_t& __c32 = __src[__src_idx];
 				size_t __res              = ZTD_UCHAR_ACCESSOR_I_ c32rtomb(
-					             __multibyte_intermediate, __c32, &__p_state->__state1);
-				if (__res == ::ztd::cnc::__cnc_detail::__stdc_ret_err_invalid) {
+				                  __multibyte_intermediate, __c32, &__p_state->__locale.__state1);
+				if (__res == ::cnc::__cnc_detail::__stdc_ret_err_invalid) {
 					return CNC_MCERROR_INVALID_SEQUENCE;
 				}
-				else if (__res == ::ztd::cnc::__cnc_detail::__stdc_ret_no_write_out_yet) {
+				else if (__res == ::cnc::__cnc_detail::__stdc_ret_no_write_out_yet) {
 					continue;
 				}
 				if constexpr (!_IsUnbounded) {
@@ -272,7 +272,7 @@ namespace ztd { namespace cnc {
 				}
 				if constexpr (!_IsCounting) {
 					::std::memcpy(*__p_maybe_dst, (__multibyte_intermediate + 0),
-						__res * sizeof(*__multibyte_intermediate));
+					     __res * sizeof(*__multibyte_intermediate));
 					*__p_maybe_dst += __res;
 				}
 				size_t __source_read = (__src_idx + 1);
@@ -282,17 +282,16 @@ namespace ztd { namespace cnc {
 			}
 			return CNC_MCERROR_OKAY;
 #else
-			return ::ztd::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded,
-				_SourceChecks>(__p_maybe_dst_len,
-				reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len, __p_src,
-				__p_state);
+			return ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, _SourceChecks>(
+			     __p_maybe_dst_len, reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
+			     __p_src, __p_state);
 #endif
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		static inline cnc_mcerror __c8nrtoc8n(size_t* __p_maybe_dst_len,
-			ztd_char8_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char8_t** __p_src,
-			cnc_mcstate_t*) noexcept {
+		     ztd_char8_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char8_t** __p_src,
+		     cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || __p_src_len == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -332,7 +331,7 @@ namespace ztd { namespace cnc {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			size_t __seq_len
-				= static_cast<size_t>(__ztd_idk_detail_utf8_sequence_length_overlong(__c8));
+			     = static_cast<size_t>(__ztd_idk_detail_utf8_sequence_length_overlong(__c8));
 			if (__seq_len > 4) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
@@ -363,7 +362,7 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c8nrtoc16n(size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char8_t** __p_src, cnc_mcstate_t*) noexcept {
+		     size_t* __p_src_len, const ztd_char8_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -400,7 +399,7 @@ namespace ztd { namespace cnc {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			size_t __seq_len
-				= static_cast<size_t>(__ztd_idk_detail_utf8_sequence_length_overlong(__c8));
+			     = static_cast<size_t>(__ztd_idk_detail_utf8_sequence_length_overlong(__c8));
 			if (__seq_len > 4) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
@@ -434,10 +433,10 @@ namespace ztd { namespace cnc {
 				if constexpr (!_IsCounting) {
 					ztd_char32_t __normal = __c32 - __ztd_idk_detail_normalizing_value;
 					ztd_char32_t __lead   = __ztd_idk_detail_first_lead_surrogate
-						+ ((__normal & __ztd_idk_detail_lead_surrogate_bitmask)
-						     >> __ztd_idk_detail_lead_shifted_bits);
+					     + ((__normal & __ztd_idk_detail_lead_surrogate_bitmask)
+					          >> __ztd_idk_detail_lead_shifted_bits);
 					ztd_char32_t __trail = __ztd_idk_detail_first_trail_surrogate
-						+ (__normal & __ztd_idk_detail_trail_surrogate_bitmask);
+					     + (__normal & __ztd_idk_detail_trail_surrogate_bitmask);
 					(*__p_maybe_dst)[0] = static_cast<ztd_char16_t>(__lead);
 					(*__p_maybe_dst)[1] = static_cast<ztd_char16_t>(__trail);
 					*__p_maybe_dst += 2;
@@ -455,7 +454,7 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c8nrtoc32n(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char8_t** __p_src, cnc_mcstate_t*) noexcept {
+		     size_t* __p_src_len, const ztd_char8_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -492,7 +491,7 @@ namespace ztd { namespace cnc {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			size_t __seq_len
-				= static_cast<size_t>(__ztd_idk_detail_utf8_sequence_length_overlong(__c8));
+			     = static_cast<size_t>(__ztd_idk_detail_utf8_sequence_length_overlong(__c8));
 			if (__seq_len > 4) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
@@ -531,8 +530,8 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c16nrtoc8n(size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char16_t** __p_src,
-			cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const ztd_char16_t** __p_src,
+		     cnc_mcstate_t* __p_state) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -562,9 +561,9 @@ namespace ztd { namespace cnc {
 				size_t __input_size = 1;
 				const ztd_char32_t* __p_input = &__point;
 				cnc_mcerror __intermediate_err
-					= ::ztd::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, false>(
-					     __p_maybe_dst_len, __p_maybe_dst, &__input_size, &__p_input,
-					     __p_state);
+				     = ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, false>(
+				          __p_maybe_dst_len, __p_maybe_dst, &__input_size, &__p_input,
+				          __p_state);
 				if (__intermediate_err == CNC_MCERROR_OKAY) {
 					__src += 2;
 					__src_len -= 2;
@@ -579,9 +578,9 @@ namespace ztd { namespace cnc {
 				size_t __input_size           = 1;
 				const ztd_char32_t* __p_input = &__point;
 				cnc_mcerror __intermediate_err
-					= ::ztd::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, false>(
-					     __p_maybe_dst_len, __p_maybe_dst, &__input_size, &__p_input,
-					     __p_state);
+				     = ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, false>(
+				          __p_maybe_dst_len, __p_maybe_dst, &__input_size, &__p_input,
+				          __p_state);
 				if (__intermediate_err == CNC_MCERROR_OKAY) {
 					__src += 1;
 					__src_len -= 1;
@@ -592,7 +591,7 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c16nrtoc16n(size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char16_t** __p_src, cnc_mcstate_t*) noexcept {
+		     size_t* __p_src_len, const ztd_char16_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -652,7 +651,7 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c16nrtoc32n(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char16_t** __p_src, cnc_mcstate_t*) noexcept {
+		     size_t* __p_src_len, const ztd_char16_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
 					return CNC_MCERROR_OKAY;
@@ -707,28 +706,28 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __mcnrtomwcn(size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst,
-			size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state) noexcept {
 			if constexpr ((sizeof(ztd_char_t) == sizeof(ztd_char8_t))
-				&& (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
+			     && (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
 				if (ztdc_is_execution_encoding_utf8()) {
 					if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
-						&& (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
+					     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
 						if (ztdc_is_wide_execution_encoding_utf16()) {
-							return ::ztd::cnc::__cnc_detail::__c8nrtoc16n<_IsCounting,
-								_IsUnbounded, _SourceChecks>(__p_maybe_dst_len,
-								reinterpret_cast<ztd_char16_t**>(__p_maybe_dst),
-								__p_src_len, reinterpret_cast<const ztd_char8_t**>(__p_src),
-								__p_state);
+							return ::cnc::__cnc_detail::__c8nrtoc16n<_IsCounting,
+							     _IsUnbounded, _SourceChecks>(__p_maybe_dst_len,
+							     reinterpret_cast<ztd_char16_t**>(__p_maybe_dst),
+							     __p_src_len, reinterpret_cast<const ztd_char8_t**>(__p_src),
+							     __p_state);
 						}
 					}
 					if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char32_t))
-						&& (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
+					     && (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
 						if (ztdc_is_wide_execution_encoding_utf32()) {
-							return ::ztd::cnc::__cnc_detail::__c8nrtoc32n<_IsCounting,
-								_IsUnbounded, _SourceChecks>(__p_maybe_dst_len,
-								reinterpret_cast<ztd_char32_t**>(__p_maybe_dst),
-								__p_src_len, reinterpret_cast<const ztd_char8_t**>(__p_src),
-								__p_state);
+							return ::cnc::__cnc_detail::__c8nrtoc32n<_IsCounting,
+							     _IsUnbounded, _SourceChecks>(__p_maybe_dst_len,
+							     reinterpret_cast<ztd_char32_t**>(__p_maybe_dst),
+							     __p_src_len, reinterpret_cast<const ztd_char8_t**>(__p_src),
+							     __p_state);
 						}
 					}
 				}
@@ -754,14 +753,14 @@ namespace ztd { namespace cnc {
 			// can only output one, but we leave space anyhow
 			ztd_wchar_t __intermediate_destination[4] {};
 			ztd_wchar_t* __dst = _IsCounting ? __intermediate_destination : *__p_maybe_dst;
-			size_t __c_err
-				= ZTD_WCHAR_ACCESSOR_I_ mbrtowc(__dst, __src, __src_len, &__p_state->__state0);
+			size_t __c_err     = ZTD_WCHAR_ACCESSOR_I_ mbrtowc(
+			         __dst, __src, __src_len, &__p_state->__locale.__state0);
 			switch (__c_err) {
-			case ::ztd::cnc::__cnc_detail::__stdc_ret_err_invalid:
+			case ::cnc::__cnc_detail::__stdc_ret_err_invalid:
 				return CNC_MCERROR_INVALID_SEQUENCE;
-			case ::ztd::cnc::__cnc_detail::__stdc_ret_err_incomplete_input:
+			case ::cnc::__cnc_detail::__stdc_ret_err_incomplete_input:
 				return CNC_MCERROR_INCOMPLETE_INPUT;
-			case ::ztd::cnc::__cnc_detail::__stdc_ret_null_value:
+			case ::cnc::__cnc_detail::__stdc_ret_null_value:
 				// read the null character, wrote the null character
 				if constexpr (!_IsCounting) {
 					*__p_maybe_dst += 1;
@@ -793,25 +792,25 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __mwcnrtomcn(size_t* __p_maybe_dst_len, char** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_wchar_t** __p_src,
-			cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const ztd_wchar_t** __p_src,
+		     cnc_mcstate_t* __p_state) noexcept {
 			if (ztdc_is_execution_encoding_utf8()) {
 				if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
-					&& (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
+				     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
 					if (ztdc_is_wide_execution_encoding_utf16()) {
-						return ::ztd::cnc::__cnc_detail::__c16nrtoc8n<_IsCounting,
-							_IsUnbounded, _SourceChecks>(__p_maybe_dst_len,
-							reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
-							reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
+						return ::cnc::__cnc_detail::__c16nrtoc8n<_IsCounting, _IsUnbounded,
+						     _SourceChecks>(__p_maybe_dst_len,
+						     reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
+						     reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
 					}
 				}
 				if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char32_t))
-					&& (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
+				     && (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
 					if (ztdc_is_wide_execution_encoding_utf32()) {
-						return ::ztd::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting,
-							_IsUnbounded, _SourceChecks>(__p_maybe_dst_len,
-							reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
-							reinterpret_cast<const ztd_char32_t**>(__p_src), __p_state);
+						return ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded,
+						     _SourceChecks>(__p_maybe_dst_len,
+						     reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
+						     reinterpret_cast<const ztd_char32_t**>(__p_src), __p_state);
 					}
 				}
 			}
@@ -839,11 +838,11 @@ namespace ztd { namespace cnc {
 			for (size_t __src_idx = 0; __src_idx < __max_accumulated_writeouts; ++__src_idx) {
 				const ztd_wchar_t& __wc = __src[__src_idx];
 				size_t __res            = ZTD_WCHAR_ACCESSOR_I_ wcrtomb(
-					           __multibyte_intermediate, __wc, &__p_state->__state1);
-				if (__res == ::ztd::cnc::__cnc_detail::__stdc_ret_err_invalid) {
+				                __multibyte_intermediate, __wc, &__p_state->__locale.__state1);
+				if (__res == ::cnc::__cnc_detail::__stdc_ret_err_invalid) {
 					return CNC_MCERROR_INVALID_SEQUENCE;
 				}
-				else if (__res == ::ztd::cnc::__cnc_detail::__stdc_ret_no_write_out_yet) {
+				else if (__res == ::cnc::__cnc_detail::__stdc_ret_no_write_out_yet) {
 					continue;
 				}
 				if constexpr (!_IsUnbounded) {
@@ -854,7 +853,7 @@ namespace ztd { namespace cnc {
 				}
 				if constexpr (!_IsCounting) {
 					::std::memcpy(*__p_maybe_dst, __multibyte_intermediate,
-						__res * sizeof(*__multibyte_intermediate));
+					     __res * sizeof(*__multibyte_intermediate));
 					*__p_maybe_dst += __res;
 				}
 				break;
@@ -868,29 +867,29 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __c32nrtomwcn(size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_char32_t** __p_src,
-			cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const ztd_char32_t** __p_src,
+		     cnc_mcstate_t* __p_state) noexcept {
 			if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char32_t))
-				&& (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
+			     && (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
 				if (ztdc_is_wide_execution_encoding_utf16()) {
-					return ::ztd::cnc::__cnc_detail::__c32nrtoc32n<_IsCounting, _IsUnbounded,
-						_SourceChecks>(__p_maybe_dst_len,
-						reinterpret_cast<ztd_char32_t**>(__p_maybe_dst), __p_src_len, __p_src,
-						__p_state);
+					return ::cnc::__cnc_detail::__c32nrtoc32n<_IsCounting, _IsUnbounded,
+					     _SourceChecks>(__p_maybe_dst_len,
+					     reinterpret_cast<ztd_char32_t**>(__p_maybe_dst), __p_src_len, __p_src,
+					     __p_state);
 				}
 			}
 			if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
-				&& (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
+			     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
 				if (ztdc_is_wide_execution_encoding_utf16()) {
-					return ::ztd::cnc::__cnc_detail::__c32nrtoc16n<_IsCounting, _IsUnbounded,
-						_SourceChecks>(__p_maybe_dst_len,
-						reinterpret_cast<ztd_char16_t**>(__p_maybe_dst), __p_src_len, __p_src,
-						__p_state);
+					return ::cnc::__cnc_detail::__c32nrtoc16n<_IsCounting, _IsUnbounded,
+					     _SourceChecks>(__p_maybe_dst_len,
+					     reinterpret_cast<ztd_char16_t**>(__p_maybe_dst), __p_src_len, __p_src,
+					     __p_state);
 				}
 			}
 			constexpr const size_t __max_accumulated_writeouts = 4;
 			constexpr const size_t __initial_multibyte_intermediate_size
-				= (MB_LEN_MAX * __max_accumulated_writeouts);
+			     = (MB_LEN_MAX * __max_accumulated_writeouts);
 
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
@@ -911,19 +910,19 @@ namespace ztd { namespace cnc {
 			char __multibyte_intermediate[__initial_multibyte_intermediate_size] {};
 			char* __p_multibyte_intermediate_output = __multibyte_intermediate;
 			cnc_mcerror __intermediate_err
-				= ::ztd::cnc::__cnc_detail::__c32nrtomcn<_IsCounting, _IsUnbounded, false>(
-				     &__multibyte_intermediate_output_size, &__p_multibyte_intermediate_output,
-				     __p_src_len, __p_src, __p_state);
+			     = ::cnc::__cnc_detail::__c32nrtomcn<_IsCounting, _IsUnbounded, false>(
+			          &__multibyte_intermediate_output_size, &__p_multibyte_intermediate_output,
+			          __p_src_len, __p_src, __p_state);
 			if (__intermediate_err != CNC_MCERROR_OKAY) {
 				return __intermediate_err;
 			}
 			size_t __multibyte_intermediate_input_size
-				= __initial_multibyte_intermediate_size - __multibyte_intermediate_output_size;
+			     = __initial_multibyte_intermediate_size - __multibyte_intermediate_output_size;
 			const char* __p_multibyte_intermediate_input = __multibyte_intermediate;
 			cnc_mcerror __err
-				= ::ztd::cnc::__cnc_detail::__mcnrtomwcn<_IsCounting, _IsUnbounded, false>(
-				     __p_maybe_dst_len, __p_maybe_dst, &__multibyte_intermediate_input_size,
-				     &__p_multibyte_intermediate_input, __p_state);
+			     = ::cnc::__cnc_detail::__mcnrtomwcn<_IsCounting, _IsUnbounded, false>(
+			          __p_maybe_dst_len, __p_maybe_dst, &__multibyte_intermediate_input_size,
+			          &__p_multibyte_intermediate_input, __p_state);
 			if (__err != CNC_MCERROR_OKAY) {
 				__src     = __initial_src;
 				__src_len = __initial_src_len;
@@ -933,13 +932,13 @@ namespace ztd { namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __mcnrtoc32n(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-			size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state) noexcept {
 			if constexpr ((sizeof(ztd_char_t) == sizeof(ztd_char8_t))
-				&& (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
+			     && (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
 				if (ztdc_is_execution_encoding_utf8()) {
-					return ::ztd::cnc::__cnc_detail::__c8nrtoc32n<_IsCounting, _IsUnbounded,
-						_SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
-						reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
+					return ::cnc::__cnc_detail::__c8nrtoc32n<_IsCounting, _IsUnbounded,
+					     _SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+					     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
 				}
 			}
 #if ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
@@ -961,14 +960,14 @@ namespace ztd { namespace cnc {
 			ztd_char32_t* __p_c32_intermediate = __c32_intermediate;
 			for (size_t __src_idx = 0; __src_idx < __max_writeout_attempts; ++__src_idx) {
 				size_t __res = ZTD_UCHAR_ACCESSOR_I_ mbrtoc32(
-					__p_c32_intermediate, __src, __src_len, &__p_state->__state0);
-				if (__res == ::ztd::cnc::__cnc_detail::__stdc_ret_err_invalid) {
+				     __p_c32_intermediate, __src, __src_len, &__p_state->__locale.__state0);
+				if (__res == ::cnc::__cnc_detail::__stdc_ret_err_invalid) {
 					return CNC_MCERROR_INVALID_SEQUENCE;
 				}
-				else if (__res == ::ztd::cnc::__cnc_detail::__stdc_ret_err_incomplete_input) {
+				else if (__res == ::cnc::__cnc_detail::__stdc_ret_err_incomplete_input) {
 					return CNC_MCERROR_INCOMPLETE_INPUT;
 				}
-				else if (ZTD_UCHAR_ACCESSOR_I_ mbsinit(&__p_state->__state0) == 0) {
+				else if (ZTD_UCHAR_ACCESSOR_I_ mbsinit(&__p_state->__locale.__state0) == 0) {
 					++__p_c32_intermediate;
 					continue;
 				}
@@ -981,14 +980,13 @@ namespace ztd { namespace cnc {
 				}
 				if constexpr (!_IsCounting) {
 					::std::memcpy(*__p_maybe_dst, (__c32_intermediate + 0),
-						__c32_written * sizeof(*__c32_intermediate));
+					     __c32_written * sizeof(*__c32_intermediate));
 					*__p_maybe_dst += __c32_written;
 				}
-				if (__res != ::ztd::cnc::__cnc_detail::__stdc_ret_accumulated_write_out) {
+				if (__res != ::cnc::__cnc_detail::__stdc_ret_accumulated_write_out) {
 					// accumulate write outs and mandated not to read any input
 					size_t __source_read
-						= __res == ::ztd::cnc::__cnc_detail::__stdc_ret_null_value ? 1
-						                                                           : __res;
+					     = __res == ::cnc::__cnc_detail::__stdc_ret_null_value ? 1 : __res;
 					__src += __source_read;
 					__src_len -= __source_read;
 				}
@@ -999,35 +997,35 @@ namespace ztd { namespace cnc {
 			}
 			return CNC_MCERROR_OKAY;
 #else
-			return ::ztd::cnc::__cnc_detail::__c8nrtoc32n<_IsCounting, _IsUnbounded,
-				_SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
-				reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
+			return ::cnc::__cnc_detail::__c8nrtoc32n<_IsCounting, _IsUnbounded, _SourceChecks>(
+			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+			     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
 #endif
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		cnc_mcerror __mwcnrtoc32n(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-			size_t* __p_src_len, const ztd_wchar_t** __p_src,
-			cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const ztd_wchar_t** __p_src,
+		     cnc_mcstate_t* __p_state) noexcept {
 			if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char32_t))
-				&& (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
+			     && (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
 				if (ztdc_is_wide_execution_encoding_utf32()) {
-					return ::ztd::cnc::__cnc_detail::__c32nrtoc32n<_IsCounting, _IsUnbounded,
-						_SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
-						reinterpret_cast<const ztd_char32_t**>(__p_src), __p_state);
+					return ::cnc::__cnc_detail::__c32nrtoc32n<_IsCounting, _IsUnbounded,
+					     _SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+					     reinterpret_cast<const ztd_char32_t**>(__p_src), __p_state);
 				}
 			}
 			if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
-				&& (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
+			     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
 				if (ztdc_is_wide_execution_encoding_utf16()) {
-					return ::ztd::cnc::__cnc_detail::__c16nrtoc32n<_IsCounting, _IsUnbounded,
-						_SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
-						reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
+					return ::cnc::__cnc_detail::__c16nrtoc32n<_IsCounting, _IsUnbounded,
+					     _SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+					     reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
 				}
 			}
 			constexpr const size_t __max_accumulated_writeouts = 4;
 			constexpr const size_t __initial_multibyte_intermediate_size
-				= (MB_LEN_MAX * __max_accumulated_writeouts);
+			     = (MB_LEN_MAX * __max_accumulated_writeouts);
 
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
@@ -1048,19 +1046,19 @@ namespace ztd { namespace cnc {
 			char __multibyte_intermediate[__initial_multibyte_intermediate_size] {};
 			char* __p_multibyte_intermediate_output = __multibyte_intermediate;
 			cnc_mcerror __intermediate_err
-				= ::ztd::cnc::__cnc_detail::__mwcnrtomcn<_IsCounting, _IsUnbounded, false>(
-				     &__multibyte_intermediate_output_size, &__p_multibyte_intermediate_output,
-				     __p_src_len, __p_src, __p_state);
+			     = ::cnc::__cnc_detail::__mwcnrtomcn<_IsCounting, _IsUnbounded, false>(
+			          &__multibyte_intermediate_output_size, &__p_multibyte_intermediate_output,
+			          __p_src_len, __p_src, __p_state);
 			if (__intermediate_err != CNC_MCERROR_OKAY) {
 				return __intermediate_err;
 			}
 			size_t __multibyte_intermediate_input_size
-				= __initial_multibyte_intermediate_size - __multibyte_intermediate_output_size;
+			     = __initial_multibyte_intermediate_size - __multibyte_intermediate_output_size;
 			const char* __p_multibyte_intermediate_input = __multibyte_intermediate;
 			cnc_mcerror __err
-				= ::ztd::cnc::__cnc_detail::__mcnrtoc32n<_IsCounting, _IsUnbounded, false>(
-				     __p_maybe_dst_len, __p_maybe_dst, &__multibyte_intermediate_input_size,
-				     &__p_multibyte_intermediate_input, __p_state);
+			     = ::cnc::__cnc_detail::__mcnrtoc32n<_IsCounting, _IsUnbounded, false>(
+			          __p_maybe_dst_len, __p_maybe_dst, &__multibyte_intermediate_input_size,
+			          &__p_multibyte_intermediate_input, __p_state);
 			if (__err != CNC_MCERROR_OKAY) {
 				__src     = __initial_src;
 				__src_len = __initial_src_len;
@@ -1089,6 +1087,6 @@ namespace ztd { namespace cnc {
 	} // namespace __cnc_detail
 
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_
-}} // namespace ztd::cnc
+} // namespace cnc
 
 #endif // ZTD_CUNEICODE_DETAIL_MCCHAR_INTERNAL_HPP

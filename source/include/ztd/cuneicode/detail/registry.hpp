@@ -87,17 +87,17 @@ struct __path_key_deleter {
 
 	void operator()(ztd_char8_t* __ptr) const {
 		constexpr size_t alignment = static_cast<size_t>(
-		     ::ztd::cnc::__cnc_detail::__heap_allocator<ztd_char8_t>::alignment());
+		     ::cnc::__cnc_detail::__heap_allocator<ztd_char8_t>::alignment());
 		unsigned char* untyped_ptr = static_cast<unsigned char*>(static_cast<void*>(__ptr));
 		__heap->deallocate(untyped_ptr, __key_size, alignment, __heap->user_data);
 	}
 };
 
-using __path_allocator = ::ztd::cnc::__cnc_detail::__heap_allocator<
+using __path_allocator = ::cnc::__cnc_detail::__heap_allocator<
      ::std::pair<const __cnc_registry_entry_key, __cnc_registry_entry>>;
-using __path_key_allocator  = ::ztd::cnc::__cnc_detail::__heap_allocator<ztd_char8_t>;
+using __path_key_allocator  = ::cnc::__cnc_detail::__heap_allocator<ztd_char8_t>;
 using __path_key            = ::std::vector<ztd_char8_t, __path_key_allocator>;
-using __path_keys_allocator = ::ztd::cnc::__cnc_detail::__heap_allocator<__path_key>;
+using __path_keys_allocator = ::cnc::__cnc_detail::__heap_allocator<__path_key>;
 
 struct cnc_conversion_registry {
 	cnc_conversion_heap __heap;

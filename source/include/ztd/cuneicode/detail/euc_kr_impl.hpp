@@ -29,13 +29,14 @@
 
 #pragma once
 
-#ifndef ZTD_CUNEICODE_BENCHMARKS_UTF8_STARTUP_HPP
-#define ZTD_CUNEICODE_BENCHMARKS_UTF8_STARTUP_HPP
+#ifndef ZTD_CUNEICODE_SOURCE_DETAIL_EUC_KR_IMPL_HPP
+#define ZTD_CUNEICODE_SOURCE_DETAIL_EUC_KR_IMPL_HPP
 
-#include <ztd/idk/utf8_startup_hook.hpp>
+#include <ztd/cuneicode/version.h>
 
-namespace cnc { namespace benchmarks {
-	inline ztd::utf8_startup_hook utf8_startup {};
-}} // namespace cnc::benchmarks
+#include <ztd/cuneicode/mcerror.h>
 
-#endif // ZTD_CUNEICODE_BENCHMARKS_UTF8_STARTUP_HPP
+// TODO: EUC-KR can be used as the wide encoding in some systems, so it should be templated over the
+// code_unit type.
+
+#endif // ZTD_CUNEICODE_SOURCE_DETAIL_EUC_KR_IMPL_HPP

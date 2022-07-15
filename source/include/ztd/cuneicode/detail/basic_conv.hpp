@@ -46,7 +46,7 @@
 #include <langinfo.h>
 #endif // nl_langinfo
 
-namespace ztd { namespace cnc {
+namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_
 
 	namespace __cnc_detail {
@@ -64,6 +64,6 @@ namespace ztd { namespace cnc {
 		};
 	} // namespace __cnc_detail
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_
-}} // namespace ztd::cnc
+} // namespace cnc
 
 #endif // ZTD_CUNEICODE_SOURCE_DETAIL_BASIC_CONV_HPP

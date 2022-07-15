@@ -41,7 +41,7 @@
 #include <vector>
 #include <cstddef>
 
-namespace ztd { namespace cnc {
+namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_
 	namespace __cnc_detail {
 
@@ -108,21 +108,21 @@ namespace ztd { namespace cnc {
 
 		inline const ::std::basic_string_view<ztd_char8_t>& __to_name(__cnc_defined_slot __slot) {
 			static const ::std::basic_string_view<ztd_char8_t>
-				__identifiers[__cnc_defined_slot_max] = {
-					__utf8_name(),
-					__utf8_unchecked_name(),
-					__utf16_name(),
-					__utf16_unchecked_name(),
-					__utf32_name(),
-					__utf32_unchecked_name(),
-				};
+			     __identifiers[__cnc_defined_slot_max] = {
+				     __utf8_name(),
+				     __utf8_unchecked_name(),
+				     __utf16_name(),
+				     __utf16_unchecked_name(),
+				     __utf32_name(),
+				     __utf32_unchecked_name(),
+			     };
 			return __identifiers[static_cast<size_t>(__slot)];
 		}
 
 		inline bool __is_unicode_identifier(
-			const ::std::basic_string_view<ztd_char8_t>& __id, __cnc_defined_slot& __out_slot) {
+		     const ::std::basic_string_view<ztd_char8_t>& __id, __cnc_defined_slot& __out_slot) {
 			for (size_t __slot_index = 0; __slot_index < __cnc_defined_slot_max;
-				++__slot_index) {
+			     ++__slot_index) {
 				__cnc_defined_slot __slot = static_cast<__cnc_defined_slot>(__slot_index);
 				if (__to_name(__slot) == __id) {
 					__out_slot = __slot;
@@ -133,6 +133,6 @@ namespace ztd { namespace cnc {
 		}
 	} // namespace __cnc_detail
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_
-}} // namespace ztd::cnc
+} // namespace cnc
 
 #endif // ZTD_CUNEICODE_SOURCE_DETAIL_CONV_ID_HPP

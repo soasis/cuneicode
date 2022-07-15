@@ -52,6 +52,12 @@ ZTD_EXTERN_C_OPEN_I_
 ZTD_EXTERN_C_CLOSE_I_
 #endif
 
+#if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
+#define ZTD_CUNEICODE_STATE_SIZE_I_ (sizeof(mbstate_t))
+#else
+#define ZTD_CUNEICODE_STATE_SIZE_I_ 8
+#endif
+
 //////
 /// @addtogroup ztd_cuneicode_conversion_state Typed Conversion Function State
 ///
@@ -63,22 +69,29 @@ ZTD_EXTERN_C_CLOSE_I_
 ///
 /// @remarks This is a complete object, but none of its members should be accessed or relied
 /// upon in any way, shape or form. If you do so, it is Undefined Behavior.
-typedef struct cnc_mcstate_t {
+typedef union cnc_mcstate_t {
 #if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
 	//////
 	/// @brief Private, do not access.
-	mbstate_t __state0;
-	//////
-	/// @brief Private, do not access.
-	mbstate_t __state1;
-#else
-	//////
-	/// @brief Private, do not access.
-	unsigned char __state0[8];
-	//////
-	/// @brief Private, do not access.
-	unsigned char __state1[8];
+	struct __locale_t {
+		//////
+		/// @brief Private, do not access.
+		mbstate_t __state0;
+		//////
+		/// @brief Private, do not access.
+		mbstate_t __state1;
+	} __locale;
 #endif
+	//////
+	/// @brief Private, do not access.
+	struct __raw_t {
+		//////
+		/// @brief Private, do not access.
+		unsigned char __raw_state_data0[ZTD_CUNEICODE_STATE_SIZE_I_];
+		//////
+		/// @brief Private, do not access.
+		unsigned char __raw_state_data1[ZTD_CUNEICODE_STATE_SIZE_I_];
+	} __raw;
 } cnc_mcstate_t;
 
 //////

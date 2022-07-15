@@ -143,25 +143,25 @@ cnc_open_error __cnc_find_entry(cnc_conversion_registry* __registry,
 	// no direct path: search indirect paths
 	constexpr const size_t __from_index = 0;
 	constexpr const size_t __to_index   = 1;
-	const ::ztd::cnc::__cnc_detail::__cnc_defined_slot __valid_indirect_paths[][2]
-	     = { { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf8,
-		         ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf8 },
-		       { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf8,
-		            ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf8_unchecked },
-		       { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf8_unchecked,
-		            ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf8_unchecked },
-		       { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf16,
-		            ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf16 },
-		       { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf16,
-		            ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf16_unchecked },
-		       { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf16_unchecked,
-		            ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf16_unchecked },
-		       { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf32,
-		            ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf32 },
-		       { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf32,
-		            ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf32_unchecked },
-		       { ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf32_unchecked,
-		            ::ztd::cnc::__cnc_detail::__cnc_defined_slot::__utf32_unchecked } };
+	const ::cnc::__cnc_detail::__cnc_defined_slot __valid_indirect_paths[][2]
+	     = { { ::cnc::__cnc_detail::__cnc_defined_slot::__utf8,
+		         ::cnc::__cnc_detail::__cnc_defined_slot::__utf8 },
+		       { ::cnc::__cnc_detail::__cnc_defined_slot::__utf8,
+		            ::cnc::__cnc_detail::__cnc_defined_slot::__utf8_unchecked },
+		       { ::cnc::__cnc_detail::__cnc_defined_slot::__utf8_unchecked,
+		            ::cnc::__cnc_detail::__cnc_defined_slot::__utf8_unchecked },
+		       { ::cnc::__cnc_detail::__cnc_defined_slot::__utf16,
+		            ::cnc::__cnc_detail::__cnc_defined_slot::__utf16 },
+		       { ::cnc::__cnc_detail::__cnc_defined_slot::__utf16,
+		            ::cnc::__cnc_detail::__cnc_defined_slot::__utf16_unchecked },
+		       { ::cnc::__cnc_detail::__cnc_defined_slot::__utf16_unchecked,
+		            ::cnc::__cnc_detail::__cnc_defined_slot::__utf16_unchecked },
+		       { ::cnc::__cnc_detail::__cnc_defined_slot::__utf32,
+		            ::cnc::__cnc_detail::__cnc_defined_slot::__utf32 },
+		       { ::cnc::__cnc_detail::__cnc_defined_slot::__utf32,
+		            ::cnc::__cnc_detail::__cnc_defined_slot::__utf32_unchecked },
+		       { ::cnc::__cnc_detail::__cnc_defined_slot::__utf32_unchecked,
+		            ::cnc::__cnc_detail::__cnc_defined_slot::__utf32_unchecked } };
 	constexpr const size_t __valid_indirect_paths_count
 	     = sizeof(__valid_indirect_paths) / sizeof(__valid_indirect_paths[0]);
 	const ::std::pair<const __cnc_registry_entry_key, __cnc_registry_entry>*
@@ -173,8 +173,8 @@ cnc_open_error __cnc_find_entry(cnc_conversion_registry* __registry,
 		const __cnc_registry_entry_key& __key = __entry.first;
 		if (__key.__from != __from_view)
 			continue;
-		::ztd::cnc::__cnc_detail::__cnc_defined_slot __slot;
-		if (!::ztd::cnc::__cnc_detail::__is_unicode_identifier(__key.__to, __slot))
+		::cnc::__cnc_detail::__cnc_defined_slot __slot;
+		if (!::cnc::__cnc_detail::__is_unicode_identifier(__key.__to, __slot))
 			continue;
 		__path_entries[static_cast<size_t>(__slot)][__from_index] = &__entry;
 	}
@@ -183,7 +183,7 @@ cnc_open_error __cnc_find_entry(cnc_conversion_registry* __registry,
 		const auto* __from_entry = __entry_pair_array[__from_index];
 		if (__from_entry == nullptr)
 			continue;
-		const ::ztd::cnc::__cnc_detail::__cnc_defined_slot __slot
+		const ::cnc::__cnc_detail::__cnc_defined_slot __slot
 		     = __valid_indirect_paths[__slot_index][__to_index];
 		const auto& __slot_id_view = __to_name(__slot);
 		for (const auto& __entry : __registry->__paths) {
@@ -255,14 +255,14 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error 
 	if (__p_heap == nullptr) {
 		__p_heap = &__default_heap;
 	}
-	::ztd::cnc::__cnc_detail::__align(alignof(cnc_conversion_registry),
-	     sizeof(cnc_conversion_registry), __target, __available_space, __necessary_space);
+	::cnc::__cnc_detail::__align(alignof(cnc_conversion_registry), sizeof(cnc_conversion_registry),
+	     __target, __available_space, __necessary_space);
 	__target = static_cast<void*>(__p_heap->allocate(
 	     __necessary_space, alignof(cnc_conversion_registry), &__used_space, __p_heap->user_data));
 	if (__target == nullptr) {
 		return CNC_OPEN_ERROR_ALLOCATION_FAILURE;
 	}
-	void* __aligned_target = ::ztd::cnc::__cnc_detail::__align(alignof(cnc_conversion_registry),
+	void* __aligned_target = ::cnc::__cnc_detail::__align(alignof(cnc_conversion_registry),
 	     sizeof(cnc_conversion_registry), __target, __available_space);
 	if (__aligned_target == nullptr) {
 		return CNC_OPEN_ERROR_ALLOCATION_FAILURE;
