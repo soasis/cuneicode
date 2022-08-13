@@ -33,6 +33,7 @@ FILE(GLOB_RECURSE ztd.cuneicode.examples.cconv.sources
 	source/**
 )
 add_executable(ztd.cuneicode.examples.cconv ${ztd.cuneicode.examples.cconv.sources})
+ztd_cuneicode_example_options(ztd.cuneicode.examples.cconv)
 add_executable(ztd::cuneicode::examples::cconv ALIAS ztd.cuneicode.examples.cconv)
 target_link_libraries(ztd.cuneicode.examples.cconv
 	PRIVATE
@@ -44,27 +45,8 @@ target_include_directories(ztd.cuneicode.examples.cconv
 )
 set_target_properties(ztd.cuneicode.examples.cconv
 	PROPERTIES
-	OUTPUT_NAME cconv)
-
-if(MSVC)
-	target_compile_definitions(ztd.cuneicode.examples.cconv
-		PRIVATE
-		_CRT_SECURE_NO_WARNINGS
-	)
-	target_compile_options(ztd.cuneicode.examples.cconv
-		PRIVATE
-		/std:c++latest
-		/permissive-
-	)
-else()
-	target_compile_options(ztd.cuneicode.examples.cconv PRIVATE
-		-std=c++2a
-		-Wall
-		-Werror
-		-Wpedantic
-		-pedantic-errors
-	)
-endif()
+	OUTPUT_NAME cconv
+)
 
 install(TARGETS ztd.cuneicode.examples.cconv
 	RUNTIME

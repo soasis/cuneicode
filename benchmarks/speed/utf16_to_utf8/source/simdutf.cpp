@@ -27,21 +27,38 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_EXAMPLES_SIMDUTF_STREAM_HELPERS_HPP
-#define ZTD_CUNEICODE_EXAMPLES_SIMDUTF_STREAM_HELPERS_HPP
+#include <benchmark/benchmark.h>
 
 #include <ztd/cuneicode.h>
+#include <barrier/barrier.h>
 
-#include <string_view>
-#include <string>
-#include <iosfwd>
+#include <ztd/idk/c_span.h>
 
-using utf8string      = std::basic_string<ztd_char8_t>;
-using utf8string_view = std::basic_string_view<ztd_char8_t>;
+#include <simdutf.h>
 
-void print_encoding_list(std::ostream& out, cnc_conversion_registry* registry);
-void print_conversion_info(std::ostream& out, cnc_conversion_info info);
-std::ostream& operator<<(std::ostream& stream, const utf8string_view& str);
-std::ostream& operator<<(std::ostream& stream, const utf8string& str);
+#include <vector>
 
-#endif // ZTD_CUNEICODE_EXAMPLES_SIMDUTF_STREAM_HELPERS_HPP
+static void utf16_to_utf8_well_formed_simdutf(benchmark::State& state) {
+	const std::vector<char16_t> input_data(c_span_char16_t_data(u16_data),
+	     c_span_char16_t_data(u16_data) + c_span_char16_t_size(u16_data));
+	std::vector<ztd_char8_t> output_data(c_span_char8_t_size(u8_data));
+	bool result = true;
+	for (auto _ : state) {
+		size_t input_size         = input_data.size();
+		const ztd_char16_t* input = input_data.data();
+		size_t output_size        = output_data.size();
+		char* output              = (char*)output_data.data();
+		size_t output_written = simdutf::convert_valid_utf16le_to_utf8(input, input_size, output);
+		if (output_written != output_data.size()) {
+			result = false;
+		}
+	}
+	const bool is_equal
+	     = std::equal(output_data.cbegin(), output_data.cend(), c_span_char8_t_data(u8_data),
+	          c_span_char8_t_data(u8_data) + c_span_char8_t_size(u8_data));
+	if (!result || !is_equal) {
+		state.SkipWithError("bad benchmark result");
+	}
+}
+
+BENCHMARK(utf16_to_utf8_well_formed_simdutf);

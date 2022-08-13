@@ -39,7 +39,7 @@
 struct stdin_read_tag {
 } inline constexpr stdin_read = {};
 
-using input_type = std::variant<utf8string, stdin_read_tag>;
+using input_type = std::variant<stdin_read_tag, utf8string>;
 
 struct input_read {
 	utf8string input_file_name;

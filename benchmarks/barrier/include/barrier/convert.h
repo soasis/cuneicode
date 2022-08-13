@@ -27,44 +27,41 @@
 //
 // ========================================================================= //
 
-#include <ztd/cuneicode/version.h>
+#pragma once
+
+#ifndef ZTD_CUNEICODE_BENCHMARKS_BARRIER_CONVERT_H
+#define ZTD_CUNEICODE_BENCHMARKS_BARRIER_CONVERT_H
+
+#include <barrier/version.h>
+
+#include <barrier/data.h>
 
 #include <ztd/cuneicode.h>
+#include <ztd/idk/charN_t.h>
 
-#include <ztd/idk/c_span.h>
-
-#include <array>
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ typedef struct error_size_size {
-	cnc_mcerror error;
-	size_t input_read;
-	size_t output_written;
-} error_size_size;
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ typedef struct error_ptr_ptr {
-	cnc_mcerror error;
-	const ztd_char32_t* input;
-	ztd_char8_t* output;
-} error_ptr_ptr;
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ c_span_char8_t u8_data;
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ c_span_char32_t u32_data;
-
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror err_pptr_psize(
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ cnc_mcerror err_pptr_psize(
      ztd_char8_t** p_output_ptr, size_t* p_output_size, const ztd_char32_t** p_input_ptr,
      size_t* p_input_size);
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror err_pptr_ptr(
-     ztd_char8_t** p_output_ptr, ztd_char8_t* output_ptr_last, const ztd_char32_t** p_input_ptr,
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ cnc_mcerror err_pptr_ptr(ztd_char8_t** p_output_ptr,
+     ztd_char8_t* output_ptr_last, const ztd_char32_t** p_input_ptr,
      const ztd_char32_t* input_ptr_last);
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ error_size_size
-size_struct_ptr_size(ztd_char8_t* output_ptr, size_t output_size, const ztd_char32_t* p_input_ptr,
-     size_t input_size);
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ error_ptr_ptr ptr_struct_ptr_size(
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ error_size_size size_struct_ptr_size(
      ztd_char8_t* output_ptr, size_t output_size, const ztd_char32_t* p_input_ptr,
      size_t input_size);
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ error_size_size
-size_struct_ptr_ptr(ztd_char8_t* output_ptr, ztd_char8_t* output_ptr_last,
-     const ztd_char32_t* input_ptr, const ztd_char32_t* input_ptr_last);
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ error_ptr_ptr ptr_struct_ptr_ptr(
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ error_ptr_ptr ptr_struct_ptr_size(
+     ztd_char8_t* output_ptr, size_t output_size, const ztd_char32_t* p_input_ptr,
+     size_t input_size);
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ error_size_size size_struct_ptr_ptr(
      ztd_char8_t* output_ptr, ztd_char8_t* output_ptr_last, const ztd_char32_t* input_ptr,
      const ztd_char32_t* input_ptr_last);
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ error_ptr_ptr ptr_struct_ptr_ptr(
+     ztd_char8_t* output_ptr, ztd_char8_t* output_ptr_last, const ztd_char32_t* input_ptr,
+     const ztd_char32_t* input_ptr_last);
+
+#endif // ZTD_CUNEICODE_BENCHMARKS_BARRIER_CONVERT_H

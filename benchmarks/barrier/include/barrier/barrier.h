@@ -29,11 +29,12 @@
 
 #pragma once
 
-#ifndef ZTD_CUNEICODE_EXAMPLES_SIMDUTF_EXTENSIONS_HPP
-#define ZTD_CUNEICODE_EXAMPLES_SIMDUTF_EXTENSIONS_HPP
+#ifndef ZTD_CUNEICODE_BENCHMARKS_BARRIER_BARRIER_H
+#define ZTD_CUNEICODE_BENCHMARKS_BARRIER_BARRIER_H
 
-#include <ztd/cuneicode.h>
+#include <barrier/version.h>
 
-void add_simdutf_to_registry(cnc_conversion_registry* registry);
+#include <barrier/convert.h>
+#include <barrier/data.h>
 
-#endif // ZTD_CUNEICODE_EXAMPLES_SIMDUTF_EXTENSIONS_HPP
+#endif // ZTD_CUNEICODE_BENCHMARKS_BARRIER_BARRIER_H

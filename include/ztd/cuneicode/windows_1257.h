@@ -51,36 +51,52 @@
 /// @{
 //////
 
+//////
+/// @see cnc_c32ntomcn
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
 cnc_c32ntomcn_windows_1257(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
 
+//////
+/// @see cnc_c32nrtomcn
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
 cnc_c32nrtomcn_windows_1257(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
 
+//////
+/// @see cnc_mcntoc32n
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
 cnc_mcntoc32n_windows_1257(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
      size_t* __p_src_len, const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
 
+//////
+/// @see cnc_mcnrtoc32n
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
 cnc_mcnrtoc32n_windows_1257(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
      size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
 
 
 
+//////
+/// @see cnc_c32sntomcsn
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
 cnc_c32sntomcsn_windows_1257(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
 
+//////
+/// @see cnc_c32snrtomcsn
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
 cnc_c32snrtomcsn_windows_1257(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
 
+//////
+/// @see cnc_mcsntoc32sn
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
 cnc_mcsntoc32sn_windows_1257(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
      size_t* __p_src_len, const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
 
+//////
+/// @see cnc_mcsnrtoc32sn
 ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
 cnc_mcsnrtoc32sn_windows_1257(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
      size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;

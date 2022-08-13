@@ -27,16 +27,6 @@
 #
 # =========================================================================== #
 
-# # Fetch dependencies
-# simdutf
-set(SIMDUTF_BENCHMARKS OFF CACHE INTERNAL "")
-set(SIMDUTF_TESTS OFF CACHE INTERNAL "")
-FetchContent_Declare(
-	simdutf
-	GIT_REPOSITORY https://github.com/ThePhD/simdutf
-)
-FetchContent_MakeAvailable(simdutf)
-
 FILE(GLOB_RECURSE ztd.cuneicode.examples.simdutf.sources
 	LIST_DIRECTORIES FALSE
 	CONFIGURE_DEPENDS
@@ -48,5 +38,8 @@ target_include_directories(ztd.cuneicode.examples.simdutf
 	PRIVATE include/
 )
 target_link_libraries(ztd.cuneicode.examples.simdutf
-	PRIVATE simdutf::simdutf
+	PRIVATE
+	simdutf::simdutf
+	ztd::cuneicode::shared
+	ztd::cuneicode::shared::simdutf
 )

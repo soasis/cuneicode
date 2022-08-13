@@ -37,7 +37,7 @@
 #include <algorithm>
 
 bool byte_substitution_handler::operator()(const cnc_conversion_info& info,
-     cnc_conversion* conversion, size_t* p_output_size,
+     [[maybe_unused]] cnc_conversion* conversion, size_t* p_output_size,
      unsigned char** p_output_data, size_t* p_input_size,
      const unsigned char** p_input_data) const noexcept {
 	const std::string_view from_code(
@@ -119,10 +119,12 @@ bool byte_substitution_handler::operator()(const cnc_conversion_info& info,
 	return true;
 }
 
-bool discard_handler::operator()(const cnc_conversion_info& info,
-     cnc_conversion* conversion, size_t* p_output_size,
-     unsigned char** p_output_data, size_t* p_input_size,
-     const unsigned char** p_input_data) const noexcept {
+bool discard_handler::operator()([[maybe_unused]] const cnc_conversion_info& info,
+     [[maybe_unused]] cnc_conversion* conversion,
+     [[maybe_unused]] size_t* p_output_size,
+     [[maybe_unused]] unsigned char** p_output_data,
+     [[maybe_unused]] size_t* p_input_size,
+     [[maybe_unused]] const unsigned char** p_input_data) const noexcept {
 	if (p_input_size != nullptr && *p_input_size != 0) {
 		*p_input_size -= 1;
 	}
@@ -132,9 +134,11 @@ bool discard_handler::operator()(const cnc_conversion_info& info,
 	return true;
 }
 
-bool fail_handler::operator()(const cnc_conversion_info& info,
-     cnc_conversion* conversion, size_t* p_output_size,
-     unsigned char** p_output_data, size_t* p_input_size,
-     const unsigned char** p_input_data) const noexcept {
+bool fail_handler::operator()([[maybe_unused]] const cnc_conversion_info& info,
+     [[maybe_unused]] cnc_conversion* conversion,
+     [[maybe_unused]] size_t* p_output_size,
+     [[maybe_unused]] unsigned char** p_output_data,
+     [[maybe_unused]] size_t* p_input_size,
+     [[maybe_unused]] const unsigned char** p_input_data) const noexcept {
 	return false;
 }

@@ -29,7 +29,7 @@
 //
 // ========================================================================= //
 
-#include <example/stream_helpers.hpp>
+#include <ztd/cuneicode/shared/stream_helpers.hpp>
 
 #include <set>
 #include <iostream>
@@ -64,18 +64,13 @@ void print_encoding_list(std::ostream& out, cnc_conversion_registry* registry) {
 	using user_data_t = std::set<encoding_data>;
 	user_data_t existing_conversions {};
 	cnc_conversion_registry_pair_function* on_pairing
-	     = [](size_t from_size, const ztd_char8_t* from, size_t to_size,
-	            const ztd_char8_t* to, void* user_data) {
-		       user_data_t& existing_conversions
-		            = *static_cast<user_data_t*>(user_data);
+	     = [](size_t from_size, const ztd_char8_t* from, size_t to_size, const ztd_char8_t* to,
+	            void* user_data) {
+		       user_data_t& existing_conversions = *static_cast<user_data_t*>(user_data);
 		       const encoding_data& from_it
-		            = *existing_conversions
-		                    .insert({ utf8string_view(from, from_size) })
-		                    .first;
+		            = *existing_conversions.insert({ utf8string_view(from, from_size) }).first;
 		       const encoding_data& to_it
-		            = *existing_conversions
-		                    .insert({ utf8string_view(to, to_size) })
-		                    .first;
+		            = *existing_conversions.insert({ utf8string_view(to, to_size) }).first;
 		       const_cast<encoding_data&>(from_it).from = true;
 		       const_cast<encoding_data&>(to_it).to     = true;
 	       };
@@ -105,16 +100,13 @@ void print_conversion_info(std::ostream& out, cnc_conversion_info info) {
 	    << utf8string_view(info.to_code_data, info.to_code_size) << "\"";
 	if (info.is_indirect) {
 		out << " (converting indirectly from \""
-		    << utf8string_view(info.from_code_data, info.from_code_size)
-		    << "\" to \""
-		    << utf8string_view(info.indirect_code_data, info.indirect_code_size)
-		    << "\" to \""
+		    << utf8string_view(info.from_code_data, info.from_code_size) << "\" to \""
+		    << utf8string_view(info.indirect_code_data, info.indirect_code_size) << "\" to \""
 		    << utf8string_view(info.to_code_data, info.to_code_size) << "\").";
 	}
 	else {
 		out << " (converting directly from \""
-		    << utf8string_view(info.from_code_data, info.from_code_size)
-		    << "\" to \""
+		    << utf8string_view(info.from_code_data, info.from_code_size) << "\" to \""
 		    << utf8string_view(info.to_code_data, info.to_code_size) << "\").";
 	}
 	out << std::endl;

@@ -27,8 +27,8 @@
 #
 # =========================================================================== #
 
-cmake_minimum_required(VERSION 3.16.0)
-cmake_policy(VERSION 3.16)
+cmake_minimum_required(VERSION 3.21.0)
+cmake_policy(VERSION 3.21)
 
 # # Project kickstart
 # Includes a bunch of basic flags and utilities shared across projects
@@ -94,6 +94,7 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 	if(ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_TESTS OR ZTD_CUNEICODE_SCRATCH)
 		# normal flags
 		check_compiler_flag(disable-permissive MSVC /permissive- GCC -pedantic)
+		check_compiler_flag(updated-cpp-version-flag MSVC /Zc:__cplusplus)
 
 		# Warning flags
 		check_compiler_flag(warn-pedantic MSVC /permissive- GCC -pedantic)
@@ -153,6 +154,7 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		${--utf8-literal-encoding}
 		${--utf8-source-encoding}
 		${--disable-permissive}
+		${--updated-cpp-version-flag}
 		${--warn-pedantic}
 		${--warn-all}
 		${--warn-extra}
@@ -191,6 +193,41 @@ if(ZTD_CUNEICODE_GENERATE_SINGLE)
 	add_subdirectory(single)
 endif()
 
+if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
+	# # Fetch dependencies for either benchmarks and/or examples
+	find_package(Boost)
+	function(boost_text_fetch_content_jail)
+		# boost.text
+		set(BOOST_TEXT_PERF OFF CACHE INTERNAL "")
+		set(BOOST_TEXT_EXAMPLES OFF CACHE INTERNAL "")
+		set(BOOST_TEXT_TESTS OFF CACHE INTERNAL "")
+		set(BUILD_TESTING OFF CACHE INTERNAL "")
+		FetchContent_Declare(
+			boost.text
+			GIT_REPOSITORY https://github.com/ThePhD/text
+		)
+		FetchContent_MakeAvailable(boost.text)
+	endfunction()
+	function(simdutf_fetch_content_jail)
+		# simdutf
+		set(SIMDUTF_BENCHMARKS OFF CACHE INTERNAL "")
+		set(BUILD_TESTING OFF CACHE INTERNAL "")
+		FetchContent_Declare(
+			simdutf
+			GIT_REPOSITORY https://github.com/ThePhD/simdutf
+		)
+		FetchContent_MakeAvailable(simdutf)
+	endfunction()
+	boost_text_fetch_content_jail()
+	simdutf_fetch_content_jail()
+	# find package libraries
+	# ICU package
+	find_package(ICU COMPONENTS i18n uc)
+	# internal libraries for exmaples and benchmarks
+	add_subdirectory(shared)
+	add_subdirectory(shared/simdutf)
+endif()
+
 # # Benchmarks, Tests, Examples
 if(ZTD_CUNEICODE_TESTS)
 	include(CTest)
@@ -219,6 +256,7 @@ if(ZTD_CUNEICODE_SCRATCH)
 		PRIVATE
 		${--template-debugging-mode}
 		${--disable-permissive}
+		${--updated-cpp-version-flag}
 		${--warn-pedantic}
 		${--warn-all}
 		${--warn-extra}

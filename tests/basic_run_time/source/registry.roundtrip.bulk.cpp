@@ -31,7 +31,7 @@
 
 #include <ztd/cuneicode.h>
 
-#include "unicode_range.hpp"
+#include <ztd/cuneicode/shared/unicode_range.hpp>
 
 #include <iterator>
 #include <algorithm>

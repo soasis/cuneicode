@@ -31,21 +31,30 @@ include(FetchContent)
 
 # # Fetch dependencies
 # Google Benchmark
-FetchContent_Declare(
-	googlebenchmark
-	GIT_REPOSITORY https://github.com/google/benchmark.git
-)
-FetchContent_GetProperties(googlebenchmark)
+function(googlebenchmark_fetch_content_jail)
+	FetchContent_Declare(
+		googlebenchmark
+		GIT_REPOSITORY https://github.com/google/benchmark.git
+		GIT_TAG 108ca84820dc932957b75e6b31faa6c3cf0aa37a
+	)
+	FetchContent_GetProperties(googlebenchmark)
 
-if(NOT googlebenchmark_POPULATED)
-	FetchContent_Populate(googlebenchmark)
-	set(BENCHMARK_ENABLE_INSTALL OFF CACHE INTERNAL "")
-	set(BENCHMARK_ENABLE_TESTING OFF CACHE INTERNAL "")
-	set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE INTERNAL "")
-	set(BENCHMARK_ENABLE_WERROR OFF CACHE INTERNAL "")
-	set(BENCHMARK_FORCE_WERROR OFF CACHE INTERNAL "")
-	add_subdirectory(${googlebenchmark_SOURCE_DIR} ${googlebenchmark_BINARY_DIR})
-endif()
+	if(NOT googlebenchmark_POPULATED)
+		FetchContent_Populate(googlebenchmark)
+		set(BENCHMARK_ENABLE_INSTALL OFF CACHE INTERNAL "")
+		set(BENCHMARK_ENABLE_TESTING OFF CACHE INTERNAL "")
+		set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE INTERNAL "")
+		set(BENCHMARK_ENABLE_WERROR OFF CACHE INTERNAL "")
+		set(BENCHMARK_FORCE_WERROR OFF CACHE INTERNAL "")
+		if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND WIN32)
+			# google benchmark is broken, so we need to force HAVE_STD_REGEX to be on for this.
+			set(HAVE_STD_REGEX ON CACHE INTERNAL "")
+		endif()
+		add_subdirectory(${googlebenchmark_SOURCE_DIR} ${googlebenchmark_BINARY_DIR})
+	endif()
+endfunction()
+googlebenchmark_fetch_content_jail()
 
-add_subdirectory(barrier_conversion)
+add_subdirectory(barrier)
 add_subdirectory(function_form)
+add_subdirectory(speed)

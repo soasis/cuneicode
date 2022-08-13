@@ -27,40 +27,18 @@
 #
 # =========================================================================== #
 
-# # Benchmarks
-file(GLOB_RECURSE ztd.cuneicode.benchmarks.barrier_conversion.sources
+FILE(GLOB_RECURSE ztd.cuneicode.shared.simdutf.sources
 	LIST_DIRECTORIES FALSE
 	CONFIGURE_DEPENDS
-	source/*.c source/*.cpp)
-
-add_library(ztd.cuneicode.benchmarks.barrier_conversion
-	SHARED
-	${ztd.cuneicode.benchmarks.barrier_conversion.sources}
+	source/**
 )
-add_library(ztd::cuneicode::benchmarks::barrier_conversion
-	ALIAS
-	ztd.cuneicode.benchmarks.barrier_conversion
+add_library(ztd.cuneicode.shared.simdutf ${ztd.cuneicode.shared.simdutf.sources})
+add_library(ztd::cuneicode::shared::simdutf ALIAS ztd.cuneicode.shared.simdutf)
+target_include_directories(ztd.cuneicode.shared.simdutf
+	PUBLIC include/
 )
-target_compile_definitions(ztd.cuneicode.benchmarks.barrier_conversion
-	PRIVATE
-	ZTD_DLL=1
-	ZTD_BUILD=1
-)
-target_compile_options(ztd.cuneicode.benchmarks.barrier_conversion
-	PRIVATE
-	${--utf8-literal-encoding}
-	${--utf8-source-encoding}
-	${--disable-permissive}
-	${--warn-pedantic}
-	${--warn-all}
-	${--warn-extra}
-	${--warn-errors})
-target_link_libraries(ztd.cuneicode.benchmarks.barrier_conversion
-	PRIVATE
-	ztd::cuneicode
-	${CMAKE_DL_LIBS}
-)
-target_include_directories(ztd.cuneicode.benchmarks.barrier_conversion
+target_link_libraries(ztd.cuneicode.shared.simdutf
 	PUBLIC
-	include
+		simdutf::simdutf
+		ztd::cuneicode
 )

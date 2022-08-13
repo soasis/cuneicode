@@ -33,6 +33,7 @@ function(ztd_cuneicode_example_options example_target)
 		${--utf8-literal-encoding}
 		${--utf8-source-encoding}
 		${--disable-permissive}
+		${--updated-cpp-version-flag}
 		${--warn-pedantic}
 		${--warn-all}
 		${--warn-extra}

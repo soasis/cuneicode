@@ -27,8 +27,8 @@
 //
 // ========================================================================= //
 
-#include <example/simdutf_extension.hpp>
-#include <example/stream_helpers.hpp>
+#include <ztd/cuneicode/shared/simdutf/registry.hpp>
+#include <ztd/cuneicode/shared/stream_helpers.hpp>
 
 #include <ztd/cuneicode.h>
 
@@ -72,8 +72,12 @@ int main(int, char*[]) {
 		registry.reset(raw_registry);
 	}
 
-	add_simdutf_to_registry(registry.get());
-
+	if (!add_simdutf_to_registry(registry.get())) {
+		std::cerr << "[error] Could not add simdutf to "
+		             "the conversion registry."
+		          << std::endl;
+		return 1;
+	}
 	// if we are just listing encodings, do so and then stop here.
 	std::cout << "[info] ";
 	print_encoding_list(std::cout, registry.get());

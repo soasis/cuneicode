@@ -27,56 +27,11 @@
 //
 // ========================================================================= //
 
-#include <barrier_conversion/convert.h>
-
-#include <ztd/cuneicode/version.h>
+#include <barrier/convert.h>
 
 #include <ztd/idk/size.h>
 #include <ztd/idk/detail/unicode.h>
 
-#include <cassert>
-#include <vector>
-#include <stdexcept>
-
-static auto init_u8_unicode_data() {
-	std::vector<ztd_char8_t> data;
-	data.reserve(static_cast<std::size_t>(__ztd_idk_detail_last_unicode_code_point * 3));
-	for (ztd_char32_t c = 0; c < __ztd_idk_detail_last_unicode_code_point; ++c) {
-		if (__ztd_idk_detail_is_surrogate(c)) {
-			continue;
-		}
-		ztd_char8_t output_buffer[6];
-		ztd_char8_t* output       = output_buffer;
-		const ztd_char32_t* input = &c;
-		size_t input_size         = 1;
-		size_t output_size        = ztd_c_array_size(output_buffer);
-		cnc_mcerror err           = err_pptr_psize(&output, &output_size, &input, &input_size);
-		if (err != CNC_MCERROR_OKAY) {
-			throw std::runtime_error("bad idea");
-		}
-		for (std::size_t i = 6, index = 0; i > output_size; --i, ++index) {
-			data.push_back(output_buffer[index]);
-		}
-	}
-	return data;
-}
-
-static auto init_u32_unicode_data() {
-	std::vector<ztd_char32_t> data;
-	data.reserve(static_cast<std::size_t>(__ztd_idk_detail_last_unicode_code_point));
-	for (ztd_char32_t c = 0; c < __ztd_idk_detail_last_unicode_code_point; ++c) {
-		if (__ztd_idk_detail_is_surrogate(c))
-			continue;
-		data.push_back(c);
-	}
-	return data;
-}
-
-static auto u8_vec  = init_u8_unicode_data();
-static auto u32_vec = init_u32_unicode_data();
-
-c_span_char8_t u8_data   = make_c_span_char8_t(u8_vec.data(), u8_vec.data() + u8_vec.size());
-c_span_char32_t u32_data = make_c_span_char32_t(u32_vec.data(), u32_vec.data() + u32_vec.size());
 
 inline constexpr ztd_char32_t __first_4byte_unicode_code_point = 0x10000;
 inline constexpr ztd_char32_t __first_3byte_unicode_code_point = 0x800;

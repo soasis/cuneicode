@@ -39,7 +39,6 @@
 #include <ztd/idk/size.h>
 
 #include <string>
-#include <variant>
 #include <memory>
 #include <vector>
 #include <optional>
@@ -244,10 +243,9 @@ int main(int argc, char* argv[]) {
 		{
 			cnc_conversion* raw_conversion = conversion.get();
 			for (std::size_t i = 0; i < opt.input_files.size(); ++i) {
-				std::variant<utf8string, stdin_read_tag>& input_file_or_stdin
-				     = opt.input_files[i];
-				auto success = read_input_into(
-				     input, input_file_or_stdin, opt.verbose, opt.silent);
+				input_type& input_file_or_stdin = opt.input_files[i];
+				auto success                    = read_input_into(
+				                        input, input_file_or_stdin, opt.verbose, opt.silent);
 				if (success.maybe_return_code) {
 					return *success.maybe_return_code;
 				}

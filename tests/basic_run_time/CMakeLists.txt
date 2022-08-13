@@ -41,6 +41,7 @@ target_compile_options(ztd.cuneicode.tests.basic_run_time
 	${--utf8-literal-encoding}
 	${--utf8-source-encoding}
 	${--disable-permissive}
+	${--updated-cpp-version-flag}
 	${--warn-pedantic}
 	${--warn-all}
 	${--warn-extra}
@@ -51,6 +52,7 @@ target_include_directories(ztd.cuneicode.tests.basic_run_time PRIVATE
 target_link_libraries(ztd.cuneicode.tests.basic_run_time
 	PRIVATE
 	Catch2::Catch2
-	ztd::cuneicode)
+	ztd::cuneicode
+	ztd::cuneicode::shared)
 
 add_test(NAME ztd.cuneicode.tests.basic_run_time COMMAND ztd.cuneicode.tests.basic_run_time)

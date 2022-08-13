@@ -39,6 +39,7 @@ target_compile_options(ztd.cuneicode.benchmarks.function_form.bench
 	${--utf8-literal-encoding}
 	${--utf8-source-encoding}
 	${--disable-permissive}
+	${--updated-cpp-version-flag}
 	${--warn-pedantic}
 	${--warn-all}
 	${--warn-extra}
@@ -48,12 +49,11 @@ target_compile_options(ztd.cuneicode.benchmarks.function_form.bench
 )
 target_compile_definitions(ztd.cuneicode.benchmarks.function_form.bench
 	PRIVATE
-	ZTD_DLL=1
 	CATCH_CONFIG_ENABLE_BENCHMARKING=1
 )
 target_link_libraries(ztd.cuneicode.benchmarks.function_form.bench
 	PRIVATE
-	ztd::cuneicode::benchmarks::barrier_conversion
+	ztd::cuneicode::benchmarks::barrier
 	ztd::cuneicode
 	benchmark::benchmark
 	${CMAKE_DL_LIBS}

@@ -39,6 +39,7 @@ target_compile_options(ztd.cuneicode.tests.inclusion
 	${--utf8-literal-encoding}
 	${--utf8-source-encoding}
 	${--disable-permissive}
+	${--updated-cpp-version-flag}
 	${--warn-pedantic}
 	${--warn-all}
 	${--warn-extra}

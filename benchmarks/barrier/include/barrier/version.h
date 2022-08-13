@@ -27,46 +27,9 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_TESTS_SOURCE_UNICODE_RANGE_HPP
-#define ZTD_CUNEICODE_TESTS_SOURCE_UNICODE_RANGE_HPP
+#ifndef ZTD_CUNEICODE_BENCHAMRKS_BARRIER_VERSION_H
+#define ZTD_CUNEICODE_BENCHAMRKS_BARRIER_VERSION_H
 
-#pragma once
+#include <barrier/api.h>
 
-#include <ztd/cuneicode.h>
-
-#include <ztd/tests/basic_unicode_strings.hpp>
-#include <ztd/idk/detail/unicode.hpp>
-
-#include <vector>
-
-inline namespace ztd_cnc_tests {
-	inline std::vector<ztd_char32_t> make_full_unicode_range() noexcept {
-		std::vector<ztd_char32_t> data;
-		for (ztd_char32_t expected_c = 0; expected_c < __ztd_idk_detail_last_unicode_code_point;
-		     ++expected_c) {
-			if (__ztd_idk_detail_is_surrogate(expected_c)) {
-				continue;
-			}
-			data.push_back(expected_c);
-		}
-		return data;
-	}
-
-	inline const std::vector<ztd_char32_t>& full_unicode_range() noexcept {
-		static const auto range = make_full_unicode_range();
-		return range;
-	}
-
-	inline std::vector<ztd_char32_t> make_basic_source_range() noexcept {
-		std::vector<ztd_char32_t> data(ztd::tests::u32_basic_source_character_set.begin(),
-		     ztd::tests::u32_basic_source_character_set.end());
-		return data;
-	}
-
-	inline const std::vector<ztd_char32_t>& basic_source_range() noexcept {
-		static const auto range = make_basic_source_range();
-		return range;
-	}
-} // namespace ztd_cnc_tests
-
-#endif // ZTD_CUNEICODE_TESTS_SOURCE_UNICODE_RANGE_HPP
+#endif // ZTD_CUNEICODE_BENCHAMRKS_BARRIER_VERSION_H
