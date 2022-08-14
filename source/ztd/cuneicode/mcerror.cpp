@@ -33,7 +33,7 @@
 
 //////
 /// @brief Returns a string representing the error code's name.
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerror_to_str(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerror_to_str(
      cnc_mcerror err) {
 	switch (err) {
 	case CNC_MCERROR_OKAY:

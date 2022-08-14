@@ -43,23 +43,23 @@
 #include <cstddef>
 #endif
 
-ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_ typedef struct error_size_size {
+ZTD_C_LANGUAGE_LINKAGE_I_ typedef struct error_size_size {
 	cnc_mcerror error;
 	size_t input_read;
 	size_t output_written;
 } error_size_size;
 
-ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_ typedef struct error_ptr_ptr {
+ZTD_C_LANGUAGE_LINKAGE_I_ typedef struct error_ptr_ptr {
 	cnc_mcerror error;
 	const ztd_char32_t* input;
 	ztd_char8_t* output;
 } error_ptr_ptr;
 
-ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_C_LANGUAGE_LINKAGE_I_
 ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ c_span_char8_t u8_data;
-ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_C_LANGUAGE_LINKAGE_I_
 ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ c_span_char16_t u16_data;
-ZTD_CUNEICODE_BENCHMARKS_BARRIER_C_LANGUAGE_LINKAGE_I_
+ZTD_C_LANGUAGE_LINKAGE_I_
 ZTD_CUNEICODE_BENCHMARKS_BARRIER_API_LINKAGE_I_ c_span_char32_t u32_data;
 
 #endif // ZTD_CUNEICODE_BENCHMARKS_BARRIER_DATA_H

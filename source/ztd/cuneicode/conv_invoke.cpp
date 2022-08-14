@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/detail/conversion.hpp>
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv(
      cnc_conversion* __conversion, size_t* __p_bytes_out_count, unsigned char** __p_bytes_out,
      size_t* __p_bytes_in_count, const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	void* __state = static_cast<void*>(__conversion + 1);
@@ -42,7 +42,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 	     __p_bytes_out, __p_bytes_in_count, __p_bytes_in, __state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid(
      cnc_conversion* __conversion, size_t* __p_bytes_in_count,
      const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	void* __state = static_cast<void*>(__conversion + 1);
@@ -51,7 +51,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_i
 	     == CNC_MCERROR_OKAY;
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_count(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_count(
      cnc_conversion* __conversion, size_t* __p_bytes_out_count, size_t* __p_bytes_in_count,
      const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	void* __state = static_cast<void*>(__conversion + 1);
@@ -59,7 +59,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 	     __conversion, __p_bytes_out_count, nullptr, __p_bytes_in_count, __p_bytes_in, __state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_unbounded(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_unbounded(
      cnc_conversion* __conversion, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
      const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	void* __state = static_cast<void*>(__conversion + 1);
@@ -67,7 +67,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 	     __conversion, nullptr, __p_bytes_out, __p_bytes_in_count, __p_bytes_in, __state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one(
      cnc_conversion* __conversion, size_t* __p_bytes_out_count, unsigned char** __p_bytes_out,
      size_t* __p_bytes_in_count, const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	void* __state = static_cast<void*>(__conversion + 1);
@@ -75,7 +75,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 	     __p_bytes_out, __p_bytes_in_count, __p_bytes_in, __state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_one_is_valid(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_one_is_valid(
      cnc_conversion* __conversion, size_t* __p_bytes_in_count,
      const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	void* __state = static_cast<void*>(__conversion + 1);
@@ -84,7 +84,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_o
 	     == CNC_MCERROR_OKAY;
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one_count(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one_count(
      cnc_conversion* __conversion, size_t* __p_bytes_out_count, size_t* __p_bytes_in_count,
      const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	void* __state = static_cast<void*>(__conversion + 1);
@@ -92,7 +92,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc
 	     __conversion, __p_bytes_out_count, nullptr, __p_bytes_in_count, __p_bytes_in, __state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one_unbounded(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one_unbounded(
      cnc_conversion* __conversion, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
      const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	void* __state = static_cast<void*>(__conversion + 1);

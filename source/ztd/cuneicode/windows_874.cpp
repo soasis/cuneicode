@@ -35,8 +35,8 @@
 
 #include <memory>
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_c32ntomcn_windows_874(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32ntomcn_windows_874(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state {};
 	cnc_mcstate_t* __p_state = ::std::addressof(__state);
@@ -44,26 +44,26 @@ cnc_c32ntomcn_windows_874(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_c32nrtomcn_windows_874(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomcn_windows_874(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
 	     __p_state, CNC_MC_MAX, decltype(&cnc_c32nrtomcn_windows_874), &cnc_c32nrtomcn_windows_874,
 	     ztd_char32_t, ztd_char_t);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_mcntoc32n_windows_874(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcntoc32n_windows_874(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state {};
 	cnc_mcstate_t* __p_state = ::std::addressof(__state);
 	return cnc_mcnrtoc32n_windows_874(
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_mcnrtoc32n_windows_874(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32n_windows_874(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	(void)__p_maybe_dst_len;
 	(void)__p_maybe_dst;
 	(void)__p_src_len;
@@ -74,8 +74,8 @@ cnc_mcnrtoc32n_windows_874(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_d
 
 
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_c32sntomcsn_windows_874(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32sntomcsn_windows_874(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state {};
 	cnc_mcstate_t* __p_state = ::std::addressof(__state);
@@ -83,8 +83,8 @@ cnc_c32sntomcsn_windows_874(size_t* __p_maybe_dst_len, char** __p_maybe_dst, siz
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_c32snrtomcsn_windows_874(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32snrtomcsn_windows_874(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	(void)__p_maybe_dst_len;
 	(void)__p_maybe_dst;
@@ -94,18 +94,18 @@ cnc_c32snrtomcsn_windows_874(size_t* __p_maybe_dst_len, char** __p_maybe_dst, si
 	return CNC_MCERROR_INVALID_SEQUENCE;
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_mcsntoc32sn_windows_874(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntoc32sn_windows_874(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state {};
 	cnc_mcstate_t* __p_state = ::std::addressof(__state);
 	return cnc_mcsnrtoc32sn_windows_874(
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_mcsnrtoc32sn_windows_874(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtoc32sn_windows_874(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
 	     __p_state, CNC_MC_MAX, decltype(&cnc_mcnrtoc32n_windows_874), &cnc_mcnrtoc32n_windows_874,
 	     ztd_char_t, ztd_char32_t);

@@ -29,7 +29,7 @@
 
 #include <ztd/cuneicode.h>
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32rtomwc_ibmeuctw(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32rtomwc_ibmeuctw(
      size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) {
 	(void)__p_maybe_dst_len;

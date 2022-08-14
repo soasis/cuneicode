@@ -118,7 +118,7 @@ typedef struct cnc_conversion_heap {
 /// @param[in] __left The first heap.
 /// @param[in] __right The second heap.
 //////
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(
      const cnc_conversion_heap* __left, const cnc_conversion_heap* __right) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -127,8 +127,7 @@ ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conver
 /// @param[in] __left The first heap.
 /// @param[in] __right The second heap.
 //////
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool
-cnc_conversion_heap_not_equals(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_not_equals(
      const cnc_conversion_heap* __left, const cnc_conversion_heap* __right) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////

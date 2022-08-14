@@ -31,15 +31,14 @@
 
 #include <ztd/cuneicode/heap.h>
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(
      const cnc_conversion_heap* __left, const cnc_conversion_heap* __right) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return __left->allocate == __right->allocate && __left->reallocate == __right->reallocate
 	     && __left->shrink == __right->shrink && __left->expand == __right->expand
 	     && __left->deallocate == __right->deallocate && __left->user_data == __right->user_data;
 }
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool
-cnc_conversion_heap_not_equals(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_not_equals(
      const cnc_conversion_heap* __left, const cnc_conversion_heap* __right) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return __left->allocate != __right->allocate || __left->reallocate != __right->reallocate
 	     || __left->shrink != __right->shrink || __left->expand != __right->expand

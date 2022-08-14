@@ -146,7 +146,11 @@ target_link_libraries(ztd.cuneicode
 target_include_directories(ztd.cuneicode
 	PRIVATE ${PROJECT_SOURCE_DIR}/source/include)
 target_compile_definitions(ztd.cuneicode
-	PRIVATE _CRT_SECURE_NO_WARNINGS
+	PRIVATE
+		_CRT_SECURE_NO_WARNINGS=1
+		ZTD_CUNEICODE_BUILD=1
+	PUBLIC
+		$<$<STREQUAL:$<TARGET_PROPERTY:ztd.cuneicode,TYPE>,SHARED_LIBRARY>:ZTD_CUNEICODE_DLL=1>
 )
 
 if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)

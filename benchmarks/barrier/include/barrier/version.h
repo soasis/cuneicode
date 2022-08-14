@@ -30,6 +30,8 @@
 #ifndef ZTD_CUNEICODE_BENCHAMRKS_BARRIER_VERSION_H
 #define ZTD_CUNEICODE_BENCHAMRKS_BARRIER_VERSION_H
 
+#include <ztd/version.h>
+
 #include <barrier/api.h>
 
 #endif // ZTD_CUNEICODE_BENCHAMRKS_BARRIER_VERSION_H

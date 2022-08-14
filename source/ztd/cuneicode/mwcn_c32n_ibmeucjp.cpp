@@ -29,9 +29,9 @@
 
 #include <ztd/cuneicode.h>
 
-ZTD_CUNEICODE_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror
-cnc_mwcnrtoc32n_ibmeucjp(size_t* __p_maybe_dst_len, ztd_char32_t* __p_maybe_dst,
-     size_t* __p_src_len, const wchar_t* __p_src, mbstate_t* __p_state) {
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcnrtoc32n_ibmeucjp(
+     size_t* __p_maybe_dst_len, ztd_char32_t* __p_maybe_dst, size_t* __p_src_len,
+     const wchar_t* __p_src, mbstate_t* __p_state) {
 	(void)__p_maybe_dst_len;
 	(void)__p_maybe_dst;
 	(void)__p_src_len;
