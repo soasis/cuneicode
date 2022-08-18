@@ -106,7 +106,7 @@ namespace cnc {
 
 		inline static const int __cnc_defined_slot_max = 6;
 
-		inline const ::std::basic_string_view<ztd_char8_t>& __to_name(__cnc_defined_slot __slot) {
+		inline const ::std::basic_string_view<ztd_char8_t>& _TO_Name(__cnc_defined_slot __slot) {
 			static const ::std::basic_string_view<ztd_char8_t>
 			     __identifiers[__cnc_defined_slot_max] = {
 				     __utf8_name(),
@@ -124,7 +124,7 @@ namespace cnc {
 			for (size_t __slot_index = 0; __slot_index < __cnc_defined_slot_max;
 			     ++__slot_index) {
 				__cnc_defined_slot __slot = static_cast<__cnc_defined_slot>(__slot_index);
-				if (__to_name(__slot) == __id) {
+				if (_TO_Name(__slot) == __id) {
 					__out_slot = __slot;
 					return true;
 				}

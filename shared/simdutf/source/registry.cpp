@@ -37,341 +37,129 @@
 
 #include <simdutf.h>
 
-// ======================
-// UTF-8 ↔ UTF-16
+#define UTF_CONVERT_DEFINITION(                                                                              \
+     FROM_N, TO_N, FROM_BIG_SUFFIX, FROM_LIL_SUFFIX, TO_BIG_SUFFIX, TO_LIL_SUFFIX)                           \
+	static cnc_mcerror simdutf_utf##FROM_N##_to_utf##TO_N##_convert(cnc_conversion*,                        \
+	     size_t* p_output_bytes_size, unsigned char** p_output_bytes, size_t* p_input_bytes_size,           \
+	     const unsigned char** p_input_bytes, void*) {                                                      \
+		using from_char_t = std::conditional_t<FROM_N == 8, char, ztd_char##FROM_N##_t>;                   \
+		using to_char_t   = std::conditional_t<TO_N == 8, char, ztd_char##TO_N##_t>;                       \
+		if (p_input_bytes == nullptr || *p_input_bytes == nullptr) {                                       \
+			return CNC_MCERROR_OKAY;                                                                      \
+		}                                                                                                  \
+		ZTD_ASSERT(p_input_bytes_size != nullptr);                                                         \
+		if (*p_input_bytes_size == 0) {                                                                    \
+			return CNC_MCERROR_OKAY;                                                                      \
+		}                                                                                                  \
+		const unsigned char*& input_bytes = *p_input_bytes;                                                \
+		size_t& input_bytes_size          = *p_input_bytes_size;                                           \
+		const bool is_counting_only   = p_output_bytes == nullptr || *p_output_bytes == nullptr;           \
+		const bool is_unbounded_write = p_output_bytes_size == nullptr;                                    \
+		if (!is_counting_only && is_unbounded_write) {                                                     \
+			simdutf::result result = ztd::endian::native == ztd::endian::big                              \
+			     ? simdutf::                                                                              \
+			          convert_utf##FROM_N##FROM_BIG_SUFFIX##_to_utf##TO_N##TO_BIG_SUFFIX##_with_errors(   \
+			               (const from_char_t*)input_bytes,                                               \
+			               input_bytes_size / sizeof(from_char_t), (to_char_t*)*p_output_bytes)           \
+			     : simdutf::                                                                              \
+			          convert_utf##FROM_N##FROM_LIL_SUFFIX##_to_utf##TO_N##TO_LIL_SUFFIX##_with_errors(   \
+			               (const from_char_t*)input_bytes,                                               \
+			               input_bytes_size / sizeof(from_char_t),                                        \
+			               (to_char_t*)*p_output_bytes);                                                  \
+			if (result.error == simdutf::error_code::SUCCESS) {                                           \
+				input_bytes += input_bytes_size;                                                         \
+				input_bytes_size = 0;                                                                    \
+				*p_output_bytes -= result.count * sizeof(to_char_t);                                     \
+				return CNC_MCERROR_OKAY;                                                                 \
+			}                                                                                             \
+		}                                                                                                  \
+		bool valid_utf##FROM_N = ztd::endian::native == ztd::endian::big                                   \
+		     ? simdutf::validate_utf##FROM_N##FROM_BIG_SUFFIX(                                             \
+		          (const from_char_t*)input_bytes, input_bytes_size / sizeof(const from_char_t))           \
+		     : simdutf::validate_utf##FROM_N##FROM_LIL_SUFFIX((const from_char_t*)input_bytes,             \
+		          input_bytes_size / sizeof(const from_char_t));                                           \
+		if (valid_utf##FROM_N) {                                                                           \
+			if (is_counting_only) {                                                                       \
+				/* VALIDATION/COUNT CASE */                                                              \
+				if (!is_unbounded_write) {                                                               \
+					size_t& output_bytes_size = *p_output_bytes_size;                                   \
+					const size_t write_size   = ztd::endian::native == ztd::endian::big                 \
+					       ? simdutf::utf##TO_N##_length_from_utf##FROM_N##FROM_BIG_SUFFIX(             \
+					            (const from_char_t*)input_bytes,                                        \
+					            input_bytes_size / sizeof(const from_char_t))                           \
+					       : simdutf::utf##TO_N##_length_from_utf##FROM_N##FROM_BIG_SUFFIX(             \
+					            (const from_char_t*)input_bytes,                                        \
+					            input_bytes_size / sizeof(const from_char_t));                          \
+					[[maybe_unused]] const size_t write_byte_size                                       \
+					     = (write_size * sizeof(to_char_t));                                            \
+					ZTD_ASSERT(write_byte_size <= output_bytes_size);                                   \
+					output_bytes_size -= write_byte_size;                                               \
+				}                                                                                        \
+				input_bytes += input_bytes_size;                                                         \
+				input_bytes_size -= input_bytes_size;                                                    \
+				return CNC_MCERROR_OKAY;                                                                 \
+			}                                                                                             \
+			else {                                                                                        \
+				const size_t initial_write_size = ztd::endian::native == ztd::endian::big                \
+				     ? simdutf::utf##TO_N##_length_from_utf##FROM_N##FROM_BIG_SUFFIX(                    \
+				          (const from_char_t*)input_bytes,                                               \
+				          input_bytes_size / sizeof(const from_char_t))                                  \
+				     : simdutf::utf##TO_N##_length_from_utf##FROM_N##FROM_LIL_SUFFIX(                    \
+				          (const from_char_t*)input_bytes,                                               \
+				          input_bytes_size / sizeof(const from_char_t));                                 \
+				if (is_unbounded_write || *p_output_bytes_size >= initial_write_size) {                  \
+					const size_t write_size = ztd::endian::native == ztd::endian::big                   \
+					     ? simdutf::                                                                    \
+					          convert_valid_utf##FROM_N##FROM_BIG_SUFFIX##_to_utf##TO_N##TO_BIG_SUFFIX( \
+					               (const from_char_t*)input_bytes,                                     \
+					               input_bytes_size / sizeof(const from_char_t),                        \
+					               (to_char_t*)*p_output_bytes)                                         \
+					     : simdutf::                                                                    \
+					          convert_valid_utf##FROM_N##FROM_LIL_SUFFIX##_to_utf##TO_N##TO_LIL_SUFFIX( \
+					               (const from_char_t*)input_bytes,                                     \
+					               input_bytes_size / sizeof(const from_char_t),                        \
+					               (to_char_t*)*p_output_bytes);                                        \
+                                                                                                             \
+                                                                                                             \
+					if (!is_unbounded_write) {                                                          \
+						ZTD_ASSERT(initial_write_size == write_size);                                  \
+						const size_t write_byte_size = write_size * sizeof(to_char_t);                 \
+						*p_output_bytes_size -= write_byte_size;                                       \
+					}                                                                                   \
+					input_bytes += input_bytes_size;                                                    \
+					input_bytes_size -= input_bytes_size;                                               \
+					return CNC_MCERROR_OKAY;                                                            \
+				}                                                                                        \
+			}                                                                                             \
+		}                                                                                                  \
+                                                                                                             \
+		ztd_char##TO_N##_t* output                                                                         \
+		     = is_counting_only ? nullptr : (ztd_char##TO_N##_t*)*p_output_bytes;                          \
+		const ztd_char##FROM_N##_t* input = (ztd_char##FROM_N##_t*)*p_input_bytes;                         \
+		size_t output_size = is_unbounded_write ? 0 : *p_output_bytes_size / sizeof(to_char_t);            \
+		size_t input_size  = *p_input_bytes_size / sizeof(from_char_t);                                    \
+		cnc_mcerror err    = cnc_c##FROM_N##sntoc##TO_N##sn(                                               \
+		        is_unbounded_write ? &output_size : nullptr, &output, &input_size, &input);                \
+		if (!is_unbounded_write) {                                                                         \
+			*p_output_bytes_size = output_size * sizeof(to_char_t);                                       \
+		}                                                                                                  \
+		if (!is_counting_only) {                                                                           \
+			*p_output_bytes = (unsigned char*)(output);                                                   \
+		}                                                                                                  \
+		*p_input_bytes_size = input_size * sizeof(from_char_t);                                            \
+		*p_input_bytes      = (const unsigned char*)(input);                                               \
+		return err;                                                                                        \
+	}                                                                                                       \
+	static_assert(true, "")
 
-static cnc_mcerror simdutf_utf8_to_utf16_convert(cnc_conversion*, size_t* p_output_bytes_size,
-     unsigned char** p_output_bytes, size_t* p_input_bytes_size,
-     const unsigned char** p_input_bytes, void*) {
-	if (p_input_bytes == nullptr || *p_input_bytes == nullptr) {
-		// we have empty input: just leave
-		return CNC_MCERROR_OKAY;
-	}
-	// the input size must not be the null pointer if the input is valid.
-	ZTD_ASSERT(p_input_bytes_size != nullptr);
-	if (*p_input_bytes_size == 0) {
-		// we have empty input: just leave
-		return CNC_MCERROR_OKAY;
-	}
-	// get the input size as normal variables
-	const unsigned char*& input_bytes = *p_input_bytes;
-	size_t& input_bytes_size          = *p_input_bytes_size;
-	// Use the simdutf API to check the data
-	bool valid_utf8
-	     = simdutf::validate_utf8((const char*)input_bytes, input_bytes_size / sizeof(const char));
-	if (valid_utf8) {
-		// we tuck these cases in here because simdutf
-		// does not do validation in any of its counting functions,
-		// so we have to validate before-hand first.
-		if (p_output_bytes == nullptr || *p_output_bytes == nullptr) {
-			// VALIDATION/COUNT CASE
-			// we are simply doing validation here.
-			// validate that the input is okay
-			// since it is UTF-8, as long as it is valid UTF-8
-			// it is automatically valid UTF-16.
-			if (p_output_bytes_size != nullptr) {
-				// COUNTING CASE
-				size_t& output_bytes_size = *p_output_bytes_size;
-				const size_t write_size   = simdutf::utf16_length_from_utf8(
-				       (const char*)input_bytes, input_bytes_size / sizeof(const char));
-				// set the number of bytes we *should* expect from this input
-				// note we multiply since it is byte count, not element count!
-				[[maybe_unused]] const size_t write_byte_size
-				     = (write_size * sizeof(ztd_char16_t));
-				ZTD_ASSERT(write_byte_size <= output_bytes_size);
-				output_bytes_size -= write_byte_size;
-			}
-			// VALIDATION CASE
-			// This covers the validation part (updating the input pointer/size)
-			input_bytes += input_bytes_size;
-			input_bytes_size -= input_bytes_size;
-			return CNC_MCERROR_OKAY;
-		}
-		else {
-			// Okay, we have an output pointer. Splat data in.
-			const size_t initial_write_size = simdutf::utf16_length_from_utf8(
-			     (const char*)input_bytes, input_bytes_size / sizeof(const char));
-			const bool is_unbounded_write = p_output_bytes_size == nullptr;
-			if (is_unbounded_write || *p_output_bytes_size >= initial_write_size) {
-				const size_t write_size =
-#if ZTDC_NATIVE_ENDIAN == ZTDC_BIG_ENDIAN
-				     simdutf::convert_valid_utf8_to_utf16be(
-#else
-				     simdutf::convert_valid_utf8_to_utf16le(
-#endif
+UTF_CONVERT_DEFINITION(8, 16, , , be, le);
+UTF_CONVERT_DEFINITION(16, 8, be, le, , );
+UTF_CONVERT_DEFINITION(8, 32, , , , );
+UTF_CONVERT_DEFINITION(32, 8, , , , );
+UTF_CONVERT_DEFINITION(32, 16, , , be, le);
+UTF_CONVERT_DEFINITION(16, 32, be, le, , );
 
-				          (const char*)input_bytes, input_bytes_size / sizeof(const char),
-				          (char16_t*)*p_output_bytes);
-
-				if (!is_unbounded_write) {
-					// make sure to update the output size
-					ZTD_ASSERT(initial_write_size == write_size);
-					const size_t write_byte_size = write_size * sizeof(char16_t);
-					*p_output_bytes_size -= write_byte_size;
-				}
-				input_bytes += input_bytes_size;
-				input_bytes_size -= input_bytes_size;
-				return CNC_MCERROR_OKAY;
-			}
-		}
-	}
-	// fall back in all failure cases, if we don't have valid input data
-	size_t output_size = p_output_bytes_size ? *p_output_bytes_size / sizeof(ztd_char16_t) : 0;
-	cnc_mcerror err    = cnc_c8sntoc16sn(p_output_bytes_size ? &output_size : nullptr,
-	     (ztd_char16_t**)p_output_bytes, p_input_bytes_size, (const ztd_char8_t**)p_input_bytes);
-	*p_output_bytes_size = output_size * sizeof(ztd_char16_t);
-	return err;
-}
-
-static cnc_mcerror simdutf_utf16_to_utf8_convert(cnc_conversion*, size_t* p_output_bytes_size,
-     unsigned char** p_output_bytes, size_t* p_input_bytes_size,
-     const unsigned char** p_input_bytes, void*) {
-	if (p_input_bytes == nullptr || *p_input_bytes == nullptr) {
-		// we have empty input: just leave
-		return CNC_MCERROR_OKAY;
-	}
-	// the input size must not be the null pointer if the input is valid.
-	ZTD_ASSERT(p_input_bytes_size != nullptr);
-	if (*p_input_bytes_size == 0) {
-		// we have empty input: just leave
-		return CNC_MCERROR_OKAY;
-	}
-	// get the input size as normal variables
-	const unsigned char*& input_bytes = *p_input_bytes;
-	size_t& input_bytes_size          = *p_input_bytes_size;
-
-	// Use the simdutf API to check the data
-	const simdutf::result validate_result
-#if ZTDC_NATIVE_ENDIAN == ZTDC_BIG_ENDIAN
-	     = simdutf::validate_utf16be_with_errors(
-#else
-	     = simdutf::validate_utf16le_with_errors(
-#endif
-	          (const char16_t*)input_bytes, input_bytes_size / sizeof(const char16_t));
-	const bool valid_utf8 = validate_result.error == simdutf::error_code::SUCCESS;
-	if (valid_utf8) {
-		// we tuck these cases in here because simdutf
-		// does not do validation in any of its counting functions,
-		// so we have to validate before-hand first.
-		if (p_output_bytes == nullptr || *p_output_bytes == nullptr) {
-			// VALIDATION/COUNT CASE
-			// we are simply doing validation here.
-			// validate that the input is okay
-			// since it is UTF-16, as long as it is valid UTF-16
-			// it is automatically valid UTF-8.
-			if (p_output_bytes_size != nullptr) {
-				// COUNTING CASE
-				size_t& output_bytes_size = *p_output_bytes_size;
-				const size_t write_byte_size =
-#if ZTDC_NATIVE_ENDIAN == ZTDC_BIG_ENDIAN
-				     simdutf::utf8_length_from_utf16be(
-#else
-				     simdutf::utf8_length_from_utf16le(
-#endif
-				          (const char16_t*)input_bytes,
-				          input_bytes_size / sizeof(const char16_t));
-				// set the number of bytes we *should* expect from this input
-				// note we multiply since it is byte count, not element count!
-				ZTD_ASSERT(output_bytes_size > write_byte_size);
-				output_bytes_size -= write_byte_size;
-			}
-			// VALIDATION CASE
-			// This covers the validation part (updating the input pointer/size)
-			input_bytes += input_bytes_size;
-			input_bytes_size -= input_bytes_size;
-			return CNC_MCERROR_OKAY;
-		}
-		else {
-			// Okay, we have an output pointer. Splat data in.
-			const size_t initial_write_byte_size =
-#if ZTDC_NATIVE_ENDIAN == ZTDC_BIG_ENDIAN
-			     simdutf::utf8_length_from_utf16be(
-#else
-			     simdutf::utf8_length_from_utf16le(
-#endif
-			          (const char16_t*)input_bytes, input_bytes_size / sizeof(const char16_t));
-			const bool is_unbounded_write = p_output_bytes_size == nullptr;
-			if (is_unbounded_write || *p_output_bytes_size >= initial_write_byte_size) {
-				const size_t write_byte_size =
-#if ZTDC_NATIVE_ENDIAN == ZTDC_BIG_ENDIAN
-				     simdutf::convert_valid_utf16be_to_utf8(
-#else
-				     simdutf::convert_valid_utf16le_to_utf8(
-#endif
-				          (const char16_t*)input_bytes, input_bytes_size / sizeof(char16_t),
-				          (char*)*p_output_bytes);
-				if (!is_unbounded_write) {
-					// make sure to update the output size
-					ZTD_ASSERT(initial_write_byte_size == write_byte_size);
-					*p_output_bytes_size -= write_byte_size;
-				}
-				input_bytes += input_bytes_size;
-				input_bytes_size -= input_bytes_size;
-				return CNC_MCERROR_OKAY;
-			}
-		}
-	}
-	// fall back in all failure cases, if we don't have valid input data
-	size_t input_size   = p_input_bytes_size ? *p_input_bytes_size / sizeof(ztd_char16_t) : 0;
-	cnc_mcerror err     = cnc_c16sntoc8sn(p_output_bytes_size, (ztd_char8_t**)p_output_bytes,
-          p_input_bytes_size ? &input_size : nullptr, (const ztd_char16_t**)p_input_bytes);
-	*p_input_bytes_size = input_size * sizeof(ztd_char8_t);
-	return err;
-}
-
-// ======================
-// UTF-8 ↔ UTF-32
-
-static cnc_mcerror simdutf_utf8_to_utf32_convert(cnc_conversion*, size_t* p_output_bytes_size,
-     unsigned char** p_output_bytes, size_t* p_input_bytes_size,
-     const unsigned char** p_input_bytes, void*) {
-	if (p_input_bytes == nullptr || *p_input_bytes == nullptr) {
-		// we have empty input: just leave
-		return CNC_MCERROR_OKAY;
-	}
-	// the input size must not be the null pointer if the input is valid.
-	ZTD_ASSERT(p_input_bytes_size != nullptr);
-	if (*p_input_bytes_size == 0) {
-		// we have empty input: just leave
-		return CNC_MCERROR_OKAY;
-	}
-	// get the input size as normal variables
-	const unsigned char*& input_bytes = *p_input_bytes;
-	size_t& input_bytes_size          = *p_input_bytes_size;
-	// Use the simdutf API to check the data
-	bool valid_utf8 = simdutf::validate_utf8((const char*)input_bytes, input_bytes_size);
-	if (valid_utf8) {
-		// we tuck these cases in here because simdutf
-		// does not do validation in any of its counting functions,
-		// so we have to validate before-hand first.
-		if (p_output_bytes == nullptr || *p_output_bytes == nullptr) {
-			// VALIDATION/COUNT CASE
-			// we are simply doing validation here.
-			// validate that the input is okay
-			// since it is UTF-8, as long as it is valid UTF-8
-			// it is automatically valid UTF-32.
-			if (p_output_bytes_size != nullptr) {
-				// COUNTING CASE
-				size_t& output_bytes_size = *p_output_bytes_size;
-				const size_t write_size   = simdutf::utf32_length_from_utf8(
-				       (const char*)input_bytes, input_bytes_size / sizeof(const char));
-				// set the number of bytes we *should* expect from this input
-				// note we multiply since it is byte count, not element count!
-				[[maybe_unused]] const size_t write_byte_size
-				     = (write_size * sizeof(ztd_char32_t));
-				ZTD_ASSERT(write_byte_size <= output_bytes_size);
-				output_bytes_size -= write_byte_size;
-			}
-			// VALIDATION CASE
-			// This covers the validation part (updating the input pointer/size)
-			input_bytes += input_bytes_size;
-			input_bytes_size -= input_bytes_size;
-			return CNC_MCERROR_OKAY;
-		}
-		else {
-			// Okay, we have an output pointer. Splat data in.
-			const size_t initial_write_size = simdutf::utf32_length_from_utf8(
-			     (const char*)input_bytes, input_bytes_size / sizeof(const char));
-			const bool is_unbounded_write = p_output_bytes_size == nullptr;
-			if (is_unbounded_write || *p_output_bytes_size >= initial_write_size) {
-				const size_t write_size
-				     = simdutf::convert_valid_utf8_to_utf32((const char*)input_bytes,
-				          input_bytes_size / sizeof(const char), (char32_t*)*p_output_bytes);
-
-				if (!is_unbounded_write) {
-					// make sure to update the output size
-					ZTD_ASSERT(initial_write_size == write_size);
-					const size_t write_byte_size = write_size * sizeof(char32_t);
-					*p_output_bytes_size -= write_byte_size;
-				}
-				input_bytes += input_bytes_size;
-				input_bytes_size -= input_bytes_size;
-				return CNC_MCERROR_OKAY;
-			}
-		}
-	}
-	// fall back in all failure cases, if we don't have valid input data
-	size_t output_size = p_output_bytes_size ? *p_output_bytes_size / sizeof(ztd_char32_t) : 0;
-	cnc_mcerror err    = cnc_c8sntoc32sn(p_output_bytes_size ? &output_size : nullptr,
-	     (ztd_char32_t**)p_output_bytes, p_input_bytes_size, (const ztd_char8_t**)p_input_bytes);
-	*p_output_bytes_size = output_size * sizeof(ztd_char32_t);
-	return err;
-}
-
-static cnc_mcerror simdutf_utf32_to_utf8_convert(cnc_conversion*, size_t* p_output_bytes_size,
-     unsigned char** p_output_bytes, size_t* p_input_bytes_size,
-     const unsigned char** p_input_bytes, void*) {
-	if (p_input_bytes == nullptr || *p_input_bytes == nullptr) {
-		// we have empty input: just leave
-		return CNC_MCERROR_OKAY;
-	}
-	// the input size must not be the null pointer if the input is valid.
-	ZTD_ASSERT(p_input_bytes_size != nullptr);
-	if (*p_input_bytes_size == 0) {
-		// we have empty input: just leave
-		return CNC_MCERROR_OKAY;
-	}
-	// get the input size as normal variables
-	const unsigned char*& input_bytes = *p_input_bytes;
-	size_t& input_bytes_size          = *p_input_bytes_size;
-	// Use the simdutf API to check the data
-	const simdutf::result validate_result = simdutf::validate_utf32_with_errors(
-	     (const char32_t*)input_bytes, input_bytes_size / sizeof(const char32_t));
-	const bool valid_utf8 = validate_result.error == simdutf::error_code::SUCCESS;
-	if (valid_utf8) {
-		// we tuck these cases in here because simdutf
-		// does not do validation in any of its counting functions,
-		// so we have to validate before-hand first.
-		if (p_output_bytes == nullptr || *p_output_bytes == nullptr) {
-			// VALIDATION/COUNT CASE
-			// we are simply doing validation here.
-			// validate that the input is okay
-			// since it is UTF-32, as long as it is valid UTF-32
-			// it is automatically valid UTF-8.
-			if (p_output_bytes_size != nullptr) {
-				// COUNTING CASE
-				size_t& output_bytes_size    = *p_output_bytes_size;
-				const size_t write_byte_size = simdutf::utf8_length_from_utf32(
-				     (const char32_t*)input_bytes, input_bytes_size / sizeof(const char32_t));
-				// set the number of bytes we *should* expect from this input
-				// note we multiply since it is byte count, not element count!
-				ZTD_ASSERT(output_bytes_size > write_byte_size);
-				output_bytes_size -= write_byte_size;
-			}
-			// VALIDATION CASE
-			// This covers the validation part (updating the input pointer/size)
-			input_bytes += input_bytes_size;
-			input_bytes_size -= input_bytes_size;
-			return CNC_MCERROR_OKAY;
-		}
-		else {
-			// Okay, we have an output pointer. Splat data in.
-			const size_t initial_write_byte_size = simdutf::utf8_length_from_utf32(
-			     (const char32_t*)input_bytes, input_bytes_size / sizeof(const char32_t));
-			const bool is_unbounded_write = p_output_bytes_size == nullptr;
-			if (is_unbounded_write || *p_output_bytes_size >= initial_write_byte_size) {
-				const size_t write_byte_size
-				     = simdutf::convert_valid_utf32_to_utf8((const char32_t*)input_bytes,
-				          input_bytes_size / sizeof(char32_t), (char*)*p_output_bytes);
-				if (!is_unbounded_write) {
-					// make sure to update the output size
-					ZTD_ASSERT(initial_write_byte_size == write_byte_size);
-					*p_output_bytes_size -= write_byte_size;
-				}
-				input_bytes += input_bytes_size;
-				input_bytes_size -= input_bytes_size;
-				return CNC_MCERROR_OKAY;
-			}
-		}
-	}
-	// fall back in all failure cases, if we don't have valid input data
-	size_t input_size   = p_input_bytes_size ? *p_input_bytes_size / sizeof(ztd_char32_t) : 0;
-	cnc_mcerror err     = cnc_c32sntoc8sn(p_output_bytes_size, (ztd_char8_t**)p_output_bytes,
-          p_input_bytes_size ? &input_size : nullptr, (const ztd_char32_t**)p_input_bytes);
-	*p_input_bytes_size = input_size * sizeof(ztd_char8_t);
-	return err;
-}
-
+#undef UTF_CONVERT_DEFINITION
 bool add_simdutf_to_registry(cnc_conversion_registry* registry) {
 	using utf8string_view = std::basic_string_view<ztd_char8_t>;
 	{
@@ -406,6 +194,24 @@ bool add_simdutf_to_registry(cnc_conversion_registry* registry) {
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf8";
 		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
 		     simdutf_utf32_to_utf8_convert, nullptr, nullptr);
+		if (err != CNC_OPEN_ERROR_OKAY) {
+			return false;
+		}
+	}
+	{
+		const utf8string_view from_code = (const ztd_char8_t*)"utf16";
+		const utf8string_view to_code   = (const ztd_char8_t*)"utf32";
+		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
+		     simdutf_utf16_to_utf32_convert, nullptr, nullptr);
+		if (err != CNC_OPEN_ERROR_OKAY) {
+			return false;
+		}
+	}
+	{
+		const utf8string_view from_code = (const ztd_char8_t*)"utf32";
+		const utf8string_view to_code   = (const ztd_char8_t*)"utf16";
+		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
+		     simdutf_utf32_to_utf16_convert, nullptr, nullptr);
 		if (err != CNC_OPEN_ERROR_OKAY) {
 			return false;
 		}

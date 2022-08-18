@@ -27,27 +27,32 @@
 //
 // ========================================================================= //
 
+#include <ztd/version.hpp>
+
+#if ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)
+
 #include <benchmark/benchmark.h>
 
-#include <ztd/cuneicode.h>
+#include <ztd/cuneicode/shared/unicode_range.hpp>
 #include <barrier/barrier.h>
 
-#include <boost/text/text.hpp>
+#include <Windows.h>
 
 #include <vector>
 
-static void utf16_to_utf8_well_formed_boost_text(benchmark::State& state) {
-	const std::vector<char16_t> input_data(c_span_char16_t_data(u16_data),
+static void utf16_to_utf8_well_formed_windows_api(benchmark::State& state) {
+	const std::vector<ztd_char16_t> input_data(c_span_char16_t_data(u16_data),
 	     c_span_char16_t_data(u16_data) + c_span_char16_t_size(u16_data));
 	std::vector<ztd_char8_t> output_data(c_span_char8_t_size(u8_data));
 	bool result = true;
 	for (auto _ : state) {
-		size_t input_size         = input_data.size();
-		const ztd_char16_t* input = input_data.data();
-		size_t output_size        = output_data.size();
-		ztd_char8_t* output       = output_data.data();
-		auto position = boost::text::transcode_to_utf8(input, input + input_size, output);
-		if (position.in != (input + input_size) || position.out != (output + output_size)) {
+		size_t input_size    = input_data.size();
+		const wchar_t* input = (const wchar_t*)input_data.data();
+		size_t output_size   = output_data.size();
+		char* output         = (char*)output_data.data();
+		int err              = WideCharToMultiByte(
+		                  CP_UTF8, 0, input, (int)input_size, output, (int)output_size, 0, 0);
+		if (err == 0) {
 			result = false;
 		}
 	}
@@ -59,32 +64,32 @@ static void utf16_to_utf8_well_formed_boost_text(benchmark::State& state) {
 	}
 }
 
-static void utf16_to_utf8_well_formed_boost_text_view(benchmark::State& state) {
-	const std::vector<char16_t> input_data(c_span_char16_t_data(u16_data),
-	     c_span_char16_t_data(u16_data) + c_span_char16_t_size(u16_data));
-	std::vector<ztd_char8_t> output_data(c_span_char8_t_size(u8_data));
+static void utf8_to_utf16_well_formed_windows_api(benchmark::State& state) {
+	const std::vector<ztd_char8_t> input_data(c_span_char8_t_data(u8_data),
+	     c_span_char8_t_data(u8_data) + c_span_char8_t_size(u8_data));
+	std::vector<ztd_char16_t> output_data(c_span_char16_t_size(u16_data));
 	bool result = true;
 	for (auto _ : state) {
-		size_t input_size         = input_data.size();
-		const ztd_char16_t* input = input_data.data();
-		size_t output_size        = output_data.size();
-		ztd_char8_t* output       = output_data.data();
-		auto view                 = boost::text::as_utf8(input, input + input_size);
-		for (const auto value : view) {
-			*output = value;
-			++output;
-		}
-		if (output != (output_data.data() + output_data.size())) {
+		size_t input_size  = input_data.size();
+		const char* input  = (const char*)input_data.data();
+		size_t output_size = output_data.size();
+		wchar_t* output    = (wchar_t*)output_data.data();
+		int err            = MultiByteToWideChar(
+		                CP_UTF8, MB_ERR_INVALID_CHARS, input, (int)input_size, output, (int)output_size);
+		if (err == 0) {
 			result = false;
 		}
 	}
 	const bool is_equal
-	     = std::equal(output_data.cbegin(), output_data.cend(), c_span_char8_t_data(u8_data),
-	          c_span_char8_t_data(u8_data) + c_span_char8_t_size(u8_data));
+	     = std::equal(output_data.cbegin(), output_data.cend(), c_span_char16_t_data(u16_data),
+	          c_span_char16_t_data(u16_data) + c_span_char16_t_size(u16_data));
 	if (!result || !is_equal) {
 		state.SkipWithError("bad benchmark result");
+		return;
 	}
 }
 
-BENCHMARK(utf16_to_utf8_well_formed_boost_text);
-BENCHMARK(utf16_to_utf8_well_formed_boost_text_view);
+BENCHMARK(utf16_to_utf8_well_formed_windows_api);
+BENCHMARK(utf8_to_utf16_well_formed_windows_api);
+
+#endif // Windows-only

@@ -29,41 +29,39 @@
 
 #include <ztd/version.hpp>
 
-#if ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)
-
 #include <benchmark/benchmark.h>
 
-#include <ztd/cuneicode/shared/unicode_range.hpp>
 #include <barrier/barrier.h>
-
-#include <Windows.h>
+#include <ctre_utf8_cxx17.hpp>
 
 #include <vector>
+#include <string_view>
+#include <algorithm>
 
-static void utf16_to_utf8_well_formed_windows_api(benchmark::State& state) {
-	const std::vector<char16_t> input_data(c_span_char16_t_data(u16_data),
-	     c_span_char16_t_data(u16_data) + c_span_char16_t_size(u16_data));
-	std::vector<ztd_char8_t> output_data(c_span_char8_t_size(u8_data));
+static void utf8_to_utf32_well_formed_ctre(benchmark::State& state) {
+	const std::vector<ztd_char8_t> input_data(c_span_char8_t_data(u8_data),
+	     c_span_char8_t_data(u8_data) + c_span_char8_t_size(u8_data));
+	std::vector<ztd_char32_t> output_data(c_span_char32_t_size(u32_data));
 	bool result = true;
 	for (auto _ : state) {
-		size_t input_size    = input_data.size();
-		const wchar_t* input = (const wchar_t*)input_data.data();
-		size_t output_size   = output_data.size();
-		char* output         = (char*)output_data.data();
-		int err              = WideCharToMultiByte(
-		                  CP_UTF8, 0, input, (int)input_size, output, (int)output_size, 0, 0);
-		if (err == 0) {
+		ctre::utf8_range view(
+		     std::basic_string_view<unsigned char>(input_data.data(), input_data.size()));
+		auto out_it = output_data.begin();
+		auto last   = view.end();
+		for (auto it = view.begin(); it != last; (void)++it, ++out_it) {
+			*out_it = *it;
+		}
+		if (out_it != output_data.end()) {
 			result = false;
 		}
 	}
 	const bool is_equal
-	     = std::equal(output_data.cbegin(), output_data.cend(), c_span_char8_t_data(u8_data),
-	          c_span_char8_t_data(u8_data) + c_span_char8_t_size(u8_data));
+	     = std::equal(output_data.cbegin(), output_data.cend(), c_span_char32_t_data(u32_data),
+	          c_span_char32_t_data(u32_data) + c_span_char32_t_size(u32_data));
 	if (!result || !is_equal) {
 		state.SkipWithError("bad benchmark result");
+		return;
 	}
 }
 
-BENCHMARK(utf16_to_utf8_well_formed_windows_api);
-
-#endif // Windows-only
+BENCHMARK(utf8_to_utf32_well_formed_ctre);

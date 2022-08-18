@@ -185,7 +185,7 @@ cnc_open_error __cnc_find_entry(cnc_conversion_registry* __registry,
 			continue;
 		const ::cnc::__cnc_detail::__cnc_defined_slot __slot
 		     = __valid_indirect_paths[__slot_index][__to_index];
-		const auto& __slot_id_view = __to_name(__slot);
+		const auto& __slot_id_view = _TO_Name(__slot);
 		for (const auto& __entry : __registry->__paths) {
 			if (__key.__from != __slot_id_view)
 				continue;

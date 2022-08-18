@@ -31,7 +31,7 @@ include(FetchContent)
 
 # # Fetch dependencies
 # Google Benchmark
-function(googlebenchmark_fetch_content_jail)
+function(googlebenchmark_dependency_jail)
 	FetchContent_Declare(
 		googlebenchmark
 		GIT_REPOSITORY https://github.com/google/benchmark.git
@@ -53,8 +53,28 @@ function(googlebenchmark_fetch_content_jail)
 		add_subdirectory(${googlebenchmark_SOURCE_DIR} ${googlebenchmark_BINARY_DIR})
 	endif()
 endfunction()
-googlebenchmark_fetch_content_jail()
+googlebenchmark_dependency_jail()
 
+function (utf8cpp_dependency_jail)
+	FetchContent_Declare(
+		utf8cpp
+		GIT_REPOSITORY https://github.com/nemtrif/utfcpp
+	)
+	FetchContent_MakeAvailable(utf8cpp)
+endfunction()
+utf8cpp_dependency_jail()
+
+function (ctre_dependency_jail)
+	FetchContent_Declare(
+		ctre
+		GIT_REPOSITORY https://github.com/hanickadot/compile-time-regular-expressions
+		GIT_TAG main
+	)
+	FetchContent_MakeAvailable(ctre)
+endfunction()
+ctre_dependency_jail()
+
+add_subdirectory(tools)
 add_subdirectory(barrier)
 add_subdirectory(function_form)
 add_subdirectory(speed)

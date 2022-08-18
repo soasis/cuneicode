@@ -30,35 +30,15 @@
 #include <benchmark/benchmark.h>
 
 #include <ztd/cuneicode.h>
-#include <barrier/barrier.h>
-
 #include <ztd/idk/c_span.h>
-
+#include <ztd/idk/endian.hpp>
+#include <barrier/barrier.h>
 #include <simdutf.h>
 
 #include <vector>
 
-static void utf16_to_utf8_well_formed_simdutf(benchmark::State& state) {
-	const std::vector<char16_t> input_data(c_span_char16_t_data(u16_data),
-	     c_span_char16_t_data(u16_data) + c_span_char16_t_size(u16_data));
-	std::vector<ztd_char8_t> output_data(c_span_char8_t_size(u8_data));
-	bool result = true;
-	for (auto _ : state) {
-		size_t input_size         = input_data.size();
-		const ztd_char16_t* input = input_data.data();
-		size_t output_size        = output_data.size();
-		char* output              = (char*)output_data.data();
-		size_t output_written = simdutf::convert_valid_utf16le_to_utf8(input, input_size, output);
-		if (output_written != output_data.size()) {
-			result = false;
-		}
-	}
-	const bool is_equal
-	     = std::equal(output_data.cbegin(), output_data.cend(), c_span_char8_t_data(u8_data),
-	          c_span_char8_t_data(u8_data) + c_span_char8_t_size(u8_data));
-	if (!result || !is_equal) {
-		state.SkipWithError("bad benchmark result");
-	}
+static void noop(benchmark::State& state) {
+	for (auto _ : state) { }
 }
 
-BENCHMARK(utf16_to_utf8_well_formed_simdutf);
+BENCHMARK(noop);

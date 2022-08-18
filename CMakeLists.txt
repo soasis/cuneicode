@@ -116,6 +116,7 @@ option(ZTD_CUNEICODE_DOCUMENTATION "Enable build of documentation" OFF)
 option(ZTD_CUNEICODE_DOCUMENTATION_NO_SPHINX "Turn off Sphinx usage (useful for ReadTheDocs builds)" OFF)
 option(ZTD_CUNEICODE_EXAMPLES "Enable build of examples" OFF)
 option(ZTD_CUNEICODE_BENCHMARKS "Enable build of benchmarks" OFF)
+set(ZTD_CUNEICODE_BENCHMARKS_REPETITIONS 50 CACHE STRING "Whole number of repetitions to run for all of ztd.cuneicode's benchmarks")
 option(ZTD_CUNEICODE_GENERATE_SINGLE "Enable generation of a single header and its target" OFF)
 option(ZTD_CUNEICODE_USE_CUNEICODE "Enable generation of a single header and its target" OFF)
 
@@ -198,9 +199,11 @@ if(ZTD_CUNEICODE_GENERATE_SINGLE)
 endif()
 
 if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
+	# Python, for benchmarks
+	find_package(Python3)
 	# # Fetch dependencies for either benchmarks and/or examples
 	find_package(Boost)
-	function(boost_text_fetch_content_jail)
+	function(boost_text_dependency_jail)
 		# boost.text
 		set(BOOST_TEXT_PERF OFF CACHE INTERNAL "")
 		set(BOOST_TEXT_EXAMPLES OFF CACHE INTERNAL "")
@@ -212,7 +215,7 @@ if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
 		)
 		FetchContent_MakeAvailable(boost.text)
 	endfunction()
-	function(simdutf_fetch_content_jail)
+	function(simdutf_dependency_jail)
 		# simdutf
 		set(SIMDUTF_BENCHMARKS OFF CACHE INTERNAL "")
 		set(BUILD_TESTING OFF CACHE INTERNAL "")
@@ -222,11 +225,17 @@ if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
 		)
 		FetchContent_MakeAvailable(simdutf)
 	endfunction()
-	boost_text_fetch_content_jail()
-	simdutf_fetch_content_jail()
-	# find package libraries
-	# ICU package
-	find_package(ICU COMPONENTS i18n uc)
+	function(ztd_platform_dependency_jail)
+		# ztd.platform
+		FetchContent_Declare(
+			ztd.platform
+			GIT_REPOSITORY https://github.com/soasis/platform
+		)
+		FetchContent_MakeAvailable(ztd.platform)
+	endfunction()
+	boost_text_dependency_jail()
+	simdutf_dependency_jail()
+	ztd_platform_dependency_jail()
 	# internal libraries for exmaples and benchmarks
 	add_subdirectory(shared)
 	add_subdirectory(shared/simdutf)

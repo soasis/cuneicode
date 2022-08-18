@@ -27,4 +27,45 @@
 #
 # =========================================================================== #
 
-add_subdirectory(bench)
+# # Benchmarks
+file(GLOB_RECURSE ztd.cuneicode.benchmarks.function_form.sources
+	LIST_DIRECTORIES FALSE
+	CONFIGURE_DEPENDS
+	source/*.c source/*.cpp)
+
+add_executable(ztd.cuneicode.benchmarks.function_form ${ztd.cuneicode.benchmarks.function_form.sources})
+target_compile_options(ztd.cuneicode.benchmarks.function_form
+	PRIVATE
+	${--utf8-literal-encoding}
+	${--utf8-source-encoding}
+	${--disable-permissive}
+	${--updated-cpp-version-flag}
+	${--warn-pedantic}
+	${--warn-all}
+	${--warn-extra}
+
+	# MSVC is BROKEN
+	# ${--warn-errors}
+)
+target_compile_definitions(ztd.cuneicode.benchmarks.function_form
+	PRIVATE
+	CATCH_CONFIG_ENABLE_BENCHMARKING=1
+)
+target_link_libraries(ztd.cuneicode.benchmarks.function_form
+	PRIVATE
+	ztd::cuneicode::benchmarks::barrier
+	ztd::cuneicode
+	benchmark::benchmark
+	${CMAKE_DL_LIBS}
+)
+target_include_directories(ztd.cuneicode.benchmarks.function_form
+	PRIVATE
+	include
+	../include
+)
+generate_config_and_manifest_for(ztd.cuneicode.benchmarks.function_form)
+ztd_tools_make_benchmark_graphing_targets(
+	ztd.cuneicode.benchmarks.function_form
+	"${CMAKE_CURRENT_SOURCE_DIR}/graph_config.json"
+	${ZTD_CUNEICODE_BENCHMARKS_REPETITIONS}
+)
