@@ -153,6 +153,7 @@ target_compile_definitions(ztd.cuneicode
 	PUBLIC
 		$<$<STREQUAL:$<TARGET_PROPERTY:ztd.cuneicode,TYPE>,SHARED_LIBRARY>:ZTD_CUNEICODE_DLL=1>
 )
+target_sources(ztd.cuneicode PRIVATE ${ztd.cuneicode.includes})
 
 if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 	target_compile_options(ztd.cuneicode PRIVATE
@@ -167,7 +168,6 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 	)
 endif()
 
-target_sources(ztd.cuneicode PRIVATE ${ztd.cuneicode.includes})
 install(DIRECTORY include/
 	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
