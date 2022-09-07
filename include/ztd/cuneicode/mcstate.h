@@ -36,8 +36,11 @@
 
 #if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
+#include <climits>
 #else
 #include <stddef.h>
+#include <stdbool.h>
+#include <limits.h>
 #endif
 #if ZTD_IS_ON(ZTD_CWCHAR)
 #include <cwchar>
@@ -52,17 +55,47 @@ ZTD_EXTERN_C_OPEN_I_
 ZTD_EXTERN_C_CLOSE_I_
 #endif
 
-#if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
-#define ZTD_CUNEICODE_STATE_SIZE_I_ (sizeof(mbstate_t))
-#else
-#define ZTD_CUNEICODE_STATE_SIZE_I_ 8
-#endif
+typedef union cnc_mcstate_t cnc_mcstate_t;
 
 //////
 /// @addtogroup ztd_cuneicode_conversion_state Typed Conversion Function State
 ///
 /// @{
 //////
+
+//////
+/// @brief The function signature used to check whether or not a state has finished processing
+/// all of its data.
+///
+/// @param[in] __state The cnc_mcstate_t object being checked.
+/// @param[in] __data The fixed-size data within the cnc_mcstate_t object.
+/// @param[in] __data_size The size of the fixed-size data kept within the cnc_mcstate_t, in number
+/// of bytes.
+///
+/// @remarks The cnc_mcstate_t object should only be touched through its `raw` member and is only
+/// provided for the use of its `raw` member and the member variables contained within `raw`. The
+/// `raw.indcator` member must be set to CNC_MCSTATE_INDICATOR_RAW by a user. Any data needing to be
+/// checked or stored should be accessed in the provided [`__data`, `__data_size`] region.
+typedef bool(state_is_complete_function)(
+     const cnc_mcstate_t* __state, const unsigned char* __data, size_t __data_size);
+
+//////
+/// @brief An enumeration containing the current state indications.
+///
+/// @remarks May only use 8 bits of information.
+//////
+typedef enum cnc_mcstate_indicator {
+	//////
+	/// @brief Reserved, do NOT use.
+	CNC_MCSTATE_INDICATOR___RESERVED0 = 0,
+	//////
+	/// @brief The state indicator that indicates a user is using the "raw" portion for their
+	/// custom conversion routine.
+	CNC_MCSTATE_INDICATOR_RAW = 1,
+	//////
+	/// @brief Reserved, do NOT use.
+	CNC_MCSTATE_INDICATOR___RESERVED1 = 2
+} cnc_mcstate_indicator;
 
 //////
 /// @brief The state for the typed conversion functions.
@@ -76,6 +109,12 @@ typedef union cnc_mcstate_t {
 	struct __locale_t {
 		//////
 		/// @brief Private, do not access.
+		cnc_mcstate_indicator __indicator : CHAR_BIT;
+		//////
+		/// @brief Private, do not access.
+		unsigned int __padding : (sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT;
+		//////
+		/// @brief Private, do not access.
 		mbstate_t __state0;
 		//////
 		/// @brief Private, do not access.
@@ -83,16 +122,33 @@ typedef union cnc_mcstate_t {
 	} __locale;
 #endif
 	//////
-	/// @brief Private, do not access.
+	/// @brief The raw type for user use.
 	struct __raw_t {
 		//////
-		/// @brief Private, do not access.
-		unsigned char __raw_state_data0[ZTD_CUNEICODE_STATE_SIZE_I_];
+		/// @brief The indactor. Must be set by any custom encoding routine using mcstate_t and
+		/// desiring custom completion behavior to CNC_MCSTATE_INDICATOR_RAW.
 		//////
-		/// @brief Private, do not access.
-		unsigned char __raw_state_data1[ZTD_CUNEICODE_STATE_SIZE_I_];
-	} __raw;
+		cnc_mcstate_indicator indicator : CHAR_BIT;
+		//////
+		/// @brief Padding to keep consistent sizing. Not meant to be part of any location.
+		//////
+		unsigned int __paddding : (sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT;
+		//////
+		/// @brief The completion function. If behavior beyond a check for the provided
+		/// fixed-size data is zero is desired, then this must be set to a valid
+		/// function pointer. Otherwise, it must be a null pointer.
+		state_is_complete_function* completion_function;
+		//////
+		/// @brief Leftover data blob for use by the user. The user is responsible for its
+		/// management within the conversion functions.
+		unsigned char raw_data[(sizeof(void*) * 3)];
+	} raw;
 } cnc_mcstate_t;
+
+//////
+/// @brief Returns whether or not the given cnc_mcstate_t has no more data that needs to be output.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_complete(
+     const cnc_mcstate_t* __state);
 
 //////
 /// @}

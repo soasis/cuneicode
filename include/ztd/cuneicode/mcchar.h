@@ -37,13 +37,8 @@
 #include <ztd/cuneicode/mcerror.h>
 #include <ztd/cuneicode/detail/mccharn.h>
 #include <ztd/cuneicode/detail/mccharsn.h>
-
-#if ZTD_IS_ON(ZTD_CXX)
 #include <ztd/cuneicode/detail/mcchar_generic.hpp>
-#endif // C++
-#if ZTD_IS_ON(ZTD_C)
 #include <ztd/cuneicode/detail/mcchar_generic.h>
-#endif // C
 
 //////
 /// @addtogroup ztd_cuneicode_generic_typed_conversions Generic Typed Conversion Functions

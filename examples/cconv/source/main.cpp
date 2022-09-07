@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 	std::size_t total_input_read     = 0;
 	std::size_t total_output_written = 0;
 	options opt;
-#if ZTD_IS_ON(ZTD_DEBUG)
+#if ZTD_IS_OFF(ZTD_DEBUG)
 	try {
 #endif // top-level try
 		std::optional<std::string> maybe_error_message
@@ -390,7 +390,7 @@ int main(int argc, char* argv[]) {
 				}
 			}
 		}
-#if ZTD_IS_ON(ZTD_DEBUG)
+#if ZTD_IS_OFF(ZTD_DEBUG)
 	}
 	catch (...) {
 		if (!opt.silent)

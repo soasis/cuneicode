@@ -38,6 +38,8 @@
 #include <ztd/cuneicode/detail/mccharn.h>
 #include <ztd/cuneicode/detail/mccharsn.h>
 
+#if ZTD_IS_ON(ZTD_CXX)
+
 #include <ztd/idk/type_traits.hpp>
 
 template <typename _Destination, typename _Source>
@@ -549,5 +551,7 @@ cnc_mcerror __cnc_cxsnrtocxsn(size_t* __p_maybe_dst_len, _Destination** __p_mayb
 		static_assert(::ztd::always_false_v<_USource>, "[ztd.cuneicode] incorrect type");
 	}
 }
+
+#endif
 
 #endif // ZTD_CUNEICODE_MCCHAR_GENERIC_HPP

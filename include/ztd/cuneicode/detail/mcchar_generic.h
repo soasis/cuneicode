@@ -38,6 +38,8 @@
 #include <ztd/cuneicode/detail/mccharn.h>
 #include <ztd/cuneicode/detail/mccharsn.h>
 
+#if ZTD_IS_ON(ZTD_C)
+
 // clang-format off
 #define CNC_CXNTOC32N_I_(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src)                        \
 	_Generic(**(__p_src),                                                                              \
@@ -279,5 +281,7 @@
 		default: CNC_CXSNRTOC8SN_I_((__p_maybe_dst_len), (__p_maybe_dst), (__p_src_len), (__p_src))                     \
 	)
 // clang-format on
+
+#endif
 
 #endif // ZTD_CUNEICODE_MCCHAR_GENERIC_H

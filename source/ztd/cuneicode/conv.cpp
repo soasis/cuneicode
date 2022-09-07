@@ -32,6 +32,7 @@
 #include <ztd/cuneicode/conv.h>
 #include <ztd/cuneicode/mcchar.h>
 #include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/pivot_info.h>
 #include <ztd/cuneicode/mcchar_named.h>
 
 #include <ztd/cuneicode/detail/conv_id.hpp>
@@ -54,6 +55,66 @@
 #include <cstring>
 
 namespace {
+	template <typename _State>
+	static inline _State* __basic_state(unsigned char* __state,
+	     size_t __available_space = sizeof(_State) + (sizeof(_State) - 1)) {
+		void* __extra_start   = static_cast<void*>(__state);
+		void* __aligned_extra = ::cnc::__cnc_detail::__align(
+		     alignof(_State), sizeof(_State), __extra_start, __available_space);
+		if (__aligned_extra == nullptr) {
+			return nullptr;
+		}
+		return static_cast<_State*>(static_cast<void*>(__aligned_extra));
+	}
+
+	template <typename _State>
+	static inline _State* __basic_state(void* __state,
+	     size_t __available_space = sizeof(_State) + (sizeof(_State) - 1)) noexcept {
+		return __basic_state<_State>(static_cast<unsigned char*>(__state), __available_space);
+	}
+
+	template <typename _State>
+	static inline void __basic_close_function(void* __state) noexcept {
+		_State* __basic = __basic_state<_State>(__state);
+		__basic->~_State();
+	}
+
+	template <typename _State>
+	static inline ::std::pair<cnc_open_error, _State*> __core_open_function(
+	     cnc_conversion_registry*, cnc_conversion* __conversion, size_t* __p_available_space,
+	     size_t* __p_max_alignment, void** __p_space) noexcept {
+		const bool __is_counting = __conversion == nullptr;
+		*__p_max_alignment = ::std::max(*__p_max_alignment, static_cast<size_t>(alignof(_State)));
+		//[[maybe_unused]] const size_t __starting_available_space = *__p_available_space;
+		void* const __starting_p_space = __p_space == nullptr ? nullptr : *__p_space;
+		_State* __basic_aligned = __basic_state<_State>(__starting_p_space, *__p_available_space);
+		if (__basic_aligned == nullptr) {
+			// Ffffffffflubberbuckets.
+			return { CNC_OPEN_ERROR_ALLOCATION_FAILURE, nullptr };
+		}
+		unsigned char* const __aligned_space
+		     = static_cast<unsigned char*>(static_cast<void*>(__basic_aligned + 1));
+		const size_t __used_space
+		     = (__aligned_space - static_cast<unsigned char*>(__starting_p_space));
+		if (__is_counting) {
+			*__p_available_space -= (__used_space);
+			return { CNC_OPEN_ERROR_OKAY, nullptr };
+		}
+		_State* __basic = new (static_cast<void*>(__basic_aligned)) _State();
+		*__p_available_space -= __used_space;
+		*__p_space = __aligned_space;
+		return { CNC_OPEN_ERROR_OKAY, __basic };
+	}
+
+	template <typename _State>
+	static inline cnc_open_error __basic_open_function(cnc_conversion_registry* __registry,
+	     cnc_conversion* __conversion, size_t* __p_available_space, size_t* __p_max_alignment,
+	     void** __p_space) noexcept {
+		auto __code_and_ptr = __core_open_function<_State>(
+		     __registry, __conversion, __p_available_space, __p_max_alignment, __p_space);
+		return __code_and_ptr.first;
+	}
+
 	struct __typical_cnc_conversion {
 		cnc_mcstate_t __state;
 	};
@@ -71,81 +132,59 @@ namespace {
 		void* __link1_state;
 	};
 
-	static inline __typical_cnc_conversion* __typical_state(unsigned char* __state,
-	     size_t __available_space
-	     = sizeof(__typical_cnc_conversion) + (sizeof(__typical_cnc_conversion) - 1)) {
-		void* __extra_start   = static_cast<void*>(__state);
-		void* __aligned_extra = ::cnc::__cnc_detail::__align(sizeof(__typical_cnc_conversion),
-		     sizeof(__typical_cnc_conversion), __extra_start, __available_space);
-		if (__aligned_extra == nullptr) {
-			return nullptr;
-		}
-		return static_cast<__typical_cnc_conversion*>(static_cast<void*>(__aligned_extra));
-	}
-
 	static inline __typical_cnc_conversion* __typical_state(void* __state,
 	     size_t __available_space
 	     = sizeof(__typical_cnc_conversion) + (sizeof(__typical_cnc_conversion) - 1)) noexcept {
-		return __typical_state(static_cast<unsigned char*>(__state), __available_space);
+		return __basic_state<__typical_cnc_conversion>(__state, __available_space);
 	}
 
 	static inline void __typical_close_function(void* __state) noexcept {
-		__typical_cnc_conversion* __typical = __typical_state(__state);
-		__typical->~__typical_cnc_conversion();
+		__basic_close_function<__typical_cnc_conversion>(__state);
 	}
 
-	static inline cnc_open_error __typical_open_function(
-	     [[maybe_unused]] cnc_conversion_registry* __registry, cnc_conversion* __conversion,
-	     size_t* __p_available_space, size_t* __p_max_alignment, void** __p_space) noexcept {
-		bool __is_counting = __conversion == nullptr;
-		*__p_max_alignment = ::std::max(
-		     *__p_max_alignment, static_cast<size_t>(alignof(__typical_cnc_conversion)));
-		[[maybe_unused]] const size_t __starting_available_space = *__p_available_space;
-		void* const __starting_p_space = __p_space == nullptr ? nullptr : *__p_space;
-		__typical_cnc_conversion* __typical_aligned
-		     = __typical_state(__starting_p_space, *__p_available_space);
-		unsigned char* const __aligned_space
-		     = static_cast<unsigned char*>(static_cast<void*>(__typical_aligned + 1));
-		const size_t __used_space
-		     = (__aligned_space - static_cast<unsigned char*>(__starting_p_space));
-		if (__is_counting) {
-			*__p_available_space -= (__used_space);
-			return CNC_OPEN_ERROR_OKAY;
+	static inline cnc_open_error __typical_open_function(cnc_conversion_registry* __registry,
+	     cnc_conversion* __conversion, size_t* __p_available_space, size_t* __p_max_alignment,
+	     void** __p_space) noexcept {
+		auto __code_and_ptr = __core_open_function<__typical_cnc_conversion>(
+		     __registry, __conversion, __p_available_space, __p_max_alignment, __p_space);
+		if (__code_and_ptr.second) {
+			cnc_mcstate_t* __p_state = &(__code_and_ptr.second->__state);
+			*__p_state               = cnc_mcstate_t {};
 		}
-		if (__typical_aligned == nullptr) {
-			// Ffffffffflubberbuckets.
-			return CNC_OPEN_ERROR_ALLOCATION_FAILURE;
-		}
-		__typical_cnc_conversion* __typical
-		     = new (static_cast<void*>(__typical_aligned)) __typical_cnc_conversion();
-		cnc_mcstate_t* __p_state = &(__typical->__state);
-		::std::memset(__p_state, 0, sizeof(__typical_cnc_conversion));
-		*__p_available_space -= __used_space;
-		*__p_space = __aligned_space;
-		return CNC_OPEN_ERROR_OKAY;
+		return __code_and_ptr.first;
 	}
 
-	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func>
-	static inline cnc_mcerror __typical_multi_conversion(
-	     [[maybe_unused]] cnc_conversion* __base_conversion, size_t* __p_bytes_out_count,
-	     unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
-	     const unsigned char** __p_bytes_in, void* __state) noexcept {
+	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func,
+	     typename _State>
+	static inline cnc_mcerror __basic_single_conversion(cnc_conversion*,
+	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
+	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
+	     void* __state) noexcept {
+		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
 		const bool __is_counting  = __p_bytes_out == nullptr || *__p_bytes_out == nullptr;
 		const bool __is_unbounded = __p_bytes_out_count == nullptr;
 		const size_t __initial_source_count = *__p_bytes_in_count / sizeof(_SourceChar);
 		size_t __source_count               = __initial_source_count;
 		const _SourceChar* __source_first   = reinterpret_cast<const _SourceChar*>(*__p_bytes_in);
 		const _SourceChar* __source         = __source_first;
+		[[maybe_unused]] const _SourceChar* __source_last = __source_first + __source_count;
 		const size_t __initial_dest_count
 		     = __is_unbounded ? SIZE_MAX : *__p_bytes_out_count / sizeof(_DestChar);
 		size_t __dest_count = __initial_dest_count;
 		_DestChar* __dest_first
 		     = __is_counting ? nullptr : reinterpret_cast<_DestChar*>(*__p_bytes_out);
-		_DestChar* __dest                      = __dest_first;
-		__typical_cnc_conversion* __conversion = __typical_state(__state);
-		cnc_mcstate_t* __p_state               = &__conversion->__state;
-		cnc_mcerror __err = __func(__is_unbounded ? nullptr : &__dest_count, &__dest,
-		     &__source_count, &__source, __p_state);
+		_DestChar* __dest    = __dest_first;
+		_State* __conversion = __basic_state<_State>(__state);
+		cnc_mcerror __err;
+		if constexpr (::std::is_same_v<__typical_cnc_conversion, _State>) {
+			cnc_mcstate_t* __p_state = &__conversion->__state;
+			__err = __func(__is_unbounded ? nullptr : &__dest_count, &__dest, &__source_count,
+			     &__source, __p_state);
+		}
+		else {
+			__err = __func(__is_unbounded ? nullptr : &__dest_count, &__dest, &__source_count,
+			     &__source, __conversion);
+		}
 		// always update all relevant counts
 		// and pointers, whether or not there is an actual error
 		size_t __bytes_written = (__initial_dest_count - __dest_count) * sizeof(_DestChar);
@@ -158,14 +197,77 @@ namespace {
 		if (!__is_unbounded) {
 			*__p_bytes_out_count -= static_cast<size_t>(__bytes_written);
 		}
+		if (__using_provided_pivot_info) {
+			__p_pivot_info->error = CNC_MCERROR_OKAY;
+		}
 		return __err;
+	}
+
+	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func,
+	     typename _State>
+	static inline cnc_mcerror __basic_multi_conversion(cnc_conversion*,
+	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
+	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
+	     void* __state) noexcept {
+		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
+		const bool __is_counting  = __p_bytes_out == nullptr || *__p_bytes_out == nullptr;
+		const bool __is_unbounded = __p_bytes_out_count == nullptr;
+		const size_t __initial_source_count = *__p_bytes_in_count / sizeof(_SourceChar);
+		size_t __source_count               = __initial_source_count;
+		const _SourceChar* __source_first   = reinterpret_cast<const _SourceChar*>(*__p_bytes_in);
+		const _SourceChar* __source         = __source_first;
+		const size_t __initial_dest_count
+		     = __is_unbounded ? SIZE_MAX : *__p_bytes_out_count / sizeof(_DestChar);
+		size_t __dest_count = __initial_dest_count;
+		_DestChar* __dest_first
+		     = __is_counting ? nullptr : reinterpret_cast<_DestChar*>(*__p_bytes_out);
+		_DestChar* __dest    = __dest_first;
+		_State* __conversion = __basic_state<_State>(__state);
+		cnc_mcerror __err;
+		if constexpr (::std::is_same_v<__typical_cnc_conversion, _State>) {
+			cnc_mcstate_t* __p_state = &__conversion->__state;
+			__err = __func(__is_unbounded ? nullptr : &__dest_count, &__dest, &__source_count,
+			     &__source, __p_state);
+		}
+		else {
+			__err = __func(__is_unbounded ? nullptr : &__dest_count, &__dest, &__source_count,
+			     &__source, __conversion);
+		}
+		// always update all relevant counts
+		// and pointers, whether or not there is an actual error
+		size_t __bytes_written = (__initial_dest_count - __dest_count) * sizeof(_DestChar);
+		size_t __bytes_read    = (__initial_source_count - __source_count) * sizeof(_SourceChar);
+		*__p_bytes_in          = reinterpret_cast<const unsigned char*>(__source);
+		*__p_bytes_in_count -= static_cast<size_t>(__bytes_read);
+		if (!__is_counting) {
+			*__p_bytes_out = reinterpret_cast<unsigned char*>(__dest);
+		}
+		if (!__is_unbounded) {
+			*__p_bytes_out_count -= static_cast<size_t>(__bytes_written);
+		}
+		if (__using_provided_pivot_info) {
+			__p_pivot_info->error = CNC_MCERROR_OKAY;
+		}
+		return __err;
+	}
+
+	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func>
+	static inline cnc_mcerror __typical_multi_conversion(cnc_conversion* __base_conversion,
+	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
+	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
+	     void* __state) noexcept {
+		return __basic_multi_conversion<_SourceChar, _DestChar, _Func, __func,
+		     __typical_cnc_conversion>(__base_conversion, __p_bytes_out_count, __p_bytes_out,
+		     __p_bytes_in_count, __p_bytes_in, __p_pivot_info, __state);
 	}
 
 	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func>
 	static inline cnc_mcerror __typical_single_conversion(
 	     [[maybe_unused]] cnc_conversion* __base_conversion, size_t* __p_bytes_out_count,
 	     unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
-	     const unsigned char** __p_bytes_in, void* __state) noexcept {
+	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
+	     void* __state) noexcept {
+		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
 		const bool __is_counting  = __p_bytes_out == nullptr || *__p_bytes_out == nullptr;
 		const bool __is_unbounded = __p_bytes_out_count == nullptr;
 		const size_t __initial_source_count = *__p_bytes_in_count / sizeof(_SourceChar);
@@ -194,6 +296,9 @@ namespace {
 		}
 		if (!__is_unbounded) {
 			*__p_bytes_out_count -= static_cast<size_t>(__bytes_written);
+		}
+		if (__using_provided_pivot_info) {
+			__p_pivot_info->error = CNC_MCERROR_OKAY;
 		}
 		return __err;
 	}
@@ -332,67 +437,103 @@ namespace {
 
 	static inline cnc_mcerror __intermediary_multi_conversion(cnc_conversion* __base_conversion,
 	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
-	     const unsigned char** __p_bytes_in, void* __state) noexcept {
-		const size_t __intermediate_buffer_max = CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
-		unsigned char __intermediate_buffer[__intermediate_buffer_max] {};
-		__intermediary_states __states = __intermediary_state(__state);
+	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
+	     void* __state) noexcept {
+		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
+		const size_t __intermediate_pivot_buffer_max
+		     = CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
+		unsigned char __intermediate_pivot_buffer[__intermediate_pivot_buffer_max] {};
+		cnc_pivot_info __backup_pivot_info
+		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, CNC_MCERROR_OKAY };
+		cnc_pivot_info* __target_p_pivot_info
+		     = !__using_provided_pivot_info || __p_pivot_info->bytes == nullptr
+		     ? &__backup_pivot_info
+		     : __p_pivot_info;
+		cnc_pivot_info __empty_pivot_info = { 0, nullptr, CNC_MCERROR_OKAY };
+		__intermediary_states __states    = __intermediary_state(__state);
 		for (; *__p_bytes_in_count != 0;) {
 			size_t __start_bytes_in_count           = *__p_bytes_in_count;
 			const unsigned char* __start_bytes_in   = *__p_bytes_in;
-			size_t __intermediate_bytes_out_count   = __intermediate_buffer_max;
-			unsigned char* __intermediate_bytes_out = __intermediate_buffer;
+			size_t __intermediate_bytes_out_count   = __target_p_pivot_info->bytes_size;
+			unsigned char* __intermediate_bytes_out = __target_p_pivot_info->bytes;
 			cnc_mcerror __link0res
 			     = __states.__intermediary_state->__link0.__multi_conversion_function(
 			          __base_conversion, &__intermediate_bytes_out_count,
 			          &__intermediate_bytes_out, __p_bytes_in_count, __p_bytes_in,
-			          __states.__link0_state);
+			          &__empty_pivot_info, __states.__link0_state);
 			if (__link0res != CNC_MCERROR_OKAY
 			     && __link0res != CNC_MCERROR_INSUFFICIENT_OUTPUT) {
 				// something bad happened: revert potential writes to the
 				// progress variables
 				*__p_bytes_in_count = __start_bytes_in_count;
 				*__p_bytes_in       = __start_bytes_in;
+				if (__using_provided_pivot_info) {
+					__p_pivot_info->error = __link0res;
+				}
 				return __link0res;
 			}
 			size_t __intermediate_bytes_in_count
-			     = __intermediate_buffer_max - __intermediate_bytes_out_count;
-			const unsigned char* __intermediate_bytes_in = __intermediate_buffer;
+			     = __target_p_pivot_info->bytes_size - __intermediate_bytes_out_count;
+			const unsigned char* __intermediate_bytes_in = __target_p_pivot_info->bytes;
 			cnc_mcerror __link1res
 			     = __states.__intermediary_state->__link1.__multi_conversion_function(
 			          __base_conversion, __p_bytes_out_count, __p_bytes_out,
 			          &__intermediate_bytes_in_count, &__intermediate_bytes_in,
-			          __states.__link1_state);
+			          &__empty_pivot_info, __states.__link1_state);
 			if (__link1res != CNC_MCERROR_OKAY) {
+				if (__using_provided_pivot_info) {
+					__p_pivot_info->error = __link1res;
+				}
 				return __link1res;
 			}
+		}
+
+		if (__using_provided_pivot_info) {
+			__p_pivot_info->error = CNC_MCERROR_OKAY;
 		}
 		return CNC_MCERROR_OKAY;
 	}
 
 	static inline cnc_mcerror __intermediary_single_conversion(cnc_conversion* __base_conversion,
 	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
-	     const unsigned char** __p_bytes_in, void* __state) noexcept {
-		const size_t __intermediate_buffer_max = CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
-		unsigned char __intermediate_buffer[__intermediate_buffer_max] {};
+	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
+	     void* __state) noexcept {
+		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
+		const size_t __intermediate_pivot_buffer_max
+		     = CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
+		unsigned char __intermediate_pivot_buffer[__intermediate_pivot_buffer_max] {};
+		cnc_pivot_info __backup_pivot_info
+		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, CNC_MCERROR_OKAY };
+		cnc_pivot_info* __target_p_pivot_info
+		     = !__using_provided_pivot_info || __p_pivot_info->bytes == nullptr
+		     ? &__backup_pivot_info
+		     : __p_pivot_info;
+		cnc_pivot_info __empty_pivot_info                      = { 0, nullptr, CNC_MCERROR_OKAY };
 		__intermediary_states __states                         = __intermediary_state(__state);
 		[[maybe_unused]] size_t __start_bytes_in_count         = *__p_bytes_in_count;
 		[[maybe_unused]] const unsigned char* __start_bytes_in = *__p_bytes_in;
-		size_t __intermediate_bytes_out_count                  = __intermediate_buffer_max;
-		unsigned char* __intermediate_bytes_out                = __intermediate_buffer;
+		size_t __intermediate_bytes_out_count   = __target_p_pivot_info->bytes_size;
+		unsigned char* __intermediate_bytes_out = __target_p_pivot_info->bytes;
 		cnc_mcerror __link0res
 		     = __states.__intermediary_state->__link0.__single_conversion_function(
 		          __base_conversion, &__intermediate_bytes_out_count, &__intermediate_bytes_out,
-		          __p_bytes_in_count, __p_bytes_in, __states.__link0_state);
+		          __p_bytes_in_count, __p_bytes_in, &__empty_pivot_info, __states.__link0_state);
 		if (__link0res != CNC_MCERROR_OKAY) {
+			if (__using_provided_pivot_info) {
+				__p_pivot_info->error = __link0res;
+			}
 			return __link0res;
 		}
+		if (__using_provided_pivot_info) {
+			__p_pivot_info->error = CNC_MCERROR_OKAY;
+		}
 		size_t __intermediate_bytes_in_count
-		     = __intermediate_buffer_max - __intermediate_bytes_out_count;
-		const unsigned char* __intermediate_bytes_in = __intermediate_buffer;
+		     = __target_p_pivot_info->bytes_size - __intermediate_bytes_out_count;
+		const unsigned char* __intermediate_bytes_in = __target_p_pivot_info->bytes;
 		cnc_mcerror __link1res
 		     = __states.__intermediary_state->__link1.__single_conversion_function(
 		          __base_conversion, __p_bytes_out_count, __p_bytes_out,
-		          &__intermediate_bytes_in_count, &__intermediate_bytes_in,
+		          &__intermediate_bytes_in_count, &__intermediate_bytes_in, &__empty_pivot_info,
 		          __states.__link1_state);
 		return __link1res;
 	}
@@ -470,7 +611,8 @@ namespace {
 /// this library.
 extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversion,
      size_t* __p_output_bytes_size, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
-     const unsigned char** __p_input_bytes, void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
+     const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
+     void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_input_bytes_size == nullptr || __p_input_bytes == nullptr) {
 		return CNC_MCERROR_OKAY;
 	}
@@ -480,9 +622,9 @@ extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversi
 		return CNC_MCERROR_OKAY;
 	}
 	for (; __input_bytes_size > 0;) {
-		cnc_mcerror __err
-		     = __conversion->__single_conversion_function(__conversion, __p_output_bytes_size,
-		          __p_output_bytes, __p_input_bytes_size, __p_input_bytes, __user_data);
+		cnc_mcerror __err = __conversion->__single_conversion_function(__conversion,
+		     __p_output_bytes_size, __p_output_bytes, __p_input_bytes_size, __p_input_bytes,
+		     __p_pivot_info, __user_data);
 		switch (__err) {
 		case CNC_MCERROR_OKAY:
 			// loop around!
@@ -501,7 +643,8 @@ extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversi
 /// this library.
 extern cnc_mcerror __cnc_single_from_multi_conversion(cnc_conversion* __conversion,
      size_t* __p_output_bytes_size, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
-     const unsigned char** __p_input_bytes, void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
+     const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
+     void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_input_bytes_size == nullptr || __p_input_bytes == nullptr) {
 		return CNC_MCERROR_OKAY;
 	}
@@ -511,8 +654,9 @@ extern cnc_mcerror __cnc_single_from_multi_conversion(cnc_conversion* __conversi
 		return CNC_MCERROR_OKAY;
 	}
 	for (size_t __len = 1; __len <= __input_bytes_size; ++__len) {
-		cnc_mcerror __err = __conversion->__multi_conversion_function(__conversion,
-		     __p_output_bytes_size, __p_output_bytes, &__len, &__input_bytes, __user_data);
+		cnc_mcerror __err
+		     = __conversion->__multi_conversion_function(__conversion, __p_output_bytes_size,
+		          __p_output_bytes, &__len, &__input_bytes, __p_pivot_info, __user_data);
 		switch (__err) {
 		case CNC_MCERROR_INCOMPLETE_INPUT:
 			// alright, so we just need more input:
@@ -715,6 +859,24 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c32nrtoc32n>,
 	     &::__typical_open_function, &::__typical_close_function));
 
+#define _ADD_MCN_NAMED_ENCODING_BASIC(_NAME, _SUFFIX, _DECODE_STATE, _ENCODE_STATE)              \
+	_CHECK_ERR_AND_RETURN(cnc_add_to_registry(__registry, (const ztd_char8_t*)(_NAME),          \
+	     ::cnc::__cnc_detail::__utf32_name(),                                                   \
+	     &__basic_multi_conversion<ztd_char_t, ztd_char32_t,                                    \
+	          decltype(&::cnc_mcsnrtoc32sn_punycode), &::cnc_mcsnrtoc32sn_punycode,             \
+	          _DECODE_STATE>,                                                                   \
+	     &__basic_single_conversion<ztd_char_t, ztd_char32_t,                                   \
+	          decltype(&::cnc_mcnrtoc32n_punycode), &::cnc_mcnrtoc32n_punycode, _DECODE_STATE>, \
+	     &::__basic_open_function<_DECODE_STATE>, &::__basic_close_function<_DECODE_STATE>));   \
+	_CHECK_ERR_AND_RETURN(cnc_add_to_registry(__registry, ::cnc::__cnc_detail::__utf32_name(),  \
+	     (const ztd_char8_t*)(_NAME),                                                           \
+	     &__basic_multi_conversion<ztd_char32_t, ztd_char_t,                                    \
+	          decltype(&::cnc_c32snrtomcsn_punycode), &::cnc_c32snrtomcsn_punycode,             \
+	          _ENCODE_STATE>,                                                                   \
+	     &__basic_single_conversion<ztd_char32_t, ztd_char_t,                                   \
+	          decltype(&::cnc_c32nrtomcn_punycode), &::cnc_c32nrtomcn_punycode, _ENCODE_STATE>, \
+	     &::__basic_open_function<_ENCODE_STATE>, &::__basic_close_function<_ENCODE_STATE>))
+
 #define _ADD_MCN_NAMED_ENCODING(_NAME, _SUFFIX)                                                 \
 	_CHECK_ERR_AND_RETURN(cnc_add_to_registry(__registry, (const ztd_char8_t*)(_NAME),         \
 	     ::cnc::__cnc_detail::__utf32_name(),                                                  \
@@ -736,8 +898,14 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	_ADD_MCN_NAMED_ENCODING("big5-hkscs", big5_hkscs);
 	_ADD_MCN_NAMED_ENCODING("gb18030", gb18030);
 
-#undef _CHECK_ERR_AND_RETURN
+	_ADD_MCN_NAMED_ENCODING_BASIC(
+	     "punycode", punycode, cnc_pny_decode_state_t, cnc_pny_encode_state_t);
+	_ADD_MCN_NAMED_ENCODING_BASIC(
+	     "punycode (idna)", punycode_idna, cnc_pny_decode_state_t, cnc_pny_encode_state_t);
+
 #undef _ADD_MCN_NAMED_ENCODING
+#undef _ADD_MCN_NAMED_ENCODING_BASIC
+#undef _CHECK_ERR_AND_RETURN
 
 	return CNC_OPEN_ERROR_OKAY;
 }
@@ -771,10 +939,10 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 	::std::basic_string_view<ztd_char8_t> __to_view(__to, __to_size);
 	const __cnc_registry_entry* __from_entry;
 	const __cnc_registry_entry* __to_entry;
-	cnc_open_error err = ::__cnc_find_entry(
+	cnc_open_error __err = ::__cnc_find_entry(
 	     __registry, __from_view, __to_view, &__from_entry, &__to_entry, __p_info);
-	if (err != CNC_OPEN_ERROR_OKAY) {
-		return err;
+	if (__err != CNC_OPEN_ERROR_OKAY) {
+		return __err;
 	}
 	size_t __before_available_space = SIZE_MAX;
 	size_t __after_available_space  = SIZE_MAX - sizeof(cnc_conversion);

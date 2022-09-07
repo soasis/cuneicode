@@ -38,6 +38,7 @@
 #include <ztd/cuneicode/open_error.h>
 #include <ztd/cuneicode/registry.h>
 #include <ztd/cuneicode/heap.h>
+#include <ztd/cuneicode/pivot_info.h>
 #include <ztd/idk/charN_t.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
@@ -211,6 +212,49 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_delete(
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv(
      cnc_conversion* __conversion, size_t* __p_output_bytes_size, unsigned char** __p_output_bytes,
      size_t* __p_input_bytes_size, const unsigned char** __p_input_bytes) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @brief Converts a series of bytes in one encoding scheme to the other encoding scheme using the
+/// specified `__conversion` format.
+///
+/// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
+/// `nullptr`.
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
+/// `nullptr`, then it will not update the count (and the output stream will automatically be
+/// considered large enough to handle all data, if
+/// `__p_output_bytes` is not `nullptr`).
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
+/// pointer within are `nullptr`, than this function will not write output data (it may still
+/// decrement the value pointed to by
+/// `__p_output_bytes_size`).
+/// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
+/// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
+/// CNC_MCERROR_OKAY is returned.
+/// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// returned.
+/// @param[in, out] __p_pivot_info A pointer to a pivot buffer and return error code. If the return
+/// value of this function is not CNC_MCERROR_OKAY, the pivot information is not NULL, and the error
+/// was caused by the intermediate conversion step failing, then the `error` member of
+/// cnc_pivot_info will be set to the error value that took place.
+///
+/// @remarks The conversion functions take parameters as output parameters (pointers) so that they
+/// can provide information about how much of the input and output is used. Providing a `nullptr`
+/// for both `__p_ouput_bytes_size` and `__p_output_bytes` serves as a way to validate the input.
+/// Providing only `__p_output_bytes` but not
+/// `__p_output_bytes_size` is a way to indicate that the output space is sufficiently large for the
+/// input space. Providing `__p_output_bytes_size` but not `__p_output_bytes` is a way to determine
+/// how much data will be written out for a given input without actually performing such a write.
+/// The pivot buffer is used when the conversion cannot be done directly (which is specified through
+/// the cnc_conversion_info structure returned from opening a conversion routine). If the pivot
+/// buffer does not point to a null / empty buffer, and it ends up being too small for the given
+/// conversion, it may produce spurious CNC_MCERROR_INSUFFICIENT_OUTPUT errors unrelated to the
+/// actual `__p_output_bytes` buffer passed into the function.
+//////
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_with_pivot(
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, unsigned char** __p_output_bytes,
+     size_t* __p_input_bytes_size, const unsigned char** __p_input_bytes,
+     cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @brief Counts the total number of bytes that can be successfully converted until an error occurs

@@ -221,7 +221,7 @@ if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
 		set(BUILD_TESTING OFF CACHE INTERNAL "")
 		FetchContent_Declare(
 			simdutf
-			GIT_REPOSITORY https://github.com/ThePhD/simdutf
+			GIT_REPOSITORY https://github.com/simdutf/simdutf
 		)
 		FetchContent_MakeAvailable(simdutf)
 	endfunction()

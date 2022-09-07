@@ -28,6 +28,7 @@
 # =========================================================================== #
 
 function(ztd_cuneicode_example_options example_target)
+	cmake_parse_arguments(PARSE_ARGV 1 CUNEICODE_EXAMPLE_OPT "" "TEST" "")
 	target_compile_options(${example_target}
 		PRIVATE
 		${--utf8-literal-encoding}
@@ -41,8 +42,12 @@ function(ztd_cuneicode_example_options example_target)
 	target_link_libraries(${example_target}
 		PRIVATE
 		ztd::cuneicode)
-	add_test(NAME ${example_target}
-		COMMAND ${example_target})
+	if (NOT DEFINED CUNEICODE_EXAMPLE_OPT_TEST)
+		add_test(NAME ${example_target} COMMAND ${example_target})
+	elseif (${CUNEICODE_EXAMPLE_OPT_TEST})
+		add_test(NAME ${example_target} COMMAND ${example_target})
+	endif()
+	unset(CUNEICODE_EXAMPLE_OPT_TEST)
 endfunction(ztd_cuneicode_example_options)
 
 function(ztd_cuneicode_example_simple example_source_file example_prefix)
@@ -58,6 +63,6 @@ function(ztd_cuneicode_example_simple example_source_file example_prefix)
 	ztd_cuneicode_example_options(${example_name})
 endfunction(ztd_cuneicode_example_simple)
 
-add_subdirectory(cconv)
 add_subdirectory(documentation)
 add_subdirectory(simdutf)
+add_subdirectory(cconv)

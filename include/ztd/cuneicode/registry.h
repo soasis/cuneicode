@@ -38,6 +38,7 @@
 #include <ztd/cuneicode/open_error.h>
 #include <ztd/cuneicode/registry_options.h>
 #include <ztd/cuneicode/heap.h>
+#include <ztd/cuneicode/pivot_info.h>
 #include <ztd/idk/charN_t.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
@@ -194,20 +195,26 @@ typedef void(cnc_close_function)(void* __data);
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
 /// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
 /// returned.
+/// @param[in] __p_pivot_info Pivot information, if provided. Is allowed to be a null pointer, or is
+/// allowed to be a non-null pointer but have the member `bytes` be a null pointer. If either of
+/// these null pointer cases is true, then the implementation may use its own internal buffer.
+/// Otherwise, neither of these is true, then the pivot buffer is used for any intermediate
+/// conversion (even if the size of the buffer is 0 or demonstrably too small / insufficient for the
+/// conversion).
 /// @param[in] __p_state Any state allocated by the open function associated with the pair of to and
 /// from names that created the cnc_conversion object that is pointed to be `__conversion`.
 ///
 /// @remarks The conversion functions take parameters as output parameters (pointers) so that they
 /// can provide information about how much of the input and output is used. Providing a `nullptr`
 /// for both `__p_ouput_bytes_size` and `__p_output_bytes` serves as a way to validate the input.
-/// Providing only `__p_output_bytes` but not
-/// `__p_output_bytes_size` is a way to indicate that the output space is sufficiently large for the
-/// input space. Providing `__p_output_bytes_size` but not `__p_output_bytes` is a way to determine
-/// how much data will be written out for a given input without actually performing such a write.
+/// Providing only `__p_output_bytes` but not `__p_output_bytes_size` is a way to indicate that the
+/// output space is sufficiently large for the input space. Providing `__p_output_bytes_size` but
+/// not `__p_output_bytes` is a way to determine how much data will be written out for a given input
+/// without actually performing such a write.
 //////
 typedef cnc_mcerror(cnc_conversion_function)(cnc_conversion* __conversion,
      size_t* __p_output_bytes_size, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
-     const unsigned char** __p_input_bytes, void* __p_state);
+     const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info, void* __p_state);
 
 //////
 /// @brief The function type for iterating through a `cnc_conversion_registry`'s registered pairs of

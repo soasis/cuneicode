@@ -41,6 +41,7 @@
 #include <cstddef>
 #else
 #include <stddef.h>
+#include <stdbool.h>
 #endif
 
 //////

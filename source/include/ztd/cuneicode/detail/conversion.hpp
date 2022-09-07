@@ -54,9 +54,11 @@ typedef struct cnc_conversion {
 
 extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversion,
      size_t* __p_output_bytes_size, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
-     const unsigned char** __p_input_bytes, void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_;
+     const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
+     void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_;
 extern cnc_mcerror __cnc_single_from_multi_conversion(cnc_conversion* __conversion,
      size_t* __p_output_bytes_size, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
-     const unsigned char** __p_input_bytes, void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_;
+     const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
+     void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_;
 
 #endif // ZTD_CUNEICODE_SOURCE_DETAIL_CONVERSION_HPP

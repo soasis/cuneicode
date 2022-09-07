@@ -46,10 +46,10 @@ namespace cnc {
 
 		template <bool _IsCounting, bool _IsUnbounded, typename _FromFunc, _FromFunc __xsnrtoisn,
 		     typename _ToFunc, _ToFunc __isnrtozsn, typename _IntermediateChar = ztd_char32_t,
-		     size_t _IntermediateMax = CNC_C32_MAX, typename _SourceChar, typename _DestChar>
+		     size_t _IntermediateMax = CNC_C32_MAX, typename _SourceChar, typename _DestChar,
+		     typename _State>
 		cnc_mcerror __basic_transcode_one(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
-		     size_t* __p_src_len, const _SourceChar** __p_src,
-		     cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const _SourceChar** __p_src, _State __p_state) noexcept {
 			if (__p_src_len == nullptr || *__p_src_len < 1) {
 				// empty sources are just fine (returns 0)
 				return CNC_MCERROR_OKAY;
@@ -115,10 +115,11 @@ namespace cnc {
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, size_t _IntermediateMax, typename _Func,
-		     _Func __xsnrtoysn, typename _SourceChar, typename _DestChar>
+		     _Func __xsnrtoysn, typename _SourceChar, typename _DestChar,
+		     typename _CompletionFunc          = decltype(&cnc_mcstate_is_complete),
+		     _CompletionFunc __completion_func = &cnc_mcstate_is_complete, typename _State>
 		cnc_mcerror __transcode(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
-		     size_t* __p_src_len, const _SourceChar** __p_src,
-		     cnc_mcstate_t* __p_state) noexcept {
+		     size_t* __p_src_len, const _SourceChar** __p_src, _State __p_state) noexcept {
 			if (__p_src_len == nullptr || *__p_src_len < 1) {
 				// empty sources are just fine (returns 0)
 				return CNC_MCERROR_OKAY;
@@ -139,17 +140,20 @@ namespace cnc {
 			const _SourceChar*& __src = *__p_src;
 			size_t& __src_len         = *__p_src_len;
 
-			for (; __src_len > 0;) {
+			for (;;) {
 				cnc_mcerror __res = __xsnrtoysn(
 				     __p_maybe_dst_len, __p_maybe_dst, &__src_len, &__src, __p_state);
 				switch (__res) {
 				case CNC_MCERROR_OKAY:
 					if (__src_len == 0) {
+						if (!__completion_func(__p_state)) {
+							break;
+						}
 						return CNC_MCERROR_OKAY;
 					}
 					break;
 				default:
-					// error, explode
+					// error, explode out
 					return __res;
 				}
 			}

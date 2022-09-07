@@ -318,8 +318,8 @@ TEST_CASE(
 		if (cnc_is_execution_encoding_unicode()) {
 			compare_roundtrip_utf32<ztd_char_t, true>(from_conv, to_conv);
 		}
-		cnc_conv_close(from_conv);
-		cnc_conv_close(to_conv);
+		cnc_conv_delete(from_conv);
+		cnc_conv_delete(to_conv);
 	}
 	SECTION("mwc") {
 		const ztd_char8_t* from_name  = (const ztd_char8_t*)u8"utf32";
@@ -337,8 +337,8 @@ TEST_CASE(
 		if (cnc_is_wide_execution_encoding_unicode()) {
 			compare_roundtrip_utf32<ztd_wchar_t, true>(from_conv, to_conv);
 		}
-		cnc_conv_close(from_conv);
-		cnc_conv_close(to_conv);
+		cnc_conv_delete(from_conv);
+		cnc_conv_delete(to_conv);
 	}
 	SECTION("c8") {
 		const ztd_char8_t* from_name  = (const ztd_char8_t*)u8"utf32";
@@ -354,8 +354,8 @@ TEST_CASE(
 		REQUIRE(to_err == CNC_OPEN_ERROR_OKAY);
 		compare_roundtrip_utf32<ztd_char8_t, false>(from_conv, to_conv);
 		compare_roundtrip_utf32<ztd_char8_t, true>(from_conv, to_conv);
-		cnc_conv_close(from_conv);
-		cnc_conv_close(to_conv);
+		cnc_conv_delete(from_conv);
+		cnc_conv_delete(to_conv);
 	}
 	SECTION("c16") {
 		const ztd_char8_t* from_name  = (const ztd_char8_t*)u8"utf32";
@@ -371,8 +371,8 @@ TEST_CASE(
 		REQUIRE(to_err == CNC_OPEN_ERROR_OKAY);
 		compare_roundtrip_utf32<ztd_char16_t, false>(from_conv, to_conv);
 		compare_roundtrip_utf32<ztd_char16_t, true>(from_conv, to_conv);
-		cnc_conv_close(from_conv);
-		cnc_conv_close(to_conv);
+		cnc_conv_delete(from_conv);
+		cnc_conv_delete(to_conv);
 	}
 	SECTION("c32") {
 		const ztd_char8_t* from_name  = (const ztd_char8_t*)u8"utf32";
@@ -388,8 +388,8 @@ TEST_CASE(
 		REQUIRE(to_err == CNC_OPEN_ERROR_OKAY);
 		compare_roundtrip_utf32<ztd_char32_t, false>(from_conv, to_conv);
 		compare_roundtrip_utf32<ztd_char32_t, true>(from_conv, to_conv);
-		cnc_conv_close(from_conv);
-		cnc_conv_close(to_conv);
+		cnc_conv_delete(from_conv);
+		cnc_conv_delete(to_conv);
 	}
 	cnc_delete_registry(registry);
 }

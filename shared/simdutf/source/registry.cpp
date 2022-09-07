@@ -41,7 +41,7 @@
      FROM_N, TO_N, FROM_BIG_SUFFIX, FROM_LIL_SUFFIX, TO_BIG_SUFFIX, TO_LIL_SUFFIX)                           \
 	static cnc_mcerror simdutf_utf##FROM_N##_to_utf##TO_N##_convert(cnc_conversion*,                        \
 	     size_t* p_output_bytes_size, unsigned char** p_output_bytes, size_t* p_input_bytes_size,           \
-	     const unsigned char** p_input_bytes, void*) {                                                      \
+	     const unsigned char** p_input_bytes, cnc_pivot_info*, void*) {                                     \
 		using from_char_t = std::conditional_t<FROM_N == 8, char, ztd_char##FROM_N##_t>;                   \
 		using to_char_t   = std::conditional_t<TO_N == 8, char, ztd_char##TO_N##_t>;                       \
 		if (p_input_bytes == nullptr || *p_input_bytes == nullptr) {                                       \

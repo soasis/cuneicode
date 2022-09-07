@@ -60,6 +60,7 @@
 #include <ztd/cuneicode/mac_roman.h>
 #include <ztd/cuneicode/mac_ukrainian.h>
 #include <ztd/cuneicode/punycode.h>
+#include <ztd/cuneicode/punycode_idna.h>
 #include <ztd/cuneicode/shift_jis.h>
 #include <ztd/cuneicode/windows_874.h>
 #include <ztd/cuneicode/windows_1250.h>

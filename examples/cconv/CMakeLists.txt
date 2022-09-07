@@ -33,7 +33,7 @@ FILE(GLOB_RECURSE ztd.cuneicode.examples.cconv.sources
 	source/**
 )
 add_executable(ztd.cuneicode.examples.cconv ${ztd.cuneicode.examples.cconv.sources})
-ztd_cuneicode_example_options(ztd.cuneicode.examples.cconv)
+ztd_cuneicode_example_options(ztd.cuneicode.examples.cconv TEST OFF)
 add_executable(ztd::cuneicode::examples::cconv ALIAS ztd.cuneicode.examples.cconv)
 target_link_libraries(ztd.cuneicode.examples.cconv
 	PRIVATE
