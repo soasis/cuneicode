@@ -424,8 +424,7 @@ namespace cnc {
 								     __pny.__input.begin(), __pny.__input.end());
 								return CNC_MCERROR_OKAY;
 							}
-							__n = static_cast<ztd_char32_t>(
-							     __n + __i / __i_div_output_size_plus1);
+							__n = static_cast<ztd_char32_t>(__n + __i_div_output_size_plus1);
 							__i = __i % __output_size_plus1;
 							if (__n < __ztd_idk_detail_last_ascii_value
 							     || __n > __ztd_idk_detail_last_unicode_code_point) {

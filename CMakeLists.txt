@@ -118,7 +118,7 @@ option(ZTD_CUNEICODE_EXAMPLES "Enable build of examples" OFF)
 option(ZTD_CUNEICODE_BENCHMARKS "Enable build of benchmarks" OFF)
 set(ZTD_CUNEICODE_BENCHMARKS_REPETITIONS 50 CACHE STRING "Whole number of repetitions to run for all of ztd.cuneicode's benchmarks")
 option(ZTD_CUNEICODE_GENERATE_SINGLE "Enable generation of a single header and its target" OFF)
-option(ZTD_CUNEICODE_USE_CUNEICODE "Enable generation of a single header and its target" OFF)
+option(ZTD_CUNEICODE_SIMDUTF_SHARED "Enable the simdutf shared target for cuneicode" OFF)
 
 # # Dependencies
 # ztd.idk
@@ -198,9 +198,13 @@ if(ZTD_CUNEICODE_GENERATE_SINGLE)
 	add_subdirectory(single)
 endif()
 
-if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
+# # Benchmarks, Tests, Examples
+if (ZTD_CUNEICODE_BENCHMARKS)
 	# Python, for benchmarks
 	find_package(Python3)
+endif()
+
+if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 	# # Fetch dependencies for either benchmarks and/or examples
 	function(simdutf_dependency_jail)
 		# simdutf
@@ -213,12 +217,10 @@ if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
 		FetchContent_MakeAvailable(simdutf)
 	endfunction()
 	simdutf_dependency_jail()
-	# internal libraries for examples and benchmarks
 	add_subdirectory(shared)
 	add_subdirectory(shared/simdutf)
 endif()
 
-# # Benchmarks, Tests, Examples
 if(ZTD_CUNEICODE_TESTS)
 	include(CTest)
 	add_subdirectory(tests)
