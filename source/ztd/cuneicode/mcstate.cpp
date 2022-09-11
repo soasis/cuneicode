@@ -67,7 +67,6 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_compl
 		}
 	}
 	default:
-		ZTD_UNREACHABLE();
 		break;
 	}
 	return true;
