@@ -413,8 +413,10 @@ namespace cnc {
 							const ::std::size_t __output_size_plus1 = (__output_size + 1);
 							__bias                                  = __pny_adapt_bias(
 							                                      __i - __old_i, __output_size + 1, __old_i == 0);
-							if (__pny_will_overflow_add32(__n,
-							         static_cast<::std::uint32_t>(__output_size_plus1))) {
+							const ::std::size_t __i_div_output_size_plus1
+							     = __i / __output_size_plus1;
+							if (__pny_will_overflow_add(static_cast<::std::size_t>(__n),
+							         __i_div_output_size_plus1)) {
 								// this is a failure and we must bail.
 								__p_state->__action_state
 								     = ::cnc::__cnc_detail::__pny_decode_state_write_output;
@@ -422,7 +424,8 @@ namespace cnc {
 								     __pny.__input.begin(), __pny.__input.end());
 								return CNC_MCERROR_OKAY;
 							}
-							__n = __n + __i / __output_size_plus1;
+							__n = static_cast<ztd_char32_t>(
+							     __n + __i / __i_div_output_size_plus1);
 							__i = __i % __output_size_plus1;
 							if (__n < __ztd_idk_detail_last_ascii_value
 							     || __n > __ztd_idk_detail_last_unicode_code_point) {
