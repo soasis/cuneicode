@@ -48,8 +48,7 @@ target_link_libraries(ztd.cuneicode.benchmarks.speed
 		ztd::cuneicode::shared::simdutf
 		ctre::ctre
 		utf8::cpp
-		Boost::boost
-		boost::text
+		Boost::text
 		benchmark::benchmark
 		${CMAKE_DL_LIBS}
 )

@@ -202,19 +202,21 @@ if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
 	# Python, for benchmarks
 	find_package(Python3)
 	# # Fetch dependencies for either benchmarks and/or examples
-	find_package(Boost)
-	function(boost_text_dependency_jail)
-		# boost.text
-		set(BOOST_TEXT_PERF OFF CACHE INTERNAL "")
-		set(BOOST_TEXT_EXAMPLES OFF CACHE INTERNAL "")
-		set(BOOST_TEXT_TESTS OFF CACHE INTERNAL "")
-		set(BUILD_TESTING OFF CACHE INTERNAL "")
-		FetchContent_Declare(
-			boost.text
-			GIT_REPOSITORY https://github.com/ThePhD/text
-		)
-		FetchContent_MakeAvailable(boost.text)
-	endfunction()
+	if (ZTD_CUNEICODE_BENCHMARKS)
+		function(boost_text_dependency_jail)
+			# boost.text
+			set(BOOST_TEXT_PERF OFF CACHE INTERNAL "")
+			set(BOOST_TEXT_EXAMPLES OFF CACHE INTERNAL "")
+			set(BOOST_TEXT_TESTS OFF CACHE INTERNAL "")
+			set(BUILD_TESTING OFF CACHE INTERNAL "")
+			FetchContent_Declare(
+				boost.text
+				GIT_REPOSITORY https://github.com/ThePhD/text
+			)
+			FetchContent_MakeAvailable(boost.text)
+		endfunction()
+		boost_text_dependency_jail()
+	endif()
 	function(simdutf_dependency_jail)
 		# simdutf
 		set(SIMDUTF_BENCHMARKS OFF CACHE INTERNAL "")
@@ -234,7 +236,6 @@ if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
 		)
 		FetchContent_MakeAvailable(ztd.platform)
 	endfunction()
-	boost_text_dependency_jail()
 	simdutf_dependency_jail()
 	ztd_platform_dependency_jail()
 	# internal libraries for exmaples and benchmarks
