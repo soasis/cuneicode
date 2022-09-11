@@ -74,7 +74,8 @@ function (ctre_dependency_jail)
 endfunction()
 ctre_dependency_jail()
 
-add_subdirectory(tools)
+include(GraphBenchmarks)
+
 add_subdirectory(barrier)
 add_subdirectory(function_form)
 add_subdirectory(speed)

@@ -64,8 +64,13 @@ target_include_directories(ztd.cuneicode.benchmarks.function_form
 	../include
 )
 generate_config_and_manifest_for(ztd.cuneicode.benchmarks.function_form)
-ztd_tools_make_benchmark_graphing_targets(
-	ztd.cuneicode.benchmarks.function_form
-	"${CMAKE_CURRENT_SOURCE_DIR}/graph_config.json"
-	${ZTD_CUNEICODE_BENCHMARKS_REPETITIONS}
+configure_graph_benchmark_targets(
+	NAME
+		function_form
+	CONFIG
+		"${CMAKE_CURRENT_SOURCE_DIR}/graph_config.json"
+	TARGETS
+		ztd.cuneicode.benchmarks.function_form
+	REPETITIONS
+		${ZTD_CUNEICODE_BENCHMARKS_REPETITIONS}
 )

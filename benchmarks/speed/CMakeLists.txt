@@ -65,8 +65,13 @@ target_compile_options(ztd.cuneicode.benchmarks.speed
 		${--allow-microsoft-enum-value}
 )
 generate_config_and_manifest_for(ztd.cuneicode.benchmarks.speed)
-ztd_tools_make_benchmark_graphing_targets(
-	ztd.cuneicode.benchmarks.speed
-	"${CMAKE_CURRENT_SOURCE_DIR}/graph_config.json"
-	${ZTD_CUNEICODE_BENCHMARKS_REPETITIONS}
+configure_graph_benchmark_targets(
+	NAME
+		speed
+	CONFIG
+		"${CMAKE_CURRENT_SOURCE_DIR}/graph_config.json"
+	TARGETS
+		ztd.cuneicode.benchmarks.speed
+	REPETITIONS
+		${ZTD_CUNEICODE_BENCHMARKS_REPETITIONS}
 )

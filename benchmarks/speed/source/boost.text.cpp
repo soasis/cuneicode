@@ -31,7 +31,15 @@
 
 #include <ztd/cuneicode.h>
 #include <barrier/barrier.h>
+#if ZTD_IS_ON(ZTD_COMPILER_CLANG) || ZTD_IS_ON(ZTD_COMPILER_GCC)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-variable"
+#pragma clang diagnostic ignored "-Wunused-parameter"
+#endif
 #include <boost/text/text.hpp>
+#if ZTD_IS_ON(ZTD_COMPILER_CLANG) || ZTD_IS_ON(ZTD_COMPILER_GCC)
+#pragma clang diagnostic pop
+#endif
 
 #include <vector>
 #include <algorithm>
