@@ -230,6 +230,7 @@ if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
 		FetchContent_Declare(
 			ztd.platform
 			GIT_REPOSITORY https://github.com/soasis/platform
+			GIT_TAG main
 		)
 		FetchContent_MakeAvailable(ztd.platform)
 	endfunction()
