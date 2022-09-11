@@ -157,7 +157,6 @@ namespace cnc {
 					return __res;
 				}
 			}
-			return CNC_MCERROR_INVALID_SEQUENCE;
 		}
 
 #define _ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(_DL, _D, _SL, _S, _ST, ...)                       \
