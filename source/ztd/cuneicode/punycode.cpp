@@ -153,10 +153,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 			}
 			case ::cnc::__cnc_detail::__pny_encode_state_ascii: {
 				bool __is_not_last_code_point;
-				for (; (__is_not_last_code_point = (__modified_src != __modified_src_last))
-				     && __is_not_ascii_codepoint(*__modified_src);
-				     ++__modified_src) {
-					// Skip all non-ascii codepoints
+				for (;; ++__modified_src) {
+					__is_not_last_code_point = (__modified_src != __modified_src_last);
+					if (__is_not_last_code_point
+					     && __is_not_ascii_codepoint(*__modified_src)) {
+						// Skip all non-ascii codepoints
+						continue;
+					}
+					break;
 				}
 				if (!__is_not_last_code_point) {
 					// no more ASCII characters left to write!
