@@ -212,35 +212,8 @@ if (ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES)
 		)
 		FetchContent_MakeAvailable(simdutf)
 	endfunction()
-	function(ztd_platform_dependency_jail)
-		# ztd.platform
-		FetchContent_Declare(
-			ztd.platform
-			GIT_REPOSITORY https://github.com/soasis/platform
-			GIT_TAG main
-		)
-		FetchContent_MakeAvailable(ztd.platform)
-	endfunction()
 	simdutf_dependency_jail()
-	ztd_platform_dependency_jail()
-	if (ZTD_CUNEICODE_BENCHMARKS)
-		function(boost_text_dependency_jail)
-			# boost.text
-			set(BOOST_TEXT_PERF OFF CACHE INTERNAL "")
-			set(BOOST_TEXT_EXAMPLES OFF CACHE INTERNAL "")
-			set(BOOST_TEXT_TESTS OFF CACHE INTERNAL "")
-			set(BOOST_TEXT_FETCH_BOOST ON CACHE INTERNAL "")
-			set(BOOST_TEXT_INSTALL OFF CACHE INTERNAL "")
-			set(BUILD_TESTING OFF CACHE INTERNAL "")
-			FetchContent_Declare(
-				boost.text
-				GIT_REPOSITORY https://github.com/ThePhD/text
-			)
-			FetchContent_MakeAvailable(boost.text)
-		endfunction()
-		boost_text_dependency_jail()
-	endif()
-	# internal libraries for exmaples and benchmarks
+	# internal libraries for examples and benchmarks
 	add_subdirectory(shared)
 	add_subdirectory(shared/simdutf)
 endif()
