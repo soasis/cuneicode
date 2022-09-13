@@ -65,7 +65,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid(
      const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return cnc_conv_with_pivot(
 	            __conversion, nullptr, nullptr, __p_bytes_in_count, __p_bytes_in, nullptr)
-	     == CNC_MCERROR_OKAY;
+	     == CNC_MCERROR_OK;
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_count(
@@ -94,7 +94,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_one_is_vali
      const unsigned char** __p_bytes_in) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return cnc_conv_one_with_pivot(
 	            __conversion, nullptr, nullptr, __p_bytes_in_count, __p_bytes_in, nullptr)
-	     == CNC_MCERROR_OKAY;
+	     == CNC_MCERROR_OK;
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one_count(

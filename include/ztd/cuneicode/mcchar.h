@@ -70,9 +70,9 @@
 /// `__p_maybe_dst_len`).
 /// @param[in, out] __p_src_len A pointer to the size of the input buffer (in number of
 /// **elements**). If this is `nullptr` or points to a value equivalent to `0`, then the input is
-/// considered empty and CNC_MCERROR_OKAY is returned.
+/// considered empty and CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_src A pointer to the pointer of the input buffer. If this or the pointer
-/// within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is returned.
+/// within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_state A pointer to the conversion state. If this is `nullptr`, a
 /// value-initialized (`= {0}` or similar) cnc_mcstate_t is used.
 ///
@@ -111,9 +111,9 @@
 /// `__p_maybe_dst_len`).
 /// @param[in, out] __p_src_len A pointer to the size of the input buffer (in number of
 /// **elements**). If this is `nullptr` or points to a value equivalent to `0`, then the input is
-/// considered empty and CNC_MCERROR_OKAY is returned.
+/// considered empty and CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_src A pointer to the pointer of the input buffer. If this or the pointer
-/// within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is returned.
+/// within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_state A pointer to the conversion state. If this is `nullptr`, a
 /// value-initialized (`= {0}` or similar) cnc_mcstate_t is used.
 ///

@@ -52,7 +52,7 @@ int main() {
 	     &output_size, &p_output,       // output first
 	     &input_size, &p_input,         // input second
 	     &state);                       // state parameter
-	if (err != CNC_MCERROR_OKAY) {
+	if (err != CNC_MCERROR_OK) {
 		const char* err_str = cnc_mcerror_to_str(err);
 		printf(
 		     "An (unexpected) error occurred and the conversion could not "

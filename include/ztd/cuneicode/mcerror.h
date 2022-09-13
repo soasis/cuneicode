@@ -54,7 +54,7 @@ typedef enum cnc_mcerror {
 	/// and
 	/// nothing has gone wrong.
 	//////
-	CNC_MCERROR_OKAY = 0,
+	CNC_MCERROR_OK = 0,
 	//////
 	/// @brief Returned when there is an error processing any input. No output is written.
 	///

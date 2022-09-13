@@ -54,7 +54,7 @@ int main() {
 	     &count_input_size, &p_count_input,
 	     // state parameter
 	     &count_state);
-	if (count_err != CNC_MCERROR_OKAY) {
+	if (count_err != CNC_MCERROR_OK) {
 		const char* err_str = cnc_mcerror_to_str(count_err);
 		printf(
 		     "An (unexpected) error occurred and the counting could not "
@@ -80,7 +80,7 @@ int main() {
           &input_size, &p_input,
           // state parameter
           &state);
-	if (err != CNC_MCERROR_OKAY) {
+	if (err != CNC_MCERROR_OK) {
 		const char* err_str = cnc_mcerror_to_str(err);
 		printf(
 		     "An (unexpected) error occurred and the conversion could not "

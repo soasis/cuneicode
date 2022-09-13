@@ -81,7 +81,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
      size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_pny_encode_state_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_src == nullptr || *__p_src == nullptr) {
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	size_t& __src_len          = *__p_src_len;
 	const ztd_char32_t*& __src = *__p_src;
@@ -126,7 +126,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 						// there are no more characters.
 						::cnc::__cnc_detail::__destroy_pny_encode_state(__p_state);
 					}
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 				else if (__modified_src
 				     == &__u32_xn_prefix[ztd_c_array_size(__u32_xn_prefix)]) {
@@ -148,7 +148,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 						__p_maybe_dst[0] += 1;
 					}
 					++__modified_src;
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			case ::cnc::__cnc_detail::__pny_encode_state_ascii: {
@@ -175,7 +175,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 					else if (__p_state->__has_seen_non_basic == 0) {
 						// there are no more characters to output; get out of here.
 						::cnc::__cnc_detail::__destroy_pny_encode_state(__p_state);
-						return CNC_MCERROR_OKAY;
+						return CNC_MCERROR_OK;
 					}
 					else {
 						// output a - and then go to the unicode section
@@ -194,7 +194,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 						__modified_src = __pny.__input.data();
 						::cnc::__cnc_detail::__start_non_basic_pny_encode_state(
 						     __pny, __p_state->__has_seen_non_basic);
-						return CNC_MCERROR_OKAY;
+						return CNC_MCERROR_OK;
 					}
 				}
 				// write out the single ASCII character
@@ -209,7 +209,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 					__p_maybe_dst[0] += 1;
 				}
 				++__modified_src;
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 			case ::cnc::__cnc_detail::__pny_encode_state_rle_unicode: {
 				// TODO: actually write this monstrosity...
@@ -316,11 +316,11 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 						break;
 						// we are fully done!
 					}
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 				// we are completely done!
 				::cnc::__cnc_detail::__destroy_pny_encode_state(__p_state);
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			} break;
 			default: {
 				ZTD_UNREACHABLE();
@@ -365,7 +365,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		__src_len -= 1;
 		__src += 1;
 	}
-	return CNC_MCERROR_OKAY;
+	return CNC_MCERROR_OK;
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcntoc32n_punycode(

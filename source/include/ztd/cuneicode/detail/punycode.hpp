@@ -257,14 +257,14 @@ namespace cnc {
 		     ztd_char32_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char_t** __p_src,
 		     cnc_pny_decode_state_t* __p_state) noexcept {
 			if (__p_src == nullptr || *__p_src == nullptr) {
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 			size_t& __src_len        = *__p_src_len;
 			const ztd_char_t*& __src = *__p_src;
 			if (!__p_state->__is_initialized) {
 				if (__src_len == 0) {
 					// just... don't bother, everything is fine.
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 				::cnc::__cnc_detail::__init_pny_decode_state(__p_state, _IsIdna);
 			}
@@ -370,7 +370,7 @@ namespace cnc {
 									     __pny_decode_state_write_output;
 									__pny.__output.assign(
 									     __pny.__input.begin(), __pny.__input.end());
-									return CNC_MCERROR_OKAY;
+									return CNC_MCERROR_OK;
 								}
 								const ztd_char_t __code_unit = __input_current[0];
 								__input_current += 1;
@@ -382,7 +382,7 @@ namespace cnc {
 									     __pny_decode_state_write_output;
 									__pny.__output.assign(
 									     __pny.__input.begin(), __pny.__input.end());
-									return CNC_MCERROR_OKAY;
+									return CNC_MCERROR_OK;
 								}
 								if (__pny_will_overflow_add_mul(__i, __digit, __w)) {
 									// this is a failure and we must bail.
@@ -390,7 +390,7 @@ namespace cnc {
 									     __pny_decode_state_write_output;
 									__pny.__output.assign(
 									     __pny.__input.begin(), __pny.__input.end());
-									return CNC_MCERROR_OKAY;
+									return CNC_MCERROR_OK;
 								}
 								__i                     = __i + (__digit * __w);
 								const ::std::size_t __t = __k <= __bias
@@ -405,7 +405,7 @@ namespace cnc {
 									     __pny_decode_state_write_output;
 									__pny.__output.assign(
 									     __pny.__input.begin(), __pny.__input.end());
-									return CNC_MCERROR_OKAY;
+									return CNC_MCERROR_OK;
 								}
 								__w = __w * (__base - __t);
 							}
@@ -422,7 +422,7 @@ namespace cnc {
 								     = ::cnc::__cnc_detail::__pny_decode_state_write_output;
 								__pny.__output.assign(
 								     __pny.__input.begin(), __pny.__input.end());
-								return CNC_MCERROR_OKAY;
+								return CNC_MCERROR_OK;
 							}
 							__n = static_cast<ztd_char32_t>(__n + __i_div_output_size_plus1);
 							__i = __i % __output_size_plus1;
@@ -434,7 +434,7 @@ namespace cnc {
 								     = ::cnc::__cnc_detail::__pny_decode_state_write_output;
 								__pny.__output.assign(
 								     __pny.__input.begin(), __pny.__input.end());
-								return CNC_MCERROR_OKAY;
+								return CNC_MCERROR_OK;
 							}
 							__pny.__output.insert(__pny.__output.begin() + __i, __n);
 							__i += 1;
@@ -452,7 +452,7 @@ namespace cnc {
 							::cnc::__cnc_detail::__destroy_pny_decode_state(__p_state);
 							__p_state->__action_state
 							     = ::cnc::__cnc_detail::__pny_decode_state_complete;
-							return CNC_MCERROR_OKAY;
+							return CNC_MCERROR_OK;
 						}
 						const ztd_char32_t __code_point = __pny.__output[__pny.__i];
 						if (!_IsUnbounded) {
@@ -466,7 +466,7 @@ namespace cnc {
 							__p_maybe_dst[0] += 1;
 						}
 						__i += 1;
-						return CNC_MCERROR_OKAY;
+						return CNC_MCERROR_OK;
 					} break;
 					default:
 						break;
@@ -484,7 +484,7 @@ namespace cnc {
 					for (; __pny.__i < 4; (void)++__pny.__i, (void)++__src, --__src_len) {
 						// if we are out of source, just come back around.
 						if (__src_len == 0) {
-							return CNC_MCERROR_OKAY;
+							return CNC_MCERROR_OK;
 						}
 						__pny.__input.push_back(__src[0]);
 						switch (__pny.__i) {
@@ -534,7 +534,7 @@ namespace cnc {
 						break;
 					}
 					__pny.__i = 0u;
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			const bool __is_directly_outputting = _IsIdna ? !__p_state->__prefixed : false;
@@ -552,14 +552,14 @@ namespace cnc {
 						::cnc::__cnc_detail::__destroy_pny_decode_state(__p_state);
 						__p_state->__action_state
 						     = ::cnc::__cnc_detail::__pny_decode_state_complete;
-						return CNC_MCERROR_OKAY;
+						return CNC_MCERROR_OK;
 					}
 					// we have had 0 input twice in a row; switch the completeness switch on to
 					// FORCE additional processing.
 					__p_state->__action_state = ::cnc::__cnc_detail::__pny_decode_state_ascii;
 					__pny.__input_current     = __pny.__input.data();
 				}
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 			const ztd_char_t __initial_code_unit = __src[0];
 			if (__initial_code_unit
@@ -600,7 +600,7 @@ namespace cnc {
 			}
 			__src_len -= 1;
 			__src += 1;
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 	} // namespace __cnc_detail

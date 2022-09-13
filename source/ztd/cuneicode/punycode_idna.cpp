@@ -54,7 +54,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
      size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_pny_encode_state_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_src == nullptr || *__p_src == nullptr) {
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	if (!__p_state->__is_initialized) {
 		::cnc::__cnc_detail::__init_pny_encode_state(__p_state, true);

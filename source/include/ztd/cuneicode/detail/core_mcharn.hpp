@@ -66,7 +66,7 @@ namespace cnc {
 		     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -74,7 +74,7 @@ namespace cnc {
 			const ztd_char32_t*& __src = *__p_src;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0 || __src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			ztd_char32_t __c0 = *__src;
@@ -131,7 +131,7 @@ namespace cnc {
 			}
 			__src += 1;
 			__src_len -= 1;
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
@@ -139,7 +139,7 @@ namespace cnc {
 		     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -147,7 +147,7 @@ namespace cnc {
 			const ztd_char32_t*& __src = *__p_src;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0 || __src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			ztd_char32_t __c0 = *__src;
@@ -184,7 +184,7 @@ namespace cnc {
 				}
 			}
 
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
@@ -192,7 +192,7 @@ namespace cnc {
 		     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -200,7 +200,7 @@ namespace cnc {
 			const ztd_char32_t*& __src = *__p_src;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0 || __src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			if constexpr (!_IsUnbounded) {
@@ -222,7 +222,7 @@ namespace cnc {
 			if constexpr (!_IsUnbounded) {
 				*__p_maybe_dst_len -= 1;
 			}
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
@@ -241,13 +241,13 @@ namespace cnc {
 #if ZTD_IS_ON(ZTD_UCHAR) || ZTD_IS_ON(ZTD_CUCHAR)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			size_t& __src_len = *__p_src_len;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -280,7 +280,7 @@ namespace cnc {
 				__src_len -= __source_read;
 				break;
 			}
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 #else
 			return ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, _SourceChecks>(
 			     __p_maybe_dst_len, reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
@@ -294,14 +294,14 @@ namespace cnc {
 		     cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || __p_src_len == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
 			size_t& __src_len = *__p_src_len;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -322,7 +322,7 @@ namespace cnc {
 				}
 				__src += 1;
 				__src_len -= 1;
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 			if (__ztd_idk_detail_is_lead_utf8(__c8)) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
@@ -357,7 +357,7 @@ namespace cnc {
 			}
 			__src += __seq_len;
 			__src_len -= __seq_len;
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
@@ -365,7 +365,7 @@ namespace cnc {
 		     size_t* __p_src_len, const ztd_char8_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -373,7 +373,7 @@ namespace cnc {
 			const ztd_char8_t*& __src = *__p_src;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0 || __src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -390,7 +390,7 @@ namespace cnc {
 				}
 				__src += 1;
 				__src_len -= 1;
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 			if (__ztd_idk_detail_is_lead_utf8(__c8)) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
@@ -449,7 +449,7 @@ namespace cnc {
 			__src += __seq_len;
 			__src_len -= __seq_len;
 
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
@@ -457,7 +457,7 @@ namespace cnc {
 		     size_t* __p_src_len, const ztd_char8_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -465,7 +465,7 @@ namespace cnc {
 			const ztd_char8_t*& __src = *__p_src;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0 || __src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -482,7 +482,7 @@ namespace cnc {
 				}
 				__src += 1;
 				__src_len -= 1;
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 			if (__ztd_idk_detail_is_lead_utf8(__c8)) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
@@ -525,7 +525,7 @@ namespace cnc {
 			__src += __seq_len;
 			__src_len -= __seq_len;
 
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
@@ -534,14 +534,14 @@ namespace cnc {
 		     cnc_mcstate_t* __p_state) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			size_t& __src_len          = *__p_src_len;
 			const ztd_char16_t*& __src = *__p_src;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0 || __src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -564,7 +564,7 @@ namespace cnc {
 				     = ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, false>(
 				          __p_maybe_dst_len, __p_maybe_dst, &__input_size, &__p_input,
 				          __p_state);
-				if (__intermediate_err == CNC_MCERROR_OKAY) {
+				if (__intermediate_err == CNC_MCERROR_OK) {
 					__src += 2;
 					__src_len -= 2;
 				}
@@ -581,7 +581,7 @@ namespace cnc {
 				     = ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, false>(
 				          __p_maybe_dst_len, __p_maybe_dst, &__input_size, &__p_input,
 				          __p_state);
-				if (__intermediate_err == CNC_MCERROR_OKAY) {
+				if (__intermediate_err == CNC_MCERROR_OK) {
 					__src += 1;
 					__src_len -= 1;
 				}
@@ -594,7 +594,7 @@ namespace cnc {
 		     size_t* __p_src_len, const ztd_char16_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -602,7 +602,7 @@ namespace cnc {
 			const ztd_char16_t*& __src = *__p_src;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0 || __src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			if constexpr (!_IsUnbounded) {
@@ -646,7 +646,7 @@ namespace cnc {
 				__src += 1;
 				__src_len -= 1;
 			}
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
@@ -654,7 +654,7 @@ namespace cnc {
 		     size_t* __p_src_len, const ztd_char16_t** __p_src, cnc_mcstate_t*) noexcept {
 			if constexpr (_SourceChecks) {
 				if (__p_src_len == nullptr || __p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 
@@ -662,7 +662,7 @@ namespace cnc {
 			const ztd_char16_t*& __src = *__p_src;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0 || __src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			if constexpr (!_IsUnbounded) {
@@ -701,7 +701,7 @@ namespace cnc {
 			if constexpr (!_IsUnbounded) {
 				*__p_maybe_dst_len -= 1;
 			}
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
@@ -735,13 +735,13 @@ namespace cnc {
 #if ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CWCHAR)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			size_t& __src_len = *__p_src_len;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			if constexpr (!_IsUnbounded) {
@@ -783,7 +783,7 @@ namespace cnc {
 				__src_len -= __c_err;
 				break;
 			}
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 #else
 			::std::abort();
 			return CNC_MCERROR_INVALID_SEQUENCE;
@@ -817,13 +817,13 @@ namespace cnc {
 #if ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CWCHAR)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			size_t& __src_len = *__p_src_len;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			if constexpr (!_IsUnbounded) {
@@ -858,7 +858,7 @@ namespace cnc {
 				}
 				break;
 			}
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 #else
 			::std::abort();
 			return CNC_MCERROR_INVALID_SEQUENCE;
@@ -893,13 +893,13 @@ namespace cnc {
 
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			size_t& __src_len = *__p_src_len;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			const ztd_char32_t*& __src = *__p_src;
@@ -913,7 +913,7 @@ namespace cnc {
 			     = ::cnc::__cnc_detail::__c32nrtomcn<_IsCounting, _IsUnbounded, false>(
 			          &__multibyte_intermediate_output_size, &__p_multibyte_intermediate_output,
 			          __p_src_len, __p_src, __p_state);
-			if (__intermediate_err != CNC_MCERROR_OKAY) {
+			if (__intermediate_err != CNC_MCERROR_OK) {
 				return __intermediate_err;
 			}
 			size_t __multibyte_intermediate_input_size
@@ -923,7 +923,7 @@ namespace cnc {
 			     = ::cnc::__cnc_detail::__mcnrtomwcn<_IsCounting, _IsUnbounded, false>(
 			          __p_maybe_dst_len, __p_maybe_dst, &__multibyte_intermediate_input_size,
 			          &__p_multibyte_intermediate_input, __p_state);
-			if (__err != CNC_MCERROR_OKAY) {
+			if (__err != CNC_MCERROR_OK) {
 				__src     = __initial_src;
 				__src_len = __initial_src_len;
 			}
@@ -944,13 +944,13 @@ namespace cnc {
 #if ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			size_t& __src_len = *__p_src_len;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			const char*& __src = *__p_src;
@@ -995,7 +995,7 @@ namespace cnc {
 				}
 				break;
 			}
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 #else
 			return ::cnc::__cnc_detail::__c8nrtoc32n<_IsCounting, _IsUnbounded, _SourceChecks>(
 			     __p_maybe_dst_len, __p_maybe_dst, __p_src_len,
@@ -1029,13 +1029,13 @@ namespace cnc {
 
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			size_t& __src_len = *__p_src_len;
 			if constexpr (_SourceChecks) {
 				if (__src_len == 0) {
-					return CNC_MCERROR_OKAY;
+					return CNC_MCERROR_OK;
 				}
 			}
 			const ztd_wchar_t*& __src = *__p_src;
@@ -1049,7 +1049,7 @@ namespace cnc {
 			     = ::cnc::__cnc_detail::__mwcnrtomcn<_IsCounting, _IsUnbounded, false>(
 			          &__multibyte_intermediate_output_size, &__p_multibyte_intermediate_output,
 			          __p_src_len, __p_src, __p_state);
-			if (__intermediate_err != CNC_MCERROR_OKAY) {
+			if (__intermediate_err != CNC_MCERROR_OK) {
 				return __intermediate_err;
 			}
 			size_t __multibyte_intermediate_input_size
@@ -1059,7 +1059,7 @@ namespace cnc {
 			     = ::cnc::__cnc_detail::__mcnrtoc32n<_IsCounting, _IsUnbounded, false>(
 			          __p_maybe_dst_len, __p_maybe_dst, &__multibyte_intermediate_input_size,
 			          &__p_multibyte_intermediate_input, __p_state);
-			if (__err != CNC_MCERROR_OKAY) {
+			if (__err != CNC_MCERROR_OK) {
 				__src     = __initial_src;
 				__src_len = __initial_src_len;
 			}

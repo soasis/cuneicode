@@ -34,8 +34,8 @@
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerror_to_str(
      cnc_mcerror err) {
 	switch (err) {
-	case CNC_MCERROR_OKAY:
-		return "CNC_MCERROR_OKAY";
+	case CNC_MCERROR_OK:
+		return "CNC_MCERROR_OK";
 	case CNC_MCERROR_INCOMPLETE_INPUT:
 		return "CNC_MCERROR_INCOMPLETE_INPUT";
 	case CNC_MCERROR_INSUFFICIENT_OUTPUT:

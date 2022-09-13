@@ -69,7 +69,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	else if (__code == U'\uE5E5') {
 		return CNC_MCERROR_INVALID_SEQUENCE;
@@ -101,7 +101,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 
 	if (!_IsUnbounded) {
@@ -133,7 +133,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 
 	return CNC_MCERROR_INVALID_SEQUENCE;
@@ -175,7 +175,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	else if (__first_byte == 0x80) {
 		// specific output for 0x80
@@ -194,7 +194,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	else if (__first_byte >= 0xFF) {
 		return CNC_MCERROR_INVALID_SEQUENCE;
@@ -235,7 +235,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 			}
 			__src += 4;
 			__src_len -= 4;
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 		return CNC_MCERROR_INVALID_SEQUENCE;
 	}
@@ -263,7 +263,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 			}
 			__src += 2;
 			__src_len -= 2;
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 	}
 	return CNC_MCERROR_INVALID_SEQUENCE;

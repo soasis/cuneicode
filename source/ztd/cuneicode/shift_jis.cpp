@@ -1643,7 +1643,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	else if (__code == 0x00A5) {
 		if (!_IsUnbounded) {
@@ -1659,7 +1659,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	else if (__code == 0x203E) {
 		if (!_IsUnbounded) {
@@ -1675,7 +1675,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	else if (__code >= 0xFF61 && __code <= 0xFF9F) {
 		if (!_IsUnbounded) {
@@ -1692,7 +1692,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 
 	if (__code == 0x2212) {
@@ -1724,7 +1724,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 
 	return CNC_MCERROR_INVALID_SEQUENCE;
@@ -1765,7 +1765,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	else if (__first_byte <= 0xDF && __first_byte >= 0xA1) {
 		// Top-Level case 1: it's non-ASCII single-byte
@@ -1783,7 +1783,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OKAY;
+		return CNC_MCERROR_OK;
 	}
 	else if ((__first_byte <= 0x9F && __first_byte >= 0x81)
 	     || (__first_byte <= 0xFC && __first_byte >= 0xE0)) {
@@ -1834,7 +1834,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 			}
 			__src += 1;
 			__src_len -= 1;
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 	}
 

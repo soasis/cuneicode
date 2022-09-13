@@ -196,9 +196,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_delete(
 /// `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
-/// CNC_MCERROR_OKAY is returned.
+/// CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
-/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is
 /// returned.
 ///
 /// @remarks The conversion functions take parameters as output parameters (pointers) so that they
@@ -229,12 +229,12 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv(
 /// `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
-/// CNC_MCERROR_OKAY is returned.
+/// CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
-/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is
 /// returned.
 /// @param[in, out] __p_pivot_info A pointer to a pivot buffer and return error code. If the return
-/// value of this function is not CNC_MCERROR_OKAY, the pivot information is not NULL, and the error
+/// value of this function is not CNC_MCERROR_OK, the pivot information is not NULL, and the error
 /// was caused by the intermediate conversion step failing, then the `error` member of
 /// cnc_pivot_info will be set to the error value that took place.
 ///
@@ -266,9 +266,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_with
 /// `nullptr`, then it will not update the count.
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
-/// CNC_MCERROR_OKAY is returned.
+/// CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
-/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is
 /// returned.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv with the
@@ -310,9 +310,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid(
 /// `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
-/// CNC_MCERROR_OKAY is returned.
+/// CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
-/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is
 /// returned.
 ///
 /// @remarks The conversion functions take parameters as output parameters (pointers) so that they
@@ -342,9 +342,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_unbo
 /// decrement the value pointed to by `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
-/// CNC_MCERROR_OKAY is returned.
+/// CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
-/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is
 /// returned.
 ///
 /// @remarks This function only performs exactly one complete unit of work for the input and the
@@ -372,9 +372,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one(
 /// `nullptr`, then it will not update the count.
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
-/// CNC_MCERROR_OKAY is returned.
+/// CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
-/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is
 /// returned.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv_one with the

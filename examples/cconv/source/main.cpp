@@ -308,7 +308,7 @@ int main(int argc, char* argv[]) {
 						error_output_written
 						     = initial_error_output_size - error_output_size;
 					} break;
-					case CNC_MCERROR_OKAY:
+					case CNC_MCERROR_OK:
 					case CNC_MCERROR_INSUFFICIENT_OUTPUT:
 					default:
 						break;

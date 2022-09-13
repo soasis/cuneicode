@@ -53,7 +53,7 @@ namespace {
 		const cnc_mcerror output_err = cnc_cxntocyn(&output_size, &output, &input_size, &input);
 		const size_t input_read      = initial_input_size - input_size;
 		const size_t output_written  = initial_output_size - output_size;
-		REQUIRE(output_err == CNC_MCERROR_OKAY);
+		REQUIRE(output_err == CNC_MCERROR_OK);
 		REQUIRE(input_read == initial_input_size);
 		REQUIRE((output - initial_output) >= (static_cast<std::ptrdiff_t>(0)));
 		REQUIRE((initial_input + input_read) == input);
@@ -68,7 +68,7 @@ namespace {
 			size_t validate_input_size               = initial_input_size;
 			const cnc_mcerror validate_input_err     = cnc_cxntocyn(nullptr,
 			         static_cast<output_char**>(nullptr), &validate_input_size, &validate_input);
-			REQUIRE(validate_input_err == CNC_MCERROR_OKAY);
+			REQUIRE(validate_input_err == CNC_MCERROR_OK);
 			REQUIRE(
 			     (validate_input - initial_input) == (static_cast<std::ptrdiff_t>(input_read)));
 		}
@@ -81,7 +81,7 @@ namespace {
 			const cnc_mcerror count_input_err     = cnc_cxntocyn(&count_output_size,
 			         static_cast<output_char**>(nullptr), &count_input_size, &count_input);
 			const size_t count_output_written     = initial_output_size - count_output_size;
-			REQUIRE(count_input_err == CNC_MCERROR_OKAY);
+			REQUIRE(count_input_err == CNC_MCERROR_OK);
 			REQUIRE((count_input - initial_count_input)
 			     == (static_cast<std::ptrdiff_t>(input_read)));
 			REQUIRE(count_output_written == output_written);
@@ -96,7 +96,7 @@ namespace {
 			output_char* unbounded_output         = initial_unbounded_output;
 			const cnc_mcerror unbounded_input_err = cnc_cxntocyn(
 			     nullptr, &unbounded_output, &unbounded_input_size, &unbounded_input);
-			REQUIRE(unbounded_input_err == CNC_MCERROR_OKAY);
+			REQUIRE(unbounded_input_err == CNC_MCERROR_OK);
 			REQUIRE((unbounded_input - initial_unbounded_input)
 			     == (static_cast<std::ptrdiff_t>(input_read)));
 			REQUIRE((unbounded_output - initial_unbounded_output)
@@ -120,8 +120,8 @@ namespace {
 		     = cnc_cxntocyn(&input_output_size, &input_output, &intermediate_size, &intermediate);
 		const size_t intermediate_read    = initial_intermediate_size - intermediate_size;
 		const size_t input_output_written = initial_input_output_size - input_output_size;
-		if (input_output_err != CNC_MCERROR_OKAY)
-			REQUIRE(input_output_err == CNC_MCERROR_OKAY);
+		if (input_output_err != CNC_MCERROR_OK)
+			REQUIRE(input_output_err == CNC_MCERROR_OK);
 		REQUIRE(intermediate_size == 0);
 		REQUIRE((intermediate - initial_intermediate) >= (static_cast<std::ptrdiff_t>(0)));
 		REQUIRE(intermediate_read == output_written);
@@ -140,7 +140,7 @@ namespace {
 			size_t validate_input_size                = initial_intermediate_size;
 			const cnc_mcerror validate_input_err      = cnc_cxntocyn(nullptr,
 			          static_cast<input_char**>(nullptr), &validate_input_size, &validate_input);
-			REQUIRE(validate_input_err == CNC_MCERROR_OKAY);
+			REQUIRE(validate_input_err == CNC_MCERROR_OK);
 			REQUIRE((validate_input - initial_validate_input)
 			     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 		}
@@ -153,7 +153,7 @@ namespace {
 			const cnc_mcerror count_input_err      = cnc_cxntocyn(&count_output_size,
 			          static_cast<input_char**>(nullptr), &count_input_size, &count_input);
 			const size_t count_output_written      = initial_output_size - count_output_size;
-			REQUIRE(count_input_err == CNC_MCERROR_OKAY);
+			REQUIRE(count_input_err == CNC_MCERROR_OK);
 			REQUIRE((count_input - initial_count_input)
 			     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 			REQUIRE(count_output_written == input_output_written);
@@ -168,7 +168,7 @@ namespace {
 			input_char* unbounded_output          = initial_unbounded_output;
 			const cnc_mcerror unbounded_input_err = cnc_cxntocyn(
 			     nullptr, &unbounded_output, &unbounded_input_size, &unbounded_input);
-			REQUIRE(unbounded_input_err == CNC_MCERROR_OKAY);
+			REQUIRE(unbounded_input_err == CNC_MCERROR_OK);
 			REQUIRE((unbounded_input - initial_unbounded_input)
 			     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 			REQUIRE((unbounded_output - initial_unbounded_output)
@@ -213,7 +213,7 @@ namespace {
 			     = cnc_cxntocyn(&output_size, &output, &input_size, &input);
 			const size_t input_read     = initial_input_size - input_size;
 			const size_t output_written = initial_output_size - output_size;
-			REQUIRE(output_err == CNC_MCERROR_OKAY);
+			REQUIRE(output_err == CNC_MCERROR_OK);
 			REQUIRE((input - initial_input) == (static_cast<std::ptrdiff_t>(1)));
 			REQUIRE(input_read == 1);
 			REQUIRE((output - initial_output) >= (static_cast<std::ptrdiff_t>(0)));
@@ -226,7 +226,7 @@ namespace {
 				const cnc_mcerror validate_input_err
 				     = cnc_cxntocyn(nullptr, static_cast<output_char**>(nullptr),
 				          &validate_input_size, &validate_input);
-				REQUIRE(validate_input_err == CNC_MCERROR_OKAY);
+				REQUIRE(validate_input_err == CNC_MCERROR_OK);
 				REQUIRE((validate_input - initial_input)
 				     == (static_cast<std::ptrdiff_t>(input_read)));
 			}
@@ -239,7 +239,7 @@ namespace {
 				const cnc_mcerror count_input_err     = cnc_cxntocyn(&count_output_size,
 				         static_cast<output_char**>(nullptr), &count_input_size, &count_input);
 				const size_t count_output_written     = initial_output_size - count_output_size;
-				REQUIRE(count_input_err == CNC_MCERROR_OKAY);
+				REQUIRE(count_input_err == CNC_MCERROR_OK);
 				REQUIRE((count_input - initial_count_input)
 				     == (static_cast<std::ptrdiff_t>(input_read)));
 				REQUIRE(count_output_written == output_written);
@@ -254,7 +254,7 @@ namespace {
 				output_char* unbounded_output         = initial_unbounded_output;
 				const cnc_mcerror unbounded_input_err = cnc_cxntocyn(
 				     nullptr, &unbounded_output, &unbounded_input_size, &unbounded_input);
-				REQUIRE(unbounded_input_err == CNC_MCERROR_OKAY);
+				REQUIRE(unbounded_input_err == CNC_MCERROR_OK);
 				REQUIRE((unbounded_input - initial_unbounded_input)
 				     == (static_cast<std::ptrdiff_t>(input_read)));
 				REQUIRE((unbounded_output - initial_unbounded_output)
@@ -284,7 +284,7 @@ namespace {
 			         &input_output_size, &input_output, &intermediate_size, &intermediate);
 			const size_t intermediate_read    = initial_intermediate_size - intermediate_size;
 			const size_t input_output_written = initial_input_output_size - input_output_size;
-			REQUIRE(input_output_err == CNC_MCERROR_OKAY);
+			REQUIRE(input_output_err == CNC_MCERROR_OK);
 			REQUIRE((intermediate - initial_intermediate)
 			     == (static_cast<std::ptrdiff_t>(output_written)));
 			REQUIRE(intermediate_size == 0);
@@ -305,7 +305,7 @@ namespace {
 				size_t validate_input_size                = initial_intermediate_size;
 				const cnc_mcerror validate_input_err      = cnc_cxntocyn(nullptr,
 				          static_cast<input_char**>(nullptr), &validate_input_size, &validate_input);
-				REQUIRE(validate_input_err == CNC_MCERROR_OKAY);
+				REQUIRE(validate_input_err == CNC_MCERROR_OK);
 				REQUIRE((validate_input - initial_validate_input)
 				     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 			}
@@ -318,7 +318,7 @@ namespace {
 				const cnc_mcerror count_input_err      = cnc_cxntocyn(&count_output_size,
 				          static_cast<input_char**>(nullptr), &count_input_size, &count_input);
 				const size_t count_output_written = initial_output_size - count_output_size;
-				REQUIRE(count_input_err == CNC_MCERROR_OKAY);
+				REQUIRE(count_input_err == CNC_MCERROR_OK);
 				REQUIRE((count_input - initial_count_input)
 				     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 				REQUIRE(count_output_written == input_output_written);
@@ -333,7 +333,7 @@ namespace {
 				input_char* unbounded_output          = initial_unbounded_output;
 				const cnc_mcerror unbounded_input_err = cnc_cxntocyn(
 				     nullptr, &unbounded_output, &unbounded_input_size, &unbounded_input);
-				REQUIRE(unbounded_input_err == CNC_MCERROR_OKAY);
+				REQUIRE(unbounded_input_err == CNC_MCERROR_OK);
 				REQUIRE((unbounded_input - initial_unbounded_input)
 				     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 				REQUIRE((unbounded_output - initial_unbounded_output)

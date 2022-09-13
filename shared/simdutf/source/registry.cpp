@@ -45,11 +45,11 @@
 		using from_char_t = std::conditional_t<FROM_N == 8, char, ztd_char##FROM_N##_t>;                   \
 		using to_char_t   = std::conditional_t<TO_N == 8, char, ztd_char##TO_N##_t>;                       \
 		if (p_input_bytes == nullptr || *p_input_bytes == nullptr) {                                       \
-			return CNC_MCERROR_OKAY;                                                                      \
+			return CNC_MCERROR_OK;                                                                        \
 		}                                                                                                  \
 		ZTD_ASSERT(p_input_bytes_size != nullptr);                                                         \
 		if (*p_input_bytes_size == 0) {                                                                    \
-			return CNC_MCERROR_OKAY;                                                                      \
+			return CNC_MCERROR_OK;                                                                        \
 		}                                                                                                  \
 		const unsigned char*& input_bytes = *p_input_bytes;                                                \
 		size_t& input_bytes_size          = *p_input_bytes_size;                                           \
@@ -70,7 +70,7 @@
 				input_bytes += input_bytes_size;                                                         \
 				input_bytes_size = 0;                                                                    \
 				*p_output_bytes -= result.count * sizeof(to_char_t);                                     \
-				return CNC_MCERROR_OKAY;                                                                 \
+				return CNC_MCERROR_OK;                                                                   \
 			}                                                                                             \
 		}                                                                                                  \
 		bool valid_utf##FROM_N = ztd::endian::native == ztd::endian::big                                   \
@@ -97,7 +97,7 @@
 				}                                                                                        \
 				input_bytes += input_bytes_size;                                                         \
 				input_bytes_size -= input_bytes_size;                                                    \
-				return CNC_MCERROR_OKAY;                                                                 \
+				return CNC_MCERROR_OK;                                                                   \
 			}                                                                                             \
 			else {                                                                                        \
 				const size_t initial_write_size = ztd::endian::native == ztd::endian::big                \
@@ -128,7 +128,7 @@
 					}                                                                                   \
 					input_bytes += input_bytes_size;                                                    \
 					input_bytes_size -= input_bytes_size;                                               \
-					return CNC_MCERROR_OKAY;                                                            \
+					return CNC_MCERROR_OK;                                                              \
 				}                                                                                        \
 			}                                                                                             \
 		}                                                                                                  \

@@ -52,11 +52,11 @@ namespace cnc {
 		     size_t* __p_src_len, const _SourceChar** __p_src, _State __p_state) noexcept {
 			if (__p_src_len == nullptr || *__p_src_len < 1) {
 				// empty sources are just fine (returns 0)
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 			if (__p_src == nullptr || *__p_src == nullptr) {
 				// null sources are treated like empty sources: okay
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 
 			const _SourceChar*& __src             = *__p_src;
@@ -80,7 +80,7 @@ namespace cnc {
 			case CNC_MCERROR_INSUFFICIENT_OUTPUT:
 				// this error should never happen, ever!
 				return __res_decode;
-			case CNC_MCERROR_OKAY:
+			case CNC_MCERROR_OK:
 			default:
 				// we can keep going!
 				break;
@@ -104,14 +104,14 @@ namespace cnc {
 			case CNC_MCERROR_INSUFFICIENT_OUTPUT:
 				// this error should never happen, ever!
 				return __res_encode;
-			case CNC_MCERROR_OKAY:
+			case CNC_MCERROR_OK:
 			default:
 				// all good, update original pointers!
 				__src     = __intermediate_src;
 				__src_len = __intermediate_src_len;
 				break;
 			}
-			return CNC_MCERROR_OKAY;
+			return CNC_MCERROR_OK;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, size_t _IntermediateMax, typename _Func,
@@ -122,11 +122,11 @@ namespace cnc {
 		     size_t* __p_src_len, const _SourceChar** __p_src, _State __p_state) noexcept {
 			if (__p_src_len == nullptr || *__p_src_len < 1) {
 				// empty sources are just fine (returns 0)
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 			if (__p_src == nullptr || *__p_src == nullptr) {
 				// null sources are treated like empty sources: okay
-				return CNC_MCERROR_OKAY;
+				return CNC_MCERROR_OK;
 			}
 
 			if constexpr (!_IsUnbounded) {
@@ -144,12 +144,12 @@ namespace cnc {
 				cnc_mcerror __res = __xsnrtoysn(
 				     __p_maybe_dst_len, __p_maybe_dst, &__src_len, &__src, __p_state);
 				switch (__res) {
-				case CNC_MCERROR_OKAY:
+				case CNC_MCERROR_OK:
 					if (__src_len == 0) {
 						if (!__completion_func(__p_state)) {
 							break;
 						}
-						return CNC_MCERROR_OKAY;
+						return CNC_MCERROR_OK;
 					}
 					break;
 				default:
@@ -205,13 +205,13 @@ namespace cnc {
 
 #define _ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE)                 \
 	if (__p_src == nullptr || *__p_src == nullptr) {                                   \
-		return CNC_MCERROR_OKAY;                                                      \
+		return CNC_MCERROR_OK;                                                        \
 	}                                                                                  \
 	ZTD_ASSERT(__p_src_len != nullptr);                                                \
 	const _SRC_TYPE*& __src = *__p_src;                                                \
 	size_t& __src_len       = *__p_src_len;                                            \
 	if (__src_len < 1) {                                                               \
-		return CNC_MCERROR_OKAY;                                                      \
+		return CNC_MCERROR_OK;                                                        \
 	}                                                                                  \
 	const bool _IsCounting  = __p_maybe_dst == nullptr || __p_maybe_dst[0] == nullptr; \
 	const bool _IsUnbounded = __p_maybe_dst_len == nullptr

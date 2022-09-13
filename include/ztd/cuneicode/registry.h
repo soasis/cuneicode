@@ -191,9 +191,9 @@ typedef void(cnc_close_function)(void* __data);
 /// `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
-/// CNC_MCERROR_OKAY is returned.
+/// CNC_MCERROR_OK is returned.
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
-/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OKAY is
+/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is
 /// returned.
 /// @param[in] __p_pivot_info Pivot information, if provided. Is allowed to be a null pointer, or is
 /// allowed to be a non-null pointer but have the member `bytes` be a null pointer. If either of

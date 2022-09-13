@@ -33,7 +33,7 @@
 
 .. doxygenfunction:: cnc_mcerror_to_str
 
-.. doxygenenumvalue:: CNC_MCERROR_OKAY
+.. doxygenenumvalue:: CNC_MCERROR_OK
 
 .. doxygenenumvalue:: CNC_MCERROR_INCOMPLETE_INPUT
 
