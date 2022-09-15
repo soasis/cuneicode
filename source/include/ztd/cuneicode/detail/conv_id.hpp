@@ -35,6 +35,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/idk/charN_t.hpp>
+#include <ztd/idk/char_traits.hpp>
 #include <ztd/idk/detail/unicode.hpp>
 
 #include <string_view>

@@ -32,6 +32,8 @@
 
 #include <ztd/cuneicode.h>
 
+#include <ztd/idk/char_traits.hpp>
+
 #include <cstddef>
 #include <string_view>
 #include <string>

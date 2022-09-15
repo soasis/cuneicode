@@ -208,8 +208,8 @@ if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 	# # Fetch dependencies for either benchmarks and/or examples
 	function(simdutf_dependency_jail)
 		# simdutf
-		set(SIMDUTF_BENCHMARKS OFF CACHE INTERNAL "")
-		set(BUILD_TESTING OFF CACHE INTERNAL "")
+		set(SIMDUTF_BENCHMARKS OFF)
+		set(BUILD_TESTING OFF)
 		FetchContent_Declare(
 			simdutf
 			GIT_REPOSITORY https://github.com/simdutf/simdutf

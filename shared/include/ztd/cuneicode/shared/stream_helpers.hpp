@@ -32,6 +32,9 @@
 
 #include <ztd/cuneicode.h>
 
+#include <ztd/idk/charN_t.hpp>
+#include <ztd/idk/char_traits.hpp>
+
 #include <string_view>
 #include <string>
 #include <iosfwd>
