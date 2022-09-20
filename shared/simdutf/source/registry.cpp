@@ -33,9 +33,9 @@
 
 #include <ztd/idk/assert.hpp>
 #include <ztd/idk/endian.hpp>
-#include <ztd/idk/unreachable.h>
+#include <ztd/idk/unreachable.hpp>
 #include <ztd/idk/char_traits.hpp>
-#include <ztd/idk/align.h>
+#include <ztd/idk/align.hpp>
 
 #include <simdutf.h>
 
