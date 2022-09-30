@@ -105,7 +105,8 @@ def run_cmake_doxygen():
 	xml_dir = os.path.join(cmake_dir, 'documentation/doxygen/xml')
 	os.makedirs(cmake_dir, exist_ok=True)
 	os.makedirs(xml_dir, exist_ok=True)
-	print("[ztd.cuneicode/documentation/conf.py] CMake Directory: %s" % cmake_dir)
+	print("[ztd.cuneicode/documentation/conf.py] CMake Directory: %s" %
+	      cmake_dir)
 	print("[ztd.cuneicode/documentation/conf.py] XML Directory: %s" % xml_dir)
 
 	try:
@@ -118,9 +119,10 @@ def run_cmake_doxygen():
 		return
 
 	try:
-		retcode = subprocess.call("cmake --build .",
-		                          shell=True,
-		                          cwd=cmake_dir)
+		retcode = subprocess.call(
+		    "cmake --build . --target \"ztd.cuneicode.documentation.doxygen\"",
+		    shell=True,
+		    cwd=cmake_dir)
 	except OSError as e:
 		sys.stderr.write("cmake generation execution failed: %s\n" % e)
 		return

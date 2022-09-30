@@ -39,6 +39,7 @@
 #include <ztd/cuneicode/registry.h>
 #include <ztd/cuneicode/heap.h>
 #include <ztd/cuneicode/pivot_info.h>
+#include <ztd/cuneicode/inout_result.h>
 #include <ztd/idk/charN_t.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
