@@ -213,7 +213,7 @@ if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 		FetchContent_Declare(
 			simdutf
 			GIT_REPOSITORY https://github.com/simdutf/simdutf
-		)
+			GIT_TAG master)
 		FetchContent_MakeAvailable(simdutf)
 	endfunction()
 	simdutf_dependency_jail()
