@@ -67,7 +67,6 @@ typedef struct cnc_conversion_info {
 	///
 	/// @remarks This will always be a null-terminated pointer, but does not guarantee there may
 	/// not be embedded nulls.
-	//////
 	const ztd_char8_t* from_code_data;
 	//////
 	/// @brief The size of the `from_code` data.
@@ -77,7 +76,6 @@ typedef struct cnc_conversion_info {
 	///
 	/// @remarks This will always be a null-terminated pointer, but does not guarantee there may
 	/// not be embedded nulls.
-	//////
 	const ztd_char8_t* to_code_data;
 	//////
 	/// @brief The size of the `to_code` data.
@@ -88,20 +86,17 @@ typedef struct cnc_conversion_info {
 	/// @remarks An indirect conversion goes through an intermediate encoding to reach it's final
 	/// destination. This is typical for most conversions which encoding to and from some form of
 	/// Unicode, but do not translate to each other.
-	///////
 	bool is_indirect;
 	//////
 	/// @brief The name of the indirect encoding.
 	///
 	/// @remarks This is `nullptr` if is_indirect is false. If it is not `nullptr`, this will be a
 	/// null-terminated pointer. But, it does not guarantee there may not be embedded nulls.
-	//////
 	const ztd_char8_t* indirect_code_data;
 	//////
 	/// @brief The size of the `indirect_code` data.
 	///
 	/// @remarks This is 0 if is_indirect is false.
-	//////
 	size_t indirect_code_size;
 } cnc_conversion_info;
 

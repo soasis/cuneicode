@@ -107,17 +107,14 @@ typedef union cnc_mcstate_t {
 		//////
 		/// @brief The indactor. Must be set by any custom encoding routine using mcstate_t and
 		/// desiring custom completion behavior to CNC_MCSTATE_INDICATOR_RAW.
-		//////
 		cnc_mcstate_indicator indicator : CHAR_BIT;
 		//////
 		/// @brief Universal "assume valid input" flag for use with "-unchecked"-suffixed
 		/// encodings.
-		//////
 		unsigned int assume_valid : 1;
 		//////
 		/// @brief Padding to keep consistent sizing. Not meant to be part of any location. Do not
 		/// access.
-		//////
 		unsigned int __paddding : ((sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT) - 1;
 	} header;
 #if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
@@ -147,28 +144,23 @@ typedef union cnc_mcstate_t {
 		//////
 		/// @brief The indactor. Must be set by any custom encoding routine using mcstate_t and
 		/// desiring custom completion behavior to CNC_MCSTATE_INDICATOR_RAW.
-		//////
 		cnc_mcstate_indicator indicator : CHAR_BIT;
 		//////
 		/// @brief Universal "assume valid input" flag for use with "-unchecked"-suffixed
 		/// encodings.
-		//////
 		unsigned int assume_valid : 1;
 		//////
 		/// @brief Padding to keep consistent sizing. Not meant to be part of any location. Do not
 		/// access.
-		//////
 		unsigned int __paddding : ((sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT) - 1;
 		//////
 		/// @brief The completion function. If behavior beyond a check for the provided
 		/// fixed-size data is zero is desired, then this must be set to a valid
 		/// function pointer. Otherwise, it must be a null pointer.
-		//////
 		state_is_complete_function* completion_function;
 		//////
 		/// @brief Leftover data blob for use by the user. The user is responsible for its
 		/// management within the conversion functions.
-		//////
 		unsigned char raw_data[(sizeof(void*) * 3)];
 	} raw;
 } cnc_mcstate_t;

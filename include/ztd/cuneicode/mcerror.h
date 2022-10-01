@@ -53,7 +53,6 @@ typedef enum cnc_mcerror {
 	/// @brief Returned when processing of the input and writing of the output is successful
 	/// and
 	/// nothing has gone wrong.
-	//////
 	CNC_MCERROR_OK = 0,
 	//////
 	/// @brief Returned when there is an error processing any input. No output is written.
@@ -64,7 +63,6 @@ typedef enum cnc_mcerror {
 	/// Critically,
 	/// no output from **that specific unit of work** is written (but any previously written
 	/// successful output remains with e.g. any bulk conversion function).
-	//////
 	CNC_MCERROR_INVALID_SEQUENCE = 1,
 	//////
 	/// @brief Returned when there is not yet an error in processing the input, but the input
@@ -78,7 +76,6 @@ typedef enum cnc_mcerror {
 	/// erroneous. If the input values are erroneous, @ref CNC_MCERROR_INVALID_SEQUENCE should
 	/// be
 	/// used instead.
-	//////
 	CNC_MCERROR_INCOMPLETE_INPUT = 2,
 	//////
 	/// @brief Returned when the size of the output is not sufficiently large to handle the
@@ -91,7 +88,6 @@ typedef enum cnc_mcerror {
 	/// statically sized buffer. This is typically done by using the maximum-output macros
 	/// such as
 	/// @ref CNC_C32_MAX - see the documentation for more details.
-	//////
 	CNC_MCERROR_INSUFFICIENT_OUTPUT = 3
 } cnc_mcerror;
 

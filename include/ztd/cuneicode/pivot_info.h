@@ -65,7 +65,6 @@ typedef struct __cnc_pivot_info {
 	/// @remarks If this is a null pointer, it signifies that an internal buffer created in some
 	/// fashion by the implementation should be used instead to perform the conversion. Otherwise,
 	/// even if the buffer is insufficiently small, it will use this buffer.
-	//////
 	unsigned char* bytes;
 	//////
 	/// @brief The error code representing any failed conversion specific to the intermediate/pivot
@@ -73,7 +72,6 @@ typedef struct __cnc_pivot_info {
 	///
 	/// @remarks If a conversion involving the intermediate buffer / pivot buffer - even the
 	/// implementation-defined one - fails for any reason, it will be reported in this variable.
-	//////
 	cnc_mcerror error;
 } cnc_pivot_info;
 
