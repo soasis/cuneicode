@@ -57,8 +57,9 @@ input_read read_input_into(std::vector<unsigned char>& input,
 				return { exit_file_open_failure };
 			}
 			maybe_input_stream.emplace(file_name.c_str(),
-			     static_cast<std::ios_base::openmode>(
-			          std::ios_base::beg | std::ios_base::binary));
+			     static_cast<std::ios_base::openmode>(std::ios_base::beg)
+			          | static_cast<std::ios_base::openmode>(
+			               std::ios_base::binary));
 			std::ifstream& input_stream = *maybe_input_stream;
 			if (!input_stream.is_open() || !input_stream.good()) {
 				if (!silent) {

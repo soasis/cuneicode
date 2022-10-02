@@ -103,7 +103,7 @@ int main(int, char*[]) {
 		print_conversion_info(std::cout, info);
 	}
 
-	const char utf8_text[]
+	const ztd_char8_t utf8_text[]
 	     = u8R"(We don't know where Arua came from, nor how she came to be. We do know, however, that nothing existed before Arua. The Goddess of life, souls, and all existence created the universe as she saw fit… a calm and beautiful place where souls could dwell peacefully. The deep matters of the universe cradled the waves of life, on which all beings would sway soothingly. This perfect universe was called the Sea of Souls.
 
 Life would bring shine to the Sea of Souls, in the form of seven planets. Arua created these out of love, and dedicated each of them to the inhabitants that she breathed life into.
@@ -130,7 +130,7 @@ Soon, the gossips about strange visitors started. The Visitors protect life, and
 		const size_t initial_output_byte_size = SIZE_MAX;
 		size_t output_byte_size               = initial_output_byte_size;
 		cnc_mcerror err                       = cnc_conv_count(
-		                           conversion.get(), &output_byte_size, &input_size, &input);
+               conversion.get(), &output_byte_size, &input_size, &input);
 		if (err != CNC_MCERROR_OK) {
 			std::cerr << "[error] Could not perform counting operation on "
 			             "input data from \""
