@@ -323,8 +323,8 @@ namespace {
 		size_t __intermediary_extra_space = sizeof(__intermediary_cnc_conversion);
 		void* __intermediary_extra_start  = __state;
 		void* __intermediary_aligned      = ::cnc::__cnc_detail::__align(
-               alignof(__intermediary_cnc_conversion), sizeof(__intermediary_cnc_conversion),
-               __intermediary_extra_start, __intermediary_extra_space);
+		          alignof(__intermediary_cnc_conversion), sizeof(__intermediary_cnc_conversion),
+		          __intermediary_extra_start, __intermediary_extra_space);
 		if (__intermediary_aligned == nullptr) {
 			return nullptr;
 		}
@@ -373,7 +373,7 @@ namespace {
 		}
 		const bool __is_counting = __conversion == nullptr;
 		*__p_max_alignment       = ::std::max(
-               *__p_max_alignment, static_cast<size_t>(alignof(__intermediary_cnc_conversion)));
+		           *__p_max_alignment, static_cast<size_t>(alignof(__intermediary_cnc_conversion)));
 		const size_t __starting_available_space = *__p_available_space;
 		void* const __starting_space            = *__p_space;
 		__intermediary_cnc_conversion* __intermediary_aligned
@@ -413,7 +413,7 @@ namespace {
 		void* __link0_space = *__p_space;
 		size_t __space_before_link0 = *__p_available_space;
 		cnc_open_error __link0_err  = __from->__open_function(
-               __registry, __conversion, __p_available_space, __p_max_alignment, &__link0_space);
+		      __registry, __conversion, __p_available_space, __p_max_alignment, &__link0_space);
 		if (__link0_err != CNC_OPEN_ERROR_OK) {
 			__intermediary->~__intermediary_cnc_conversion();
 			*__p_available_space = __starting_available_space;
@@ -585,7 +585,7 @@ namespace {
 		const size_t __starting_available_space = *__p_available_space;
 		void* __target                          = *__p_space;
 		void* __aligned_target                  = ::cnc::__cnc_detail::__align(
-               alignof(cnc_conversion), sizeof(cnc_conversion), __target, *__p_available_space);
+		                      alignof(cnc_conversion), sizeof(cnc_conversion), __target, *__p_available_space);
 		if (__aligned_target == nullptr) {
 			*__p_available_space = __starting_available_space;
 			return CNC_OPEN_ERROR_INSUFFICIENT_OUTPUT;
@@ -602,7 +602,7 @@ namespace {
 		*__p_available_space -= sizeof(cnc_conversion);
 		size_t __max_alignment = alignof(cnc_conversion);
 		cnc_open_error __err   = __entry->__open_function(
-               __registry, __base_conv, __p_available_space, &__max_alignment, __p_space);
+		       __registry, __base_conv, __p_available_space, &__max_alignment, __p_space);
 		if (__err != CNC_OPEN_ERROR_OK) {
 			__base_conv->~cnc_conversion();
 			*__p_out_conversion  = nullptr;
@@ -618,7 +618,7 @@ namespace {
 		const size_t __starting_available_space = *__p_available_space;
 		void* __target                          = *__p_space;
 		void* __aligned_target                  = ::cnc::__cnc_detail::__align(
-               alignof(cnc_conversion), sizeof(cnc_conversion), __target, *__p_available_space);
+		                      alignof(cnc_conversion), sizeof(cnc_conversion), __target, *__p_available_space);
 		if (__aligned_target == nullptr) {
 			*__p_available_space = __starting_available_space;
 			return CNC_OPEN_ERROR_INSUFFICIENT_OUTPUT;
@@ -683,8 +683,6 @@ extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversi
 		}
 		return __err;
 	}
-	// if we reach here, we just simply do not have enough input: bail out
-	return CNC_MCERROR_INCOMPLETE_INPUT;
 }
 
 //////
@@ -1059,7 +1057,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 	}
 	size_t __available_space = __before_available_space - __after_available_space;
 	void* __space            = __registry->__heap.allocate(
-          __available_space, __max_alignment, &__available_space, __registry->__heap.user_data);
+	                __available_space, __max_alignment, &__available_space, __registry->__heap.user_data);
 	if (__space == nullptr) {
 		return CNC_OPEN_ERROR_ALLOCATION_FAILURE;
 	}
