@@ -48,12 +48,12 @@
 inline constexpr const ::std::size_t __cnc_detail_inline_size_guess
      = sizeof(size_t) > 1 ? sizeof(size_t) - 1 : sizeof(size_t);
 
-inline constexpr bool __cnc_detail_encoding_name_code_unit_predicate(ztd_char8_t __value) noexcept {
+inline bool __cnc_detail_encoding_name_code_unit_predicate(ztd_char8_t __value) noexcept {
 	return ::ztd::__idk_detail::__readable_characters_v<char>.find(static_cast<char>(__value))
 	     != ::std::string_view::npos;
 }
 
-inline constexpr bool __cnc_detail_encoding_name_code_unit_hash(ztd_char8_t __value) noexcept {
+inline bool __cnc_detail_encoding_name_code_unit_hash(ztd_char8_t __value) noexcept {
 	constexpr ::std::hash<char> __char_hasher {};
 	if (__value > 'A' && __value < 'Z') {
 		__value += +('a' - 'A');
