@@ -54,7 +54,7 @@ inline bool __cnc_detail_encoding_name_code_unit_predicate(ztd_char8_t __value) 
 }
 
 inline bool __cnc_detail_encoding_name_code_unit_hash(ztd_char8_t __value) noexcept {
-	constexpr ::std::hash<char> __char_hasher {};
+	::std::hash<char> __char_hasher {};
 	if (__value > 'A' && __value < 'Z') {
 		__value += +('a' - 'A');
 	}
@@ -62,7 +62,7 @@ inline bool __cnc_detail_encoding_name_code_unit_hash(ztd_char8_t __value) noexc
 }
 
 inline constexpr bool __cnc_detail_select_everything_okay(
-     ztd_char8_t*, size_t, ztd_char8_t*, size_t) noexcept {
+     ztd_char8_t*, size_t, ztd_char8_t*, size_t, ztd_char8_t*, size_t) noexcept {
 	return true;
 }
 
