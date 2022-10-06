@@ -48,12 +48,19 @@
 /// @addtogroup ztd_cuneicode_conversion_result Conversion Function Result Structures
 ///
 /// @{
+
 //////
-
-
+/// @brief A structure for the input and output values of an encoding, decoding, or transcoding
+/// operation using `size_t`-based counts.
 typedef struct inout_count_result {
+	//////
+	/// @brief The error code.
 	cnc_mcerror error;
+	//////
+	/// @brief The size of the input that was consumed.
 	size_t input_count;
+	//////
+	/// @brief The size of the output that was consumed.
 	size_t output_count;
 } inout_count_result;
 
@@ -66,21 +73,22 @@ typedef struct inout_count_result {
 
 //////
 /// @brief Produces the expected name out the structure matching the 2 types for the desired name of
-/// the cnc_*_inout_result type.
+/// the `cnc_*_inout_result` type.
 ///
 /// @remarks The affiliation is:
 ///
-/// - uc: unsigned char
-/// - mc: char
-/// - mwc: wchar_t
-/// - c8: char8_t
-/// - c16: char16_t
-/// - c32: char32_t
+/// - uc: `unsigned char`
+/// - mc: `char`
+/// - mwc: `wchar_t`
+/// - c8: `char8_t`
+/// - c16: `char16_t`
+/// - c32: `char32_t`
 ///
-/// The unsigned char / char8_t types will technically be identical in C versions, but in C++
-/// char8_t is a distinct type. Similarly, char16_t and char32_t are also typedefs in C, and so have
-/// the very tiny (but not zero) chance of overlapping with other typedefs, meaning it is not
-/// necessarily stable to use _Generic over the inner contents of the input/output of the structure.
+/// The `unsigned char` / `char8_t` types will technically be identical in C versions, but in C++
+/// `char8_t` is a distinct type. Similarly, `char16_t` and `char32_t` are also typedefs in C, and
+/// so have the very tiny (but not zero) chance of overlapping with other typedefs, meaning it is
+/// not necessarily stable to use _Generic over the inner contents of the input/output of the
+/// structure.
 #define CNC_INOUT_RESULT(_INNAME, _OUTNAME) cnc_##_INNAME##_OUTNAME##_inout_result
 
 ZTD_CNC_RESULT_STRUCT_I_(CNC_INOUT_RESULT(uc, ), unsigned char, unsigned char);
@@ -133,6 +141,5 @@ ZTD_CNC_RESULT_STRUCT_I_(CNC_INOUT_RESULT(c16, c32), ztd_char16_t, ztd_char32_t)
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_INOUT_RESULT_H

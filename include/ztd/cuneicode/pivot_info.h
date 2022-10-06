@@ -46,7 +46,6 @@
 /// @addtogroup ztd_cuneicode_conversion Conversion Functions
 ///
 /// @{
-//////
 
 //////
 /// @brief A structure containing information for a "pivot buffer".
@@ -54,7 +53,6 @@
 /// @remarks When a failure happens due to an intermediate conversion failing, the `result` member
 /// of the cnc_pivot_info will be set to a non-CNC_MCERROR_OK value reflecting the type of
 /// failure that happened within the intermediate conversion.
-//////
 typedef struct __cnc_pivot_info {
 	//////
 	/// @brief The number of bytes pointed to by bytes.

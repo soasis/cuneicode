@@ -36,18 +36,34 @@ There are two categories of conversion, as discussed in the :doc:`design </desig
 ``cnc_conversion`` Conversion Functions
 ---------------------------------------
 
+.. doxygenfunction:: cnc_conv_pivot
+
 .. doxygenfunction:: cnc_conv
+
+.. doxygenfunction:: cnc_conv_count_pivot
 
 .. doxygenfunction:: cnc_conv_count
 
+.. doxygenfunction:: cnc_conv_is_valid_pivot
+
 .. doxygenfunction:: cnc_conv_is_valid
+
+.. doxygenfunction:: cnc_conv_unbounded_pivot
 
 .. doxygenfunction:: cnc_conv_unbounded
 
+.. doxygenfunction:: cnc_conv_one_pivot
+
 .. doxygenfunction:: cnc_conv_one
+
+.. doxygenfunction:: cnc_conv_one_count_pivot
 
 .. doxygenfunction:: cnc_conv_one_count
 
+.. doxygenfunction:: cnc_conv_one_is_valid_pivot
+
 .. doxygenfunction:: cnc_conv_one_is_valid
+
+.. doxygenfunction:: cnc_conv_one_unbounded_pivot
 
 .. doxygenfunction:: cnc_conv_one_unbounded

@@ -29,8 +29,8 @@
 
 #pragma once
 
-#ifndef ZTD_CUNEICODE_SOURCE_DETAIL_EUC_CN_IMPL_HPP
-#define ZTD_CUNEICODE_SOURCE_DETAIL_EUC_CN_IMPL_HPP
+#ifndef ZTD_CUNEICODE_SOURCE_DETAIL_ASCII_IMPL_HPP
+#define ZTD_CUNEICODE_SOURCE_DETAIL_ASCII_IMPL_HPP
 
 #include <ztd/cuneicode/version.h>
 
@@ -39,4 +39,4 @@
 // TODO: EUC-CN can be used as the wide encoding in some systems, so it should be templated over the
 // code_unit type.
 
-#endif // ZTD_CUNEICODE_SOURCE_DETAIL_EUC_CN_IMPL_HPP
+#endif // ZTD_CUNEICODE_SOURCE_DETAIL_ASCII_IMPL_HPP

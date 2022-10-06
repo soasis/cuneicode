@@ -63,7 +63,7 @@ int main(int, char*[]) {
 		cnc_conversion_registry* raw_registry = registry.get();
 		cnc_registry_options registry_options = CNC_REGISTRY_OPTIONS_DEFAULT;
 		cnc_open_error err = cnc_new_registry(&raw_registry, registry_options);
-		if (err != CNC_OPEN_ERROR_OKAY) {
+		if (err != CNC_OPEN_ERROR_OK) {
 			std::cerr << "[error] Could not open a conversion "
 			             "registry (error code: "
 			          << err << ")." << std::endl;
@@ -93,7 +93,7 @@ int main(int, char*[]) {
 		const ztd_char8_t* to_data     = to_code.data();
 		cnc_open_error err = cnc_conv_new_n(registry.get(), from_size, from_data,
 		     to_size, to_data, &raw_conversion, &info);
-		if (err != CNC_OPEN_ERROR_OKAY) {
+		if (err != CNC_OPEN_ERROR_OK) {
 			std::cerr << "[error] Could not open a conversion from \""
 			          << from_code << "\" to \"" << to_code << "\"."
 			          << std::endl;

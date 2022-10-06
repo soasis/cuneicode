@@ -44,9 +44,13 @@ Registry-Based Conversions: Resource Handles
 
 .. doxygenfunction:: cnc_conv_open_n
 
+.. doxygenfunction:: cnc_conv_open_n_select
+
 .. doxygenfunction:: cnc_conv_new
 
 .. doxygenfunction:: cnc_conv_new_n
+
+.. doxygenfunction:: cnc_conv_new_n_select
 
 .. doxygenfunction:: cnc_conv_close
 

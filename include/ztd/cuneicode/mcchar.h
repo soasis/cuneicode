@@ -44,7 +44,6 @@
 /// @addtogroup ztd_cuneicode_generic_typed_conversions Generic Typed Conversion Functions
 ///
 /// @{
-//////
 
 //////
 /// @brief Converts from the encoding given by `__p_src`'s character type to `__p_maybe_dst`'s
@@ -52,7 +51,6 @@
 /// __p_state argument passed in from a properly initialized cnc_mcstate_t object of automatic
 /// storage duration (it is a "stack"-based variable that does not live beyond the call of this
 /// function).
-//////
 #define cnc_cxntocyn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src) \
 	__cnc_cxntocxn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src)
 
@@ -83,7 +81,6 @@
 /// ```cpp
 /// cnc_mcerror err = cnc_cxsntocysn(&required_len, (char**)nullptr, &src_len, &src_ptr, &state);
 /// ```
-//////
 #define cnc_cxnrtocyn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state) \
 	__cnc_cxnrtocxn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state)
 
@@ -93,7 +90,6 @@
 /// __p_state argument passed in from a properly initialized cnc_mcstate_t object of automatic
 /// storage duration (it is a "stack"-based variable that does not live beyond the call of this
 /// function).
-//////
 #define cnc_cxsntocysn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src) \
 	__cnc_cxsntocxsn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src)
 
@@ -124,12 +120,10 @@
 /// ```cpp
 /// cnc_mcerror err = cnc_cxsntocysn(&required_len, (char**)nullptr, &src_len, &src_ptr, &state);
 /// ```
-//////
 #define cnc_cxsnrtocysn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state) \
 	__cnc_cxsnrtocxsn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state)
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_MCCHAR_H

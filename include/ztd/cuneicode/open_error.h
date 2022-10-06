@@ -45,14 +45,13 @@
 /// @addtogroup ztd_cuneicode_registry_error_types Registry Error Types
 ///
 /// @{
-//////
 
 //////
 /// @brief The error that occurred when trying to open or create a conversion resource.
 typedef enum cnc_open_error {
 	//////
 	/// @brief Returned when everything was okay.
-	CNC_OPEN_ERROR_OKAY = 0,
+	CNC_OPEN_ERROR_OK = 0,
 	//////
 	/// @brief Returned when there is no conversion path between the specified from and to
 	/// encodings.
@@ -72,6 +71,5 @@ typedef enum cnc_open_error {
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_OPEN_ERROR_H

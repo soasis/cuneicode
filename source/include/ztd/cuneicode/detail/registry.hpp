@@ -38,23 +38,38 @@
 
 #include <ztd/idk/hash.hpp>
 #include <ztd/idk/size.hpp>
+#include <ztd/idk/charN_t.hpp>
 #include <ztd/idk/encoding_name.hpp>
 
 #include <string_view>
 #include <unordered_map>
 #include <vector>
 
-inline constexpr const ::std::size_t __inline_size_guess
+inline constexpr const ::std::size_t __cnc_detail_inline_size_guess
      = sizeof(size_t) > 1 ? sizeof(size_t) - 1 : sizeof(size_t);
 
-inline constexpr bool __encoding_name_code_unit_predicate(char __value) noexcept {
-	return ::ztd::__idk_detail::__readable_characters_v<char>.find(__value)
+inline constexpr bool __cnc_detail_encoding_name_code_unit_predicate(ztd_char8_t __value) noexcept {
+	return ::ztd::__idk_detail::__readable_characters_v<char>.find(static_cast<char>(__value))
 	     != ::std::string_view::npos;
+}
+
+inline constexpr bool __cnc_detail_encoding_name_code_unit_hash(ztd_char8_t __value) noexcept {
+	constexpr ::std::hash<char> __char_hasher {};
+	if (__value > 'A' && __value < 'Z') {
+		__value += +('a' - 'A');
+	}
+	return __char_hasher(static_cast<char>(__value));
+}
+
+inline constexpr bool __cnc_detail_select_everything_okay(
+     ztd_char8_t*, size_t, ztd_char8_t*, size_t) noexcept {
+	return true;
 }
 
 struct __cnc_registry_entry {
 	cnc_conversion_function* __multi_conversion_function;
 	cnc_conversion_function* __single_conversion_function;
+	cnc_state_is_complete_function* __state_is_complete_function;
 	cnc_open_function* __open_function;
 	cnc_close_function* __close_function;
 };
@@ -66,10 +81,13 @@ struct __cnc_registry_entry_key {
 
 struct __cnc_registry_entry_key_hash {
 	::std::size_t operator()(const __cnc_registry_entry_key& __value) const noexcept {
-		::std::size_t __from_hash
-		     = ::ztd::fnv1a_hash_if(__value.__from, &__encoding_name_code_unit_predicate);
-		return ::ztd::fnv1a_hash_if(
-		     __from_hash, __value.__to, &__encoding_name_code_unit_predicate);
+		::std::size_t __from_hash = ::ztd::fnv1a_offset_basis;
+		__from_hash               = ::ztd::fnv1a_hash_if(__from_hash, __value.__from,
+		                   &__cnc_detail_encoding_name_code_unit_predicate,
+		                   &__cnc_detail_encoding_name_code_unit_hash);
+		return ::ztd::fnv1a_hash_if(__from_hash, __value.__to,
+		     &__cnc_detail_encoding_name_code_unit_predicate,
+		     &__cnc_detail_encoding_name_code_unit_hash);
 	}
 };
 
@@ -110,7 +128,7 @@ struct cnc_conversion_registry {
 	: __heap(__heap_)
 	, __paths(__path_allocator(&this->__heap))
 	, __path_keys(static_cast<::std::size_t>(2),
-	       __path_key { __inline_size_guess, __path_key_allocator(&this->__heap) },
+	       __path_key { __cnc_detail_inline_size_guess, __path_key_allocator(&this->__heap) },
 	       __path_keys_allocator(&this->__heap)) {
 	}
 };
@@ -120,8 +138,8 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 
 extern cnc_open_error __cnc_find_entry(cnc_conversion_registry* __registry,
      ::std::basic_string_view<ztd_char8_t> __from_view,
-     ::std::basic_string_view<ztd_char8_t> __to_view, const __cnc_registry_entry** __p_from_entry,
-     const __cnc_registry_entry** __p_to_entry,
+     ::std::basic_string_view<ztd_char8_t> __to_view, cnc_indirect_selection_function* __selection,
+     const __cnc_registry_entry** __p_from_entry, const __cnc_registry_entry** __p_to_entry,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 #endif // ZTD_CUNEICODE_SOURCE_DETAIL_REGISTRY_HPP

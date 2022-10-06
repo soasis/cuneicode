@@ -27,4 +27,4 @@
 //
 // ========================================================================= //
 
-#include <ztd/cuneicode/euc_cn.h>
+#include <ztd/cuneicode/ascii.h>

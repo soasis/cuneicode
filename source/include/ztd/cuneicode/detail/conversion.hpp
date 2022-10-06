@@ -39,15 +39,24 @@
 
 #if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
+#include <cstdint>
 #else
 #include <stddef.h>
 #include <stdbool.h>
+#include <stdint.h>
 #endif
 
+typedef enum cnc_conv_props {
+	CNC_CONV_PROPS_NONE     = 0x0,
+	CNC_CONV_PROPS_INDIRECT = 0x01
+} cnc_conv_props;
+
 typedef struct cnc_conversion {
-	cnc_conversion_registry* __registry;
 	size_t __size;
+	uint_least32_t __properties;
+	cnc_conversion_registry* __registry;
 	cnc_conversion_function* __single_conversion_function;
+	cnc_state_is_complete_function* __state_is_complete_function;
 	cnc_conversion_function* __multi_conversion_function;
 	cnc_close_function* __close_function;
 } cnc_conversion;

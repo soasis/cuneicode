@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
 			     = CNC_REGISTRY_OPTIONS_DEFAULT;
 			cnc_open_error err
 			     = cnc_new_registry(&raw_registry, registry_options);
-			if (err != CNC_OPEN_ERROR_OKAY) {
+			if (err != CNC_OPEN_ERROR_OK) {
 				if (!opt.silent) {
 					std::cerr << "[error] Could not open a conversion "
 					             "registry (error code: "
@@ -146,7 +146,7 @@ int main(int argc, char* argv[]) {
 			cnc_conversion_registry* __registry = registry.get();
 			cnc_open_error err = cnc_conv_new_n(__registry, from_size,
 			     from_data, to_size, to_data, &raw_conversion, &info);
-			if (err != CNC_OPEN_ERROR_OKAY) {
+			if (err != CNC_OPEN_ERROR_OK) {
 				if (!opt.silent) {
 					std::cerr << "[error] Could not open a conversion from \""
 					          << opt.from_code << "\" to \"" << opt.to_code
@@ -245,7 +245,7 @@ int main(int argc, char* argv[]) {
 			for (std::size_t i = 0; i < opt.input_files.size(); ++i) {
 				input_type& input_file_or_stdin = opt.input_files[i];
 				auto success                    = read_input_into(
-				                        input, input_file_or_stdin, opt.verbose, opt.silent);
+                         input, input_file_or_stdin, opt.verbose, opt.silent);
 				if (success.maybe_return_code) {
 					return *success.maybe_return_code;
 				}

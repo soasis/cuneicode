@@ -54,6 +54,7 @@ Typed Conversion
 .. toctree::
 	:maxdepth: 1
 	
+	api/encodings
 	api/typed conversions
 	api/generic typed conversions
 

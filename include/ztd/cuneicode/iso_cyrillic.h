@@ -49,7 +49,6 @@
 /// @addtogroup ztd_cuneicode_conversion Conversion Functions
 ///
 /// @{
-//////
 
 //////
 /// @see cnc_c32ntomcn
@@ -104,6 +103,5 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtoc3
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_ISO_CYRILLIC_H

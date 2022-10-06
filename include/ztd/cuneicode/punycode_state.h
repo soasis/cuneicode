@@ -48,12 +48,10 @@
 /// @addtogroup ztd_cuneicode_conversion Conversion Functions
 ///
 /// @{
-//////
 
 //////
 /// @brief A structure containing all of the necessary information for a general-purpose to-punycode
 /// transformation from UTF-32.
-//////
 typedef struct cnc_pny_encode_state_t {
 	//////
 	/// @brief Whether or not the input is finished.
@@ -94,7 +92,6 @@ typedef struct cnc_pny_encode_state_t {
 //////
 /// @brief A structure containing all of the necessary information for a general-purpose
 /// from-punycode transformation to UTF-32.
-//////
 typedef struct cnc_pny_decode_state_t {
 	//////
 	/// @brief Whether or not the input is finished.
@@ -141,6 +138,5 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_PUNYCODE_STATE_H

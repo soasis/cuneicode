@@ -38,7 +38,6 @@
 /// @addtogroup ztd_cuneicode_registry_options Conversion Registry Options
 ///
 /// @{
-//////
 
 //////
 /// @brief The options which change how a registry is initialized and adjusted upon creation.
@@ -58,6 +57,5 @@ typedef enum cnc_registry_options {
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_REGISTRY_OPTIONS_H

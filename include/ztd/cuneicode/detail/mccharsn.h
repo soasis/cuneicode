@@ -47,7 +47,6 @@
 //////
 /// @addtogroup ztd_cuneicode_multi_conversion_functions Bulk Conversion Functions
 /// @{
-//////
 
 //////
 /// @brief Converts from the encoding given by `__p_src`'s character type to `__p_maybe_dst`'s
@@ -78,7 +77,6 @@
 /// **NOT** recommended to use this with the execution encoding and wide execution encodings,
 /// which may have shift state and could lead to invalid reads of later data without that shift
 /// state information from the `cnc_mcstate_t` object.)
-//////
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntomcsn(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -107,7 +105,6 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntomcs
 /// @remarks
 /// The documentation for the type ↔ encoding mapping can be found in the
 /// @verbatim embed:rst:inline :ref:`design-naming-encoding.table` @endverbatim .
-//////
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtomcsn(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len, const char** __p_src,
      cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -358,6 +355,5 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32snrtoc
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_DETAIL_MCCHARSN_H

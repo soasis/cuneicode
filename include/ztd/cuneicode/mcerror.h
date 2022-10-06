@@ -44,7 +44,6 @@
 /// @addtogroup ztd_cuneicode_conversion_error_types Typed and Untyped Conversion Error Types
 ///
 /// @{
-//////
 
 //////
 /// @brief The various errors that can be returned from multi or single conversion functions.
@@ -98,6 +97,5 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerror_t
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_MCERROR_H

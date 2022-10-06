@@ -35,6 +35,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/big5_hkscs.h>
+#include <ztd/cuneicode/ascii.h>
 #include <ztd/cuneicode/euc_cn.h>
 #include <ztd/cuneicode/euc_jp.h>
 #include <ztd/cuneicode/euc_kr.h>

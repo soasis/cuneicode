@@ -37,7 +37,6 @@
 //////
 /// @addtogroup ztd_cuneicode_max_macros Maximum-Size Macros
 /// @{
-//////
 
 //////
 /// @brief The maximum size that can be output by a single `cnc_cxnrtomcn` function call.
@@ -57,6 +56,5 @@
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_MAX_OUTPUT_H

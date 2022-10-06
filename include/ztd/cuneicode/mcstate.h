@@ -61,7 +61,6 @@ typedef union cnc_mcstate_t cnc_mcstate_t;
 /// @addtogroup ztd_cuneicode_conversion_state Typed Conversion Function State
 ///
 /// @{
-//////
 
 //////
 /// @brief The function signature used to check whether or not a state has finished processing
@@ -83,7 +82,6 @@ typedef bool(state_is_complete_function)(
 /// @brief An enumeration containing the current state indications.
 ///
 /// @remarks May only use 8 bits of information.
-//////
 typedef enum cnc_mcstate_indicator {
 	//////
 	/// @brief Reserved, do NOT use.
@@ -103,7 +101,9 @@ typedef enum cnc_mcstate_indicator {
 /// @remarks This is a complete object, but none of its members should be accessed or relied
 /// upon in any way, shape or form. If you do so, it is Undefined Behavior.
 typedef union cnc_mcstate_t {
-	struct __header_t {
+	//////
+	/// @brief Shared data as part of every structure within a cnc_mcstate_t.
+	struct cnc_header_t {
 		//////
 		/// @brief The indactor. Must be set by any custom encoding routine using mcstate_t and
 		/// desiring custom completion behavior to CNC_MCSTATE_INDICATOR_RAW.
@@ -172,6 +172,5 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_compl
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_DETAIL_MCSTATE_H

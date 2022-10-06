@@ -77,13 +77,13 @@ static inline cnc_open_error unchecked_open_function(cnc_conversion_registry* re
 	const size_t used_space = (aligned_space - static_cast<unsigned char*>(starting_p_space));
 	if (is_counting) {
 		*p_available_space -= (used_space);
-		return CNC_OPEN_ERROR_OKAY;
+		return CNC_OPEN_ERROR_OK;
 	}
 	cnc_mcstate_t* state = new (static_cast<void*>(state_aligned)) cnc_mcstate_t();
 	*p_available_space -= used_space;
 	*p_space                   = aligned_space;
 	state->header.assume_valid = 1;
-	return CNC_OPEN_ERROR_OKAY;
+	return CNC_OPEN_ERROR_OK;
 }
 
 #define UTF_CONVERT_DEFINITION(                                                                                 \
@@ -257,8 +257,9 @@ bool add_simdutf_to_registry(cnc_conversion_registry* registry) {
 		const utf8string_view from_code = (const ztd_char8_t*)"utf8-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf16-unchecked";
 		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
-		     simdutf_utf8_to_utf16_convert, unchecked_open_function, unchecked_close_function);
-		if (err != CNC_OPEN_ERROR_OKAY) {
+		     simdutf_utf8_to_utf16_convert, nullptr, unchecked_open_function,
+		     unchecked_close_function);
+		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
 		}
 	}
@@ -266,8 +267,9 @@ bool add_simdutf_to_registry(cnc_conversion_registry* registry) {
 		const utf8string_view from_code = (const ztd_char8_t*)"utf16-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf8-unchecked";
 		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
-		     simdutf_utf16_to_utf8_convert, unchecked_open_function, unchecked_close_function);
-		if (err != CNC_OPEN_ERROR_OKAY) {
+		     simdutf_utf16_to_utf8_convert, nullptr, unchecked_open_function,
+		     unchecked_close_function);
+		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
 		}
 	}
@@ -275,8 +277,9 @@ bool add_simdutf_to_registry(cnc_conversion_registry* registry) {
 		const utf8string_view from_code = (const ztd_char8_t*)"utf8-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf32-unchecked";
 		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
-		     simdutf_utf8_to_utf32_convert, unchecked_open_function, unchecked_close_function);
-		if (err != CNC_OPEN_ERROR_OKAY) {
+		     simdutf_utf8_to_utf32_convert, nullptr, unchecked_open_function,
+		     unchecked_close_function);
+		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
 		}
 	}
@@ -284,8 +287,9 @@ bool add_simdutf_to_registry(cnc_conversion_registry* registry) {
 		const utf8string_view from_code = (const ztd_char8_t*)"utf32-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf8-unchecked";
 		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
-		     simdutf_utf32_to_utf8_convert, unchecked_open_function, unchecked_close_function);
-		if (err != CNC_OPEN_ERROR_OKAY) {
+		     simdutf_utf32_to_utf8_convert, nullptr, unchecked_open_function,
+		     unchecked_close_function);
+		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
 		}
 	}
@@ -293,8 +297,9 @@ bool add_simdutf_to_registry(cnc_conversion_registry* registry) {
 		const utf8string_view from_code = (const ztd_char8_t*)"utf16-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf32-unchecked";
 		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
-		     simdutf_utf16_to_utf32_convert, unchecked_open_function, unchecked_close_function);
-		if (err != CNC_OPEN_ERROR_OKAY) {
+		     simdutf_utf16_to_utf32_convert, nullptr, unchecked_open_function,
+		     unchecked_close_function);
+		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
 		}
 	}
@@ -302,8 +307,9 @@ bool add_simdutf_to_registry(cnc_conversion_registry* registry) {
 		const utf8string_view from_code = (const ztd_char8_t*)"utf32-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf16-unchecked";
 		cnc_open_error err = cnc_add_to_registry_multi(registry, from_code.data(), to_code.data(),
-		     simdutf_utf32_to_utf16_convert, unchecked_open_function, unchecked_close_function);
-		if (err != CNC_OPEN_ERROR_OKAY) {
+		     simdutf_utf32_to_utf16_convert, nullptr, unchecked_open_function,
+		     unchecked_close_function);
+		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
 		}
 	}

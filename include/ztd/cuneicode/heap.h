@@ -48,40 +48,33 @@
 /// @addtogroup ztd_cuneicode_heap Heap Functions
 ///
 /// @{
-//////
 
 //////
 /// @brief An allocation function type.
-//////
 typedef void*(cnc_allocate_function)(size_t __requested_size, size_t __alignment,
      size_t* __p_actual_size, void* __user_data);
 //////
 /// @brief A reallocation function type.
-//////
 typedef void*(cnc_reallocate_function)(void* __original, size_t __requested_size,
      size_t __alignment, size_t* __p_actual_size, void* __user_data);
 //////
 /// @brief An allocation expanding function type.
-//////
 typedef void*(cnc_allocation_expand_function)(void* __original, size_t __original_size,
      size_t __alignment, size_t __expand_left, size_t __expand_right, size_t* __p_actual_size,
      void* __user_data);
 //////
 /// @brief An allocation shrink function type.
-//////
 typedef void*(cnc_allocation_shrink_function)(void* __original, size_t __original_size,
      size_t __alignment, size_t __reduce_left, size_t __reduce_right, size_t* __p_actual_size,
      void* __user_data);
 //////
 /// @brief The allocation deallocate function type.
-//////
 typedef void(cnc_deallocate_function)(
      void* __ptr, size_t __ptr_size, size_t __alignment, void* __user_data);
 
 //////
 /// @brief The conversion heap through which all allocating and deallocating happens, as well as any
 /// related actions that require dynamic allocation.
-//////
 typedef struct cnc_conversion_heap {
 	//////
 	/// @brief The userdata to be passed alng to the heap functions.
@@ -118,7 +111,6 @@ typedef struct cnc_conversion_heap {
 ///
 /// @param[in] __left The first heap.
 /// @param[in] __right The second heap.
-//////
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(
      const cnc_conversion_heap* __left, const cnc_conversion_heap* __right) ZTD_NOEXCEPT_IF_CXX_I_;
 
@@ -127,12 +119,10 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_
 ///
 /// @param[in] __left The first heap.
 /// @param[in] __right The second heap.
-//////
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_not_equals(
      const cnc_conversion_heap* __left, const cnc_conversion_heap* __right) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @}
-//////
 
 #endif // ZTD_CUNEICODE_HEAP_H

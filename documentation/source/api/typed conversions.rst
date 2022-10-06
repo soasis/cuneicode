@@ -35,6 +35,8 @@ Typed conversions are of the form ``{prefix}(s?)n(r?)to{suffix}(s?)n``. The pref
 
 The "prefix" represents the source data. The "suffix" represents the destination data. The `s` stands for "string", which means a bulk conversion. The `r` in the name stands for "restartable", which means the function takes an `cnc_mcstate_t` pointer. If there `s` is not present in the name, it is a single conversion function. If the `r` is not present in the name, it is the "non-restartable" version (the version that does not take the state).
 
+Additional encodings not meant to be in the "core set" supported by a typical C or C++ implementation, and that have definitive names other than the unicode encodings, can be found in the :doc:`encodings documentation</api/encodings>`.
+
 .. important::
 
 	Any function which does not convert to the :term:`execution encoding` or :term:`wide execution encoding` are guaranteed not to touch the locale (as defined by ``LC_CTYPE``).
