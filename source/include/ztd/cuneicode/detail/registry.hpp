@@ -62,7 +62,7 @@ inline bool __cnc_detail_encoding_name_code_unit_hash(ztd_char8_t __value) noexc
 }
 
 inline constexpr bool __cnc_detail_select_everything_okay(
-     const ztd_char8_t*, size_t, const ztd_char8_t*, size_t, const ztd_char8_t*, size_t) noexcept {
+     size_t, const ztd_char8_t*, size_t, const ztd_char8_t*, size_t, const ztd_char8_t*) noexcept {
 	return true;
 }
 
