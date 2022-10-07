@@ -238,7 +238,7 @@ namespace cnc {
 					     __p_state);
 				}
 			}
-#if ZTD_IS_ON(ZTD_UCHAR) || ZTD_IS_ON(ZTD_CUCHAR)
+#if (ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)) && ZTD_IS_OFF(ZTD_PLATFORM_MAC_OS)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
 					return CNC_MCERROR_OK;
@@ -941,7 +941,7 @@ namespace cnc {
 					     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
 				}
 			}
-#if ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
+#if (ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)) && ZTD_IS_OFF(ZTD_PLATFORM_MAC_OS)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
 					return CNC_MCERROR_OK;
