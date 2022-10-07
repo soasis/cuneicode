@@ -27,7 +27,7 @@
 //
 // ========================================================================= //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <ztd/cuneicode.h>
 
@@ -281,7 +281,7 @@ namespace {
 			const size_t initial_input_output_size = 64;
 			size_t input_output_size               = initial_input_output_size;
 			const cnc_mcerror input_output_err     = cnc_cxntocyn(
-			         &input_output_size, &input_output, &intermediate_size, &intermediate);
+                    &input_output_size, &input_output, &intermediate_size, &intermediate);
 			const size_t intermediate_read    = initial_intermediate_size - intermediate_size;
 			const size_t input_output_written = initial_input_output_size - input_output_size;
 			REQUIRE(input_output_err == CNC_MCERROR_OK);

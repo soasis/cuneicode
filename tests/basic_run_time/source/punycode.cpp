@@ -27,7 +27,7 @@
 //
 // ========================================================================= //
 
-#include <catch2/catch.hpp>
+#include <catch2/catch_all.hpp>
 
 #include <ztd/cuneicode.h>
 
@@ -59,7 +59,7 @@ namespace {
 			REQUIRE(err == CNC_MCERROR_OK);
 			std::size_t used_size = destination_size - output_size;
 			const bool is_equal   = std::equal(
-			       expected.cbegin(), expected.cend(), destination + 0, destination + used_size);
+                    expected.cbegin(), expected.cend(), destination + 0, destination + used_size);
 			REQUIRE(is_equal);
 			REQUIRE(state.__is_initialized == 0);
 		}
@@ -97,7 +97,7 @@ namespace {
 			REQUIRE(err == CNC_MCERROR_OK);
 			std::size_t used_size = destination_size - output_size;
 			const bool is_equal   = std::equal(
-			       source.cbegin(), source.cend(), destination + 0, destination + used_size);
+                    source.cbegin(), source.cend(), destination + 0, destination + used_size);
 			REQUIRE(is_equal);
 			REQUIRE(state.__is_initialized == 0);
 		}
@@ -116,7 +116,7 @@ namespace {
 			REQUIRE(err == CNC_MCERROR_OK);
 			std::size_t used_size = destination_size - output_size;
 			const bool is_equal   = std::equal(
-			       source.cbegin(), source.cend(), destination + 0, destination + used_size);
+                    source.cbegin(), source.cend(), destination + 0, destination + used_size);
 			REQUIRE(is_equal);
 			REQUIRE(state.__is_initialized == 0);
 		}
