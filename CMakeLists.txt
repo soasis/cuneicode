@@ -209,10 +209,12 @@ if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 	function(simdutf_dependency_jail)
 		# simdutf
 		set(SIMDUTF_BENCHMARKS OFF)
+		set(SIMDUTF_TOOLS OFF)
+		set(SIMDUTF_SINGLE_HEADER OFF)
 		set(BUILD_TESTING OFF)
 		FetchContent_Declare(
 			simdutf
-			GIT_REPOSITORY https://github.com/simdutf/simdutf
+			GIT_REPOSITORY https://github.com/ThePhD/simdutf
 			GIT_TAG master)
 		FetchContent_MakeAvailable(simdutf)
 	endfunction()
@@ -221,7 +223,7 @@ if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 	add_subdirectory(shared/simdutf)
 endif()
 
-if(ZTD_CUNEICODE_TESTS)
+if (ZTD_CUNEICODE_TESTS)
 	include(CTest)
 	add_subdirectory(tests)
 endif()
