@@ -214,9 +214,11 @@ if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 		set(BUILD_TESTING OFF)
 		FetchContent_Declare(
 			simdutf
-			GIT_REPOSITORY https://github.com/ThePhD/simdutf
-			GIT_TAG master)
+			GIT_REPOSITORY https://github.com/simdutf/simdutf
+			GIT_SHALLOW    ON
+			GIT_TAG        master)
 		FetchContent_MakeAvailable(simdutf)
+		set_property(DIRECTORY "${simdutf_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL YES)
 	endfunction()
 	simdutf_dependency_jail()
 	add_subdirectory(shared)

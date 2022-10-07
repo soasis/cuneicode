@@ -32,11 +32,13 @@ include(FetchContent)
 # # Fetch dependencies
 # Catch2
 FetchContent_Declare(
-	Catch2
+	catch2
 	GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-	GIT_TAG v2.13.7
+	GIT_SHALLOW ON
+	GIT_TAG devel
 )
-FetchContent_MakeAvailable(Catch2)
+FetchContent_MakeAvailable(catch2)
+set_property(DIRECTORY "${catch2_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL YES)
 
 add_subdirectory(basic_run_time)
 add_subdirectory(compile_time)
