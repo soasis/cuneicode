@@ -144,7 +144,7 @@ int main(int argc, char* argv[]) {
 			std::size_t to_size                 = opt.to_code.size();
 			const ztd_char8_t* to_data          = opt.to_code.data();
 			cnc_conversion_registry* __registry = registry.get();
-			cnc_open_error err = cnc_conv_new_n(__registry, from_size,
+			cnc_open_error err = cnc_conv_new_c8n(__registry, from_size,
 			     from_data, to_size, to_data, &raw_conversion, &info);
 			if (err != CNC_OPEN_ERROR_OK) {
 				if (!opt.silent) {
@@ -245,7 +245,7 @@ int main(int argc, char* argv[]) {
 			for (std::size_t i = 0; i < opt.input_files.size(); ++i) {
 				input_type& input_file_or_stdin = opt.input_files[i];
 				auto success                    = read_input_into(
-                         input, input_file_or_stdin, opt.verbose, opt.silent);
+				                        input, input_file_or_stdin, opt.verbose, opt.silent);
 				if (success.maybe_return_code) {
 					return *success.maybe_return_code;
 				}

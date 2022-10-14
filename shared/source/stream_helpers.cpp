@@ -63,7 +63,7 @@ struct encoding_data {
 void print_encoding_list(std::ostream& out, cnc_conversion_registry* registry) {
 	using user_data_t = std::set<encoding_data>;
 	user_data_t existing_conversions {};
-	cnc_conversion_registry_pair_function* on_pairing
+	cnc_conversion_registry_pair_c8_function* on_pairing
 	     = [](size_t from_size, const ztd_char8_t* from, size_t to_size, const ztd_char8_t* to,
 	            void* user_data) {
 		       user_data_t& existing_conversions = *static_cast<user_data_t*>(user_data);
@@ -75,7 +75,7 @@ void print_encoding_list(std::ostream& out, cnc_conversion_registry* registry) {
 		       const_cast<encoding_data&>(to_it).to     = true;
 	       };
 	out << "Available encodings:" << std::endl;
-	cnc_pairs_list(registry, on_pairing, &existing_conversions);
+	cnc_pairs_c8_list(registry, on_pairing, &existing_conversions);
 	if (existing_conversions.empty()) {
 		out << "\t (None)" << std::endl;
 		return;

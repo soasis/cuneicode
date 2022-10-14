@@ -165,11 +165,11 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 	}
 	// add new conversion from our (weird) encoding to ASCII, then ASCII to UTF-32
 	{
-		cnc_open_error from_err = cnc_add_to_registry_single(registry.get(),
+		cnc_open_error from_err = cnc_add_to_registry_c8_single(registry.get(),
 		     (const ztd_char8_t*)u8"weird-1", (const ztd_char8_t*)u8"ascii",
 		     mcnrtomcn_weird1_ascii, nullptr, nullptr, nullptr);
 		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		cnc_open_error to_err = cnc_add_to_registry_single(registry.get(),
+		cnc_open_error to_err = cnc_add_to_registry_c8_single(registry.get(),
 		     (const ztd_char8_t*)u8"ascii", (const ztd_char8_t*)u8"weird-1",
 		     mcnrtomcn_ascii_weird1, nullptr, nullptr, nullptr);
 		REQUIRE(to_err == CNC_OPEN_ERROR_OK);
@@ -177,20 +177,26 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 	std::unique_ptr<cnc_conversion, cnc_conversion_deleter> conversion = nullptr;
 	cnc_conversion_info info                                           = {};
 	{
+		std::string_view ascii_name("ascii");
+		std::string_view weird1_name("weird-1");
+		std::string_view utf32_name("UTF-32");
 		cnc_conversion* raw_conversion      = conversion.get();
 		std::size_t from_size               = 7;
-		const ztd_char8_t* from_data        = (const ztd_char8_t*)u8"weird-1";
+		const ztd_char8_t* from_data        = (const ztd_char8_t*)weird1_name.data();
 		std::size_t to_size                 = 6;
-		const ztd_char8_t* to_data          = (const ztd_char8_t*)u8"UTF-32";
+		const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 		cnc_conversion_registry* __registry = registry.get();
-		cnc_open_error err                  = cnc_conv_new_n(
-               __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
+		cnc_open_error err                  = cnc_conv_new_c8n(
+		                      __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
 		REQUIRE(err == CNC_OPEN_ERROR_OK);
 		REQUIRE(info.is_indirect);
-		std::string_view ascii_name("ascii");
+		std::string_view from_name((const char*)info.from_code_data, info.from_code_size);
 		std::string_view indirect_name(
 		     (const char*)info.indirect_code_data, info.indirect_code_size);
+		std::string_view to_name((const char*)info.to_code_data, info.to_code_size);
 		REQUIRE(ztd::is_encoding_name_equal_for(ascii_name, indirect_name));
+		REQUIRE(ztd::is_encoding_name_equal(weird1_name, from_name));
+		REQUIRE(ztd::is_encoding_name_equal(utf32_name, to_name));
 		conversion.reset(raw_conversion);
 	}
 

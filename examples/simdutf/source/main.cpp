@@ -72,7 +72,7 @@ int main(int, char*[]) {
 		registry.reset(raw_registry);
 	}
 
-	if (!add_simdutf_to_registry(registry.get())) {
+	if (!cnc_shared_add_simdutf_to_registry(registry.get())) {
 		std::cerr << "[error] Could not add simdutf to "
 		             "the conversion registry."
 		          << std::endl;
@@ -91,8 +91,8 @@ int main(int, char*[]) {
 		const ztd_char8_t* from_data   = from_code.data();
 		std::size_t to_size            = to_code.size();
 		const ztd_char8_t* to_data     = to_code.data();
-		cnc_open_error err = cnc_conv_new_n(registry.get(), from_size, from_data,
-		     to_size, to_data, &raw_conversion, &info);
+		cnc_open_error err = cnc_conv_new_c8n(registry.get(), from_size,
+		     from_data, to_size, to_data, &raw_conversion, &info);
 		if (err != CNC_OPEN_ERROR_OK) {
 			std::cerr << "[error] Could not open a conversion from \""
 			          << from_code << "\" to \"" << to_code << "\"."
@@ -130,7 +130,7 @@ Soon, the gossips about strange visitors started. The Visitors protect life, and
 		const size_t initial_output_byte_size = SIZE_MAX;
 		size_t output_byte_size               = initial_output_byte_size;
 		cnc_mcerror err                       = cnc_conv_count(
-               conversion.get(), &output_byte_size, &input_size, &input);
+		                           conversion.get(), &output_byte_size, &input_size, &input);
 		if (err != CNC_MCERROR_OK) {
 			std::cerr << "[error] Could not perform counting operation on "
 			             "input data from \""

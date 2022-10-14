@@ -28,43 +28,23 @@
 ..
 .. ========================================================================= ..
 
-Conversion Registry
-===================
+Registry Function Types
+=======================
 
-.. doxygentypedef:: cnc_conversion_registry
+There are many function types used to perform work related to the registry, or hook in user behavior. They are detailed below and are used in the various :doc:`registry functions<registry>`.
 
-.. doxygenfunction:: cnc_new_registry
+.. note:: Breathe and Doxygen is broken by the function typedefs, so they are not shown here at the moment.
 
-.. doxygenfunction:: cnc_open_registry
-
-.. doxygenfunction:: cnc_add_to_registry
-
-.. doxygenfunction:: cnc_add_to_registry_n
-
-.. doxygenfunction:: cnc_add_to_registry_multi
-
-.. doxygenfunction:: cnc_add_to_registry_n_multi
-
-.. doxygenfunction:: cnc_add_to_registry_single
-
-.. doxygenfunction:: cnc_add_to_registry_n_single
-
-.. doxygenfunction:: cnc_add_to_registry_c8
-
-.. doxygenfunction:: cnc_add_to_registry_c8n
-
-.. doxygenfunction:: cnc_add_to_registry_c8_multi
-
-.. doxygenfunction:: cnc_add_to_registry_c8n_multi
-
-.. doxygenfunction:: cnc_add_to_registry_c8_single
-
-.. doxygenfunction:: cnc_add_to_registry_c8n_single
-
-.. doxygenfunction:: cnc_close_registry
-
-.. doxygenfunction:: cnc_delete_registry
-
-.. doxygenfunction:: cnc_pairs_c8_list
-
-.. doxygenfunction:: cnc_pairs_list
+.. .. doxygentypedef:: cnc_conversion_function
+.. 
+.. .. doxygentypedef:: cnc_open_function
+.. 
+.. .. doxygentypedef:: cnc_close_function
+.. 
+.. .. doxygentypedef:: cnc_conversion_registry_pair_c8_function
+.. 
+.. .. doxygentypedef:: cnc_conversion_registry_pair_function
+.. 
+.. .. doxygentypedef:: cnc_indirect_selection_c8_function
+.. 
+.. .. doxygentypedef:: cnc_indirect_selection_function

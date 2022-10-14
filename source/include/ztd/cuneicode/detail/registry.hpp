@@ -138,8 +138,9 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 
 extern cnc_open_error __cnc_find_entry(cnc_conversion_registry* __registry,
      ::std::basic_string_view<ztd_char8_t> __from_view,
-     ::std::basic_string_view<ztd_char8_t> __to_view, cnc_indirect_selection_function* __selection,
-     const __cnc_registry_entry** __p_from_entry, const __cnc_registry_entry** __p_to_entry,
+     ::std::basic_string_view<ztd_char8_t> __to_view,
+     cnc_indirect_selection_c8_function* __selection, const __cnc_registry_entry** __p_from_entry,
+     const __cnc_registry_entry** __p_to_entry,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 #endif // ZTD_CUNEICODE_SOURCE_DETAIL_REGISTRY_HPP
