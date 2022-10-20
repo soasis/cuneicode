@@ -42,65 +42,6 @@
 #include <limits>
 
 namespace {
-	static inline void* __cnc_default_allocate(size_t __requested_size, size_t __alignment,
-	     size_t* __p_actual_size, void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
-		(void)__user_data;
-		(void)__alignment;
-		unsigned char* __ptr = static_cast<unsigned char*>(malloc(__requested_size));
-		if (__ptr == nullptr) {
-			return nullptr;
-		}
-		*__p_actual_size = __requested_size;
-		return __ptr;
-	}
-
-	static inline void* __cnc_default_reallocate(void* __original, size_t __requested_size,
-	     size_t __alignment, size_t* __p_actual_size, void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
-		(void)__user_data;
-		(void)__alignment;
-		unsigned char* __ptr = static_cast<unsigned char*>(realloc(__original, __requested_size));
-		if (__ptr == nullptr) {
-			*__p_actual_size = 0;
-			return nullptr;
-		}
-		*__p_actual_size = __requested_size;
-		return __ptr;
-	}
-
-	static inline void* __cnc_default_expand_allocation(void* __original, size_t __original_size,
-	     size_t __alignment, size_t __expand_left, size_t __expand_right, size_t* __p_actual_size,
-	     void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
-		(void)__original;
-		(void)__original_size;
-		(void)__alignment;
-		(void)__expand_left;
-		(void)__expand_right;
-		(void)__user_data;
-		*__p_actual_size = 0;
-		return nullptr;
-	}
-
-	static inline void* __cnc_default_shrink_allocation(void* __original, size_t __original_size,
-	     size_t __alignment, size_t __reduce_left, size_t __reduce_right, size_t* __p_actual_size,
-	     void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
-		(void)__original;
-		(void)__original_size;
-		(void)__alignment;
-		(void)__reduce_left;
-		(void)__reduce_right;
-		(void)__user_data;
-		*__p_actual_size = 0;
-		return nullptr;
-	}
-
-	static inline void __cnc_default_deallocate(void* __ptr, size_t __ptr_size, size_t __alignment,
-	     void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
-		(void)__ptr_size;
-		(void)__user_data;
-		(void)__alignment;
-		free(__ptr);
-	}
-
 	static inline void __cnc_default_close_function(void* __conversion) ZTD_NOEXCEPT_IF_CXX_I_ {
 		// nothing to do with the extra space
 		(void)__conversion;
@@ -276,9 +217,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_new_re
      cnc_registry_options __registry_options) ZTD_NOEXCEPT_IF_CXX_I_ {
 	try {
 		cnc_conversion_registry* __registry = nullptr;
-		cnc_conversion_heap __heap { nullptr, __cnc_default_allocate, __cnc_default_reallocate,
-			__cnc_default_expand_allocation, __cnc_default_shrink_allocation,
-			__cnc_default_deallocate };
+		cnc_conversion_heap __heap          = cnc_create_default_heap();
 		cnc_open_error err = ::cnc_open_registry(&__registry, &__heap, __registry_options);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return err;
@@ -295,14 +234,12 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_new_re
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_open_registry(
      cnc_conversion_registry** __p_out_registry, cnc_conversion_heap* __p_original_heap,
      cnc_registry_options __registry_options) ZTD_NOEXCEPT_IF_CXX_I_ {
-	size_t __available_space      = (::std::numeric_limits<size_t>::max)();
-	size_t __necessary_space      = 0;
-	size_t __used_space           = 0;
-	void* __target                = nullptr;
-	cnc_conversion_heap* __p_heap = __p_original_heap;
-	cnc_conversion_heap __default_heap { nullptr, __cnc_default_allocate, __cnc_default_reallocate,
-		__cnc_default_expand_allocation, __cnc_default_shrink_allocation,
-		__cnc_default_deallocate };
+	size_t __available_space           = (::std::numeric_limits<size_t>::max)();
+	size_t __necessary_space           = 0;
+	size_t __used_space                = 0;
+	void* __target                     = nullptr;
+	cnc_conversion_heap __default_heap = cnc_create_default_heap();
+	cnc_conversion_heap* __p_heap      = __p_original_heap;
 	if (__p_heap == nullptr) {
 		__p_heap = &__default_heap;
 	}

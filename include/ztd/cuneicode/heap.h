@@ -107,6 +107,12 @@ typedef struct cnc_conversion_heap {
 } cnc_conversion_heap;
 
 //////
+/// @brief Creates a default heap to be used. Goes through the globally-available allocator (malloc,
+/// free. etc. or similar known provided free stores).
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_conversion_heap cnc_create_default_heap(
+     void) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
 /// @brief Compares whether two cnc_conversion_heaps are the same.
 ///
 /// @param[in] __left The first heap.
