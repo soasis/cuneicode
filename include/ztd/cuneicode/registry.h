@@ -39,7 +39,10 @@
 #include <ztd/cuneicode/registry_options.h>
 #include <ztd/cuneicode/heap.h>
 #include <ztd/cuneicode/pivot_info.h>
+
 #include <ztd/idk/charN_t.h>
+#include <ztd/idk/encoding_name.h>
+#include <ztd/idk/extent.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
@@ -167,15 +170,17 @@ typedef cnc_open_error(cnc_open_function)(cnc_conversion_registry* __registry,
 /// @param[in] __indirect_size The number of code units in the `__indirect` parameter.
 /// @param[in] __indirect A pointer to a string encoded in UTF-8 representing the encoding that will
 /// be used as a pivot. The string need not be null-terminated.
-typedef bool(cnc_indirect_selection_c8_function)(size_t __from_size, const ztd_char8_t* __from,
-     size_t __to_size, const ztd_char8_t* __to, size_t __indirect_size,
+typedef bool(cnc_indirect_selection_c8_function)(size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)], size_t __indirect_size,
      const ztd_char8_t* __indirect);
 
 
 //////
 /// @copydoc cnc_indirect_selection_c8_function
-typedef bool(cnc_indirect_selection_function)(size_t __from_size, const char* __from,
-     size_t __to_size, const char* __to, size_t __indirect_size, const char* __indirect);
+typedef bool(cnc_indirect_selection_function)(size_t __from_size,
+     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)], size_t __indirect_size, const char* __indirect);
 
 //////
 /// @brief The functiont type for closing the state associated with a cnc_conversion object.
@@ -194,14 +199,14 @@ typedef void(cnc_close_function)(void* __data);
 /// @brief The function type for converting a series of bytes to another series of bytes.
 ///
 /// @param[in] __conversion The cnc_conversion handle that called this function.
-/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count (and the output stream will automatically be
 /// considered large enough to handle all data, if
-/// `__p_output_bytes` is not `nullptr`).
-/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
+/// `__out_pput_bytes` is not `nullptr`).
+/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
 /// decrement the value pointed to by
-/// `__p_output_bytes_size`).
+/// `__out_pput_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
 /// CNC_MCERROR_OK is returned.
@@ -219,13 +224,13 @@ typedef void(cnc_close_function)(void* __data);
 ///
 /// @remarks The conversion functions take parameters as output parameters (pointers) so that they
 /// can provide information about how much of the input and output is used. Providing a `nullptr`
-/// for both `__p_ouput_bytes_size` and `__p_output_bytes` serves as a way to validate the input.
-/// Providing only `__p_output_bytes` but not `__p_output_bytes_size` is a way to indicate that the
-/// output space is sufficiently large for the input space. Providing `__p_output_bytes_size` but
-/// not `__p_output_bytes` is a way to determine how much data will be written out for a given input
+/// for both `__p_ouput_bytes_size` and `__out_pput_bytes` serves as a way to validate the input.
+/// Providing only `__out_pput_bytes` but not `__out_pput_bytes_size` is a way to indicate that the
+/// output space is sufficiently large for the input space. Providing `__out_pput_bytes_size` but
+/// not `__out_pput_bytes` is a way to determine how much data will be written out for a given input
 /// without actually performing such a write.
 typedef cnc_mcerror(cnc_conversion_function)(cnc_conversion* __conversion,
-     size_t* __p_output_bytes_size, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
+     size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info, void* __p_state);
 
 //////
@@ -250,29 +255,31 @@ typedef bool(cnc_state_is_complete_function)(cnc_conversion* __conversion, void*
 /// the size, as embedded nulls are not strictly prohibited from being part of the UTF-8 encoded
 /// name.
 typedef void(cnc_conversion_registry_pair_c8_function)(size_t __from_size,
-     const ztd_char8_t* __from, size_t __to_size, const ztd_char8_t* __to, void* __user_data);
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)], void* __user_data);
 
 //////
 /// @copydoc cnc_conversion_registry_pair_c8_function
-typedef void(cnc_conversion_registry_pair_function)(
-     size_t __from_size, const char* __from, size_t __to_size, const char* __to, void* __user_data);
+typedef void(cnc_conversion_registry_pair_function)(size_t __from_size,
+     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)], void* __user_data);
 
 //////
 /// @brief Creates a new registry.
 ///
-/// @param[in, out] __p_out_registry The output pointer to the handle of the cnc_conversion_registry
+/// @param[in, out] __out_p_registry The output pointer to the handle of the cnc_conversion_registry
 /// that will be created.
 /// @param[in] __registry_options The options that affect how this registry is created.
 ///
 /// @remarks This will default to using a normal cnc_conversion_heap which uses the
 /// globally-available allocator (malloc, free, realloc, etc.).
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_new_registry(
-     cnc_conversion_registry** __p_out_registry,
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_new(
+     cnc_conversion_registry** __out_p_registry,
      cnc_registry_options __registry_options) ZTD_NOEXCEPT_IF_CXX_I_;
 //////
 /// @brief Creates a new registry.
 ///
-/// @param[in, out] __p_out_registry The output pointer to the handle of the cnc_conversion_registry
+/// @param[in, out] __out_p_registry The output pointer to the handle of the cnc_conversion_registry
 /// that will be created.
 /// @param[in] __p_heap A pointer to the heap to use. The heap this points to will be copied into
 /// the registry upon successful creation.
@@ -281,8 +288,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_new_re
 /// @remarks All allocations shall be done through the passed-in heap if needed. It is unspecified
 /// if the implementation can or will use the heap at all (e.g., there is a small buffer
 /// optimization applied).
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_open_registry(
-     cnc_conversion_registry** __p_out_registry, cnc_conversion_heap* __p_heap,
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_open(
+     cnc_conversion_registry** __out_p_registry, cnc_conversion_heap* __p_heap,
      cnc_registry_options __registry_options) ZTD_NOEXCEPT_IF_CXX_I_;
 
 
@@ -295,6 +302,58 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_open_r
 /// encoding to convert from. Can be `nullptr`.
 /// @param[in] __to A pointer to a null-terminated c string encoded in UTF-8 representing the
 /// encoding to convert to. Can be `nullptr`.
+///
+/// @returns Whether or not a conversion routine was actually found and removed. If there is no
+/// routine by that name, then the function returns `false`. Otherwise, it returns `true`. In either
+/// case, the conversino routine between `__from` and `__to` will no longer exist.
+///////
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_registry_remove_c8(
+     cnc_conversion_registry* __registry, const ztd_char8_t* __from,
+     const ztd_char8_t* __to) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_registry_remove_c8
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_registry_remove(
+     cnc_conversion_registry* __registry, const char* __from,
+     const char* __to) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
+/// registry.
+///
+/// @param[in] __registry The registry to create the new conversion pair in.
+/// @param[in] __from A pointer to a string encoded in UTF-8 representing the
+/// encoding to convert from. Can be `nullptr`.
+/// @param[in] __from_size The number of code units in the `__from` parameter.
+/// @param[in] __to A pointer to a string encoded in UTF-8 representing the
+/// encoding to convert to. Can be `nullptr`.
+/// @param[in] __to_size The number of code units in the `__to` parameter.
+///
+/// @returns Whether or not a conversion routine was actually found and removed. If there is no
+/// routine by that name, then the function returns `false`. Otherwise, it returns `true`. In either
+/// case, the conversino routine between `__from` and `__to` will no longer exist.
+///////
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_registry_remove_c8n(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)]) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_registry_remove_c8n
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_registry_remove_n(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const char* __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)]) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
+/// registry.
+///
+/// @param[in] __registry The registry to create the new conversion pair in.
+/// @param[in] __from A pointer to a null-terminated c string encoded in UTF-8 representing the
+/// name of the encoding to convert from. Can be `nullptr`.
+/// @param[in] __to A pointer to a null-terminated c string encoded in UTF-8 representing the
+/// name of the encoding to convert to. Can be `nullptr`.
 /// @param[in] __multi_conversion_function The conversion cnc_conversion_function which will perform
 /// a bulk conversion (consumes as much input as is available until exhausted or an error occurs).
 /// Can be `nullptr`, but only if the
@@ -310,13 +369,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_open_r
 /// @param[in] __close_function The cnc_close_function to be used for allocating additional space
 /// during function calls which open new cnc_conversion handles. Can be `nullptr`.
 ///
-/// @remarks This function has identical behavior to cnc_add_to_registry_n, where the `__from_size`
+/// @remarks This function has identical behavior to cnc_registry_add_n, where the `__from_size`
 /// and `__to_size` arguments are calculated by calling the equivalent of `strlen` on `__from` and
 /// `__to`, respectively. If `__from` or
 /// `__to` are `nullptr`, then the function will assume they are the empty string (and use the
 /// default name in that case).
 ///////
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_c8(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_c8(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion_function* __multi_conversion_function,
      cnc_conversion_function* __single_conversion_function,
@@ -325,8 +384,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_add_to_registry_c8
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry(
+/// @copydoc cnc_registry_add_c8
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_conversion_function* __multi_conversion_function,
      cnc_conversion_function* __single_conversion_function,
@@ -340,11 +399,11 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
 ///
 /// @param[in] __registry The registry to create the new conversion pair in.
 /// @param[in] __from_size The number of code units in the `__from` parameter.
-/// @param[in] __from A pointer to a string encoded in UTF-8 representing the encoding to convert
-/// from. The string need not be null-terminated. Can be `nullptr`.
+/// @param[in] __from A pointer to a string encoded in UTF-8 representing the name of the encoding
+/// to convert from. The string need not be null-terminated. Can be `nullptr`.
 /// @param[in] __to_size The number of code units in the `__to` parameter.
-/// @param[in] __to A pointer to a string encoded in UTF-8 representing the encoding to convert to.
-/// The string need not be null-terminated. Can be `nullptr`.
+/// @param[in] __to A pointer to a string encoded in UTF-8 representing the name of the encoding to
+/// convert to. The string need not be null-terminated. Can be `nullptr`.
 /// @param[in] __multi_conversion_function The conversion cnc_conversion_function which will perform
 /// a bulk conversion (consumes as much input as is available until exhausted or an error occurs).
 /// Can be `nullptr`, but only if the
@@ -360,19 +419,16 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
 /// @param[in] __close_function The cnc_close_function to be used for allocating additional space
 /// during function calls which open new cnc_conversion handles. Can be `nullptr`.
 ///
-/// @remarks Either the `__multi_conversion_function` or the `__single_conversion_function` can be
-/// `nullptr`, but not both. When one is `nullptr`, the other one will be used to back-construct a
-/// suitable implementation of the single-conversion function call or the multi-conversion (bulk)
-/// function call, respectively. When the
-/// `__open_function` or the `__close_function` are `nullptr`, they are simply defaulted when stored
-/// in the registry. If
-/// `__from` denotes either `nullptr` or the empty string (`__from_size == 0`), then the `__from`
-/// name is defaulted to
-/// `"execution"`. If `__to` denotes either `nullptr` or the empty string (`__to_size == 0`), then
-/// the `__to` name is defaulted to `"UTF-8"`.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_c8n(
-     cnc_conversion_registry* __registry, size_t __from_size, const ztd_char8_t* __from,
-     size_t __to_size, const ztd_char8_t* __to,
+/// @remarks This function has identical behavior to cnc_registry_add_n, where the `__from_size`
+/// and `__to_size` arguments are calculated by calling the equivalent of `strlen` on `__from` and
+/// `__to`, respectively. If `__from` or
+/// `__to` are `nullptr`, then the function will assume they are the empty string (and use the
+/// default name in that case).
+///////
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_c8n(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
      cnc_conversion_function* __multi_conversion_function,
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -380,10 +436,12 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_add_to_registry_c8n
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_n(
-     cnc_conversion_registry* __registry, size_t __from_size, const char* __from, size_t __to_size,
-     const char* __to, cnc_conversion_function* __multi_conversion_function,
+/// @copydoc cnc_registry_add_c8n
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_n(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_conversion_function* __multi_conversion_function,
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
@@ -409,12 +467,12 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
 /// @param[in] __close_function The cnc_close_function to be used for allocating additional space
 /// during function calls which open new cnc_conversion handles. Can be `nullptr`.
 ///
-/// @remarks Identical to calling cnc_add_to_registry_n, with the `__multi_conversion_function`
+/// @remarks Identical to calling cnc_registry_add_n, with the `__multi_conversion_function`
 /// parameter set to `nullptr`. The `__from_size` and `__to_size` arguments are calculated by
 /// calling the equivalent of `strlen` on
 /// `__from` and `__to`, respectively. If `__from` or `__to` are `nullptr`, then the function will
 /// assume they are the empty string (and use the default name in that case).
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_c8_multi(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_c8_multi(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion_function* __multi_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -422,8 +480,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_add_to_registry_c8_multi
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_multi(
+/// @copydoc cnc_registry_add_c8_multi
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_multi(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_conversion_function* __multi_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -452,21 +510,24 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
 /// @param[in] __close_function The cnc_close_function to be used for allocating additional space
 /// during function calls which open new cnc_conversion handles. Can be `nullptr`.
 ///
-/// @remarks Identical to calling cnc_add_to_registry_n, with the `__single_conversion_function`
+/// @remarks Identical to calling cnc_registry_add_n, with the `__single_conversion_function`
 /// parameter set to `nullptr`.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_c8n_multi(
-     cnc_conversion_registry* __registry, size_t __from_size, const ztd_char8_t* __from,
-     size_t __to_size, const ztd_char8_t* __to,
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_c8n_multi(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
      cnc_conversion_function* __multi_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_add_to_registry_c8n_multi
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_n_multi(
-     cnc_conversion_registry* __registry, size_t __from_size, const char* __from, size_t __to_size,
-     const char* __to, cnc_conversion_function* __multi_conversion_function,
+/// @copydoc cnc_registry_add_c8n_multi
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_n_multi(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_conversion_function* __multi_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -490,12 +551,12 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
 /// @param[in] __close_function The cnc_close_function to be used for allocating additional space
 /// during function calls which open new cnc_conversion handles. Can be `nullptr`.
 ///
-/// @remarks Identical to calling cnc_add_to_registry_n, with the `__multi_conversion_function`
+/// @remarks Identical to calling cnc_registry_add_n, with the `__multi_conversion_function`
 /// parameter set to `nullptr`. The `__from_size` and `__to_size` arguments are calculated by
 /// calling the equivalent of `strlen` on
 /// `__from` and `__to`, respectively. If `__from` or `__to` are `nullptr`, then the function will
 /// assume they are the empty string (and use the default name in that case).
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_c8_single(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_c8_single(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -503,8 +564,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_add_to_registry_c8_single
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_single(
+/// @copydoc cnc_registry_add_c8_single
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_single(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -532,21 +593,24 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
 /// @param[in] __close_function The cnc_close_function to be used for allocating additional space
 /// during function calls which open new cnc_conversion handles. Can be `nullptr`.
 ///
-/// @remarks Identical to calling cnc_add_to_registry_n, with the `__multi_conversion_function`
+/// @remarks Identical to calling cnc_registry_add_n, with the `__multi_conversion_function`
 /// parameter set to `nullptr`.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error
-cnc_add_to_registry_c8n_single(cnc_conversion_registry* __registry, size_t __from_size,
-     const ztd_char8_t* __from, size_t __to_size, const ztd_char8_t* __to,
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_c8n_single(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_add_to_registry_c8n_single
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to_registry_n_single(
-     cnc_conversion_registry* __registry, size_t __from_size, const char* __from, size_t __to_size,
-     const char* __to, cnc_conversion_function* __single_conversion_function,
+/// @copydoc cnc_registry_add_c8n_single
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_n_single(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -556,11 +620,11 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_add_to
 ///
 /// @param[in] __registry The registry to delete.
 ///
-/// @remarks This function MUST be paired with @ref cnc_open_registry. It cannot be paired with any
+/// @remarks This function MUST be paired with @ref cnc_registry_open. It cannot be paired with any
 /// other creation function. This will close the registry before it's memory is deleted/freed: see
-/// cnc_close_registry for more information. If `registry` is `nullptr`, this function will do
+/// cnc_registry_close for more information. If `registry` is `nullptr`, this function will do
 /// nothing.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_close_registry(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_registry_close(
      cnc_conversion_registry* __registry) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -568,11 +632,11 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_close_registry(
 ///
 /// @param[in] __registry The registry to delete.
 ///
-/// @remarks This function MUST be paired with @ref cnc_new_registry. It cannot be paired with any
+/// @remarks This function MUST be paired with @ref cnc_registry_new. It cannot be paired with any
 /// other creation function. This will close the registry before it's memory is deleted/freed: see
-/// cnc_close_registry for more information. If `registry` is `nullptr`, this function will do
+/// cnc_registry_close for more information. If `registry` is `nullptr`, this function will do
 /// nothing.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_delete_registry(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_registry_delete(
      cnc_conversion_registry* __registry) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////

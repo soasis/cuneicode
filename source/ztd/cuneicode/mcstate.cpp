@@ -38,6 +38,22 @@
 #include <memory>
 #include <cstring>
 
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_get_assume_valid(
+     const cnc_mcstate_t* __state) {
+	if (__state == nullptr) {
+		return false;
+	}
+	return __state->header.__assume_valid == static_cast<unsigned int>(1);
+}
+
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assume_valid(
+     cnc_mcstate_t* __state, bool __check_validity) {
+	if (__state == nullptr) {
+		return;
+	}
+	__state->header.__assume_valid = static_cast<unsigned int>(__check_validity ? 1 : 0);
+}
+
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_complete(
      const cnc_mcstate_t* __state) {
 	if (__state == nullptr) {

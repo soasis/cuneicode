@@ -284,7 +284,7 @@ TEST_CASE(
 	const auto& unicode_input         = full_unicode_range();
 	const auto& basic_source_input    = basic_source_range();
 	cnc_conversion_registry* registry = NULL;
-	cnc_open_error reg_err            = cnc_new_registry(&registry, CNC_REGISTRY_OPTIONS_DEFAULT);
+	cnc_open_error reg_err            = cnc_registry_new(&registry, CNC_REGISTRY_OPTIONS_DEFAULT);
 	REQUIRE(reg_err == CNC_OPEN_ERROR_OK);
 	SECTION("mc") {
 		const ztd_char8_t* from_name  = (const ztd_char8_t*)u8"utf32";
@@ -375,5 +375,5 @@ TEST_CASE(
 		cnc_conv_close(from_conv);
 		cnc_conv_close(to_conv);
 	}
-	cnc_delete_registry(registry);
+	cnc_registry_delete(registry);
 }

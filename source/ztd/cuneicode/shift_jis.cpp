@@ -1760,7 +1760,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 			__p_maybe_dst_len[0] -= 1;
 		}
 		if (!_IsCounting) {
-			__p_maybe_dst[0][0] = static_cast<code_unit>(__code);
+			__p_maybe_dst[0][0] = __code;
 			__p_maybe_dst[0] += 1;
 		}
 		__src += 1;
@@ -1778,7 +1778,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 			__p_maybe_dst_len[0] -= 1;
 		}
 		if (!_IsCounting) {
-			__p_maybe_dst[0][0] = static_cast<code_unit>(__code);
+			__p_maybe_dst[0][0] = __code;
 			__p_maybe_dst[0] += 1;
 		}
 		__src += 1;
@@ -1800,7 +1800,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 			__lookup_index = (((__first_byte - __lead_lookup_offset) * 188) + __second_byte)
 			     - lookup_offset;
 			if (__lookup_index <= 10715 && __lookup_index >= 8836) {
-				code_point __code = static_cast<char32_t>(0xE000 - 8836 + __lookup_index);
+				code_point __code = static_cast<code_point>(0xE000 - 8836 + __lookup_index);
 				if (!_IsUnbounded) {
 					if (__p_maybe_dst_len[0] == 0) {
 						// output is empty :(
@@ -1809,7 +1809,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 					__p_maybe_dst_len[0] -= 1;
 				}
 				if (!_IsCounting) {
-					__p_maybe_dst[0][0] = static_cast<code_unit>(__code);
+					__p_maybe_dst[0][0] = __code;
 					__p_maybe_dst[0] += 1;
 				}
 			}
@@ -1827,13 +1827,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 						__p_maybe_dst_len[0] -= 1;
 					}
 					if (!_IsCounting) {
-						__p_maybe_dst[0][0] = static_cast<code_unit>(__code);
+						__p_maybe_dst[0][0] = __code;
 						__p_maybe_dst[0] += 1;
 					}
 				}
 			}
-			__src += 1;
-			__src_len -= 1;
+			__src += 2;
+			__src_len -= 2;
 			return CNC_MCERROR_OK;
 		}
 	}

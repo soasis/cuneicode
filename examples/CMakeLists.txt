@@ -64,5 +64,6 @@ function(ztd_cuneicode_example_simple example_source_file example_prefix)
 endfunction(ztd_cuneicode_example_simple)
 
 add_subdirectory(documentation)
+add_subdirectory(basic)
 add_subdirectory(simdutf)
 add_subdirectory(cconv)

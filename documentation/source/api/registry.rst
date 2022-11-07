@@ -33,37 +33,37 @@ Conversion Registry
 
 .. doxygentypedef:: cnc_conversion_registry
 
-.. doxygenfunction:: cnc_new_registry
+.. doxygenfunction:: cnc_registry_new
 
-.. doxygenfunction:: cnc_open_registry
+.. doxygenfunction:: cnc_registry_open
 
-.. doxygenfunction:: cnc_add_to_registry
+.. doxygenfunction:: cnc_registry_add
 
-.. doxygenfunction:: cnc_add_to_registry_n
+.. doxygenfunction:: cnc_registry_add_n
 
-.. doxygenfunction:: cnc_add_to_registry_multi
+.. doxygenfunction:: cnc_registry_add_multi
 
-.. doxygenfunction:: cnc_add_to_registry_n_multi
+.. doxygenfunction:: cnc_registry_add_n_multi
 
-.. doxygenfunction:: cnc_add_to_registry_single
+.. doxygenfunction:: cnc_registry_add_single
 
-.. doxygenfunction:: cnc_add_to_registry_n_single
+.. doxygenfunction:: cnc_registry_add_n_single
 
-.. doxygenfunction:: cnc_add_to_registry_c8
+.. doxygenfunction:: cnc_registry_add_c8
 
-.. doxygenfunction:: cnc_add_to_registry_c8n
+.. doxygenfunction:: cnc_registry_add_c8n
 
-.. doxygenfunction:: cnc_add_to_registry_c8_multi
+.. doxygenfunction:: cnc_registry_add_c8_multi
 
-.. doxygenfunction:: cnc_add_to_registry_c8n_multi
+.. doxygenfunction:: cnc_registry_add_c8n_multi
 
-.. doxygenfunction:: cnc_add_to_registry_c8_single
+.. doxygenfunction:: cnc_registry_add_c8_single
 
-.. doxygenfunction:: cnc_add_to_registry_c8n_single
+.. doxygenfunction:: cnc_registry_add_c8n_single
 
-.. doxygenfunction:: cnc_close_registry
+.. doxygenfunction:: cnc_registry_close
 
-.. doxygenfunction:: cnc_delete_registry
+.. doxygenfunction:: cnc_registry_delete
 
 .. doxygenfunction:: cnc_pairs_c8_list
 

@@ -94,7 +94,7 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 	if(ZTD_CUNEICODE_BENCHMARKS OR ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_TESTS OR ZTD_CUNEICODE_SCRATCH)
 		# normal flags
 		check_compiler_flag(disable-permissive MSVC /permissive- GCC -pedantic)
-		check_compiler_flag(updated-cpp-version-flag MSVC /Zc:__cplusplus Clang -doesnotexist GCC -doesnotexist)
+		check_compiler_flag(updated-cpp-version-flag LANGUAGES CXX MSVC /Zc:__cplusplus Clang -fdoesnotexist GCC -fdoesnotexist)
 		check_compiler_flag(utf8-literal-encoding MSVC /execution-charset:utf-8 GCC -fexec-charset=utf-8)
 		check_compiler_flag(utf8-source-encoding MSVC /source-charset:utf-8 GCC -finput-charset=utf-8)
 		check_compiler_flag(extra-constexpr-depth MSVC /constexpr:depth2147483647 GCC -fconstexpr-depth=2147483647 Clang -fconstexpr-depth=2147483647)

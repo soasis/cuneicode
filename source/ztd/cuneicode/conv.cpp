@@ -580,7 +580,7 @@ namespace {
 	}
 
 	static inline cnc_open_error __cnc_open_with(cnc_conversion_registry* __registry,
-	     const __cnc_registry_entry* __entry, cnc_conversion** __p_out_conversion,
+	     const __cnc_registry_entry* __entry, cnc_conversion** __out_p_conversion,
 	     size_t* __p_available_space, void** __p_space) {
 		const size_t __starting_available_space = *__p_available_space;
 		void* __target                          = *__p_space;
@@ -597,7 +597,7 @@ namespace {
 		__base_conv->__multi_conversion_function  = __entry->__multi_conversion_function;
 		__base_conv->__single_conversion_function = __entry->__single_conversion_function;
 		__base_conv->__close_function             = __entry->__close_function;
-		*__p_out_conversion                       = __base_conv;
+		*__out_p_conversion                       = __base_conv;
 		*__p_space = static_cast<unsigned char*>(static_cast<void*>(__base_conv + 1));
 		*__p_available_space -= sizeof(cnc_conversion);
 		size_t __max_alignment = alignof(cnc_conversion);
@@ -605,7 +605,7 @@ namespace {
 		       __registry, __base_conv, __p_available_space, &__max_alignment, __p_space);
 		if (__err != CNC_OPEN_ERROR_OK) {
 			__base_conv->~cnc_conversion();
-			*__p_out_conversion  = nullptr;
+			*__out_p_conversion  = nullptr;
 			*__p_available_space = __starting_available_space;
 			return __err;
 		}
@@ -614,7 +614,7 @@ namespace {
 
 	static inline cnc_open_error __cnc_open_intermediary_with(cnc_conversion_registry* __registry,
 	     const __cnc_registry_entry* __from, const __cnc_registry_entry* __to,
-	     cnc_conversion** __p_out_conversion, size_t* __p_available_space, void** __p_space) {
+	     cnc_conversion** __out_p_conversion, size_t* __p_available_space, void** __p_space) {
 		const size_t __starting_available_space = *__p_available_space;
 		void* __target                          = *__p_space;
 		void* __aligned_target                  = ::cnc::__cnc_detail::__align(
@@ -635,12 +635,12 @@ namespace {
 		*__p_space
 		     = static_cast<void*>(static_cast<unsigned char*>(static_cast<void*>(__base_conv))
 		          + sizeof(cnc_conversion));
-		*__p_out_conversion  = __base_conv;
+		*__out_p_conversion  = __base_conv;
 		cnc_open_error __err = ::__intermediary_open_function(__registry, __base_conv, __from,
 		     __to, __p_available_space, &__max_alignment, __p_space);
 		if (__err != CNC_OPEN_ERROR_OK) {
 			__base_conv->~cnc_conversion();
-			*__p_out_conversion  = nullptr;
+			*__out_p_conversion  = nullptr;
 			*__p_available_space = __starting_available_space;
 			return __err;
 		}
@@ -653,7 +653,7 @@ namespace {
 /// @brief This function must be marked extern because it must have a stable external symbol w.r.t
 /// this library.
 extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversion,
-     size_t* __p_output_bytes_size, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
+     size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
      void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_input_bytes_size == nullptr || __p_input_bytes == nullptr) {
@@ -666,7 +666,7 @@ extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversi
 	}
 	for (;;) {
 		cnc_mcerror __err = __conversion->__single_conversion_function(__conversion,
-		     __p_output_bytes_size, __p_output_bytes, __p_input_bytes_size, __p_input_bytes,
+		     __out_pput_bytes_size, __out_pput_bytes, __p_input_bytes_size, __p_input_bytes,
 		     __p_pivot_info, __user_data);
 		switch (__err) {
 		case CNC_MCERROR_OK:
@@ -689,7 +689,7 @@ extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversi
 /// @brief This function must be marked extern because it must have a stable external symbol w.r.t
 /// this library.
 extern cnc_mcerror __cnc_single_from_multi_conversion(cnc_conversion* __conversion,
-     size_t* __p_output_bytes_size, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
+     size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
      void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_input_bytes_size == nullptr || __p_input_bytes == nullptr) {
@@ -702,8 +702,8 @@ extern cnc_mcerror __cnc_single_from_multi_conversion(cnc_conversion* __conversi
 	}
 	for (size_t __len = 1; __len <= __input_bytes_size; ++__len) {
 		cnc_mcerror __err
-		     = __conversion->__multi_conversion_function(__conversion, __p_output_bytes_size,
-		          __p_output_bytes, &__len, &__input_bytes, __p_pivot_info, __user_data);
+		     = __conversion->__multi_conversion_function(__conversion, __out_pput_bytes_size,
+		          __out_pput_bytes, &__len, &__input_bytes, __p_pivot_info, __user_data);
 		switch (__err) {
 		case CNC_MCERROR_INCOMPLETE_INPUT:
 			// alright, so we just need more input:
@@ -728,13 +728,13 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	}                                                 \
 	static_assert(true, "")
 
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
 	     ::cnc::__cnc_detail::__exec_name(),
 	     &__typical_multi_conversion<char, char, decltype(&::cnc_mcsnrtomcsn), &::cnc_mcsnrtomcsn>,
 	     &__typical_single_conversion<char, char, decltype(&::cnc_mcnrtomcn), &::cnc_mcnrtomcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
 	     ::cnc::__cnc_detail::__wide_name(),
 	     &__typical_multi_conversion<char, wchar_t, decltype(&::cnc_mcsnrtomwcsn),
 	          &::cnc_mcsnrtomwcsn>,
@@ -742,7 +742,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_mcnrtomwcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
 	     ::cnc::__cnc_detail::__utf8_name(),
 	     &__typical_multi_conversion<char, ztd_char8_t, decltype(&::cnc_mcsnrtoc8sn),
 	          &::cnc_mcsnrtoc8sn>,
@@ -750,7 +750,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_mcnrtoc8n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
 	     ::cnc::__cnc_detail::__utf16_name(),
 	     &__typical_multi_conversion<char, ztd_char16_t, decltype(&::cnc_mcsnrtoc16sn),
 	          &::cnc_mcsnrtoc16sn>,
@@ -758,7 +758,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_mcnrtoc16n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
 	     ::cnc::__cnc_detail::__utf32_name(),
 	     &__typical_multi_conversion<char, ztd_char32_t, decltype(&::cnc_mcsnrtoc32sn),
 	          &::cnc_mcsnrtoc32sn>,
@@ -767,7 +767,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
 
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
 	     ::cnc::__cnc_detail::__exec_name(),
 	     &__typical_multi_conversion<wchar_t, char, decltype(&::cnc_mwcsnrtomcsn),
 	          &::cnc_mwcsnrtomcsn>,
@@ -775,7 +775,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_mwcnrtomcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
 	     ::cnc::__cnc_detail::__wide_name(),
 	     &__typical_multi_conversion<wchar_t, wchar_t, decltype(&::cnc_mwcsnrtomwcsn),
 	          &::cnc_mwcsnrtomwcsn>,
@@ -783,7 +783,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_mwcnrtomwcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
 	     ::cnc::__cnc_detail::__utf8_name(),
 	     &__typical_multi_conversion<wchar_t, ztd_char8_t, decltype(&::cnc_mwcsnrtoc8sn),
 	          &::cnc_mwcsnrtoc8sn>,
@@ -791,7 +791,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_mwcnrtoc8n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
 	     ::cnc::__cnc_detail::__utf16_name(),
 	     &__typical_multi_conversion<wchar_t, ztd_char16_t, decltype(&::cnc_mwcsnrtoc16sn),
 	          &::cnc_mwcsnrtoc16sn>,
@@ -799,7 +799,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_mwcnrtoc16n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__wide_name(),
 	     ::cnc::__cnc_detail::__utf32_name(),
 	     &__typical_multi_conversion<wchar_t, ztd_char32_t, decltype(&::cnc_mwcsnrtoc32sn),
 	          &::cnc_mwcsnrtoc32sn>,
@@ -808,7 +808,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
 
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
 	     ::cnc::__cnc_detail::__exec_name(),
 	     &__typical_multi_conversion<ztd_char8_t, char, decltype(&::cnc_c8snrtomcsn),
 	          &::cnc_c8snrtomcsn>,
@@ -816,7 +816,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c8nrtomcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
 	     ::cnc::__cnc_detail::__wide_name(),
 	     &__typical_multi_conversion<ztd_char8_t, wchar_t, decltype(&::cnc_c8snrtomwcsn),
 	          &::cnc_c8snrtomwcsn>,
@@ -824,7 +824,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c8nrtomwcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
 	     ::cnc::__cnc_detail::__utf8_name(),
 	     &__typical_multi_conversion<ztd_char8_t, ztd_char8_t, decltype(&::cnc_c8snrtoc8sn),
 	          &::cnc_c8snrtoc8sn>,
@@ -832,7 +832,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c8nrtoc8n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
 	     ::cnc::__cnc_detail::__utf16_name(),
 	     &__typical_multi_conversion<ztd_char8_t, ztd_char16_t, decltype(&::cnc_c8snrtoc16sn),
 	          &::cnc_c8snrtoc16sn>,
@@ -840,7 +840,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c8nrtoc16n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf8_name(),
 	     ::cnc::__cnc_detail::__utf32_name(),
 	     &__typical_multi_conversion<ztd_char8_t, ztd_char32_t, decltype(&::cnc_c8snrtoc32sn),
 	          &::cnc_c8snrtoc32sn>,
@@ -849,7 +849,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
 
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
 	     ::cnc::__cnc_detail::__exec_name(),
 	     &__typical_multi_conversion<ztd_char16_t, char, decltype(&::cnc_c16snrtomcsn),
 	          &::cnc_c16snrtomcsn>,
@@ -857,7 +857,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c16nrtomcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
 	     ::cnc::__cnc_detail::__wide_name(),
 	     &__typical_multi_conversion<ztd_char16_t, wchar_t, decltype(&::cnc_c16snrtomwcsn),
 	          &::cnc_c16snrtomwcsn>,
@@ -865,7 +865,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c16nrtomwcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
 	     ::cnc::__cnc_detail::__utf8_name(),
 	     &__typical_multi_conversion<ztd_char16_t, ztd_char8_t, decltype(&::cnc_c16snrtoc8sn),
 	          &::cnc_c16snrtoc8sn>,
@@ -873,7 +873,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c16nrtoc8n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
 	     ::cnc::__cnc_detail::__utf16_name(),
 	     &__typical_multi_conversion<ztd_char16_t, ztd_char16_t, decltype(&::cnc_c16snrtoc16sn),
 	          &::cnc_c16snrtoc16sn>,
@@ -881,7 +881,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c16nrtoc16n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf16_name(),
 	     ::cnc::__cnc_detail::__utf32_name(),
 	     &__typical_multi_conversion<ztd_char16_t, ztd_char32_t, decltype(&::cnc_c16snrtoc32sn),
 	          &::cnc_c16snrtoc32sn>,
@@ -890,7 +890,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
 
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
 	     ::cnc::__cnc_detail::__exec_name(),
 	     &__typical_multi_conversion<ztd_char32_t, char, decltype(&::cnc_c32snrtomcsn),
 	          &::cnc_c32snrtomcsn>,
@@ -898,7 +898,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c32nrtomcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
 	     ::cnc::__cnc_detail::__wide_name(),
 	     &__typical_multi_conversion<ztd_char32_t, wchar_t, decltype(&::cnc_c32snrtomwcsn),
 	          &::cnc_c32snrtomwcsn>,
@@ -906,7 +906,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c32nrtomwcn>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
 	     ::cnc::__cnc_detail::__utf8_name(),
 	     &__typical_multi_conversion<ztd_char32_t, ztd_char8_t, decltype(&::cnc_c32snrtoc8sn),
 	          &::cnc_c32snrtoc8sn>,
@@ -914,7 +914,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c32nrtoc8n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
 	     ::cnc::__cnc_detail::__utf16_name(),
 	     &__typical_multi_conversion<ztd_char32_t, ztd_char16_t, decltype(&::cnc_c32snrtoc16sn),
 	          &::cnc_c32snrtoc16sn>,
@@ -922,7 +922,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          &::cnc_c32nrtoc16n>,
 	     &::__typical_state_is_complete_function, &::__typical_open_function,
 	     &::__typical_close_function));
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),
 	     ::cnc::__cnc_detail::__utf32_name(),
 	     &__typical_multi_conversion<ztd_char32_t, ztd_char32_t, decltype(&::cnc_c32snrtoc32sn),
 	          &::cnc_c32snrtoc32sn>,
@@ -933,7 +933,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 
 #define _ADD_MCN_NAMED_ENCODING_BASIC(                                                             \
      _NAME, _SUFFIX, _DECODE_STATE, _DECODE_COMPLETE_FN, _ENCODE_STATE, _ENCODE_COMPLETE_FN)       \
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, (const ztd_char8_t*)(_NAME),         \
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, (const ztd_char8_t*)(_NAME),            \
 	     ::cnc::__cnc_detail::__utf32_name(),                                                     \
 	     &__basic_multi_conversion<ztd_char_t, ztd_char32_t,                                      \
 	          decltype(&::cnc_mcsnrtoc32sn_##_SUFFIX), &::cnc_mcsnrtoc32sn_##_SUFFIX,             \
@@ -943,7 +943,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	     &::__basic_state_is_complete_function<_DECODE_STATE, decltype(_DECODE_COMPLETE_FN),      \
 	          _DECODE_COMPLETE_FN>,                                                               \
 	     &::__basic_open_function<_DECODE_STATE>, &::__basic_close_function<_DECODE_STATE>));     \
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf32_name(), \
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(),    \
 	     (const ztd_char8_t*)(_NAME),                                                             \
 	     &__basic_multi_conversion<ztd_char32_t, ztd_char_t,                                      \
 	          decltype(&::cnc_c32snrtomcsn_##_SUFFIX), &::cnc_c32snrtomcsn_##_SUFFIX,             \
@@ -954,22 +954,22 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	          _ENCODE_COMPLETE_FN>,                                                               \
 	     &::__basic_open_function<_ENCODE_STATE>, &::__basic_close_function<_ENCODE_STATE>))
 
-#define _ADD_MCN_NAMED_ENCODING(_NAME, _SUFFIX)                                                    \
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, (const ztd_char8_t*)(_NAME),         \
-	     ::cnc::__cnc_detail::__utf32_name(),                                                     \
-	     &__typical_multi_conversion<ztd_char_t, ztd_char32_t,                                    \
-	          decltype(&::cnc_mcsnrtoc32sn_##_SUFFIX), &::cnc_mcsnrtoc32sn_##_SUFFIX>,            \
-	     &__typical_single_conversion<ztd_char_t, ztd_char32_t,                                   \
-	          decltype(&::cnc_mcnrtoc32n_##_SUFFIX), &::cnc_mcnrtoc32n_##_SUFFIX>,                \
-	     &::__typical_state_is_complete_function, &::__typical_open_function,                     \
-	     &::__typical_close_function));                                                           \
-	_CHECK_ERR_AND_RETURN(cnc_add_to_registry_c8(__registry, ::cnc::__cnc_detail::__utf32_name(), \
-	     (const ztd_char8_t*)(_NAME),                                                             \
-	     &__typical_multi_conversion<ztd_char32_t, ztd_char_t,                                    \
-	          decltype(&::cnc_c32snrtomcsn_##_SUFFIX), &::cnc_c32snrtomcsn_##_SUFFIX>,            \
-	     &__typical_single_conversion<ztd_char32_t, ztd_char_t,                                   \
-	          decltype(&::cnc_c32nrtomcn_##_SUFFIX), &::cnc_c32nrtomcn_##_SUFFIX>,                \
-	     &::__typical_state_is_complete_function, &::__typical_open_function,                     \
+#define _ADD_MCN_NAMED_ENCODING(_NAME, _SUFFIX)                                                 \
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, (const ztd_char8_t*)(_NAME),         \
+	     ::cnc::__cnc_detail::__utf32_name(),                                                  \
+	     &__typical_multi_conversion<ztd_char_t, ztd_char32_t,                                 \
+	          decltype(&::cnc_mcsnrtoc32sn_##_SUFFIX), &::cnc_mcsnrtoc32sn_##_SUFFIX>,         \
+	     &__typical_single_conversion<ztd_char_t, ztd_char32_t,                                \
+	          decltype(&::cnc_mcnrtoc32n_##_SUFFIX), &::cnc_mcnrtoc32n_##_SUFFIX>,             \
+	     &::__typical_state_is_complete_function, &::__typical_open_function,                  \
+	     &::__typical_close_function));                                                        \
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(), \
+	     (const ztd_char8_t*)(_NAME),                                                          \
+	     &__typical_multi_conversion<ztd_char32_t, ztd_char_t,                                 \
+	          decltype(&::cnc_c32snrtomcsn_##_SUFFIX), &::cnc_c32snrtomcsn_##_SUFFIX>,         \
+	     &__typical_single_conversion<ztd_char32_t, ztd_char_t,                                \
+	          decltype(&::cnc_c32nrtomcn_##_SUFFIX), &::cnc_c32nrtomcn_##_SUFFIX>,             \
+	     &::__typical_state_is_complete_function, &::__typical_open_function,                  \
 	     &::__typical_close_function))
 
 	_ADD_MCN_NAMED_ENCODING("ascii", ascii);
@@ -994,7 +994,7 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_c8(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
-     cnc_conversion** __p_out_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
+     cnc_conversion** __out_p_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__from == nullptr) {
 		return CNC_OPEN_ERROR_INVALID_PARAMETER;
 	}
@@ -1004,22 +1004,24 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 	size_t __from_size = ::ztd::c_string_ptr_size(__from);
 	size_t __to_size   = ::ztd::c_string_ptr_size(__to);
 	return cnc_conv_new_c8n(
-	     __registry, __from_size, __from, __to_size, __to, __p_out_conversion, __p_info);
+	     __registry, __from_size, __from, __to_size, __to, __out_p_conversion, __p_info);
 }
 
 
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
-     cnc_conversion** __p_out_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
+     cnc_conversion** __out_p_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return cnc_conv_new_c8(__registry, reinterpret_cast<const ztd_char8_t*>(__from),
-	     reinterpret_cast<const ztd_char8_t*>(__to), __p_out_conversion, __p_info);
+	     reinterpret_cast<const ztd_char8_t*>(__to), __out_p_conversion, __p_info);
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_c8n_select(
-     cnc_conversion_registry* __registry, size_t __from_size, const ztd_char8_t* __from,
-     size_t __to_size, const ztd_char8_t* __to, cnc_indirect_selection_c8_function __selection,
-     cnc_conversion** __p_out_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_indirect_selection_c8_function __selection, cnc_conversion** __out_p_conversion,
+     cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__from_size == 0 || __from == nullptr) {
 		return CNC_OPEN_ERROR_INVALID_PARAMETER;
 	}
@@ -1072,33 +1074,35 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 	}
 	if (!__p_info->is_indirect) {
 		return ::__cnc_open_with(
-		     __registry, __from_entry, __p_out_conversion, &__available_space, &__space);
+		     __registry, __from_entry, __out_p_conversion, &__available_space, &__space);
 	}
 	else {
 		return ::__cnc_open_intermediary_with(__registry, __from_entry, __to_entry,
-		     __p_out_conversion, &__available_space, &__space);
+		     __out_p_conversion, &__available_space, &__space);
 	}
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_c8n(
-     cnc_conversion_registry* __registry, size_t __from_size, const ztd_char8_t* __from,
-     size_t __to_size, const ztd_char8_t* __to, cnc_conversion** __p_out_conversion,
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return cnc_conv_new_c8n_select(
-	     __registry, __from_size, __from, __to_size, __to, nullptr, __p_out_conversion, __p_info);
+	     __registry, __from_size, __from, __to_size, __to, nullptr, __out_p_conversion, __p_info);
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_n(
-     cnc_conversion_registry* __registry, size_t __from_size, const char* __from, size_t __to_size,
-     const char* __to, cnc_conversion** __p_out_conversion,
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return cnc_conv_new_c8n(__registry, __from_size, reinterpret_cast<const ztd_char8_t*>(__from),
-	     __to_size, reinterpret_cast<const ztd_char8_t*>(__to), __p_out_conversion, __p_info);
+	     __to_size, reinterpret_cast<const ztd_char8_t*>(__to), __out_p_conversion, __p_info);
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_c8(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
-     cnc_conversion** __p_out_conversion, size_t* __p_available_space, unsigned char* __space,
+     cnc_conversion** __out_p_conversion, size_t* __p_available_space, unsigned char* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__from == nullptr) {
 		return CNC_OPEN_ERROR_INVALID_PARAMETER;
@@ -1109,13 +1113,32 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 	size_t __from_size = ::ztd::c_string_ptr_size(__from);
 	size_t __to_size   = ::ztd::c_string_ptr_size(__to);
 	return ::cnc_conv_open_c8n(__registry, __from_size, __from, __to_size, __to,
-	     __p_out_conversion, __p_available_space, __space, __p_info);
+	     __out_p_conversion, __p_available_space, __space, __p_info);
+}
+
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_c8_select(
+     cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
+     cnc_indirect_selection_c8_function* __selection, cnc_conversion** __out_p_conversion,
+     size_t* __p_available_space, void* __space,
+     cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
+	if (__from == nullptr) {
+		return CNC_OPEN_ERROR_INVALID_PARAMETER;
+	}
+	if (__to == nullptr) {
+		return CNC_OPEN_ERROR_INVALID_PARAMETER;
+	}
+	size_t __from_size = ::ztd::c_string_ptr_size(__from);
+	size_t __to_size   = ::ztd::c_string_ptr_size(__to);
+	return ::cnc_conv_open_c8n_select(__registry, __from_size, __from, __to_size, __to,
+	     __selection, __out_p_conversion, __p_available_space, __space, __p_info);
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_c8n_select(
-     cnc_conversion_registry* __registry, size_t __from_size, const ztd_char8_t* __from,
-     size_t __to_size, const ztd_char8_t* __to, cnc_indirect_selection_c8_function* __selection,
-     cnc_conversion** __p_out_conversion, size_t* __p_available_space, void* __space,
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_indirect_selection_c8_function* __selection, cnc_conversion** __out_p_conversion,
+     size_t* __p_available_space, void* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__from == nullptr) {
 		return CNC_OPEN_ERROR_INVALID_PARAMETER;
@@ -1156,42 +1179,46 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 	}
 	if (!__p_info->is_indirect) {
 		return ::__cnc_open_with(
-		     __registry, __from_entry, __p_out_conversion, __p_available_space, &__space);
+		     __registry, __from_entry, __out_p_conversion, __p_available_space, &__space);
 	}
 	else {
 		// we have matching entries: open an intermediary
 		return ::__cnc_open_intermediary_with(__registry, __from_entry, __to_entry,
-		     __p_out_conversion, __p_available_space, &__space);
+		     __out_p_conversion, __p_available_space, &__space);
 	}
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_n_select(
-     cnc_conversion_registry* __registry, size_t __from_size, const char* __from, size_t __to_size,
-     const char* __to, cnc_indirect_selection_function* __selection,
-     cnc_conversion** __p_out_conversion, size_t* __p_available_space, void* __space,
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_indirect_selection_function* __selection,
+     cnc_conversion** __out_p_conversion, size_t* __p_available_space, void* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return cnc_conv_open_c8n_select(__registry, __from_size,
 	     reinterpret_cast<const ztd_char8_t*>(__from), __to_size,
 	     reinterpret_cast<const ztd_char8_t*>(__to),
-	     reinterpret_cast<cnc_indirect_selection_c8_function*>(__selection), __p_out_conversion,
+	     reinterpret_cast<cnc_indirect_selection_c8_function*>(__selection), __out_p_conversion,
 	     __p_available_space, __space, __p_info);
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_c8n(
-     cnc_conversion_registry* __registry, size_t __from_size, const ztd_char8_t* __from,
-     size_t __to_size, const ztd_char8_t* __to, cnc_conversion** __p_out_conversion,
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
      size_t* __p_available_space, void* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return cnc_conv_open_c8n_select(__registry, __from_size, __from, __to_size, __to, nullptr,
-	     __p_out_conversion, __p_available_space, __space, __p_info);
+	     __out_p_conversion, __p_available_space, __space, __p_info);
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_n(
-     cnc_conversion_registry* __registry, size_t __from_size, const char* __from, size_t __to_size,
-     const char* __to, cnc_conversion** __p_out_conversion, size_t* __p_available_space,
-     void* __space, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
+     size_t* __p_available_space, void* __space,
+     cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_ {
 	return cnc_conv_open_c8n(__registry, __from_size, reinterpret_cast<const ztd_char8_t*>(__from),
-	     __to_size, reinterpret_cast<const ztd_char8_t*>(__to), __p_out_conversion,
+	     __to_size, reinterpret_cast<const ztd_char8_t*>(__to), __out_p_conversion,
 	     __p_available_space, __space, __p_info);
 }
 

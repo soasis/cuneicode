@@ -70,7 +70,7 @@ inline namespace cnc_tests_registry_indirect_ascii {
 
 	struct cnc_registry_deleter {
 		void operator()(cnc_conversion_registry* handle) const {
-			cnc_delete_registry(handle);
+			cnc_registry_delete(handle);
 		}
 	};
 
@@ -159,17 +159,17 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 	{
 		cnc_conversion_registry* raw_registry = registry.get();
 		cnc_registry_options registry_options = CNC_REGISTRY_OPTIONS_DEFAULT;
-		cnc_open_error err                    = cnc_new_registry(&raw_registry, registry_options);
+		cnc_open_error err                    = cnc_registry_new(&raw_registry, registry_options);
 		REQUIRE(err == CNC_OPEN_ERROR_OK);
 		registry.reset(raw_registry);
 	}
 	// add new conversion from our (weird) encoding to ASCII, then ASCII to UTF-32
 	{
-		cnc_open_error from_err = cnc_add_to_registry_c8_single(registry.get(),
+		cnc_open_error from_err = cnc_registry_add_c8_single(registry.get(),
 		     (const ztd_char8_t*)u8"weird-1", (const ztd_char8_t*)u8"ascii",
 		     mcnrtomcn_weird1_ascii, nullptr, nullptr, nullptr);
 		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		cnc_open_error to_err = cnc_add_to_registry_c8_single(registry.get(),
+		cnc_open_error to_err = cnc_registry_add_c8_single(registry.get(),
 		     (const ztd_char8_t*)u8"ascii", (const ztd_char8_t*)u8"weird-1",
 		     mcnrtomcn_ascii_weird1, nullptr, nullptr, nullptr);
 		REQUIRE(to_err == CNC_OPEN_ERROR_OK);

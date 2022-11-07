@@ -48,7 +48,7 @@ struct cnc_conversion_deleter {
 
 struct cnc_registry_deleter {
 	void operator()(cnc_conversion_registry* handle) const {
-		cnc_delete_registry(handle);
+		cnc_registry_delete(handle);
 	}
 };
 
@@ -62,7 +62,7 @@ int main(int, char*[]) {
 	{
 		cnc_conversion_registry* raw_registry = registry.get();
 		cnc_registry_options registry_options = CNC_REGISTRY_OPTIONS_DEFAULT;
-		cnc_open_error err = cnc_new_registry(&raw_registry, registry_options);
+		cnc_open_error err = cnc_registry_new(&raw_registry, registry_options);
 		if (err != CNC_OPEN_ERROR_OK) {
 			std::cerr << "[error] Could not open a conversion "
 			             "registry (error code: "

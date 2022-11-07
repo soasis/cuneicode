@@ -110,8 +110,8 @@ typedef union cnc_mcstate_t {
 		cnc_mcstate_indicator indicator : CHAR_BIT;
 		//////
 		/// @brief Universal "assume valid input" flag for use with "-unchecked"-suffixed
-		/// encodings.
-		unsigned int assume_valid : 1;
+		/// encodings. Do not access.
+		unsigned int __assume_valid : 1;
 		//////
 		/// @brief Padding to keep consistent sizing. Not meant to be part of any location. Do not
 		/// access.
@@ -166,7 +166,27 @@ typedef union cnc_mcstate_t {
 } cnc_mcstate_t;
 
 //////
+/// @brief Sets internal state for the cnc_mcstate_t object which will set its assume valid bits, if
+/// applicable.
+///
+/// @param[in,out] __state The state to turn validity on for.
+/// @param[in,out] __check_validity Whether or not to check for validity.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assume_valid(
+     cnc_mcstate_t* __state, bool __check_validity);
+
+//////
+/// @brief Gets the internal state for the cnc_mcstate_t object representing its current "assume
+/// valid" state.
+///
+/// @param[in,out] __state The state to turn validity on for.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_get_assume_valid(
+     const cnc_mcstate_t* __state);
+
+//////
 /// @brief Returns whether or not the given cnc_mcstate_t has no more data that needs to be output.
+///
+/// @param[in] __state The state object to check is complete/finished and has no pending writes to
+/// do or data to gather.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_complete(
      const cnc_mcstate_t* __state);
 

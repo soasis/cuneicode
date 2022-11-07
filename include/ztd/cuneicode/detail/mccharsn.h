@@ -353,6 +353,124 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32snrtoc
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
 
+
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntomcsn_utf8_exec(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtomcsn_utf8_exec(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len, const char** __p_src,
+     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntomwcsn_utf8_wide_exec(
+     size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtomwcsn_utf8_wide_exec(
+     size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len, const char** __p_src,
+     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntoc8sn_utf8(
+     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtoc8sn_utf8(
+     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntoc16sn_utf8(
+     size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtoc16sn_utf8(
+     size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntoc32sn_utf8(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtoc32sn_utf8(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntomcsn_exec_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtomcsn_exec_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len, const char** __p_src,
+     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcsntomcsn_wide_exec_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const wchar_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcsnrtomcsn_wide_exec_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len, const wchar_t** __p_src,
+     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c8sntomcsn_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c8snrtomcsn_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c16sntomcsn_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char16_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c16snrtomcsn_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char16_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32sntomcsn_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32snrtomcsn_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_mcsntomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntomcsn_utf8_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
+     const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+//////
+/// @copydoc cnc_mcsnrtomcsn
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtomcsn_utf8_utf8(
+     size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len, const char** __p_src,
+     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+
 //////
 /// @}
 

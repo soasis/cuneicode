@@ -68,6 +68,7 @@ Registry (Untyped) Conversions
 	
 	api/registry
 	api/registry_options
+	api/registry_types
 	api/conversion_info
 	api/registry conversion handles
 	api/registry conversions

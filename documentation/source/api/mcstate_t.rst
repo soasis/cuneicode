@@ -42,3 +42,7 @@ The state object is used during conversions to provide a place for the function 
 .. doxygenunion:: cnc_mcstate_t
 
 .. doxygenfunction:: cnc_mcstate_is_complete
+
+.. doxygenfunction:: cnc_mcstate_set_assume_valid
+
+.. doxygenfunction:: cnc_mcstate_get_assume_valid
