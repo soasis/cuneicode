@@ -54,9 +54,10 @@ then ``ztd.cuneicode`` is for you!
 
 	start
 	quick
-	api
 	design
+	api
 	definitions
+	known unicode encodings
 	future
 	benchmarks
 	license

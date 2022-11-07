@@ -57,9 +57,12 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		std::string_view pivot_view((const ztd_char_t*)pivot.bytes, pivot_expected.size());
 		std::u32string_view output_view((const ztd_char32_t*)output_buffer,
 		     (ztd_c_array_size(output_buffer) - output_size) / sizeof(ztd_char32_t));
-		REQUIRE(err == CNC_MCERROR_OK);
-		REQUIRE(pivot_view == pivot_expected);
-		REQUIRE(output_view == expected);
+		const bool err_okay    = err == CNC_MCERROR_OK;
+		const bool pivot_okay  = pivot_view == pivot_expected;
+		const bool output_okay = output_view == expected;
+		REQUIRE(err_okay);
+		REQUIRE(pivot_okay);
+		REQUIRE(output_okay);
 	}
 
 	struct cnc_conversion_deleter {
@@ -187,7 +190,7 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 		const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 		cnc_conversion_registry* __registry = registry.get();
 		cnc_open_error err                  = cnc_conv_new_c8n(
-		                      __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
+               __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
 		REQUIRE(err == CNC_OPEN_ERROR_OK);
 		REQUIRE(info.is_indirect);
 		std::string_view from_name((const char*)info.from_code_data, info.from_code_size);
