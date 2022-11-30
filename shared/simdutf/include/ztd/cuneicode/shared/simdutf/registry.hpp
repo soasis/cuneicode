@@ -41,4 +41,4 @@
 extern bool cnc_shared_add_simdutf_to_registry(
      cnc_conversion_registry* registry) ZTD_NOEXCEPT_IF_CXX_I_;
 
-#endif // ZTD_CUNEICODE_SHARED_SIMDUTF_EXTENSIONS_H
+#endif

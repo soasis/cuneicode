@@ -89,4 +89,4 @@
 
 // clang-format on
 
-#endif // ZTD_CUNEICODE_DETAIL_API_H
+#endif

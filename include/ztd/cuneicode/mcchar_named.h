@@ -71,4 +71,4 @@
 #include <ztd/cuneicode/windows_1257.h>
 #include <ztd/cuneicode/windows_1258.h>
 
-#endif // ZTD_CUNEICODE_MCHAR_NAMED_H
+#endif

@@ -56,4 +56,4 @@ struct options {
 
 std::optional<std::string> parse_options(options& opt, int argc, char* argv[]);
 
-#endif // ZTD_CUNEICODE_EXAMPLES_CCONV_OPTIONS_HPP
+#endif

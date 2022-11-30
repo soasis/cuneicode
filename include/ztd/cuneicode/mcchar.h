@@ -126,4 +126,4 @@
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_MCCHAR_H
+#endif

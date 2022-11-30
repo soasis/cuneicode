@@ -72,4 +72,4 @@ typedef enum cnc_open_error {
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_OPEN_ERROR_H
+#endif

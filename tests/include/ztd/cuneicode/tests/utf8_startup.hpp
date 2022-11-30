@@ -38,4 +38,4 @@ namespace cnc { namespace tests {
 	inline ztd::utf8_startup_hook utf8_startup {};
 }} // namespace cnc::tests
 
-#endif // ZTD_CUNEICODE_TESTS_UTF8_STARTUP_HPP
+#endif

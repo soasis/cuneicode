@@ -44,4 +44,4 @@
 
 #include <ztd/idk/charN_t.h>
 
-#endif // ZTD_CUNEICODE_H
+#endif

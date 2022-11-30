@@ -554,4 +554,4 @@ cnc_mcerror __cnc_cxsnrtocxsn(size_t* __p_maybe_dst_len, _Destination** __p_mayb
 
 #endif
 
-#endif // ZTD_CUNEICODE_MCCHAR_GENERIC_HPP
+#endif

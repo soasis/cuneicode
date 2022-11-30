@@ -71,10 +71,9 @@ namespace cnc {
 			}
 			::std::uint_least32_t lookup_index
 			     = static_cast<::std::uint_least32_t>(__lookup_index_pointer);
-			auto __last = ::ztd::ranges::ranges_adl::adl_cend(__index_code_point_map);
-			auto __it   = ::std::lower_bound(
-			       ::ztd::ranges::ranges_adl::adl_cbegin(__index_code_point_map), __last,
-			       lookup_index, &__cnc_less_than_index_target);
+			auto __last = ::ztd::ranges::cend(__index_code_point_map);
+			auto __it = ::std::lower_bound(::ztd::ranges::cbegin(__index_code_point_map), __last,
+			     lookup_index, &__cnc_less_than_index_target);
 			if (__it == __last) {
 				return ::std::nullopt;
 			}
@@ -95,10 +94,9 @@ namespace cnc {
 			if (__code == U'\uE7C7') {
 				return 7457;
 			}
-			auto __last = ::ztd::ranges::ranges_adl::adl_cend(__index_code_point_map);
-			auto __it   = ::std::lower_bound(
-			       ::ztd::ranges::ranges_adl::adl_cbegin(__index_code_point_map), __last, __code,
-			       &__cnc_less_than_code_point_target);
+			auto __last = ::ztd::ranges::cend(__index_code_point_map);
+			auto __it = ::std::lower_bound(::ztd::ranges::cbegin(__index_code_point_map), __last,
+			     __code, &__cnc_less_than_code_point_target);
 			if (__it == __last) {
 				return ::std::nullopt;
 			}
@@ -115,10 +113,9 @@ namespace cnc {
 		     ::std::size_t __lookup_index_pointer) noexcept {
 			::std::uint_least32_t lookup_index
 			     = static_cast<::std::uint_least32_t>(__lookup_index_pointer);
-			auto __last = ::ztd::ranges::ranges_adl::adl_cend(__index_code_point_map);
-			auto __it   = ::std::lower_bound(
-			       ::ztd::ranges::ranges_adl::adl_cbegin(__index_code_point_map), __last,
-			       lookup_index, &__cnc_less_than_index_target);
+			auto __last = ::ztd::ranges::cend(__index_code_point_map);
+			auto __it = ::std::lower_bound(::ztd::ranges::cbegin(__index_code_point_map), __last,
+			     lookup_index, &__cnc_less_than_index_target);
 			if (__it == __last) {
 				return ::std::nullopt;
 			}
@@ -139,10 +136,9 @@ namespace cnc {
 			            const ::std::pair<::std::uint_least32_t, ::std::uint_least32_t>& value) {
 				       return __code == value.second;
 			       };
-			auto __last = ::ztd::ranges::ranges_adl::adl_cend(__index_code_point_map);
-			auto __it
-			     = ::std::find_if(::ztd::ranges::ranges_adl::adl_cbegin(__index_code_point_map),
-			          __last, predicate);
+			auto __last = ::ztd::ranges::cend(__index_code_point_map);
+			auto __it   = ::std::find_if(
+			       ::ztd::ranges::cbegin(__index_code_point_map), __last, predicate);
 			if (__it == __last) {
 				return ::std::nullopt;
 			}
@@ -162,10 +158,9 @@ namespace cnc {
 				       return __code == value.second
 				            && !(value.first > 8272 && value.first < 8835);
 			       };
-			auto __last = ::ztd::ranges::ranges_adl::adl_cend(__index_code_point_map);
-			auto __it
-			     = ::std::find_if(::ztd::ranges::ranges_adl::adl_cbegin(__index_code_point_map),
-			          __last, predicate);
+			auto __last = ::ztd::ranges::cend(__index_code_point_map);
+			auto __it   = ::std::find_if(
+			       ::ztd::ranges::cbegin(__index_code_point_map), __last, predicate);
 			if (__it == __last) {
 				return ::std::nullopt;
 			}
@@ -186,10 +181,9 @@ namespace cnc {
 			       };
 			if (__code == 0x2550 || __code == 0x255E || __code == 0x256A || __code == 0x5341) {
 				// must index backwards, to find the last matching code point in the range
-				auto __last = ::ztd::ranges::ranges_adl::adl_crend(__index_code_point_map);
+				auto __last = ::ztd::ranges::crend(__index_code_point_map);
 				auto __it   = ::std::find_if(
-				       ::ztd::ranges::ranges_adl::adl_crbegin(__index_code_point_map), __last,
-				       predicate);
+				       ::ztd::ranges::crbegin(__index_code_point_map), __last, predicate);
 				if (__it == __last) {
 					return ::std::nullopt;
 				}
@@ -198,10 +192,9 @@ namespace cnc {
 				return static_cast<::std::size_t>(__index_and_codepoint.first);
 			}
 			else {
-				auto __last = ::ztd::ranges::ranges_adl::adl_cend(__index_code_point_map);
+				auto __last = ::ztd::ranges::cend(__index_code_point_map);
 				auto __it   = ::std::find_if(
-				       ::ztd::ranges::ranges_adl::adl_cbegin(__index_code_point_map), __last,
-				       predicate);
+				       ::ztd::ranges::cbegin(__index_code_point_map), __last, predicate);
 				if (__it == __last) {
 					return ::std::nullopt;
 				}

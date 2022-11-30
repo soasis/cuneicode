@@ -789,4 +789,4 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_conv_one_
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_CONV_H
+#endif

@@ -39,4 +39,4 @@
 // TODO: EUC-JP can be used as the wide encoding in some systems, so it should be templated over the
 // code_unit type.
 
-#endif // ZTD_CUNEICODE_SOURCE_DETAIL_EUC_JP_IMPL_HPP
+#endif

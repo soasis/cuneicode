@@ -58,4 +58,4 @@ typedef enum cnc_registry_options {
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_REGISTRY_OPTIONS_H
+#endif

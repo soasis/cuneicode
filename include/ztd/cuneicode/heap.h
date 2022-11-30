@@ -131,4 +131,4 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_HEAP_H
+#endif

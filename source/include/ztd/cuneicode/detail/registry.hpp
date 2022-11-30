@@ -143,4 +143,4 @@ extern cnc_open_error __cnc_find_entry(cnc_conversion_registry* __registry,
      const __cnc_registry_entry** __p_to_entry,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
-#endif // ZTD_CUNEICODE_SOURCE_DETAIL_REGISTRY_HPP
+#endif

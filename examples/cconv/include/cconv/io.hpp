@@ -51,4 +51,4 @@ input_read read_input_into(std::vector<unsigned char>& data,
 std::optional<unsigned long long> parse_unsigned_integer(
      utf8string_view value, int base = 10);
 
-#endif // ZTD_CUNEICODE_EXAMPLES_CCONV_IO_HPP
+#endif

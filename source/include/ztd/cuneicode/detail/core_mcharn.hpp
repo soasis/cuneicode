@@ -1089,4 +1089,4 @@ namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_
 } // namespace cnc
 
-#endif // ZTD_CUNEICODE_DETAIL_MCCHAR_INTERNAL_HPP
+#endif

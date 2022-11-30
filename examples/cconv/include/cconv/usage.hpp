@@ -36,4 +36,4 @@ void print_help(void);
 void print_version(void);
 void print_encoding_list(cnc_conversion_registry* p_registry);
 
-#endif // ZTD_CUNEICODE_EXAMPLES_CCONV_USAGE_HPP
+#endif

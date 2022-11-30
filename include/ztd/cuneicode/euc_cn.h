@@ -104,4 +104,4 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtoc3
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_EUC_CN_H
+#endif

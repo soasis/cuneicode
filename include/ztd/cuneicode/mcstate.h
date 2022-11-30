@@ -193,4 +193,4 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_compl
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_DETAIL_MCSTATE_H
+#endif

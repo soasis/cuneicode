@@ -284,4 +284,4 @@
 
 #endif
 
-#endif // ZTD_CUNEICODE_MCCHAR_GENERIC_H
+#endif

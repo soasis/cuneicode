@@ -73,4 +73,4 @@ typedef struct __cnc_pivot_info {
 	cnc_mcerror error;
 } cnc_pivot_info;
 
-#endif // ZTD_CUNEICODE_PIVOT_INFO_H
+#endif

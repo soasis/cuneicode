@@ -46,4 +46,4 @@ static_assert(__mc_s_i_raw == CNC_MCSTATE_INDICATOR_RAW,
 static_assert(__mc_s_i_punycode == CNC_MCSTATE_INDICATOR___RESERVED1,
      "mismatch between reserved and internal indicator values (punycode)");
 
-#endif // ZTD_CUNEICODE_SOURCE_DETAIL_STATE_HPP
+#endif

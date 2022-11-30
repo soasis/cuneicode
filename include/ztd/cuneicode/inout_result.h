@@ -142,4 +142,4 @@ ZTD_CNC_RESULT_STRUCT_I_(CNC_INOUT_RESULT(c16, c32), ztd_char16_t, ztd_char32_t)
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_INOUT_RESULT_H
+#endif

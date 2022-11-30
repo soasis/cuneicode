@@ -70,4 +70,4 @@ extern cnc_mcerror __cnc_single_from_multi_conversion(cnc_conversion* __conversi
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
      void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_;
 
-#endif // ZTD_CUNEICODE_SOURCE_DETAIL_CONVERSION_HPP
+#endif

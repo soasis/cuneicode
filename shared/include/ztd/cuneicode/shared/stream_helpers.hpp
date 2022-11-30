@@ -47,4 +47,4 @@ void print_conversion_info(std::ostream& out, cnc_conversion_info info);
 std::ostream& operator<<(std::ostream& stream, const utf8string_view& str);
 std::ostream& operator<<(std::ostream& stream, const utf8string& str);
 
-#endif // ZTD_CUNEICODE_SHARED_STREAM_HELPERS_HPP
+#endif

@@ -54,4 +54,4 @@
 
 #include <ztd/cuneicode/detail/api.h>
 
-#endif // ZTD_CUNEICODE_VERSION_H
+#endif

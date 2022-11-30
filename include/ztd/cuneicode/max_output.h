@@ -57,4 +57,4 @@
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_MAX_OUTPUT_H
+#endif

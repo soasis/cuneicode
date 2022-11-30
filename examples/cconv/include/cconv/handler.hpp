@@ -53,4 +53,4 @@ struct fail_handler {
 	     unsigned char**, size_t*, const unsigned char**) const noexcept;
 };
 
-#endif // ZTD_CUNEICODE_EXAMPLES_CCONV_HANDLER_HPP
+#endif

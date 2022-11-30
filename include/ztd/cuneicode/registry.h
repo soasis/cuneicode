@@ -670,4 +670,4 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pairs_list(
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_REGISTRY_H
+#endif

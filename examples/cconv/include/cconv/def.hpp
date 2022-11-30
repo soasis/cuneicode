@@ -57,4 +57,4 @@ constexpr int exit_file_open_failure     = 6;
 constexpr int exit_registry_open_failure = 7;
 constexpr int exit_option_failure        = 8;
 
-#endif // ZTD_CUNEICODE_EXAMPLES_CCONV_DEF_HPP
+#endif

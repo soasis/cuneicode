@@ -139,4 +139,4 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state
 //////
 /// @}
 
-#endif // ZTD_CUNEICODE_PUNYCODE_STATE_H
+#endif
