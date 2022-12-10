@@ -328,12 +328,10 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 				}
 			} break;
 			default: {
-				ZTD_UNREACHABLE();
-				break;
+				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			}
 		}
-		return CNC_MCERROR_INVALID_SEQUENCE;
 	}
 
 	if (__src_len == 0) {

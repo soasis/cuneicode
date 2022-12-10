@@ -47,9 +47,12 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32ntomcn
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomcn_windows_874(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
-	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
-	     __p_state, CNC_MC_MAX, decltype(&cnc_c32nrtomcn_windows_874), &cnc_c32nrtomcn_windows_874,
-	     ztd_char32_t, ztd_char_t);
+	(void)__p_maybe_dst_len;
+	(void)__p_maybe_dst;
+	(void)__p_src_len;
+	(void)__p_src;
+	(void)__p_state;
+	return CNC_MCERROR_INVALID_SEQUENCE;
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcntoc32n_windows_874(
