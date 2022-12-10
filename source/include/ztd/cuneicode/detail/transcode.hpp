@@ -120,32 +120,16 @@ namespace cnc {
 		     _CompletionFunc __completion_func = &cnc_mcstate_is_complete, typename _State>
 		cnc_mcerror __transcode(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
 		     size_t* __p_src_len, const _SourceChar** __p_src, _State __p_state) noexcept {
-			if (__p_src_len == nullptr || *__p_src_len < 1) {
-				// empty sources are just fine (returns 0)
-				return CNC_MCERROR_OK;
+			if (__p_src_len == nullptr) {
+				return __xsnrtoysn(
+				     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 			}
-			if (__p_src == nullptr || *__p_src == nullptr) {
-				// null sources are treated like empty sources: okay
-				return CNC_MCERROR_OK;
-			}
-
-			if constexpr (!_IsUnbounded) {
-				if (*__p_maybe_dst_len < 1) {
-					// we are not counting, and there is not enough output
-					// spaced
-					return CNC_MCERROR_INSUFFICIENT_OUTPUT;
-				}
-			}
-
-			const _SourceChar*& __src = *__p_src;
-			size_t& __src_len         = *__p_src_len;
-
 			for (;;) {
 				cnc_mcerror __res = __xsnrtoysn(
-				     __p_maybe_dst_len, __p_maybe_dst, &__src_len, &__src, __p_state);
+				     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 				switch (__res) {
 				case CNC_MCERROR_OK:
-					if (__src_len == 0) {
+					if (*__p_src_len == 0) {
 						if (!__completion_func(__p_state)) {
 							break;
 						}

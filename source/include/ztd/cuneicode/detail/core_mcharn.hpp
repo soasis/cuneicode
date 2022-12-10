@@ -78,7 +78,8 @@ namespace cnc {
 				}
 			}
 			ztd_char32_t __c0 = *__src;
-			if (__c0 > __ztd_idk_detail_last_unicode_code_point) {
+			if (__c0 > __ztd_idk_detail_last_unicode_code_point
+			     || __ztd_idk_detail_is_surrogate(__c0)) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			size_t __seq_len = static_cast<size_t>(__ztd_idk_detail_utf8_decode_length(__c0));
@@ -257,7 +258,7 @@ namespace cnc {
 			for (size_t __src_idx = 0; __src_idx < __max_accumulated_writeouts; ++__src_idx) {
 				const ztd_char32_t& __c32 = __src[__src_idx];
 				size_t __res              = ZTD_UCHAR_ACCESSOR_I_ c32rtomb(
-				                  __multibyte_intermediate, __c32, &__p_state->__locale.__state1);
+                         __multibyte_intermediate, __c32, &__p_state->__locale.__state1);
 				if (__res == ::cnc::__cnc_detail::__stdc_ret_err_invalid) {
 					return CNC_MCERROR_INVALID_SEQUENCE;
 				}
@@ -324,10 +325,7 @@ namespace cnc {
 				__src_len -= 1;
 				return CNC_MCERROR_OK;
 			}
-			if (__ztd_idk_detail_is_lead_utf8(__c8)) {
-				return CNC_MCERROR_INVALID_SEQUENCE;
-			}
-			if (__ztd_idk_detail_utf8_is_invalid(__c8)) {
+			if (!__ztd_idk_detail_is_lead_utf8(__c8)) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			size_t __seq_len
@@ -340,7 +338,6 @@ namespace cnc {
 				if (__seq_len > *__p_maybe_dst_len) {
 					return CNC_MCERROR_INSUFFICIENT_OUTPUT;
 				}
-				*__p_maybe_dst_len -= __seq_len;
 			}
 			if constexpr (!_IsCounting) {
 				for (; __src_idx < __seq_len; ++__src_idx) {
@@ -348,12 +345,15 @@ namespace cnc {
 						return CNC_MCERROR_INCOMPLETE_INPUT;
 					}
 					__c8 = __src[__src_idx];
-					if (!__ztd_idk_detail_is_lead_utf8(__c8)) {
+					if (!__ztd_idk_detail_is_trailing_utf8(__c8)) {
 						return CNC_MCERROR_INVALID_SEQUENCE;
 					}
 				}
 				::std::memcpy(*__p_maybe_dst, __src, __seq_len * sizeof(*__src));
 				*__p_maybe_dst += __seq_len;
+			}
+			if constexpr (!_IsUnbounded) {
+				*__p_maybe_dst_len -= __seq_len;
 			}
 			__src += __seq_len;
 			__src_len -= __seq_len;
@@ -392,10 +392,7 @@ namespace cnc {
 				__src_len -= 1;
 				return CNC_MCERROR_OK;
 			}
-			if (__ztd_idk_detail_is_lead_utf8(__c8)) {
-				return CNC_MCERROR_INVALID_SEQUENCE;
-			}
-			if (__ztd_idk_detail_utf8_is_invalid(__c8)) {
+			if (!__ztd_idk_detail_is_lead_utf8(__c8)) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			size_t __seq_len
@@ -413,7 +410,7 @@ namespace cnc {
 				if (__src_idx == __src_len) {
 					return CNC_MCERROR_INCOMPLETE_INPUT;
 				}
-				if (!__ztd_idk_detail_is_lead_utf8(__c8)) {
+				if (!__ztd_idk_detail_is_trailing_utf8(__c8)) {
 					return CNC_MCERROR_INVALID_SEQUENCE;
 				}
 				__c32 <<= 6;
@@ -473,21 +470,21 @@ namespace cnc {
 			ztd_char8_t __c8 = __src[__src_idx];
 			++__src_idx;
 			if (__c8 <= 0x7F) {
+				if constexpr (!_IsUnbounded) {
+					if (1 > *__p_maybe_dst_len) {
+						return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+					}
+					*__p_maybe_dst_len -= 1;
+				}
 				if constexpr (!_IsCounting) {
 					**__p_maybe_dst = static_cast<ztd_char32_t>(__c8);
 					*__p_maybe_dst += 1;
-				}
-				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 1;
 				}
 				__src += 1;
 				__src_len -= 1;
 				return CNC_MCERROR_OK;
 			}
-			if (__ztd_idk_detail_is_lead_utf8(__c8)) {
-				return CNC_MCERROR_INVALID_SEQUENCE;
-			}
-			if (__ztd_idk_detail_utf8_is_invalid(__c8)) {
+			if (!__ztd_idk_detail_is_lead_utf8(__c8)) {
 				return CNC_MCERROR_INVALID_SEQUENCE;
 			}
 			size_t __seq_len
@@ -498,9 +495,8 @@ namespace cnc {
 
 			if constexpr (!_IsUnbounded) {
 				if (1 > *__p_maybe_dst_len) {
-					return CNC_MCERROR_INVALID_SEQUENCE;
+					return CNC_MCERROR_INSUFFICIENT_OUTPUT;
 				}
-				*__p_maybe_dst_len -= 1;
 			}
 			if constexpr (!_IsCounting) {
 				ztd_char32_t __c32s[1] = { static_cast<ztd_char32_t>(__c8)
@@ -508,11 +504,11 @@ namespace cnc {
 				ztd_char32_t& __c32    = __c32s[0];
 
 				for (; __src_idx < __seq_len; ++__src_idx) {
-					__c8 = __src[__src_idx];
 					if (__src_idx == __src_len) {
 						return CNC_MCERROR_INCOMPLETE_INPUT;
 					}
-					if (!__ztd_idk_detail_is_lead_utf8(__c8)) {
+					__c8 = __src[__src_idx];
+					if (!__ztd_idk_detail_is_trailing_utf8(__c8)) {
 						return CNC_MCERROR_INVALID_SEQUENCE;
 					}
 					__c32 <<= 6;
@@ -521,6 +517,9 @@ namespace cnc {
 
 				**__p_maybe_dst = __c32;
 				*__p_maybe_dst += 1;
+			}
+			if constexpr (!_IsUnbounded) {
+				*__p_maybe_dst_len -= 1;
 			}
 			__src += __seq_len;
 			__src_len -= __seq_len;
@@ -754,7 +753,7 @@ namespace cnc {
 			ztd_wchar_t __intermediate_destination[4] {};
 			ztd_wchar_t* __dst = _IsCounting ? __intermediate_destination : *__p_maybe_dst;
 			size_t __c_err     = ZTD_WCHAR_ACCESSOR_I_ mbrtowc(
-			         __dst, __src, __src_len, &__p_state->__locale.__state0);
+                    __dst, __src, __src_len, &__p_state->__locale.__state0);
 			switch (__c_err) {
 			case ::cnc::__cnc_detail::__stdc_ret_err_invalid:
 				return CNC_MCERROR_INVALID_SEQUENCE;
@@ -838,7 +837,7 @@ namespace cnc {
 			for (size_t __src_idx = 0; __src_idx < __max_accumulated_writeouts; ++__src_idx) {
 				const ztd_wchar_t& __wc = __src[__src_idx];
 				size_t __res            = ZTD_WCHAR_ACCESSOR_I_ wcrtomb(
-				                __multibyte_intermediate, __wc, &__p_state->__locale.__state1);
+                         __multibyte_intermediate, __wc, &__p_state->__locale.__state1);
 				if (__res == ::cnc::__cnc_detail::__stdc_ret_err_invalid) {
 					return CNC_MCERROR_INVALID_SEQUENCE;
 				}

@@ -91,6 +91,11 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 	::cnc::__cnc_detail::__pny_encode_state& __pny
 	     = *::cnc::__cnc_detail::__get_pny_encode_state(__p_state);
 	if (__p_state->input_is_complete) {
+		if (__pny.__input.empty() && __pny.__output.empty()) {
+			// there are no more characters to output; get out of here.
+			::cnc::__cnc_detail::__destroy_pny_encode_state(__p_state);
+			return CNC_MCERROR_OK;
+		}
 		// now we are reading the input to do work...
 		const bool _IsCounting  = __p_maybe_dst == nullptr || __p_maybe_dst[0] == nullptr;
 		const bool _IsUnbounded = __p_maybe_dst_len == nullptr;
@@ -216,13 +221,34 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 				constexpr auto& __tmin           = ::cnc::__cnc_detail::__pny_tmin;
 				constexpr auto& __tmax           = ::cnc::__cnc_detail::__pny_tmax;
 				constexpr auto& __base           = ::cnc::__cnc_detail::__pny_base;
-				ztd_char32_t& __n                = __pny.__n;
-				::std::size_t& __delta           = __pny.__delta;
-				::std::size_t& __bias            = __pny.__bias;
 				size_t& __h                      = __pny.__h;
 				const ::std::size_t __input_size = __pny.__input.size();
-				const ::std::size_t __b          = static_cast<::std::size_t>(
-                         __input_size - __p_state->__has_seen_non_basic);
+				if (__h >= __input_size) {
+					// we are doing purely output writing at the moment.
+					if (__pny.__delta >= __pny.__output.size()) {
+						// nothing more to write: bail out.
+						::cnc::__cnc_detail::__destroy_pny_encode_state(__p_state);
+						return CNC_MCERROR_OK;
+					}
+					if (!_IsUnbounded) {
+						if (__p_maybe_dst_len[0] < 1) {
+							return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+						}
+						__p_maybe_dst_len[0] -= 1;
+					}
+					if (!_IsCounting) {
+						__p_maybe_dst[0][0]
+						     = static_cast<ztd_char_t>(__pny.__output[__pny.__delta]);
+						__p_maybe_dst[0] += 1;
+					}
+					__pny.__delta += 1;
+					return CNC_MCERROR_OK;
+				}
+				ztd_char32_t& __n       = __pny.__n;
+				::std::size_t& __delta  = __pny.__delta;
+				::std::size_t& __bias   = __pny.__bias;
+				const ::std::size_t __b = static_cast<::std::size_t>(
+				     __input_size - __p_state->__has_seen_non_basic);
 				for (;;) {
 					if (__h >= __input_size) {
 						break;
@@ -247,7 +273,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 					}
 					__delta = __delta + (__m_minus_n) * (__h_plus_1);
 					__n     = __m;
-					for (ztd_char32_t __c32 : __pny.__input) {
+					for (const ztd_char32_t __c32 : __pny.__input) {
 						if (__c32 < __n) {
 							if (::cnc::__cnc_detail::__pny_will_overflow_add(__delta, 1)) {
 								::cnc::__cnc_detail::__destroy_pny_encode_state(__p_state);
@@ -264,46 +290,28 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 								if (__q < __t) {
 									break;
 								}
-								if (!_IsUnbounded) {
-									if (__p_maybe_dst_len[0] < 1) {
-										return CNC_MCERROR_INSUFFICIENT_OUTPUT;
-									}
-									__p_maybe_dst_len[0] -= 1;
-								}
-								if (!_IsCounting) {
-									size_t __digit = __t + ((__q - __t) % (__base - __t));
-									const ztd_char32_t* __digit_map
-									     = __p_state->uppercase_letters
-									     ? ::cnc::__cnc_detail::
-									          __pny_digit_to_uppercase_codepoint_map
-									     : ::cnc::__cnc_detail::
-									          __pny_digit_to_lowercase_codepoint_map;
-
-									const ztd_char32_t __out_c32 = __digit_map[__digit];
-									__p_maybe_dst[0][0]
-									     = static_cast<ztd_char_t>(__out_c32);
-									__p_maybe_dst[0] += 1;
-								}
-								__q = (__q - __t) / (__base - __t);
-							}
-							if (!_IsUnbounded) {
-								if (__p_maybe_dst_len[0] < 1) {
-									return CNC_MCERROR_INSUFFICIENT_OUTPUT;
-								}
-								__p_maybe_dst_len[0] -= 1;
-							}
-							if (!_IsCounting) {
-								// TODO: what the hell are they asking us to output here??
+								size_t __digit = __t + ((__q - __t) % (__base - __t));
 								const ztd_char32_t* __digit_map
 								     = __p_state->uppercase_letters
 								     ? ::cnc::__cnc_detail::
 								          __pny_digit_to_uppercase_codepoint_map
 								     : ::cnc::__cnc_detail::
 								          __pny_digit_to_lowercase_codepoint_map;
-								const ztd_char32_t __out_c32 = __digit_map[__q];
-								__p_maybe_dst[0][0] = static_cast<ztd_char_t>(__out_c32);
-								__p_maybe_dst[0] += 1;
+
+								const ztd_char32_t __out_c32 = __digit_map[__digit];
+								__q                          = (__q - __t) / (__base - __t);
+								__pny.__output.push_back(
+								     static_cast<ztd_char_t>(__out_c32));
 							}
+
+							const ztd_char32_t* __digit_map = __p_state->uppercase_letters
+							     ? ::cnc::__cnc_detail::
+							          __pny_digit_to_uppercase_codepoint_map
+							     : ::cnc::__cnc_detail::
+							          __pny_digit_to_lowercase_codepoint_map;
+							const ztd_char32_t __out_c32    = __digit_map[__q];
+							__pny.__output.push_back(static_cast<ztd_char_t>(__out_c32));
+
 							__bias = ::cnc::__cnc_detail::__pny_adapt_bias(
 							     __delta, __h + 1, __h == __b);
 							__delta = 0;
@@ -313,14 +321,11 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 					__delta += 1;
 					__n += 1;
 					if (__h >= __input_size) {
+						__pny.__delta = 0;
 						break;
-						// we are fully done!
 					}
 					return CNC_MCERROR_OK;
 				}
-				// we are completely done!
-				::cnc::__cnc_detail::__destroy_pny_encode_state(__p_state);
-				return CNC_MCERROR_OK;
 			} break;
 			default: {
 				ZTD_UNREACHABLE();

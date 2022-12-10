@@ -48,8 +48,11 @@ cuneicode is a C library whose headers work in both C and C++. Its implementatio
 Once the library is appropriately included, you can start using cuneicode.
 
 
+
 Simple Conversions
 ------------------
+
+Simple conversions are provided for UTF-8, UTF-16, UTF-32, :term:`execution enoding`, and :term:`wide execution encoding`. They allow an end-user to use bit-based types.
 
 To convert from UTF-16 to UTF-8, use the appropriately `c8` and `c16`-marked free functions in the library:
 
@@ -66,3 +69,20 @@ We use raw ``printf`` to print the UTF-8 text. It may not appear correctly on a 
 - and, a pointer to any extra output that was not written to after the operation (``p_output``).
 
 One can convert from other forms of UTF-8/16/32 encodings, and from the :term:`wide execution encodings <wide execution encoding>`/:term:`execution encoding <execution encoding>` (encodings used by default for ``const char[]`` and ``const wchar_t[]`` strings) using the various different :ref:`prefixed-based <design-naming-encoding.table>` functions.
+
+
+Counting 
+++++++++
+
+
+
+
+
+Validating
+++++++++++
+
+
+
+
+Registry-Based Conversions
+--------------------------

@@ -49,3 +49,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state
 	return __p_state->input_is_complete
 	     && __p_state->__action_state == ::cnc::__cnc_detail::__pny_decode_state_complete;
 }
+
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_input_complete(
+     cnc_pny_encode_state_t* __p_state) {
+	__p_state->input_is_complete = true;
+}
+
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_input_complete(
+     cnc_pny_decode_state_t* __p_state) {
+	__p_state->input_is_complete = true;
+}

@@ -95,6 +95,7 @@ namespace cnc {
 			// TODO: this type should be a
 			// ztd::small_vector<ztd_char32_t, __idna_max_size>
 			std::vector<ztd_char32_t> __input;
+			std::vector<ztd_char_t> __output;
 		};
 
 		struct __pny_decode_state {
@@ -182,6 +183,7 @@ namespace cnc {
 			__p_state->__is_initialized = 1u;
 			__actual->__input_current   = nullptr;
 			__actual->__input.reserve(__idna_max_size);
+			__actual->__output.reserve(__idna_max_size);
 			__actual->__h     = 0u;
 			__actual->__delta = 0u;
 			__actual->__n     = 0u;
@@ -412,7 +414,7 @@ namespace cnc {
 							const ::std::size_t __output_size       = __pny.__output.size();
 							const ::std::size_t __output_size_plus1 = (__output_size + 1);
 							__bias                                  = __pny_adapt_bias(
-							                                      __i - __old_i, __output_size + 1, __old_i == 0);
+                                        __i - __old_i, __output_size + 1, __old_i == 0);
 							const ::std::size_t __i_div_output_size_plus1
 							     = __i / __output_size_plus1;
 							if (__pny_will_overflow_add(static_cast<::std::size_t>(__n),
