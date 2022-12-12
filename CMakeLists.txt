@@ -106,6 +106,15 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		check_compiler_flag(warn-all MSVC /W4 GCC -Wall)
 		check_compiler_flag(warn-errors MSVC /WX GCC -Werror)
 		check_compiler_flag(warn-extra GCC -Wextra Clang -Wextra)
+		# (Wstringop-overflow) - [meta-bug] bogus/missing -Wstringop-overflow warnings
+		#   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=88443
+		# Bogus -Wstringop-overflow warning
+		#   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100395
+		# [10 Regression] spurious -Wstringop-overflow writing to a trailing array plus offset
+		#   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=95353
+		if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0)
+			check_compiler_diagnostic(stringop-overflow)
+		endif()
 	endif()
 endif()
 
