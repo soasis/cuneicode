@@ -1,7 +1,7 @@
 # =============================================================================
 #
 # ztd.cuneicode
-# Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+# Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 # Contact: opensource@soasis.org
 #
 # Commercial License Usage
@@ -135,6 +135,11 @@ FetchContent_Declare(ztd.idk
 	GIT_REPOSITORY https://github.com/soasis/idk.git
 	GIT_TAG main)
 FetchContent_MakeAvailable(ztd.idk)
+# ztd.encoding_tables
+FetchContent_Declare(ztd.encoding_tables
+	GIT_REPOSITORY https://github.com/soasis/encoding_tables.git
+	GIT_TAG main)
+FetchContent_MakeAvailable(ztd.encoding_tables)
 
 # # Main Library
 file(GLOB ztd.cuneicode.includes CONFIGURE_DEPENDS include/*.hpp)
@@ -152,7 +157,8 @@ target_include_directories(ztd.cuneicode
 	$<INSTALL_INTERFACE:include>)
 target_link_libraries(ztd.cuneicode
 	PUBLIC
-	ztd::idk)
+	ztd::idk
+	ztd::encoding_tables)
 target_include_directories(ztd.cuneicode
 	PRIVATE ${PROJECT_SOURCE_DIR}/source/include)
 target_compile_definitions(ztd.cuneicode

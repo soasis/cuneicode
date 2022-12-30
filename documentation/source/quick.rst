@@ -1,7 +1,7 @@
 .. ============================================================================
 ..
 .. ztd.cuneicode
-.. Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+.. Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 .. Contact: opensource@soasis.org
 ..
 .. Commercial License Usage
@@ -18,7 +18,7 @@
 .. file except in compliance with the License. You may obtain a copy of the
 .. License at
 ..
-.. 		https://www.apache.org/licenses/LICENSE-2.0
+.. https://www.apache.org/licenses/LICENSE-2.0
 ..
 .. Unless required by applicable law or agreed to in writing, software
 .. distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,7 +52,7 @@ Once the library is appropriately included, you can start using cuneicode.
 Simple Conversions
 ------------------
 
-Simple conversions are provided for UTF-8, UTF-16, UTF-32, :term:`execution enoding`, and :term:`wide execution encoding`. They allow an end-user to use bit-based types.
+Simple conversions are provided for UTF-8, UTF-16, UTF-32, :term:`execution encoding`, and :term:`wide execution encoding`. They allow an end-user to use bit-based types.
 
 To convert from UTF-16 to UTF-8, use the appropriately `c8` and `c16`-marked free functions in the library:
 

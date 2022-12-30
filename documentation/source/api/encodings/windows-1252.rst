@@ -1,7 +1,7 @@
 .. ============================================================================
 ..
 .. ztd.cuneicode
-.. Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+.. Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 .. Contact: opensource@soasis.org
 ..
 .. Commercial License Usage
@@ -18,7 +18,7 @@
 .. file except in compliance with the License. You may obtain a copy of the
 .. License at
 ..
-.. 		https://www.apache.org/licenses/LICENSE-2.0
+.. https://www.apache.org/licenses/LICENSE-2.0
 ..
 .. Unless required by applicable law or agreed to in writing, software
 .. distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,15 +28,15 @@
 ..
 .. ========================================================================= ..
 
-Shift-JIS
-=========
+Shift-JIS (JIS X0208)
+=====================
 
-The legacy Shift-JIS encoding. Matches the encoding from the WHATWG Encoding standard.
+The legacy Code Page 1252 used by the Microsoft Windows Operating System. It is similar to ISO 8859-1 (e.g. Latin-1) and ISO 8859-15, but has a few different control characters that make it not a complete superset.
 
-.. doxygenfunction:: cnc_mcnrtoc32n_shift_jis
+.. doxygenfunction:: cnc_mcnrtoc32n_windows_1252
 
-.. doxygenfunction:: cnc_c32nrtomcn_shift_jis
+.. doxygenfunction:: cnc_c32nrtomcn_windows_1252
 
-.. doxygenfunction:: cnc_mcsnrtoc32sn_shift_jis
+.. doxygenfunction:: cnc_mcsnrtoc32sn_windows_1252
 
-.. doxygenfunction:: cnc_c32snrtomcsn_shift_jis
+.. doxygenfunction:: cnc_c32snrtomcsn_windows_1252

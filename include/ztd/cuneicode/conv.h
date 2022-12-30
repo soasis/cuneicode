@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -17,7 +17,7 @@
 // Version 2.0 (the "License"); you may not use this file except in compliance
 // with the License. You may obtain a copy of the License at
 //
-// 		http://www.apache.org/licenses/LICENSE-2.0
+// https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -103,10 +103,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 /// @brief Creates a new encoding using the heap provided to the `__registry`.
 ///
 /// @param[in] __registry The registry to use for opening the cnc_conversion handle.
-/// @param[in] __from_size The size of the `__from` string.
 /// @param[in] __from A pointer to data encoded as UTF-8 representing the encoding to transcode
 /// from.
-/// @param[in] __to_size The size of the `__to` string.
 /// @param[in] __to A pointer to data encoded as UTF-8 representing the encoding to transcode to.
 /// @param[in] __selection A function pointer to a indirect selection function.
 /// @param[in, out] __out_p_conversion A pointer to the cnc_conversion handle to open.

@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -17,7 +17,7 @@
 // Version 2.0 (the "License"); you may not use this file except in compliance
 // with the License. You may obtain a copy of the License at
 //
-// 		http://www.apache.org/licenses/LICENSE-2.0
+// https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -932,10 +932,11 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	     &::__basic_close_function<cnc_mcstate_t>))
 
 	_ADD_MCN_NAMED_ENCODING("ascii", ascii);
-	_ADD_MCN_NAMED_ENCODING("shift-jis", shift_jis);
+	_ADD_MCN_NAMED_ENCODING("shift-jis-x0208", shift_jis_x0208);
 	_ADD_MCN_NAMED_ENCODING("gbk", gbk);
 	_ADD_MCN_NAMED_ENCODING("big5-hkscs", big5_hkscs);
 	_ADD_MCN_NAMED_ENCODING("gb18030", gb18030);
+	_ADD_MCN_NAMED_ENCODING("windows-1252", windows_1252);
 
 	_ADD_MCN_NAMED_ENCODING_BASIC("punycode", punycode, cnc_pny_decode_state_t,
 	     &cnc_pny_decode_state_is_complete, cnc_pny_encode_state_t,

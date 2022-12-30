@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -17,7 +17,7 @@
 // Version 2.0 (the "License"); you may not use this file except in compliance
 // with the License. You may obtain a copy of the License at
 //
-// 		http://www.apache.org/licenses/LICENSE-2.0
+// https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,8 +32,8 @@
 #include <ztd/cuneicode/gb18030.h>
 #include <ztd/cuneicode/max_output.h>
 #include <ztd/cuneicode/detail/transcode.hpp>
-#include <ztd/cuneicode/detail/index.hpp>
-#include <ztd/cuneicode/detail/gb18030_index.hpp>
+
+#include <ztd/encoding_tables/gb18030.tables.hpp>
 
 #include <memory>
 
@@ -83,8 +83,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 	}
 
 	::std::optional<::std::size_t> __maybe_index
-	     = ::cnc::__cnc_detail::__general_code_point_to_index(
-	          ::cnc::__cnc_detail::__gb18030_index_code_point_map, __code);
+	     = ::ztd::et::gb18030_code_point_to_index(static_cast<::std::uint_least32_t>(__code));
 	if (__maybe_index) {
 		const ::std::size_t __index  = *__maybe_index;
 		const ::std::size_t __lead   = (__index / 190) + 0x81;
@@ -110,8 +109,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 			return CNC_MCERROR_INSUFFICIENT_OUTPUT;
 		}
 	}
-	__maybe_index = ::cnc::__cnc_detail::__gb18030_ranges_code_point_to_index(
-	     ::cnc::__cnc_detail::__gb18030_ranges_index_code_point_map, __code);
+	__maybe_index
+	     = ::ztd::et::gb18030_ranges_code_point_to_index(static_cast<uint_least32_t>(__code));
 	if (__maybe_index) {
 		const ::std::size_t __index0 = *__maybe_index;
 		const ::std::size_t __byte0  = __index0 / (10 * 126 * 10);
@@ -222,8 +221,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 		     + ((__second_byte - 0x30) * (10 * 126)) + ((__third_byte - 0x81) * 10)
 		     + (__fourth_byte - 0x30);
 		::std::optional<char32_t> __maybe_code
-		     = ::cnc::__cnc_detail::__gb18030_ranges_index_to_code_point(
-		          ::cnc::__cnc_detail::__gb18030_ranges_index_code_point_map, __index);
+		     = ::ztd::et::gb18030_ranges_index_to_code_point(__index);
 		if (__maybe_code) {
 			const char32_t __code = *__maybe_code;
 			if (!_IsUnbounded) {
@@ -249,9 +247,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
 			}
 		}
-		::std::optional<char32_t> __maybe_code
-		     = ::cnc::__cnc_detail::__general_index_to_code_point(
-		          ::cnc::__cnc_detail::__gb18030_index_code_point_map, __index);
+		::std::optional<char32_t> __maybe_code = ::ztd::et::gb18030_index_to_code_point(__index);
 		if (__maybe_code) {
 			const char32_t __code = *__maybe_code;
 			if (!_IsUnbounded) {

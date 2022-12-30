@@ -20,8 +20,8 @@ int main() {
 	cnc_conversion* conversion          = NULL;
 	cnc_conversion_info conversion_info = {};
 	{
-		cnc_open_error err = cnc_conv_new(
-		     registry, "shift-jis", "utf-8", &conversion, &conversion_info);
+		cnc_open_error err = cnc_conv_new(registry, "shift-jis-x0208", "utf-8",
+		     &conversion, &conversion_info);
 		if (err != CNC_OPEN_ERROR_OK) {
 			fprintf(stderr, "[error] could not open a new registry.");
 			cnc_registry_delete(registry);

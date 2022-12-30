@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -17,7 +17,7 @@
 // Version 2.0 (the "License"); you may not use this file except in compliance
 // with the License. You may obtain a copy of the License at
 //
-// 		http://www.apache.org/licenses/LICENSE-2.0
+// https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -32,8 +32,8 @@
 #include <ztd/cuneicode/gbk.h>
 #include <ztd/cuneicode/max_output.h>
 #include <ztd/cuneicode/detail/transcode.hpp>
-#include <ztd/cuneicode/detail/index.hpp>
-#include <ztd/cuneicode/detail/gb18030_index.hpp>
+
+#include <ztd/encoding_tables/gbk.tables.hpp>
 
 #include <memory>
 
@@ -97,9 +97,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 	}
 
-	::std::optional<::std::size_t> __maybe_index
-	     = ::cnc::__cnc_detail::__general_code_point_to_index(
-	          ::cnc::__cnc_detail::__gb18030_index_code_point_map, __code);
+	::std::optional<::std::size_t> __maybe_index = ::ztd::et::gbk_code_point_to_index(__code);
 	if (__maybe_index) {
 		const ::std::size_t __index  = *__maybe_index;
 		const ::std::size_t __lead   = (__index / 190) + 0x81;
@@ -200,9 +198,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
 			}
 		}
-		::std::optional<char32_t> __maybe_code
-		     = ::cnc::__cnc_detail::__general_index_to_code_point(
-		          ::cnc::__cnc_detail::__gb18030_index_code_point_map, __index);
+		::std::optional<char32_t> __maybe_code = ::ztd::et::gbk_index_to_code_point(__index);
 		if (__maybe_code) {
 			const char32_t __code = *__maybe_code;
 			if (!_IsUnbounded) {

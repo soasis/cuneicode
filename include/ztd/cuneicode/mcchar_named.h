@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2022 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -17,7 +17,7 @@
 // Version 2.0 (the "License"); you may not use this file except in compliance
 // with the License. You may obtain a copy of the License at
 //
-// 		http://www.apache.org/licenses/LICENSE-2.0
+// https://www.apache.org/licenses/LICENSE-2.0
 //
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
@@ -62,10 +62,11 @@
 #include <ztd/cuneicode/mac_ukrainian.h>
 #include <ztd/cuneicode/punycode.h>
 #include <ztd/cuneicode/punycode_idna.h>
-#include <ztd/cuneicode/shift_jis.h>
+#include <ztd/cuneicode/shift_jis_x0208.h>
 #include <ztd/cuneicode/windows_874.h>
 #include <ztd/cuneicode/windows_1250.h>
 #include <ztd/cuneicode/windows_1251.h>
+#include <ztd/cuneicode/windows_1252.h>
 #include <ztd/cuneicode/windows_1253.h>
 #include <ztd/cuneicode/windows_1255.h>
 #include <ztd/cuneicode/windows_1257.h>
