@@ -324,9 +324,9 @@ namespace {
 	}
 
 	static inline cnc_open_error __intermediary_open_function(cnc_conversion_registry* __registry,
-	     cnc_conversion* __conversion, const __cnc_registry_entry* __from,
-	     const __cnc_registry_entry* __to, size_t* __p_available_space, size_t* __p_max_alignment,
-	     void** __p_space) noexcept {
+	     cnc_conversion* __conversion, const __cnc_registry_entry_value* __from,
+	     const __cnc_registry_entry_value* __to, size_t* __p_available_space,
+	     size_t* __p_max_alignment, void** __p_space) noexcept {
 		if (__p_space == nullptr || *__p_space == nullptr) {
 			return CNC_OPEN_ERROR_INVALID_PARAMETER;
 		}
@@ -539,7 +539,7 @@ namespace {
 	}
 
 	static inline cnc_open_error __cnc_open_with(cnc_conversion_registry* __registry,
-	     const __cnc_registry_entry* __entry, cnc_conversion** __out_p_conversion,
+	     const __cnc_registry_entry_value* __entry, cnc_conversion** __out_p_conversion,
 	     size_t* __p_available_space, void** __p_space) {
 		const size_t __starting_available_space = *__p_available_space;
 		void* __target                          = *__p_space;
@@ -572,7 +572,7 @@ namespace {
 	}
 
 	static inline cnc_open_error __cnc_open_intermediary_with(cnc_conversion_registry* __registry,
-	     const __cnc_registry_entry* __from, const __cnc_registry_entry* __to,
+	     const __cnc_registry_entry_value* __from, const __cnc_registry_entry_value* __to,
 	     cnc_conversion** __out_p_conversion, size_t* __p_available_space, void** __p_space) {
 		const size_t __starting_available_space = *__p_available_space;
 		void* __target                          = *__p_space;
@@ -945,6 +945,11 @@ extern cnc_open_error __cnc_add_default_registry_entries(
 	     &cnc_pny_decode_state_is_complete, cnc_pny_encode_state_t,
 	     &cnc_pny_encode_state_is_complete);
 
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias_c8(
+	     __registry, ::cnc::__cnc_detail::__wide_alias(), ::cnc::__cnc_detail::__wide_name()));
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias_c8(
+	     __registry, ::cnc::__cnc_detail::__exec_alias(), ::cnc::__cnc_detail::__exec_name()));
+
 #undef _ADD_MCN_NAMED_ENCODING
 #undef _ADD_MCN_NAMED_ENCODING_BASIC
 #undef _CHECK_ERR_AND_RETURN
@@ -961,8 +966,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 	if (__to == nullptr) {
 		return CNC_OPEN_ERROR_INVALID_PARAMETER;
 	}
-	size_t __from_size = ::ztd::c_string_ptr_size(__from);
-	size_t __to_size   = ::ztd::c_string_ptr_size(__to);
+	size_t __from_size = ztdc_c_string_ptr_size_c8(__from);
+	size_t __to_size   = ztdc_c_string_ptr_size_c8(__to);
 	return cnc_conv_new_c8n(
 	     __registry, __from_size, __from, __to_size, __to, __out_p_conversion, __p_info);
 }
@@ -992,10 +997,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 		__selection = reinterpret_cast<cnc_indirect_selection_c8_function*>(
 		     &__cnc_detail_select_everything_okay);
 	}
-	::std::basic_string_view<ztd_char8_t> __from_view(__from, __from_size);
-	::std::basic_string_view<ztd_char8_t> __to_view(__to, __to_size);
-	const __cnc_registry_entry* __from_entry;
-	const __cnc_registry_entry* __to_entry;
+	__cnc_u8string_view __from_view(__from, __from_size);
+	__cnc_u8string_view __to_view(__to, __to_size);
+	__from_view = ::__cnc_resolve_alias(__registry, __from_view);
+	__to_view   = ::__cnc_resolve_alias(__registry, __to_view);
+
+	const __cnc_registry_entry_value* __from_entry;
+	const __cnc_registry_entry_value* __to_entry;
 	cnc_open_error __err = ::__cnc_find_entry(
 	     __registry, __from_view, __to_view, __selection, &__from_entry, &__to_entry, __p_info);
 	if (__err != CNC_OPEN_ERROR_OK) {
@@ -1070,8 +1078,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 	if (__to == nullptr) {
 		return CNC_OPEN_ERROR_INVALID_PARAMETER;
 	}
-	size_t __from_size = ::ztd::c_string_ptr_size(__from);
-	size_t __to_size   = ::ztd::c_string_ptr_size(__to);
+	size_t __from_size = ztdc_c_string_ptr_size_c8(__from);
+	size_t __to_size   = ztdc_c_string_ptr_size_c8(__to);
 	return ::cnc_conv_open_c8n(__registry, __from_size, __from, __to_size, __to,
 	     __out_p_conversion, __p_available_space, __space, __p_info);
 }
@@ -1087,8 +1095,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 	if (__to == nullptr) {
 		return CNC_OPEN_ERROR_INVALID_PARAMETER;
 	}
-	size_t __from_size = ::ztd::c_string_ptr_size(__from);
-	size_t __to_size   = ::ztd::c_string_ptr_size(__to);
+	size_t __from_size = ztdc_c_string_ptr_size_c8(__from);
+	size_t __to_size   = ztdc_c_string_ptr_size_c8(__to);
 	return ::cnc_conv_open_c8n_select(__registry, __from_size, __from, __to_size, __to,
 	     __selection, __out_p_conversion, __p_available_space, __space, __p_info);
 }
@@ -1109,29 +1117,20 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 	if (__p_available_space == nullptr || __space == nullptr || __p_info == nullptr) {
 		return CNC_OPEN_ERROR_INVALID_PARAMETER;
 	}
-	::std::basic_string_view<ztd_char8_t> __from_view(__from, __from_size);
-	::std::basic_string_view<ztd_char8_t> __to_view(__to, __to_size);
+
+	__cnc_u8string_view __from_view(__from, __from_size);
+	__cnc_u8string_view __to_view(__to, __to_size);
 	if (__from_view.empty()) {
 		__from_view = ::cnc::__cnc_detail::__exec_name();
-	}
-	else if (::ztd::is_encoding_name_equal(__from_view, ::cnc::__cnc_detail::__exec_alias())) {
-		__from_view = ::cnc::__cnc_detail::__exec_name();
-	}
-	else if (::ztd::is_encoding_name_equal(__from_view, ::cnc::__cnc_detail::__wide_alias())) {
-		__from_view = ::cnc::__cnc_detail::__wide_name();
 	}
 	if (__to_view.empty()) {
 		__to_view = ::cnc::__cnc_detail::__utf8_name();
 	}
-	else if (::ztd::is_encoding_name_equal(__to_view, ::cnc::__cnc_detail::__exec_alias())) {
-		__to_view = ::cnc::__cnc_detail::__exec_name();
-	}
-	else if (::ztd::is_encoding_name_equal(__to_view, ::cnc::__cnc_detail::__wide_alias())) {
-		__to_view = ::cnc::__cnc_detail::__wide_name();
-	}
+	__from_view = ::__cnc_resolve_alias(__registry, __from_view);
+	__to_view   = ::__cnc_resolve_alias(__registry, __to_view);
 
-	const __cnc_registry_entry* __from_entry;
-	const __cnc_registry_entry* __to_entry;
+	const __cnc_registry_entry_value* __from_entry;
+	const __cnc_registry_entry_value* __to_entry;
 	cnc_open_error err = ::__cnc_find_entry(
 	     __registry, __from_view, __to_view, __selection, &__from_entry, &__to_entry, __p_info);
 	if (err != CNC_OPEN_ERROR_OK) {

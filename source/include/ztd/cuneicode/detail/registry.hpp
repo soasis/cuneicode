@@ -45,6 +45,8 @@
 #include <unordered_map>
 #include <vector>
 
+using __cnc_u8string_view = ::std::basic_string_view<::ztd::uchar8_t, ::ztd::uchar8_traits>;
+
 inline constexpr const ::std::size_t __cnc_detail_inline_size_guess
      = sizeof(size_t) > 1 ? sizeof(size_t) - 1 : sizeof(size_t);
 
@@ -66,7 +68,12 @@ inline constexpr bool __cnc_detail_select_everything_okay(
 	return true;
 }
 
-struct __cnc_registry_entry {
+struct __cnc_registry_entry_key {
+	__cnc_u8string_view __from;
+	__cnc_u8string_view __to;
+};
+
+struct __cnc_registry_entry_value {
 	cnc_conversion_function* __multi_conversion_function;
 	cnc_conversion_function* __single_conversion_function;
 	cnc_state_is_complete_function* __state_is_complete_function;
@@ -74,9 +81,20 @@ struct __cnc_registry_entry {
 	cnc_close_function* __close_function;
 };
 
-struct __cnc_registry_entry_key {
-	::std::basic_string_view<ztd_char8_t> __from;
-	::std::basic_string_view<ztd_char8_t> __to;
+struct __cnc_registry_u8string_view_hash {
+	::std::size_t operator()(const __cnc_u8string_view& __value) const noexcept {
+		::std::size_t __from_hash = ::ztd::fnv1a_offset_basis;
+		return ::ztd::fnv1a_hash_if(__from_hash, __value,
+		     &__cnc_detail_encoding_name_code_unit_predicate,
+		     &__cnc_detail_encoding_name_code_unit_hash);
+	}
+};
+
+struct __cnc_registry_u8string_view_equals {
+	bool operator()(
+	     const __cnc_u8string_view& __left, const __cnc_u8string_view& __right) const noexcept {
+		return ::ztd::is_encoding_name_equal(__left, __right);
+	}
 };
 
 struct __cnc_registry_entry_key_hash {
@@ -111,15 +129,20 @@ struct __path_key_deleter {
 	}
 };
 
+using __alias_allocator = ::cnc::__cnc_detail::__heap_allocator<
+     ::std::pair<const __cnc_u8string_view, __cnc_u8string_view>>;
 using __path_allocator = ::cnc::__cnc_detail::__heap_allocator<
-     ::std::pair<const __cnc_registry_entry_key, __cnc_registry_entry>>;
+     ::std::pair<const __cnc_registry_entry_key, __cnc_registry_entry_value>>;
 using __path_key_allocator  = ::cnc::__cnc_detail::__heap_allocator<ztd_char8_t>;
 using __path_key            = ::std::vector<ztd_char8_t, __path_key_allocator>;
 using __path_keys_allocator = ::cnc::__cnc_detail::__heap_allocator<__path_key>;
 
 struct cnc_conversion_registry {
 	cnc_conversion_heap __heap;
-	::std::unordered_map<__cnc_registry_entry_key, __cnc_registry_entry,
+	::std::unordered_map<__cnc_u8string_view, __cnc_u8string_view,
+	     __cnc_registry_u8string_view_hash, __cnc_registry_u8string_view_equals, __alias_allocator>
+	     __aliases;
+	::std::unordered_map<__cnc_registry_entry_key, __cnc_registry_entry_value,
 	     __cnc_registry_entry_key_hash, __cnc_registry_entry_key_equals, __path_allocator>
 	     __paths;
 	::std::vector<__path_key, __path_keys_allocator> __path_keys;
@@ -127,6 +150,7 @@ struct cnc_conversion_registry {
 	cnc_conversion_registry(const cnc_conversion_heap& __heap_)
 	: __heap(__heap_)
 	, __paths(__path_allocator(&this->__heap))
+	, __aliases(__alias_allocator(&this->__heap))
 	, __path_keys(static_cast<::std::size_t>(2),
 	       __path_key { __cnc_detail_inline_size_guess, __path_key_allocator(&this->__heap) },
 	       __path_keys_allocator(&this->__heap)) {
@@ -136,11 +160,14 @@ struct cnc_conversion_registry {
 extern cnc_open_error __cnc_add_default_registry_entries(
      cnc_conversion_registry* __registry) ZTD_NOEXCEPT_IF_CXX_I_;
 
+extern __cnc_u8string_view __cnc_resolve_alias(
+     cnc_conversion_registry* __registry, __cnc_u8string_view __name);
+
 extern cnc_open_error __cnc_find_entry(cnc_conversion_registry* __registry,
-     ::std::basic_string_view<ztd_char8_t> __from_view,
-     ::std::basic_string_view<ztd_char8_t> __to_view,
-     cnc_indirect_selection_c8_function* __selection, const __cnc_registry_entry** __p_from_entry,
-     const __cnc_registry_entry** __p_to_entry,
+     __cnc_u8string_view __from_view, __cnc_u8string_view __to_view,
+     cnc_indirect_selection_c8_function* __selection,
+     const __cnc_registry_entry_value** __p_from_entry,
+     const __cnc_registry_entry_value** __p_to_entry,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 #endif

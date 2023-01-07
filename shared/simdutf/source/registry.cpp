@@ -284,7 +284,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf8-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf16-unchecked";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf8_to_utf16_convert, nullptr, mcstate_unchecked_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -293,7 +293,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf16-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf8-unchecked";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf16_to_utf8_convert, nullptr, mcstate_unchecked_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -302,7 +302,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf8-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf32-unchecked";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf8_to_utf32_convert, nullptr, mcstate_unchecked_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -311,7 +311,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf32-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf8-unchecked";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf32_to_utf8_convert, nullptr, mcstate_unchecked_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -320,7 +320,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf16-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf32-unchecked";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf16_to_utf32_convert, nullptr, mcstate_unchecked_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -329,7 +329,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf32-unchecked";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf16-unchecked";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf32_to_utf16_convert, nullptr, mcstate_unchecked_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -340,7 +340,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf8";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf16";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf8_to_utf16_convert, nullptr, mcstate_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -349,7 +349,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf16";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf8";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf16_to_utf8_convert, nullptr, mcstate_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -358,7 +358,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf8";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf32";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf8_to_utf32_convert, nullptr, mcstate_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -367,7 +367,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf32";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf8";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf32_to_utf8_convert, nullptr, mcstate_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -376,7 +376,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf16";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf32";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf16_to_utf32_convert, nullptr, mcstate_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;
@@ -385,7 +385,7 @@ extern bool cnc_shared_add_simdutf_to_registry(
 	{
 		const utf8string_view from_code = (const ztd_char8_t*)"utf32";
 		const utf8string_view to_code   = (const ztd_char8_t*)"utf16";
-		cnc_open_error err = cnc_registry_add_c8_multi(registry, from_code.data(), to_code.data(),
+		cnc_open_error err = cnc_registry_add_multi_c8(registry, from_code.data(), to_code.data(),
 		     simdutf_utf32_to_utf16_convert, nullptr, mcstate_open, mcstate_close);
 		if (err != CNC_OPEN_ERROR_OK) {
 			return false;

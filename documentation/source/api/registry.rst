@@ -43,21 +43,21 @@ Conversion Registry
 
 .. doxygenfunction:: cnc_registry_add_multi
 
-.. doxygenfunction:: cnc_registry_add_n_multi
+.. doxygenfunction:: cnc_registry_add_multi_n
 
 .. doxygenfunction:: cnc_registry_add_single
 
-.. doxygenfunction:: cnc_registry_add_n_single
+.. doxygenfunction:: cnc_registry_add_single_n
 
 .. doxygenfunction:: cnc_registry_add_c8
 
 .. doxygenfunction:: cnc_registry_add_c8n
 
-.. doxygenfunction:: cnc_registry_add_c8_multi
+.. doxygenfunction:: cnc_registry_add_multi_c8
 
 .. doxygenfunction:: cnc_registry_add_c8n_multi
 
-.. doxygenfunction:: cnc_registry_add_c8_single
+.. doxygenfunction:: cnc_registry_add_single_c8
 
 .. doxygenfunction:: cnc_registry_add_c8n_single
 

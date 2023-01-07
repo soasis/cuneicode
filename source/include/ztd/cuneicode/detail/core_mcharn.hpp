@@ -417,6 +417,10 @@ namespace cnc {
 				__c32 += __c8 & 0x3F;
 			}
 
+			if (__ztd_idk_detail_is_surrogate(__c32)) {
+				return CNC_MCERROR_INVALID_SEQUENCE;
+			}
+
 			if (__c32 <= __ztd_idk_detail_last_bmp_value) {
 				if constexpr (!_IsCounting) {
 					**__p_maybe_dst = static_cast<ztd_char16_t>(__c32);
@@ -682,6 +686,9 @@ namespace cnc {
 					return CNC_MCERROR_INVALID_SEQUENCE;
 				}
 				__point = __ztd_idk_detail_utf16_combine_surrogates(__c0, __c1);
+				if (__ztd_idk_detail_is_surrogate(__point)) {
+					return CNC_MCERROR_INVALID_SEQUENCE;
+				}
 				__src += 2;
 				__src_len -= 2;
 			}

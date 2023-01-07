@@ -448,6 +448,54 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_regist
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
+/// @brief Adds an alias that tells the registry that two names are identical, without needing as
+/// much storage space.
+///
+/// @param[in] __registry The registry to create the new conversion pair in.
+/// @param[in] __alias A pointer to a null-terminated c string encoded in UTF-8 representing the new
+/// name of the encoding. Can be `nullptr`.
+/// @param[in] __original A pointer to a null-terminated c string encoded in UTF-8 representing the
+/// original name of the encoding that already exists in the registry.
+///
+/// @remarks The `__alias` is an existing name. The `__original` is the new name. This is useful for
+/// supporting legacy names that the general name-comparison algorithm cannot catch.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_alias_c8(
+     cnc_conversion_registry* __registry, const ztd_char8_t* __alias,
+     const ztd_char8_t* __original) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_registry_add_alias_c8
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_alias(
+     cnc_conversion_registry* __registry, const char* __alias,
+     const char* __original) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @brief Adds an alias that tells the registry that two names are identical, without needing as
+/// much storage space.
+///
+/// @param[in] __registry The registry to create the new conversion pair in.
+/// @param[in] __alias A pointer to a null-terminated c string encoded in UTF-8 representing the new
+/// name of the encoding. Cannot be `nullptr`.
+/// @param[in] __alias_size The size of `__alias`. Can be 0.
+/// @param[in] __original A pointer to a null-terminated c string encoded in UTF-8 representing the
+/// original name of the encoding that already exists in the registry. Cannot be `nullptr`.
+/// @param[in] __original_size The size of `__original`. Can be 0.
+///
+/// @remarks The `__alias` is an existing name. The `__original` is the new name. This is useful for
+/// supporting legacy names that the general name-comparison algorithm cannot catch.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_alias_c8n(
+     cnc_conversion_registry* __registry, size_t __alias_size,
+     const ztd_char8_t __alias[ZTD_PTR_EXTENT(__alias_size)], size_t __original_size,
+     const ztd_char8_t __original[ZTD_PTR_EXTENT(__original_size)]) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_registry_add_alias_c8n
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_alias_n(
+     cnc_conversion_registry* __registry, size_t __alias_size,
+     const char __alias[ZTD_PTR_EXTENT(__alias_size)], size_t __original_size,
+     const char __original[ZTD_PTR_EXTENT(__original_size)]) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
 /// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
 /// registry.
 ///
@@ -472,7 +520,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_regist
 /// calling the equivalent of `strlen` on
 /// `__from` and `__to`, respectively. If `__from` or `__to` are `nullptr`, then the function will
 /// assume they are the empty string (and use the default name in that case).
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_c8_multi(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_multi_c8(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion_function* __multi_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -480,7 +528,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_regist
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_registry_add_c8_multi
+/// @copydoc cnc_registry_add_multi_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_multi(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_conversion_function* __multi_conversion_function,
@@ -523,7 +571,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_regist
 
 //////
 /// @copydoc cnc_registry_add_c8n_multi
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_n_multi(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_multi_n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const char __to[ZTD_PTR_EXTENT(__to_size)],
@@ -556,7 +604,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_regist
 /// calling the equivalent of `strlen` on
 /// `__from` and `__to`, respectively. If `__from` or `__to` are `nullptr`, then the function will
 /// assume they are the empty string (and use the default name in that case).
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_c8_single(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_single_c8(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -564,7 +612,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_regist
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_registry_add_c8_single
+/// @copydoc cnc_registry_add_single_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_single(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_conversion_function* __single_conversion_function,
@@ -606,7 +654,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_regist
 
 //////
 /// @copydoc cnc_registry_add_c8n_single
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_n_single(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_registry_add_single_n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const char __to[ZTD_PTR_EXTENT(__to_size)],

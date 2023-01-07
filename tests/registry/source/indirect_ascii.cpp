@@ -168,11 +168,11 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 	}
 	// add new conversion from our (weird) encoding to ASCII, then ASCII to UTF-32
 	{
-		cnc_open_error from_err = cnc_registry_add_c8_single(registry.get(),
+		cnc_open_error from_err = cnc_registry_add_single_c8(registry.get(),
 		     (const ztd_char8_t*)u8"weird-1", (const ztd_char8_t*)u8"ascii",
 		     mcnrtomcn_weird1_ascii, nullptr, nullptr, nullptr);
 		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		cnc_open_error to_err = cnc_registry_add_c8_single(registry.get(),
+		cnc_open_error to_err = cnc_registry_add_single_c8(registry.get(),
 		     (const ztd_char8_t*)u8"ascii", (const ztd_char8_t*)u8"weird-1",
 		     mcnrtomcn_ascii_weird1, nullptr, nullptr, nullptr);
 		REQUIRE(to_err == CNC_OPEN_ERROR_OK);
@@ -184,9 +184,9 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 		std::string_view weird1_name("weird-1");
 		std::string_view utf32_name("UTF-32");
 		cnc_conversion* raw_conversion      = conversion.get();
-		std::size_t from_size               = 7;
+		std::size_t from_size               = weird1_name.size();
 		const ztd_char8_t* from_data        = (const ztd_char8_t*)weird1_name.data();
-		std::size_t to_size                 = 6;
+		std::size_t to_size                 = utf32_name.size();
 		const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 		cnc_conversion_registry* __registry = registry.get();
 		cnc_open_error err                  = cnc_conv_new_c8n(
