@@ -61,11 +61,6 @@ TEST_CASE(
      "conversion from a alias encoding to UTF-32, which will give the original name in the "
      "cnc_conversion_info structure",
      "[cuneicode][registry][default registry aliases]") {
-	const std::tuple<std::string_view, std::string_view, std::u32string_view>
-	     source_and_expected_bundles[] = {
-		     { "abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz",
-		          U"abcdefghijklmnopqrstuvwxyz" },
-	     };
 	// open the registry
 	std::unique_ptr<cnc_conversion_registry, cnc_registry_deleter> registry = nullptr;
 	{
