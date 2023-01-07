@@ -35,17 +35,16 @@
 #include <ztd/cuneicode/registry.h>
 #include <ztd/cuneicode/mcchar.h>
 #include <ztd/cuneicode/detail/heap_allocator.hpp>
+#include <ztd/cuneicode/detail/string_view.hpp>
 
 #include <ztd/idk/hash.hpp>
 #include <ztd/idk/size.hpp>
 #include <ztd/idk/charN_t.hpp>
 #include <ztd/idk/encoding_name.hpp>
 
-#include <string_view>
 #include <unordered_map>
 #include <vector>
 
-using __cnc_u8string_view = ::std::basic_string_view<::ztd::uchar8_t, ::ztd::uchar8_traits>;
 
 inline constexpr const ::std::size_t __cnc_detail_inline_size_guess
      = sizeof(size_t) > 1 ? sizeof(size_t) - 1 : sizeof(size_t);

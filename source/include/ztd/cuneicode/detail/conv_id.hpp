@@ -34,6 +34,8 @@
 
 #include <ztd/cuneicode/version.h>
 
+#include <ztd/cuneicode/detail/string_view.hpp>
+
 #include <ztd/idk/charN_t.hpp>
 #include <ztd/idk/char_traits.hpp>
 #include <ztd/idk/detail/unicode.hpp>
@@ -107,21 +109,20 @@ namespace cnc {
 
 		inline static const int __cnc_defined_slot_max = 6;
 
-		inline const ::std::basic_string_view<ztd_char8_t>& __to_name(__cnc_defined_slot __slot) {
-			static const ::std::basic_string_view<ztd_char8_t>
-			     __identifiers[__cnc_defined_slot_max] = {
-				     __utf8_name(),
-				     __utf8_unchecked_name(),
-				     __utf16_name(),
-				     __utf16_unchecked_name(),
-				     __utf32_name(),
-				     __utf32_unchecked_name(),
-			     };
+		inline const __cnc_u8string_view& __to_name(__cnc_defined_slot __slot) {
+			static const __cnc_u8string_view __identifiers[__cnc_defined_slot_max] = {
+				__utf8_name(),
+				__utf8_unchecked_name(),
+				__utf16_name(),
+				__utf16_unchecked_name(),
+				__utf32_name(),
+				__utf32_unchecked_name(),
+			};
 			return __identifiers[static_cast<size_t>(__slot)];
 		}
 
 		inline bool __is_unicode_identifier(
-		     const ::std::basic_string_view<ztd_char8_t>& __id, __cnc_defined_slot& __out_slot) {
+		     const __cnc_u8string_view& __id, __cnc_defined_slot& __out_slot) {
 			for (size_t __slot_index = 0; __slot_index < __cnc_defined_slot_max;
 			     ++__slot_index) {
 				__cnc_defined_slot __slot = static_cast<__cnc_defined_slot>(__slot_index);
