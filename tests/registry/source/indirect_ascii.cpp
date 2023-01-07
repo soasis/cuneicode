@@ -197,7 +197,7 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 		std::string_view indirect_name(
 		     (const char*)info.indirect_code_data, info.indirect_code_size);
 		std::string_view to_name((const char*)info.to_code_data, info.to_code_size);
-		REQUIRE(ztd::is_encoding_name_equal_for(ascii_name, indirect_name));
+		REQUIRE(ztd::is_encoding_name_equal(ascii_name, indirect_name));
 		REQUIRE(ztd::is_encoding_name_equal(weird1_name, from_name));
 		REQUIRE(ztd::is_encoding_name_equal(utf32_name, to_name));
 		conversion.reset(raw_conversion);

@@ -93,7 +93,7 @@ struct __cnc_registry_u8string_view_hash {
 struct __cnc_registry_u8string_view_equals {
 	bool operator()(
 	     const __cnc_u8string_view& __left, const __cnc_u8string_view& __right) const noexcept {
-		return ::ztd::is_encoding_name_equal(__left, __right);
+		return ::ztd::is_encoding_name_equal_for(__left, __right);
 	}
 };
 
@@ -112,8 +112,8 @@ struct __cnc_registry_entry_key_hash {
 struct __cnc_registry_entry_key_equals {
 	bool operator()(const __cnc_registry_entry_key& __left,
 	     const __cnc_registry_entry_key& __right) const noexcept {
-		return ::ztd::is_encoding_name_equal(__left.__from, __right.__from)
-		     && ::ztd::is_encoding_name_equal(__left.__to, __right.__to);
+		return ::ztd::is_encoding_name_equal_for(__left.__from, __right.__from)
+		     && ::ztd::is_encoding_name_equal_for(__left.__to, __right.__to);
 	}
 };
 
@@ -149,8 +149,8 @@ struct cnc_conversion_registry {
 
 	cnc_conversion_registry(const cnc_conversion_heap& __heap_)
 	: __heap(__heap_)
-	, __paths(__path_allocator(&this->__heap))
 	, __aliases(__alias_allocator(&this->__heap))
+	, __paths(__path_allocator(&this->__heap))
 	, __path_keys(static_cast<::std::size_t>(2),
 	       __path_key { __cnc_detail_inline_size_guess, __path_key_allocator(&this->__heap) },
 	       __path_keys_allocator(&this->__heap)) {
