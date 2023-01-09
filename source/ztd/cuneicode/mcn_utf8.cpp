@@ -31,13 +31,13 @@
 
 #define CNC_MAKE_SLIM_SHIM_ROOT_I_(_SHIM_NAME, _SHIM_R_NAME, _INTERNAL_NAME, _INTERNAL_R_NAME,     \
      _SHIM_FROM, _SHIM_TO, _INTERNAL_FROM, _INTERNAL_TO)                                           \
-	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror _SHIM_NAME(                \
+	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr _SHIM_NAME(                \
 	     size_t* __p_maybe_dst_len, _SHIM_TO** __p_maybe_dst, size_t* __p_src_len,                \
 	     const _SHIM_FROM** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {                                     \
 		return (_INTERNAL_NAME)(__p_maybe_dst_len, (_INTERNAL_TO**)__p_maybe_dst, __p_src_len,   \
 		     (const _INTERNAL_FROM**)__p_src);                                                   \
 	}                                                                                             \
-	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror _SHIM_R_NAME(              \
+	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr _SHIM_R_NAME(              \
 	     size_t* __p_maybe_dst_len, _SHIM_TO** __p_maybe_dst, size_t* __p_src_len,                \
 	     const _SHIM_FROM** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {           \
 		return (_INTERNAL_R_NAME)(__p_maybe_dst_len, (_INTERNAL_TO**)__p_maybe_dst, __p_src_len, \

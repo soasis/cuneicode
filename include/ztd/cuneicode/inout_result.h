@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mcerror.h>
+#include <ztd/cuneicode/mcerr.h>
 #include <ztd/idk/charN_t.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
@@ -55,7 +55,7 @@
 typedef struct inout_count_result {
 	//////
 	/// @brief The error code.
-	cnc_mcerror error;
+	cnc_mcerr error;
 	//////
 	/// @brief The size of the input that was consumed.
 	size_t input_count;
@@ -66,7 +66,7 @@ typedef struct inout_count_result {
 
 #define ZTD_CNC_RESULT_STRUCT_I_(_NAME, _INTYPE, _OUTTYPE) \
 	typedef struct _NAME {                                \
-		cnc_mcerror error;                               \
+		cnc_mcerr error;                               \
 		_INTYPE* input_count;                            \
 		_OUTTYPE* output_count;                          \
 	} _NAME

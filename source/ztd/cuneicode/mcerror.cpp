@@ -29,19 +29,19 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mcerror.h>
+#include <ztd/cuneicode/mcerr.h>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerror_to_str(
-     cnc_mcerror err) {
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerr_to_str(
+     cnc_mcerr err) {
 	switch (err) {
-	case CNC_MCERROR_OK:
-		return "CNC_MCERROR_OK";
-	case CNC_MCERROR_INCOMPLETE_INPUT:
-		return "CNC_MCERROR_INCOMPLETE_INPUT";
-	case CNC_MCERROR_INSUFFICIENT_OUTPUT:
-		return "CNC_MCERROR_INSUFFICIENT_OUTPUT";
-	case CNC_MCERROR_INVALID_SEQUENCE:
-		return "CNC_MCERROR_INVALID_SEQUENCE";
+	case cnc_mcerr_ok:
+		return "cnc_mcerr_ok";
+	case cnc_mcerr_incomplete_input:
+		return "cnc_mcerr_incomplete_input";
+	case cnc_mcerr_insufficient_output:
+		return "cnc_mcerr_insufficient_output";
+	case cnc_mcerr_invalid_sequence:
+		return "cnc_mcerr_invalid_sequence";
 	}
-	return "CNC_MCERROR_UNKNOWN_ERROR_CODE";
+	return "CNC_MCERR_UNKNOWN_ERROR_CODE";
 }

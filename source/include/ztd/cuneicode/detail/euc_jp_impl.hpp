@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mcerror.h>
+#include <ztd/cuneicode/mcerr.h>
 
 // TODO: EUC-JP can be used as the wide encoding in some systems, so it should be templated over the
 // code_unit type.

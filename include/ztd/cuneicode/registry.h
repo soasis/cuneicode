@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mcerror.h>
+#include <ztd/cuneicode/mcerr.h>
 #include <ztd/cuneicode/open_error.h>
 #include <ztd/cuneicode/registry_options.h>
 #include <ztd/cuneicode/heap.h>
@@ -209,9 +209,9 @@ typedef void(cnc_close_function)(void* __data);
 /// `__out_pput_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
-/// CNC_MCERROR_OK is returned.
+/// cnc_mcerr_ok is returned.
 /// @param[in, out] __p_input_bytes A pointer to the pointer of the input buffer. If this or the
-/// pointer within are `nullptr`, than the input is considered empty and CNC_MCERROR_OK is
+/// pointer within are `nullptr`, than the input is considered empty and cnc_mcerr_ok is
 /// returned.
 /// @param[in] __p_pivot_info Pivot information, if provided. Is allowed to be a null pointer, or is
 /// allowed to be a non-null pointer but have the member `bytes` be a null pointer. If either of
@@ -229,7 +229,7 @@ typedef void(cnc_close_function)(void* __data);
 /// output space is sufficiently large for the input space. Providing `__out_pput_bytes_size` but
 /// not `__out_pput_bytes` is a way to determine how much data will be written out for a given input
 /// without actually performing such a write.
-typedef cnc_mcerror(cnc_conversion_function)(cnc_conversion* __conversion,
+typedef cnc_mcerr(cnc_conversion_function)(cnc_conversion* __conversion,
      size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info, void* __p_state);
 

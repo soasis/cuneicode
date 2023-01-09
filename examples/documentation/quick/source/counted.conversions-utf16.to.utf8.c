@@ -46,7 +46,7 @@ int main() {
 	size_t output_size_before = SIZE_MAX;
 	size_t output_size_after  = output_size_before;
 	// Use the function but with "nullptr" for the output pointer
-	cnc_mcerror count_err = cnc_c16snrtoc8sn(
+	cnc_mcerr count_err = cnc_c16snrtoc8sn(
 	     // To get the proper size for this conversion, we use the same
 	     // function but with "NULL" specificers:
 	     &output_size_after, NULL,
@@ -54,8 +54,8 @@ int main() {
 	     &count_input_size, &p_count_input,
 	     // state parameter
 	     &count_state);
-	if (count_err != CNC_MCERROR_OK) {
-		const char* err_str = cnc_mcerror_to_str(count_err);
+	if (count_err != cnc_mcerr_ok) {
+		const char* err_str = cnc_mcerr_to_str(count_err);
 		printf(
 		     "An (unexpected) error occurred and the counting could not "
 		     "happen! Error string: %s\n",
@@ -73,15 +73,15 @@ int main() {
 	const ztd_char16_t* p_input = utf16_text;
 	// ztd_c_array_size INCLUDES the null terminator in the size!
 	size_t input_size = ztd_c_array_size(utf16_text);
-	cnc_mcerror err   = cnc_c16snrtoc8sn(
-	       // output first
+	cnc_mcerr err     = cnc_c16snrtoc8sn(
+          // output first
           &output_size, &p_output,
           // input second
           &input_size, &p_input,
           // state parameter
           &state);
-	if (err != CNC_MCERROR_OK) {
-		const char* err_str = cnc_mcerror_to_str(err);
+	if (err != cnc_mcerr_ok) {
+		const char* err_str = cnc_mcerr_to_str(err);
 		printf(
 		     "An (unexpected) error occurred and the conversion could not "
 		     "happen! Error string: %s\n",

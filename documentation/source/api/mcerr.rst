@@ -28,15 +28,15 @@
 ..
 .. ========================================================================= ..
 
-``cnc_mcerror``
-===============
+``cnc_mcerr``
+=============
 
-.. doxygenfunction:: cnc_mcerror_to_str
+.. doxygenfunction:: cnc_mcerr_to_str
 
-.. doxygenenumvalue:: CNC_MCERROR_OK
+.. doxygenenumvalue:: cnc_mcerr_ok
 
-.. doxygenenumvalue:: CNC_MCERROR_INCOMPLETE_INPUT
+.. doxygenenumvalue:: cnc_mcerr_incomplete_input
 
-.. doxygenenumvalue:: CNC_MCERROR_INVALID_SEQUENCE
+.. doxygenenumvalue:: cnc_mcerr_invalid_sequence
 
-.. doxygenenumvalue:: CNC_MCERROR_INSUFFICIENT_OUTPUT
+.. doxygenenumvalue:: cnc_mcerr_insufficient_output

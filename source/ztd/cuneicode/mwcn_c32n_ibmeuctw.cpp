@@ -29,7 +29,7 @@
 
 #include <ztd/cuneicode.h>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcnrtoc32_ibmeuctwn(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mwcnrtoc32_ibmeuctwn(
      size_t* __p_maybe_dst_len, ztd_char32_t* __p_maybe_dst, size_t* __p_src_len,
      const wchar_t** __p_src, mbstate_t* __p_state) {
 	(void)__p_maybe_dst_len;
@@ -37,5 +37,5 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mwcnrtoc3
 	(void)__p_src_len;
 	(void)__p_src;
 	(void)__p_state;
-	return CNC_MCERROR_INVALID_SEQUENCE;
+	return cnc_mcerr_invalid_sequence;
 }

@@ -1,3 +1,32 @@
+// ============================================================================
+//
+// ztd.cuneicode
+// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Contact: opensource@soasis.org
+//
+// Commercial License Usage
+// Licensees holding valid commercial ztd.cuneicode licenses may use this file
+// in accordance with the commercial license agreement provided with the
+// Software or, alternatively, in accordance with the terms contained in
+// a written agreement between you and Shepherd's Oasis, LLC.
+// For licensing terms and conditions see your agreement. For
+// further information contact opensource@soasis.org.
+//
+// Apache License Version 2 Usage
+// Alternatively, this file may be used under the terms of Apache License
+// Version 2.0 (the "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at
+//
+// https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+// ========================================================================= //
+
 #include <ztd/cuneicode.h>
 
 #include <ztd/idk/size.h>
@@ -18,9 +47,9 @@ int main() {
 	const size_t starting_output_size = ztd_c_array_size(output_data);
 	size_t output_size                = starting_output_size;
 	char* output                      = output_data;
-	cnc_mcerror err                   = cnc_c32snrtomcsn_utf8(
+	cnc_mcerr err                     = cnc_c32snrtomcsn_utf8(
           &output_size, &output, &input_size, &input, &state);
-	const bool has_err          = err != CNC_MCERROR_OK;
+	const bool has_err          = err != cnc_mcerr_ok;
 	const size_t input_read     = starting_input_size - input_size;
 	const size_t output_written = starting_output_size - output_size;
 	const char* const conversion_result_title_str

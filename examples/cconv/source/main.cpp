@@ -266,13 +266,13 @@ int main(int argc, char* argv[]) {
 					unsigned char* output_data       = initial_output_data;
 					std::size_t output_size          = initial_output_size;
 					std::size_t error_output_written = 0;
-					const cnc_mcerror convert_err
+					const cnc_mcerr convert_err
 					     = cnc_conv(raw_conversion, &output_size,
 					          &output_data, &input_size, &input_data);
 					const std::size_t output_written
 					     = initial_output_size - output_size;
 					switch (convert_err) {
-					case CNC_MCERROR_INCOMPLETE_INPUT:
+					case cnc_mcerr_incomplete_input:
 						if (!opt.silent) {
 							std::cerr << "[error] Could not convert "
 							             "input data from \""
@@ -283,7 +283,7 @@ int main(int argc, char* argv[]) {
 							          << std::endl;
 						}
 						return exit_conversion_failure;
-					case CNC_MCERROR_INVALID_SEQUENCE: {
+					case cnc_mcerr_invalid_sequence: {
 						unsigned char* error_output_data
 						     = initial_error_output_data;
 						size_t error_output_size = initial_error_output_size;
@@ -308,8 +308,8 @@ int main(int argc, char* argv[]) {
 						error_output_written
 						     = initial_error_output_size - error_output_size;
 					} break;
-					case CNC_MCERROR_OK:
-					case CNC_MCERROR_INSUFFICIENT_OUTPUT:
+					case cnc_mcerr_ok:
+					case cnc_mcerr_insufficient_output:
 					default:
 						break;
 					}

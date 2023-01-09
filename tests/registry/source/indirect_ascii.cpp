@@ -46,18 +46,18 @@ inline namespace cnc_tests_registry_indirect_ascii {
 	void compare_registry_roundtrip(cnc_conversion* conv, const Source& source,
 	     const PivotExpected& pivot_expected, const Expected& expected) {
 		unsigned char pivot_buffer[500] = {};
-		cnc_pivot_info pivot = { ztd_c_array_size(pivot_buffer), pivot_buffer, CNC_MCERROR_OK };
+		cnc_pivot_info pivot = { ztd_c_array_size(pivot_buffer), pivot_buffer, cnc_mcerr_ok };
 		alignas(ztd_char32_t) unsigned char output_buffer[500] = {};
 		unsigned char* output                                  = output_buffer;
 		size_t output_size                                     = ztd_c_array_size(output_buffer);
 		const unsigned char* input = (const unsigned char*)source.data();
 		size_t input_size          = source.size();
-		cnc_mcerror err
+		cnc_mcerr err
 		     = cnc_conv_pivot(conv, &output_size, &output, &input_size, &input, &pivot);
 		std::string_view pivot_view((const ztd_char_t*)pivot.bytes, pivot_expected.size());
 		std::u32string_view output_view((const ztd_char32_t*)output_buffer,
 		     (ztd_c_array_size(output_buffer) - output_size) / sizeof(ztd_char32_t));
-		const bool err_okay    = err == CNC_MCERROR_OK;
+		const bool err_okay    = err == cnc_mcerr_ok;
 		const bool pivot_okay  = pivot_view == pivot_expected;
 		const bool output_okay = output_view == expected;
 		REQUIRE(err_okay);
@@ -77,11 +77,11 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		}
 	};
 
-	cnc_mcerror mcnrtomcn_weird1_ascii(cnc_conversion*, size_t* __p_maybe_dst_len,
+	cnc_mcerr mcnrtomcn_weird1_ascii(cnc_conversion*, size_t* __p_maybe_dst_len,
 	     unsigned char** __p_maybe_dst, size_t* __p_src_len, const unsigned char** __p_src,
 	     cnc_pivot_info*, void*) {
 		if (__p_src_len == nullptr || __p_src == nullptr) {
-			return CNC_MCERROR_OK;
+			return cnc_mcerr_ok;
 		}
 
 		const bool _IsUnbounded     = __p_maybe_dst_len == nullptr;
@@ -89,16 +89,16 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		size_t& __src_len           = *__p_src_len;
 		const unsigned char*& __src = *__p_src;
 		if (__src_len == 0 || __src == nullptr) {
-			return CNC_MCERROR_OK;
+			return cnc_mcerr_ok;
 		}
 		if (!_IsUnbounded) {
 			if (*__p_maybe_dst_len < 1) {
-				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+				return cnc_mcerr_insufficient_output;
 			}
 		}
 		const unsigned char __c0 = *__src;
 		if (__c0 > 0x7F) {
-			return CNC_MCERROR_INVALID_SEQUENCE;
+			return cnc_mcerr_invalid_sequence;
 		}
 		__src += 1;
 		__src_len -= 1;
@@ -109,14 +109,14 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		if (!_IsUnbounded) {
 			*__p_maybe_dst_len -= 1;
 		}
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 
-	cnc_mcerror mcnrtomcn_ascii_weird1(cnc_conversion*, size_t* __p_maybe_dst_len,
+	cnc_mcerr mcnrtomcn_ascii_weird1(cnc_conversion*, size_t* __p_maybe_dst_len,
 	     unsigned char** __p_maybe_dst, size_t* __p_src_len, const unsigned char** __p_src,
 	     cnc_pivot_info*, void*) {
 		if (__p_src_len == nullptr || __p_src == nullptr) {
-			return CNC_MCERROR_OK;
+			return cnc_mcerr_ok;
 		}
 
 		const bool _IsUnbounded     = __p_maybe_dst_len == nullptr;
@@ -124,16 +124,16 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		size_t& __src_len           = *__p_src_len;
 		const unsigned char*& __src = *__p_src;
 		if (__src_len == 0 || __src == nullptr) {
-			return CNC_MCERROR_OK;
+			return cnc_mcerr_ok;
 		}
 		if (!_IsUnbounded) {
 			if (*__p_maybe_dst_len < 1) {
-				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+				return cnc_mcerr_insufficient_output;
 			}
 		}
 		const unsigned char __c0 = *__src;
 		if (__c0 > 0x7F) {
-			return CNC_MCERROR_INVALID_SEQUENCE;
+			return cnc_mcerr_invalid_sequence;
 		}
 		__src += 1;
 		__src_len -= 1;
@@ -144,7 +144,7 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		if (!_IsUnbounded) {
 			*__p_maybe_dst_len -= 1;
 		}
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 
 } // namespace cnc_tests_registry_indirect_ascii

@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mcerror.h>
+#include <ztd/cuneicode/mcerr.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
@@ -51,7 +51,7 @@
 /// @brief A structure containing information for a "pivot buffer".
 ///
 /// @remarks When a failure happens due to an intermediate conversion failing, the `result` member
-/// of the cnc_pivot_info will be set to a non-CNC_MCERROR_OK value reflecting the type of
+/// of the cnc_pivot_info will be set to a non-cnc_mcerr_ok value reflecting the type of
 /// failure that happened within the intermediate conversion.
 typedef struct __cnc_pivot_info {
 	//////
@@ -70,7 +70,7 @@ typedef struct __cnc_pivot_info {
 	///
 	/// @remarks If a conversion involving the intermediate buffer / pivot buffer - even the
 	/// implementation-defined one - fails for any reason, it will be reported in this variable.
-	cnc_mcerror error;
+	cnc_mcerr error;
 } cnc_pivot_info;
 
 #endif

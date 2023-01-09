@@ -48,15 +48,15 @@ namespace cnc {
 		     typename _ToFunc, _ToFunc __isnrtozsn, typename _IntermediateChar = ztd_char32_t,
 		     size_t _IntermediateMax = CNC_C32_MAX, typename _SourceChar, typename _DestChar,
 		     typename _State>
-		cnc_mcerror __basic_transcode_one(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
+		cnc_mcerr __basic_transcode_one(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
 		     size_t* __p_src_len, const _SourceChar** __p_src, _State __p_state) noexcept {
 			if (__p_src_len == nullptr || *__p_src_len < 1) {
 				// empty sources are just fine (returns 0)
-				return CNC_MCERROR_OK;
+				return cnc_mcerr_ok;
 			}
 			if (__p_src == nullptr || *__p_src == nullptr) {
 				// null sources are treated like empty sources: okay
-				return CNC_MCERROR_OK;
+				return cnc_mcerr_ok;
 			}
 
 			const _SourceChar*& __src             = *__p_src;
@@ -67,20 +67,20 @@ namespace cnc {
 			_IntermediateChar __intermediate[_IntermediateMax];
 			_IntermediateChar* __intermediate_first = __intermediate;
 			size_t __intermediate_out_size_after    = _IntermediateMax;
-			cnc_mcerror __res_decode                = __xsnrtoisn(&__intermediate_out_size_after,
+			cnc_mcerr __res_decode                = __xsnrtoisn(&__intermediate_out_size_after,
 			                    &__intermediate_first, &__intermediate_src_len, &__intermediate_src, __p_state);
 			switch (__res_decode) {
-			case CNC_MCERROR_INVALID_SEQUENCE:
+			case cnc_mcerr_invalid_sequence:
 				// error, explode
 				return __res_decode;
-			case CNC_MCERROR_INCOMPLETE_INPUT:
+			case cnc_mcerr_incomplete_input:
 				// out of input
 				// no need to change __src or __src_len
 				return __res_decode;
-			case CNC_MCERROR_INSUFFICIENT_OUTPUT:
+			case cnc_mcerr_insufficient_output:
 				// this error should never happen, ever!
 				return __res_decode;
-			case CNC_MCERROR_OK:
+			case cnc_mcerr_ok:
 			default:
 				// we can keep going!
 				break;
@@ -91,49 +91,49 @@ namespace cnc {
 			const _IntermediateChar* __intermediate_input_first = __intermediate;
 			size_t __intermediate_input_size_after              = __intermediate_out_size;
 
-			cnc_mcerror __res_encode = __isnrtozsn(__p_maybe_dst_len, __p_maybe_dst,
+			cnc_mcerr __res_encode = __isnrtozsn(__p_maybe_dst_len, __p_maybe_dst,
 			     &__intermediate_input_size_after, &__intermediate_input_first, __p_state);
 			switch (__res_encode) {
-			case CNC_MCERROR_INVALID_SEQUENCE:
+			case cnc_mcerr_invalid_sequence:
 				// error, rollback
 				return __res_encode;
-			case CNC_MCERROR_INCOMPLETE_INPUT:
+			case cnc_mcerr_incomplete_input:
 				// out of input
 				// no need to increment __src or __src_len
 				return __res_encode;
-			case CNC_MCERROR_INSUFFICIENT_OUTPUT:
+			case cnc_mcerr_insufficient_output:
 				// this error should never happen, ever!
 				return __res_encode;
-			case CNC_MCERROR_OK:
+			case cnc_mcerr_ok:
 			default:
 				// all good, update original pointers!
 				__src     = __intermediate_src;
 				__src_len = __intermediate_src_len;
 				break;
 			}
-			return CNC_MCERROR_OK;
+			return cnc_mcerr_ok;
 		}
 
 		template <bool _IsCounting, bool _IsUnbounded, size_t _IntermediateMax, typename _Func,
 		     _Func __xsnrtoysn, typename _SourceChar, typename _DestChar,
 		     typename _CompletionFunc          = decltype(&cnc_mcstate_is_complete),
 		     _CompletionFunc __completion_func = &cnc_mcstate_is_complete, typename _State>
-		cnc_mcerror __transcode(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
+		cnc_mcerr __transcode(size_t* __p_maybe_dst_len, _DestChar** __p_maybe_dst,
 		     size_t* __p_src_len, const _SourceChar** __p_src, _State __p_state) noexcept {
 			if (__p_src_len == nullptr) {
 				return __xsnrtoysn(
 				     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 			}
 			for (;;) {
-				cnc_mcerror __res = __xsnrtoysn(
+				cnc_mcerr __res = __xsnrtoysn(
 				     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 				switch (__res) {
-				case CNC_MCERROR_OK:
+				case cnc_mcerr_ok:
 					if (*__p_src_len == 0) {
 						if (!__completion_func(__p_state)) {
 							break;
 						}
-						return CNC_MCERROR_OK;
+						return cnc_mcerr_ok;
 					}
 					break;
 				default:
@@ -189,13 +189,13 @@ namespace cnc {
 
 #define _ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE)                 \
 	if (__p_src == nullptr || *__p_src == nullptr) {                                   \
-		return CNC_MCERROR_OK;                                                        \
+		return cnc_mcerr_ok;                                                        \
 	}                                                                                  \
 	ZTD_ASSERT(__p_src_len != nullptr);                                                \
 	const _SRC_TYPE*& __src = *__p_src;                                                \
 	size_t& __src_len       = *__p_src_len;                                            \
 	if (__src_len < 1) {                                                               \
-		return CNC_MCERROR_OK;                                                        \
+		return cnc_mcerr_ok;                                                        \
 	}                                                                                  \
 	const bool _IsCounting  = __p_maybe_dst == nullptr || __p_maybe_dst[0] == nullptr; \
 	const bool _IsUnbounded = __p_maybe_dst_len == nullptr

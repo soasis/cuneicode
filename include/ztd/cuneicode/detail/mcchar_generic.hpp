@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mcerror.h>
+#include <ztd/cuneicode/mcerr.h>
 #include <ztd/cuneicode/detail/mccharn.h>
 #include <ztd/cuneicode/detail/mccharsn.h>
 
@@ -43,7 +43,7 @@
 #include <ztd/idk/type_traits.hpp>
 
 template <typename _Destination, typename _Source>
-cnc_mcerror __cnc_cxntocxn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_dst,
+cnc_mcerr __cnc_cxntocxn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_dst,
      size_t* __p_src_len, const _Source** __p_src) {
 	using _UDestination = ::ztd::remove_cvref_t<_Destination>;
 	using _USource      = ::ztd::remove_cvref_t<_Source>;
@@ -158,7 +158,7 @@ cnc_mcerror __cnc_cxntocxn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_d
 }
 
 template <typename _Destination, typename _Source>
-cnc_mcerror __cnc_cxnrtocxn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_dst,
+cnc_mcerr __cnc_cxnrtocxn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_dst,
      size_t* __p_src_len, const _Source** __p_src, cnc_mcstate_t* __p_state) {
 	using _UDestination = ::ztd::remove_cvref_t<_Destination>;
 	using _USource      = ::ztd::remove_cvref_t<_Source>;
@@ -298,7 +298,7 @@ cnc_mcerror __cnc_cxnrtocxn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_
 }
 
 template <typename _Destination, typename _Source>
-cnc_mcerror __cnc_cxsntocxsn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_dst,
+cnc_mcerr __cnc_cxsntocxsn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_dst,
      size_t* __p_src_len, const _Source** __p_src) {
 	using _UDestination = ::ztd::remove_cvref_t<_Destination>;
 	using _USource      = ::ztd::remove_cvref_t<_Source>;
@@ -413,7 +413,7 @@ cnc_mcerror __cnc_cxsntocxsn(size_t* __p_maybe_dst_len, _Destination** __p_maybe
 }
 
 template <typename _Destination, typename _Source>
-cnc_mcerror __cnc_cxsnrtocxsn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_dst,
+cnc_mcerr __cnc_cxsnrtocxsn(size_t* __p_maybe_dst_len, _Destination** __p_maybe_dst,
      size_t* __p_src_len, const _Source** __p_src, cnc_mcstate_t* __p_state) {
 	using _UDestination = ::ztd::remove_cvref_t<_Destination>;
 	using _USource      = ::ztd::remove_cvref_t<_Source>;

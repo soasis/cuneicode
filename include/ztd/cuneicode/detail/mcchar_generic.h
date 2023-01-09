@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mcerror.h>
+#include <ztd/cuneicode/mcerr.h>
 #include <ztd/cuneicode/detail/mccharn.h>
 #include <ztd/cuneicode/detail/mccharsn.h>
 

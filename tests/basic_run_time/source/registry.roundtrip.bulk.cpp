@@ -53,11 +53,11 @@ namespace {
 		const size_t initial_output_size = output_buffer.size();
 		size_t output_size               = initial_output_size;
 
-		const cnc_mcerror output_err
+		const cnc_mcerr output_err
 		     = cnc_conv(from_conv, &output_size, &output, &input_size, &input);
 		const size_t input_read     = initial_input_size - input_size;
 		const size_t output_written = initial_output_size - output_size;
-		REQUIRE(output_err == CNC_MCERROR_OK);
+		REQUIRE(output_err == cnc_mcerr_ok);
 		REQUIRE(input_read == initial_input_size);
 		REQUIRE(input_size == 0);
 		output_buffer.resize(output_written);
@@ -67,9 +67,9 @@ namespace {
 			const unsigned char* initial_validate_input = initial_input;
 			const unsigned char* validate_input         = initial_validate_input;
 			size_t validate_input_size                  = initial_input_size;
-			const cnc_mcerror validate_input_err
+			const cnc_mcerr validate_input_err
 			     = cnc_conv(from_conv, nullptr, nullptr, &validate_input_size, &validate_input);
-			REQUIRE(validate_input_err == CNC_MCERROR_OK);
+			REQUIRE(validate_input_err == cnc_mcerr_ok);
 			REQUIRE((validate_input - initial_validate_input)
 			     == (static_cast<std::ptrdiff_t>(input_read)));
 		}
@@ -90,10 +90,10 @@ namespace {
 			const unsigned char* count_input         = initial_count_input;
 			size_t count_input_size                  = initial_input_size;
 			size_t count_output_size                 = initial_output_size;
-			const cnc_mcerror count_input_err        = cnc_conv(
+			const cnc_mcerr count_input_err        = cnc_conv(
 			            from_conv, &count_output_size, nullptr, &count_input_size, &count_input);
 			const size_t count_output_written = initial_output_size - count_output_size;
-			REQUIRE(count_input_err == CNC_MCERROR_OK);
+			REQUIRE(count_input_err == cnc_mcerr_ok);
 			REQUIRE((count_input - initial_count_input)
 			     == (static_cast<std::ptrdiff_t>(input_read)));
 			REQUIRE(count_output_written == output_written);
@@ -104,10 +104,10 @@ namespace {
 			const unsigned char* count_input         = initial_count_input;
 			size_t count_input_size                  = initial_input_size;
 			size_t count_output_size                 = initial_output_size;
-			const cnc_mcerror count_input_err        = cnc_conv_count(
+			const cnc_mcerr count_input_err        = cnc_conv_count(
 			            from_conv, &count_output_size, &count_input_size, &count_input);
 			const size_t count_output_written = initial_output_size - count_output_size;
-			REQUIRE(count_input_err == CNC_MCERROR_OK);
+			REQUIRE(count_input_err == cnc_mcerr_ok);
 			REQUIRE((count_input - initial_count_input)
 			     == (static_cast<std::ptrdiff_t>(input_read)));
 			REQUIRE(count_output_written == output_written);
@@ -120,9 +120,9 @@ namespace {
 			std::vector<unsigned char> unbounded_output_buffer(output_written);
 			unsigned char* initial_unbounded_output = unbounded_output_buffer.data();
 			unsigned char* unbounded_output         = initial_unbounded_output;
-			const cnc_mcerror unbounded_input_err   = cnc_conv(
+			const cnc_mcerr unbounded_input_err   = cnc_conv(
 			       from_conv, nullptr, &unbounded_output, &unbounded_input_size, &unbounded_input);
-			REQUIRE(unbounded_input_err == CNC_MCERROR_OK);
+			REQUIRE(unbounded_input_err == cnc_mcerr_ok);
 			REQUIRE((unbounded_input - initial_unbounded_input)
 			     == (static_cast<std::ptrdiff_t>(input_read)));
 			REQUIRE((unbounded_output - initial_unbounded_output)
@@ -141,9 +141,9 @@ namespace {
 			std::vector<unsigned char> unbounded_output_buffer(output_written);
 			unsigned char* initial_unbounded_output = unbounded_output_buffer.data();
 			unsigned char* unbounded_output         = initial_unbounded_output;
-			const cnc_mcerror unbounded_input_err   = cnc_conv_unbounded(
+			const cnc_mcerr unbounded_input_err   = cnc_conv_unbounded(
 			       from_conv, &unbounded_output, &unbounded_input_size, &unbounded_input);
-			REQUIRE(unbounded_input_err == CNC_MCERROR_OK);
+			REQUIRE(unbounded_input_err == cnc_mcerr_ok);
 			REQUIRE((unbounded_input - initial_unbounded_input)
 			     == (static_cast<std::ptrdiff_t>(input_read)));
 			REQUIRE((unbounded_output - initial_unbounded_output)
@@ -163,11 +163,11 @@ namespace {
 		unsigned char* input_output            = initial_input_output;
 		const size_t initial_input_output_size = input_output_buffer.size();
 		size_t input_output_size               = initial_input_output_size;
-		const cnc_mcerror input_output_err     = cnc_conv(
+		const cnc_mcerr input_output_err     = cnc_conv(
 		         to_conv, &input_output_size, &input_output, &intermediate_size, &intermediate);
 		const size_t intermediate_read    = initial_intermediate_size - intermediate_size;
 		const size_t input_output_written = initial_input_output_size - input_output_size;
-		REQUIRE(input_output_err == CNC_MCERROR_OK);
+		REQUIRE(input_output_err == cnc_mcerr_ok);
 		REQUIRE(intermediate_size == 0);
 		REQUIRE(intermediate_read == output_written);
 		REQUIRE(input_output_written == initial_input_size);
@@ -186,9 +186,9 @@ namespace {
 			const unsigned char* initial_validate_input = initial_intermediate;
 			const unsigned char* validate_input         = initial_validate_input;
 			size_t validate_input_size                  = initial_intermediate_size;
-			const cnc_mcerror validate_input_err
+			const cnc_mcerr validate_input_err
 			     = cnc_conv(to_conv, nullptr, nullptr, &validate_input_size, &validate_input);
-			REQUIRE(validate_input_err == CNC_MCERROR_OK);
+			REQUIRE(validate_input_err == cnc_mcerr_ok);
 			REQUIRE((validate_input - initial_validate_input)
 			     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 		}
@@ -211,10 +211,10 @@ namespace {
 			const unsigned char* count_input         = initial_count_input;
 			size_t count_input_size                  = initial_intermediate_size;
 			size_t count_output_size                 = initial_input_output_size;
-			const cnc_mcerror count_input_err        = cnc_conv(
+			const cnc_mcerr count_input_err        = cnc_conv(
 			            to_conv, &count_output_size, nullptr, &count_input_size, &count_input);
 			const size_t count_output_written = initial_input_output_size - count_output_size;
-			REQUIRE(count_input_err == CNC_MCERROR_OK);
+			REQUIRE(count_input_err == cnc_mcerr_ok);
 			REQUIRE((count_input - initial_count_input)
 			     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 			REQUIRE(count_output_written == input_output_written);
@@ -225,10 +225,10 @@ namespace {
 			const unsigned char* count_input         = initial_count_input;
 			size_t count_input_size                  = initial_intermediate_size;
 			size_t count_output_size                 = initial_input_output_size;
-			const cnc_mcerror count_input_err
+			const cnc_mcerr count_input_err
 			     = cnc_conv_count(to_conv, &count_output_size, &count_input_size, &count_input);
 			const size_t count_output_written = initial_input_output_size - count_output_size;
-			REQUIRE(count_input_err == CNC_MCERROR_OK);
+			REQUIRE(count_input_err == cnc_mcerr_ok);
 			REQUIRE((count_input - initial_count_input)
 			     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 			REQUIRE(count_output_written == input_output_written);
@@ -241,9 +241,9 @@ namespace {
 			std::vector<unsigned char> unbounded_output_buffer(input_output_written);
 			unsigned char* initial_unbounded_output = unbounded_output_buffer.data();
 			unsigned char* unbounded_output         = initial_unbounded_output;
-			const cnc_mcerror unbounded_input_err   = cnc_conv(
+			const cnc_mcerr unbounded_input_err   = cnc_conv(
 			       to_conv, nullptr, &unbounded_output, &unbounded_input_size, &unbounded_input);
-			REQUIRE(unbounded_input_err == CNC_MCERROR_OK);
+			REQUIRE(unbounded_input_err == cnc_mcerr_ok);
 			REQUIRE((unbounded_input - initial_unbounded_input)
 			     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 			REQUIRE((unbounded_output - initial_unbounded_output)
@@ -261,9 +261,9 @@ namespace {
 			std::vector<unsigned char> unbounded_output_buffer(input_output_written);
 			unsigned char* initial_unbounded_output = unbounded_output_buffer.data();
 			unsigned char* unbounded_output         = initial_unbounded_output;
-			const cnc_mcerror unbounded_input_err   = cnc_conv_unbounded(
+			const cnc_mcerr unbounded_input_err   = cnc_conv_unbounded(
 			       to_conv, &unbounded_output, &unbounded_input_size, &unbounded_input);
-			REQUIRE(unbounded_input_err == CNC_MCERROR_OK);
+			REQUIRE(unbounded_input_err == cnc_mcerr_ok);
 			REQUIRE((unbounded_input - initial_unbounded_input)
 			     == (static_cast<std::ptrdiff_t>(intermediate_read)));
 			REQUIRE((unbounded_output - initial_unbounded_output)

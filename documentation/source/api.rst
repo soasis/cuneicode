@@ -41,7 +41,7 @@ General Structures, Enumerations, and Constants
 .. toctree::
 	:maxdepth: 1
 	
-	api/mcerror
+	api/mcerr
 	api/open_error
 	api/mcstate_t
 	api/constants

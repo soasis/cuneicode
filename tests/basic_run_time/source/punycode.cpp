@@ -54,9 +54,9 @@ namespace {
 			std::size_t output_size            = destination_size;
 			cnc_pny_encode_state_t state       = {};
 			REQUIRE(state.__is_initialized == 0);
-			cnc_mcerror err
+			cnc_mcerr err
 			     = cnc_c32snrtomcsn_punycode(&output_size, &output, &input_size, &input, &state);
-			REQUIRE(err == CNC_MCERROR_OK);
+			REQUIRE(err == cnc_mcerr_ok);
 			std::size_t used_size = destination_size - output_size;
 			const bool is_equal   = std::equal(
                     expected.cbegin(), expected.cend(), destination + 0, destination + used_size);
@@ -73,9 +73,9 @@ namespace {
 			std::size_t output_size            = destination_size;
 			cnc_pny_encode_state_t state       = {};
 			REQUIRE(state.__is_initialized == 0);
-			cnc_mcerror err = cnc_c32snrtomcsn_punycode_idna(
+			cnc_mcerr err = cnc_c32snrtomcsn_punycode_idna(
 			     &output_size, &output, &input_size, &input, &state);
-			REQUIRE(err == CNC_MCERROR_OK);
+			REQUIRE(err == cnc_mcerr_ok);
 			std::size_t used_size = destination_size - output_size;
 			const bool is_equal   = std::equal(expected_idna.cbegin(), expected_idna.cend(),
 			       destination + 0, destination + used_size);
@@ -92,9 +92,9 @@ namespace {
 			std::size_t output_size            = destination_size;
 			cnc_pny_decode_state_t state       = {};
 			REQUIRE(state.__is_initialized == 0);
-			cnc_mcerror err = cnc_mcsnrtoc32sn_punycode_idna(
+			cnc_mcerr err = cnc_mcsnrtoc32sn_punycode_idna(
 			     &output_size, &output, &input_size, &input, &state);
-			REQUIRE(err == CNC_MCERROR_OK);
+			REQUIRE(err == cnc_mcerr_ok);
 			std::size_t used_size = destination_size - output_size;
 			const bool is_equal   = std::equal(
                     source.cbegin(), source.cend(), destination + 0, destination + used_size);
@@ -111,9 +111,9 @@ namespace {
 			std::size_t output_size            = destination_size;
 			cnc_pny_decode_state_t state       = {};
 			REQUIRE(state.__is_initialized == 0);
-			cnc_mcerror err
+			cnc_mcerr err
 			     = cnc_mcsnrtoc32sn_punycode(&output_size, &output, &input_size, &input, &state);
-			REQUIRE(err == CNC_MCERROR_OK);
+			REQUIRE(err == cnc_mcerr_ok);
 			std::size_t used_size = destination_size - output_size;
 			const bool is_equal   = std::equal(
                     source.cbegin(), source.cend(), destination + 0, destination + used_size);

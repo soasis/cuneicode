@@ -138,7 +138,7 @@ namespace {
 
 	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func,
 	     typename _State>
-	static inline cnc_mcerror __basic_single_conversion(cnc_conversion*,
+	static inline cnc_mcerr __basic_single_conversion(cnc_conversion*,
 	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
 	     void* __state) noexcept {
@@ -157,7 +157,7 @@ namespace {
 		     = __is_counting ? nullptr : reinterpret_cast<_DestChar*>(*__p_bytes_out);
 		_DestChar* __dest    = __dest_first;
 		_State* __conversion = __basic_state<_State>(__state);
-		cnc_mcerror __err;
+		cnc_mcerr __err;
 		__err = __func(__is_unbounded ? nullptr : &__dest_count, &__dest, &__source_count,
 		     &__source, __conversion);
 		// always update all relevant counts
@@ -173,14 +173,14 @@ namespace {
 			*__p_bytes_out_count -= static_cast<size_t>(__bytes_written);
 		}
 		if (__using_provided_pivot_info) {
-			__p_pivot_info->error = CNC_MCERROR_OK;
+			__p_pivot_info->error = cnc_mcerr_ok;
 		}
 		return __err;
 	}
 
 	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func,
 	     typename _State>
-	static inline cnc_mcerror __basic_multi_conversion(cnc_conversion*,
+	static inline cnc_mcerr __basic_multi_conversion(cnc_conversion*,
 	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
 	     void* __state) noexcept {
@@ -198,7 +198,7 @@ namespace {
 		     = __is_counting ? nullptr : reinterpret_cast<_DestChar*>(*__p_bytes_out);
 		_DestChar* __dest    = __dest_first;
 		_State* __conversion = __basic_state<_State>(__state);
-		cnc_mcerror __err;
+		cnc_mcerr __err;
 		__err = __func(__is_unbounded ? nullptr : &__dest_count, &__dest, &__source_count,
 		     &__source, __conversion);
 		// always update all relevant counts
@@ -214,7 +214,7 @@ namespace {
 			*__p_bytes_out_count -= static_cast<size_t>(__bytes_written);
 		}
 		if (__using_provided_pivot_info) {
-			__p_pivot_info->error = CNC_MCERROR_OK;
+			__p_pivot_info->error = cnc_mcerr_ok;
 		}
 		return __err;
 	}
@@ -227,7 +227,7 @@ namespace {
 	}
 
 	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func>
-	static inline cnc_mcerror __typical_multi_conversion(cnc_conversion* __base_conversion,
+	static inline cnc_mcerr __typical_multi_conversion(cnc_conversion* __base_conversion,
 	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
 	     void* __state) noexcept {
@@ -237,7 +237,7 @@ namespace {
 	}
 
 	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func>
-	static inline cnc_mcerror __typical_single_conversion(
+	static inline cnc_mcerr __typical_single_conversion(
 	     [[maybe_unused]] cnc_conversion* __base_conversion, size_t* __p_bytes_out_count,
 	     unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
@@ -257,7 +257,7 @@ namespace {
 		     = __is_counting ? nullptr : reinterpret_cast<_DestChar*>(*__p_bytes_out);
 		_DestChar* __dest        = __dest_first;
 		cnc_mcstate_t* __p_state = __basic_state<cnc_mcstate_t>(__state);
-		cnc_mcerror __err        = __func(__is_unbounded ? nullptr : &__dest_count, &__dest,
+		cnc_mcerr __err        = __func(__is_unbounded ? nullptr : &__dest_count, &__dest,
 		     &__source_count, &__source, __p_state);
 		// always update all relevant counts
 		// and pointers, whether or not there is an actual error
@@ -272,7 +272,7 @@ namespace {
 			*__p_bytes_out_count -= static_cast<size_t>(__bytes_written);
 		}
 		if (__using_provided_pivot_info) {
-			__p_pivot_info->error = CNC_MCERROR_OK;
+			__p_pivot_info->error = cnc_mcerr_ok;
 		}
 		return __err;
 	}
@@ -417,7 +417,7 @@ namespace {
 		return CNC_OPEN_ERROR_OK;
 	}
 
-	static inline cnc_mcerror __intermediary_multi_conversion(cnc_conversion*,
+	static inline cnc_mcerr __intermediary_multi_conversion(cnc_conversion*,
 	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
 	     void* __state) noexcept {
@@ -426,12 +426,12 @@ namespace {
 		     = CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
 		unsigned char __intermediate_pivot_buffer[__intermediate_pivot_buffer_max] {};
 		cnc_pivot_info __backup_pivot_info
-		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, CNC_MCERROR_OK };
+		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, cnc_mcerr_ok };
 		cnc_pivot_info* __target_p_pivot_info
 		     = !__using_provided_pivot_info || __p_pivot_info->bytes == nullptr
 		     ? &__backup_pivot_info
 		     : __p_pivot_info;
-		cnc_pivot_info __empty_pivot_info = { 0, nullptr, CNC_MCERROR_OK };
+		cnc_pivot_info __empty_pivot_info = { 0, nullptr, cnc_mcerr_ok };
 		__intermediary_states __states    = __intermediary_state(__state);
 		for (;;) {
 			size_t __start_bytes_in_count         = *__p_bytes_in_count;
@@ -455,12 +455,12 @@ namespace {
 			}
 			const unsigned char* __start_bytes_in   = *__p_bytes_in;
 			unsigned char* __intermediate_bytes_out = __target_p_pivot_info->bytes;
-			cnc_mcerror __link0res
+			cnc_mcerr __link0res
 			     = __states.__intermediary_state->__link0.__multi_conversion_function(
 			          &__states.__intermediary_state->__link0, &__intermediate_bytes_out_count,
 			          &__intermediate_bytes_out, __p_bytes_in_count, __p_bytes_in,
 			          &__empty_pivot_info, __states.__link0_state);
-			if (__link0res != CNC_MCERROR_OK && __link0res != CNC_MCERROR_INSUFFICIENT_OUTPUT) {
+			if (__link0res != cnc_mcerr_ok && __link0res != cnc_mcerr_insufficient_output) {
 				// something bad happened: revert potential writes to the
 				// progress variables
 				*__p_bytes_in_count = __start_bytes_in_count;
@@ -474,12 +474,12 @@ namespace {
 			     = __target_p_pivot_info->bytes_size - __intermediate_bytes_out_count;
 			const unsigned char* __intermediate_bytes_in = __target_p_pivot_info->bytes;
 
-			cnc_mcerror __link1res
+			cnc_mcerr __link1res
 			     = __states.__intermediary_state->__link1.__multi_conversion_function(
 			          &__states.__intermediary_state->__link1, __p_bytes_out_count,
 			          __p_bytes_out, &__intermediate_bytes_in_count, &__intermediate_bytes_in,
 			          &__empty_pivot_info, __states.__link1_state);
-			if (__link1res != CNC_MCERROR_OK) {
+			if (__link1res != cnc_mcerr_ok) {
 				if (__using_provided_pivot_info) {
 					__p_pivot_info->error = __link1res;
 				}
@@ -488,12 +488,12 @@ namespace {
 		}
 
 		if (__using_provided_pivot_info) {
-			__p_pivot_info->error = CNC_MCERROR_OK;
+			__p_pivot_info->error = cnc_mcerr_ok;
 		}
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 
-	static inline cnc_mcerror __intermediary_single_conversion(cnc_conversion*,
+	static inline cnc_mcerr __intermediary_single_conversion(cnc_conversion*,
 	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
 	     void* __state) noexcept {
@@ -502,35 +502,35 @@ namespace {
 		     = CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
 		unsigned char __intermediate_pivot_buffer[__intermediate_pivot_buffer_max] {};
 		cnc_pivot_info __backup_pivot_info
-		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, CNC_MCERROR_OK };
+		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, cnc_mcerr_ok };
 		cnc_pivot_info* __target_p_pivot_info
 		     = !__using_provided_pivot_info || __p_pivot_info->bytes == nullptr
 		     ? &__backup_pivot_info
 		     : __p_pivot_info;
-		cnc_pivot_info __empty_pivot_info                      = { 0, nullptr, CNC_MCERROR_OK };
+		cnc_pivot_info __empty_pivot_info                      = { 0, nullptr, cnc_mcerr_ok };
 		__intermediary_states __states                         = __intermediary_state(__state);
 		[[maybe_unused]] size_t __start_bytes_in_count         = *__p_bytes_in_count;
 		[[maybe_unused]] const unsigned char* __start_bytes_in = *__p_bytes_in;
 		size_t __intermediate_bytes_out_count   = __target_p_pivot_info->bytes_size;
 		unsigned char* __intermediate_bytes_out = __target_p_pivot_info->bytes;
-		cnc_mcerror __link0res
+		cnc_mcerr __link0res
 		     = __states.__intermediary_state->__link0.__single_conversion_function(
 		          &__states.__intermediary_state->__link0, &__intermediate_bytes_out_count,
 		          &__intermediate_bytes_out, __p_bytes_in_count, __p_bytes_in,
 		          &__empty_pivot_info, __states.__link0_state);
-		if (__link0res != CNC_MCERROR_OK) {
+		if (__link0res != cnc_mcerr_ok) {
 			if (__using_provided_pivot_info) {
 				__p_pivot_info->error = __link0res;
 			}
 			return __link0res;
 		}
 		if (__using_provided_pivot_info) {
-			__p_pivot_info->error = CNC_MCERROR_OK;
+			__p_pivot_info->error = cnc_mcerr_ok;
 		}
 		size_t __intermediate_bytes_in_count
 		     = __target_p_pivot_info->bytes_size - __intermediate_bytes_out_count;
 		const unsigned char* __intermediate_bytes_in = __target_p_pivot_info->bytes;
-		cnc_mcerror __link1res
+		cnc_mcerr __link1res
 		     = __states.__intermediary_state->__link1.__single_conversion_function(
 		          &__states.__intermediary_state->__link1, __p_bytes_out_count, __p_bytes_out,
 		          &__intermediate_bytes_in_count, &__intermediate_bytes_in, &__empty_pivot_info,
@@ -611,31 +611,31 @@ namespace {
 //////
 /// @brief This function must be marked extern because it must have a stable external symbol w.r.t
 /// this library.
-extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversion,
+extern cnc_mcerr __cnc_multi_from_single_conversion(cnc_conversion* __conversion,
      size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
      void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_input_bytes_size == nullptr || __p_input_bytes == nullptr) {
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	const unsigned char*& __input_bytes = *__p_input_bytes;
 	size_t& __input_bytes_size          = *__p_input_bytes_size;
 	if (__input_bytes == nullptr || __input_bytes_size == 0) {
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	for (;;) {
-		cnc_mcerror __err = __conversion->__single_conversion_function(__conversion,
+		cnc_mcerr __err = __conversion->__single_conversion_function(__conversion,
 		     __out_pput_bytes_size, __out_pput_bytes, __p_input_bytes_size, __p_input_bytes,
 		     __p_pivot_info, __user_data);
 		switch (__err) {
-		case CNC_MCERROR_OK:
+		case cnc_mcerr_ok:
 			if (__input_bytes_size > 0) {
 				// loop around!
 				continue;
 			}
 			if (__conversion->__state_is_complete_function(__conversion, __user_data)) {
 				// we're done!
-				return CNC_MCERROR_OK;
+				return cnc_mcerr_ok;
 			}
 		default:
 			break;
@@ -647,24 +647,24 @@ extern cnc_mcerror __cnc_multi_from_single_conversion(cnc_conversion* __conversi
 //////
 /// @brief This function must be marked extern because it must have a stable external symbol w.r.t
 /// this library.
-extern cnc_mcerror __cnc_single_from_multi_conversion(cnc_conversion* __conversion,
+extern cnc_mcerr __cnc_single_from_multi_conversion(cnc_conversion* __conversion,
      size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info,
      void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_ {
 	if (__p_input_bytes_size == nullptr || __p_input_bytes == nullptr) {
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	const unsigned char* __input_bytes = *__p_input_bytes;
 	size_t __input_bytes_size          = *__p_input_bytes_size;
 	if (__input_bytes == nullptr || __input_bytes_size == 0) {
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	for (size_t __len = 1; __len <= __input_bytes_size; ++__len) {
-		cnc_mcerror __err
+		cnc_mcerr __err
 		     = __conversion->__multi_conversion_function(__conversion, __out_pput_bytes_size,
 		          __out_pput_bytes, &__len, &__input_bytes, __p_pivot_info, __user_data);
 		switch (__err) {
-		case CNC_MCERROR_INCOMPLETE_INPUT:
+		case cnc_mcerr_incomplete_input:
 			// alright, so we just need more input:
 			// we go A G A N E !
 			continue;
@@ -674,7 +674,7 @@ extern cnc_mcerror __cnc_single_from_multi_conversion(cnc_conversion* __conversi
 		return __err;
 	}
 	// if we reach here, we just simply do not have enough input: bail out
-	return CNC_MCERROR_INCOMPLETE_INPUT;
+	return cnc_mcerr_incomplete_input;
 }
 
 extern cnc_open_error __cnc_add_default_registry_entries(

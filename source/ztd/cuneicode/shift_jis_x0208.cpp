@@ -39,7 +39,7 @@
 #include <memory>
 #include <optional>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32ntomcn_shift_jis_x0208(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32ntomcn_shift_jis_x0208(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state    = {};
@@ -48,7 +48,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32ntomcn
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomcn_shift_jis_x0208(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_shift_jis_x0208(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
 	using code_point = ztd_char32_t;
@@ -61,7 +61,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		if (!_IsUnbounded) {
 			if (__p_maybe_dst_len[0] == 0) {
 				// output is empty :(
-				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+				return cnc_mcerr_insufficient_output;
 			}
 			__p_maybe_dst_len[0] -= 1;
 		}
@@ -71,13 +71,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	else if (__code == 0x00A5) {
 		if (!_IsUnbounded) {
 			if (__p_maybe_dst_len[0] == 0) {
 				// output is empty :(
-				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+				return cnc_mcerr_insufficient_output;
 			}
 			__p_maybe_dst_len[0] -= 1;
 		}
@@ -87,13 +87,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	else if (__code == 0x203E) {
 		if (!_IsUnbounded) {
 			if (__p_maybe_dst_len[0] == 0) {
 				// output is empty :(
-				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+				return cnc_mcerr_insufficient_output;
 			}
 			__p_maybe_dst_len[0] -= 1;
 		}
@@ -103,13 +103,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	else if (__code >= 0xFF61 && __code <= 0xFF9F) {
 		if (!_IsUnbounded) {
 			if (__p_maybe_dst_len[0] == 0) {
 				// output is empty :(
-				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+				return cnc_mcerr_insufficient_output;
 			}
 			__p_maybe_dst_len[0] -= 1;
 		}
@@ -120,7 +120,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 
 	if (__code == 0x2212) {
@@ -130,7 +130,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 	if (!_IsUnbounded) {
 		if (__p_maybe_dst_len[0] < 2) {
 			// output is empty :(
-			return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+			return cnc_mcerr_insufficient_output;
 		}
 	}
 	::std::optional<::std::size_t> __maybe_index
@@ -152,13 +152,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32nrtomc
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 
-	return CNC_MCERROR_INVALID_SEQUENCE;
+	return cnc_mcerr_invalid_sequence;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcntoc32n_shift_jis_x0208(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcntoc32n_shift_jis_x0208(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state    = {};
@@ -167,7 +167,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcntoc32n
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32n_shift_jis_x0208(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_shift_jis_x0208(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
 	using code_point = ztd_char32_t;
@@ -183,7 +183,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 		if (!_IsUnbounded) {
 			if (__p_maybe_dst_len[0] == 0) {
 				// output is empty :(
-				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+				return cnc_mcerr_insufficient_output;
 			}
 			__p_maybe_dst_len[0] -= 1;
 		}
@@ -193,7 +193,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	else if (__first_byte <= 0xDF && __first_byte >= 0xA1) {
 		// Top-Level case 1: it's non-ASCII single-byte
@@ -201,7 +201,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 		if (!_IsUnbounded) {
 			if (__p_maybe_dst_len[0] == 0) {
 				// output is empty :(
-				return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+				return cnc_mcerr_insufficient_output;
 			}
 			__p_maybe_dst_len[0] -= 1;
 		}
@@ -211,13 +211,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 		}
 		__src += 1;
 		__src_len -= 1;
-		return CNC_MCERROR_OK;
+		return cnc_mcerr_ok;
 	}
 	else if ((__first_byte <= 0x9F && __first_byte >= 0x81)
 	     || (__first_byte <= 0xFC && __first_byte >= 0xE0)) {
 		// Top-Level case 2: this is a double-byte sequence!
 		if (__src_len < 2) {
-			return CNC_MCERROR_INCOMPLETE_INPUT;
+			return cnc_mcerr_incomplete_input;
 		}
 		unsigned char __second_byte        = static_cast<unsigned char>(__src[1]);
 		unsigned char lookup_offset        = __second_byte < 0x7F ? 0x40 : 0x41;
@@ -232,7 +232,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 				if (!_IsUnbounded) {
 					if (__p_maybe_dst_len[0] == 0) {
 						// output is empty :(
-						return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+						return cnc_mcerr_insufficient_output;
 					}
 					__p_maybe_dst_len[0] -= 1;
 				}
@@ -249,7 +249,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 					if (!_IsUnbounded) {
 						if (__p_maybe_dst_len[0] == 0) {
 							// output is empty :(
-							return CNC_MCERROR_INSUFFICIENT_OUTPUT;
+							return cnc_mcerr_insufficient_output;
 						}
 						__p_maybe_dst_len[0] -= 1;
 					}
@@ -261,17 +261,17 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcnrtoc32
 			}
 			__src += 2;
 			__src_len -= 2;
-			return CNC_MCERROR_OK;
+			return cnc_mcerr_ok;
 		}
 	}
 
 	// Top-Level case 3 (default): unrecognized byte sequence!!
-	return CNC_MCERROR_INVALID_SEQUENCE;
+	return cnc_mcerr_invalid_sequence;
 }
 
 
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32sntomcsn_shift_jis_x0208(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32sntomcsn_shift_jis_x0208(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state    = {};
@@ -280,7 +280,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32sntomc
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32snrtomcsn_shift_jis_x0208(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32snrtomcsn_shift_jis_x0208(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
@@ -288,7 +288,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_c32snrtom
 	     &cnc_c32nrtomcn_shift_jis_x0208, ztd_char32_t, ztd_char_t);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntoc32sn_shift_jis_x0208(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsntoc32sn_shift_jis_x0208(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state    = {};
@@ -297,7 +297,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsntoc32
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerror cnc_mcsnrtoc32sn_shift_jis_x0208(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsnrtoc32sn_shift_jis_x0208(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,

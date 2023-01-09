@@ -129,13 +129,13 @@ Soon, the gossips about strange visitors started. The Visitors protect life, and
 		size_t input_size          = ztd_c_string_array_size(utf8_text);
 		const size_t initial_output_byte_size = SIZE_MAX;
 		size_t output_byte_size               = initial_output_byte_size;
-		cnc_mcerror err                       = cnc_conv_count(
+		cnc_mcerr err                       = cnc_conv_count(
 		                           conversion.get(), &output_byte_size, &input_size, &input);
-		if (err != CNC_MCERROR_OK) {
+		if (err != cnc_mcerr_ok) {
 			std::cerr << "[error] Could not perform counting operation on "
 			             "input data from \""
 			          << from_code << "\" to \"" << to_code
-			          << "\". Error reason:" << cnc_mcerror_to_str(err)
+			          << "\". Error reason:" << cnc_mcerr_to_str(err)
 			          << std::endl;
 			return 1;
 		}
@@ -146,9 +146,9 @@ Soon, the gossips about strange visitors started. The Visitors protect life, and
 	unsigned char* output      = (unsigned char*)output_buffer.data();
 	size_t input_size          = ztd_c_string_array_size(utf8_text);
 	const unsigned char* input = (const unsigned char*)utf8_text;
-	cnc_mcerror err
+	cnc_mcerr err
 	     = cnc_conv(conversion.get(), &output_size, &output, &input_size, &input);
-	ZTD_ASSERT(err == CNC_MCERROR_OK);
+	ZTD_ASSERT(err == cnc_mcerr_ok);
 	ZTD_ASSERT(output_size == 0);
 	// write out as a hex sequence
 	const char16_t* it = (const char16_t*)output_buffer.data();
