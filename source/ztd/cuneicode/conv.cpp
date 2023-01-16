@@ -55,22 +55,26 @@
 #include <cstring>
 
 namespace {
+
 	template <typename _State>
-	static inline _State* __basic_state(unsigned char* __state,
+	static inline _State* __basic_state(::ztd::qualify_like_t<unsigned char, _State>* __state,
 	     size_t __available_space = sizeof(_State) + (sizeof(_State) - 1)) {
-		void* __extra_start   = static_cast<void*>(__state);
-		void* __aligned_extra = ::cnc::__cnc_detail::__align(
+		using _VoidTy            = ::ztd::qualify_like_t<void, _State>;
+		_VoidTy* __extra_start   = static_cast<_VoidTy*>(__state);
+		_VoidTy* __aligned_extra = ::cnc::__cnc_detail::__align(
 		     alignof(_State), sizeof(_State), __extra_start, __available_space);
 		if (__aligned_extra == nullptr) {
 			return nullptr;
 		}
-		return static_cast<_State*>(static_cast<void*>(__aligned_extra));
+		return static_cast<_State*>(static_cast<_VoidTy*>(__aligned_extra));
 	}
 
 	template <typename _State>
-	static inline _State* __basic_state(void* __state,
+	static inline _State* __basic_state(::ztd::qualify_like_t<void, _State>* __state,
 	     size_t __available_space = sizeof(_State) + (sizeof(_State) - 1)) noexcept {
-		return __basic_state<_State>(static_cast<unsigned char*>(__state), __available_space);
+		return __basic_state<_State>(
+		     static_cast<::ztd::qualify_like_t<unsigned char, _State>*>(__state),
+		     __available_space);
 	}
 
 	template <typename _State>
@@ -82,8 +86,8 @@ namespace {
 	template <typename _State, typename _CompleteFunction,
 	     _CompleteFunction __state_is_complete_function>
 	static inline bool __basic_state_is_complete_function(
-	     cnc_conversion*, void* __state) noexcept {
-		_State* __basic = __basic_state<_State>(__state);
+	     const cnc_conversion*, const void* __state) noexcept {
+		const _State* __basic = __basic_state<const _State>(__state);
 		return __state_is_complete_function(__basic);
 	}
 
@@ -138,8 +142,8 @@ namespace {
 
 	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func,
 	     typename _State>
-	static inline cnc_mcerr __basic_single_conversion(cnc_conversion*,
-	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
+	static inline cnc_mcerr __basic_single_conversion(cnc_conversion*, size_t* __p_bytes_out_count,
+	     unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
 	     void* __state) noexcept {
 		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
@@ -180,8 +184,8 @@ namespace {
 
 	template <typename _SourceChar, typename _DestChar, typename _Func, _Func __func,
 	     typename _State>
-	static inline cnc_mcerr __basic_multi_conversion(cnc_conversion*,
-	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
+	static inline cnc_mcerr __basic_multi_conversion(cnc_conversion*, size_t* __p_bytes_out_count,
+	     unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
 	     void* __state) noexcept {
 		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
@@ -220,7 +224,7 @@ namespace {
 	}
 
 	static inline bool __typical_state_is_complete(
-	     cnc_conversion* __conversion, void* __state) noexcept {
+	     const cnc_conversion* __conversion, const void* __state) noexcept {
 		return __basic_state_is_complete_function<cnc_mcstate_t,
 		     decltype(&::cnc_mcstate_is_complete), &::cnc_mcstate_is_complete>(
 		     __conversion, __state);
@@ -257,7 +261,7 @@ namespace {
 		     = __is_counting ? nullptr : reinterpret_cast<_DestChar*>(*__p_bytes_out);
 		_DestChar* __dest        = __dest_first;
 		cnc_mcstate_t* __p_state = __basic_state<cnc_mcstate_t>(__state);
-		cnc_mcerr __err        = __func(__is_unbounded ? nullptr : &__dest_count, &__dest,
+		cnc_mcerr __err          = __func(__is_unbounded ? nullptr : &__dest_count, &__dest,
 		     &__source_count, &__source, __p_state);
 		// always update all relevant counts
 		// and pointers, whether or not there is an actual error

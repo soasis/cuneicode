@@ -60,7 +60,7 @@ namespace {
 	}
 
 	static inline bool __cnc_default_state_is_complete_function(
-	     cnc_conversion* __conversion, void* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
+	     const cnc_conversion* __conversion, const void* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 		(void)__conversion;
 		(void)__p_state;
 		return true;

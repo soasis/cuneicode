@@ -785,6 +785,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_un
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
+/// @brief Checks if any associated stored state has no outstanding data left.
+///
+/// @param[in] __conversion The cnc_conversion handle to check for state completion. Shall not be
+/// `nullptr`.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_state_is_complete(
+     const cnc_conversion* __conversion) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
 /// @}
 
 #endif

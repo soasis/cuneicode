@@ -61,6 +61,26 @@ namespace cnc {
 			return __align(alignment, size, ptr, space, required_space);
 		}
 
+		inline const void* __align(::std::size_t alignment, ::std::size_t size, const void*& ptr,
+		     ::std::size_t& space, ::std::size_t& required_space) {
+			::std::uintptr_t initial = reinterpret_cast<::std::uintptr_t>(ptr);
+			::std::uintptr_t offby   = static_cast<::std::uintptr_t>(initial % alignment);
+			::std::uintptr_t padding = (alignment - offby) % alignment;
+			required_space += size + padding;
+			if (space < required_space) {
+				return nullptr;
+			}
+			ptr = static_cast<const void*>(static_cast<const char*>(ptr) + padding);
+			space -= padding;
+			return ptr;
+		}
+
+		inline const void* __align(::std::size_t alignment, ::std::size_t size, const void*& ptr,
+		     ::std::size_t& space) {
+			::std::size_t required_space = 0;
+			return __align(alignment, size, ptr, space, required_space);
+		}
+
 	} // namespace __cnc_detail
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_
 } // namespace cnc

@@ -243,7 +243,8 @@ typedef cnc_mcerr(cnc_conversion_function)(cnc_conversion* __conversion,
 /// @remarks This only applies to the single conversion functions, which may need to use special "is
 /// state complete" functions in order to properly simulate a multi-conversion using
 /// single-conversion functions.
-typedef bool(cnc_state_is_complete_function)(cnc_conversion* __conversion, void* __p_state);
+typedef bool(cnc_state_is_complete_function)(
+     const cnc_conversion* __conversion, const void* __p_state);
 
 //////
 /// @brief The function type for iterating through a `cnc_conversion_registry`'s registered pairs of

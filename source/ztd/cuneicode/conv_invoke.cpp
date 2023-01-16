@@ -154,3 +154,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_un
 	return cnc_conv_one_pivot(
 	     __conversion, nullptr, __p_bytes_out, __p_bytes_in_count, __p_bytes_in, __p_pivot_info);
 }
+
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_state_is_complete(
+     const cnc_conversion* __conversion) ZTD_NOEXCEPT_IF_CXX_I_ {
+	const void* __state = static_cast<const void*>(__conversion + 1);
+	return __conversion->__state_is_complete_function(__conversion, __state);
+}
