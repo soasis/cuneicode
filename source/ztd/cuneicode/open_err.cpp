@@ -29,19 +29,21 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mcerr.h>
+#include <ztd/cuneicode/open_err.h>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerr_to_str(
-     cnc_mcerr err) {
-	switch (err) {
-	case cnc_mcerr_ok:
-		return "cnc_mcerr_ok";
-	case cnc_mcerr_incomplete_input:
-		return "cnc_mcerr_incomplete_input";
-	case cnc_mcerr_insufficient_output:
-		return "cnc_mcerr_insufficient_output";
-	case cnc_mcerr_invalid_sequence:
-		return "cnc_mcerr_invalid_sequence";
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_open_err_to_str(
+     cnc_open_err __err) {
+	switch (__err) {
+	case cnc_open_err_ok:
+		return "cnc_open_err_ok";
+	case cnc_open_err_no_conversion_path:
+		return "cnc_open_err_incomplete_input";
+	case cnc_open_err_allocation_failure:
+		return "cnc_open_err_allocation_failure";
+	case cnc_open_err_insufficient_output:
+		return "cnc_open_err_insufficient_output";
+	case cnc_open_err_invalid_parameter:
+		return "cnc_open_err_invalid_parameter";
 	}
-	return "CNC_MCERR_UNKNOWN_ERROR_CODE";
+	return "cnc_open_err_(unknown_error_code)";
 }

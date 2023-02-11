@@ -53,7 +53,7 @@
 /// @remarks When a failure happens due to an intermediate conversion failing, the `result` member
 /// of the cnc_pivot_info will be set to a non-cnc_mcerr_ok value reflecting the type of
 /// failure that happened within the intermediate conversion.
-typedef struct __cnc_pivot_info {
+typedef struct cnc_pivot_info {
 	//////
 	/// @brief The number of bytes pointed to by bytes.
 	size_t bytes_size;

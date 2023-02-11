@@ -38,62 +38,38 @@
 int main() {
 
 	const ztd_char16_t utf16_text[] = u"🥺🙏";
-
-	const ztd_char16_t* p_count_input = utf16_text;
-	// ztd_c_array_size INCLUDES the null terminator in the size!
-	size_t count_input_size   = ztd_c_array_size(utf16_text);
-	cnc_mcstate_t count_state = { 0 };
-	size_t output_size_before = SIZE_MAX;
-	size_t output_size_after  = output_size_before;
-	// Use the function but with "nullptr" for the output pointer
-	cnc_mcerr count_err = cnc_c16snrtoc8sn(
-	     // To get the proper size for this conversion, we use the same
-	     // function but with "NULL" specificers:
-	     &output_size_after, NULL,
-	     // input second
-	     &count_input_size, &p_count_input,
-	     // state parameter
-	     &count_state);
-	if (count_err != cnc_mcerr_ok) {
-		const char* err_str = cnc_mcerr_to_str(count_err);
-		printf(
-		     "An (unexpected) error occurred and the counting could not "
-		     "happen! Error string: %s\n",
-		     err_str);
-		return 1;
-	}
-
-	// Compute the needed space:
-	size_t output_size     = output_size_before - output_size_after;
-	ztd_char8_t* utf8_text = malloc(output_size * sizeof(ztd_char8_t));
-	ztd_char8_t* p_output  = utf8_text;
-	cnc_mcstate_t state    = { 0 };
+	ztd_char8_t utf8_text[9]        = { 0 };
 
 	// Now, actually output it
 	const ztd_char16_t* p_input = utf16_text;
-	// ztd_c_array_size INCLUDES the null terminator in the size!
-	size_t input_size = ztd_c_array_size(utf16_text);
-	cnc_mcerr err     = cnc_c16snrtoc8sn(
-          // output first
-          &output_size, &p_output,
-          // input second
-          &input_size, &p_input,
-          // state parameter
-          &state);
+	ztd_char8_t* p_output       = utf8_text;
+	size_t input_size           = ztdc_c_string_array_size(utf16_text);
+	size_t output_size          = ztdc_c_array_size(utf8_text);
+	cnc_mcstate_t state         = { 0 };
+	// call the function with the right parameters!
+	cnc_mcerr err               = cnc_c16snrtoc8sn( // formatting
+          &output_size, &p_output,     // output first
+          &input_size, &p_input,       // input second
+          &state);                     // state parameter
+	const size_t input_consumed = (ztdc_c_array_size(utf16_text) - input_size);
+	const size_t output_written = (ztdc_c_array_size(utf8_text) - output_size);
 	if (err != cnc_mcerr_ok) {
 		const char* err_str = cnc_mcerr_to_str(err);
-		printf(
+		fprintf(stderr,
 		     "An (unexpected) error occurred and the conversion could not "
-		     "happen! Error string: %s\n",
-		     err_str);
+		     "happen! Error string: %s (code: '%d')\n",
+		     err_str, (int)err);
 		return 1;
 	}
 
+	printf(
+	     "Converted %zu UTF-16 code units to %zu UTF-8 code units, giving the "
+	     "text:",
+	     input_consumed, output_written);
 	// requires a capable terminal / output, but will be
 	// UTF-8 text!
-	printf("Converted UTF-8 text: %s\n", (const char*)utf8_text);
-
-	free(utf8_text);
+	fwrite(utf8_text, sizeof(ztd_char8_t), output_written, stdout);
+	printf("\n");
 
 	return 0;
 }

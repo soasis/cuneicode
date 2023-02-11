@@ -70,10 +70,10 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_compl
 	case __mc_s_i_raw: {
 		if (__state->raw.completion_function != nullptr) {
 			return __state->raw.completion_function(
-			     __state, __state->raw.raw_data, ztd_c_array_size(__state->raw.raw_data));
+			     __state, __state->raw.raw_data, ztdc_c_array_size(__state->raw.raw_data));
 		}
 		else {
-			for (std::size_t __index = 0; __index < ztd_c_array_size(__state->raw.raw_data);
+			for (std::size_t __index = 0; __index < ztdc_c_array_size(__state->raw.raw_data);
 			     ++__index) {
 				if (__state->raw.raw_data[__index] != 0) {
 					return false;

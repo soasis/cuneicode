@@ -59,4 +59,30 @@ It is a lot of issues we have to fix in one API. We need APIs that:
 - allows for fast, bulk conversion (to cover the "convert terabytes of text as fast as possible" archival use case);
 - and, allows for a way to convert disparate encodings that may not have a hand-crafted encoding path (to prevent needing to write encodings for `100^2` one-way encoding functions).
 
-The good news is that, while libiconv's specification under POSIX is terrible and too permissive of a wide variety of implementation strategies and failures
+The good news is that, while libiconv's specification under POSIX is terrible and too permissive of a wide variety of implementation strategies and failures, the libiconv **interface** itself serves as a very good blueprint. Some minor modifications and we end up with a general-form API that tends to work for just about every kind of conversion we would potentially come across in the usual C environment:
+
+.. code-block:: cpp
+	
+	error_code conversion_name(
+		size_t* ptr_input_size, // (0)
+		input_char_type** ptr_to_input, // (1)
+		size_t* ptr_output_size, // (2)
+		output_char_type** ptr_to_input, // (3)
+		state_type* state  // (4)
+	)
+
+The types used here are as follows:
+
+0. A pointer to the size of the input.
+1. A pointer to a buffer of type `input_char_type`. The type can be anything that suits the input data, such as e.g. ``char32_t``.
+2. A pointer to the size of the output, **if needed**. Not providing specifically this allows for assuming the output buffer has enough space to handle the input.
+3. A pointer to a buffer of type `output_char_type`. The type can be anything that suits the output data, such as e.g. ``char32_t`` for transcoding to UTF-32.
+
+There are a lot of alternative designs for this kind of functionality, but this form was ultimately chosen for two specific reasons:
+
+- it's ability to be optimized by a cognizant implementation that can take advantage of null pointers for the `ptr_to_output` and `ptr_to_output_size` parameters; and,
+- it's ability to provide unmitigated access to **both** input and output size and progress simultaneously without needing to rely on implementation-defined/undefined behaviors (pointer subtraction that may fall outside the range of ``ptrdiff_t``, ).
+
+- 
+-
+- **no** replacement characters are inserted by the conversion routines; it is up to the user to insert conversions within the output space or similar where they deem it necessary.

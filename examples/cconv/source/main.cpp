@@ -113,10 +113,10 @@ int main(int argc, char* argv[]) {
 		{
 			cnc_conversion_registry* raw_registry = registry.get();
 			cnc_registry_options registry_options
-			     = CNC_REGISTRY_OPTIONS_DEFAULT;
-			cnc_open_error err
+			     = cnc_registry_options_default;
+			cnc_open_err err
 			     = cnc_registry_new(&raw_registry, registry_options);
-			if (err != CNC_OPEN_ERROR_OK) {
+			if (err != cnc_open_err_ok) {
 				if (!opt.silent) {
 					std::cerr << "[error] Could not open a conversion "
 					             "registry (error code: "
@@ -144,9 +144,9 @@ int main(int argc, char* argv[]) {
 			std::size_t to_size                 = opt.to_code.size();
 			const ztd_char8_t* to_data          = opt.to_code.data();
 			cnc_conversion_registry* __registry = registry.get();
-			cnc_open_error err = cnc_conv_new_c8n(__registry, from_size,
+			cnc_open_err err = cnc_conv_new_c8n(__registry, from_size,
 			     from_data, to_size, to_data, &raw_conversion, &info);
-			if (err != CNC_OPEN_ERROR_OK) {
+			if (err != cnc_open_err_ok) {
 				if (!opt.silent) {
 					std::cerr << "[error] Could not open a conversion from \""
 					          << opt.from_code << "\" to \"" << opt.to_code
@@ -239,7 +239,7 @@ int main(int argc, char* argv[]) {
 		unsigned char
 		     error_output[ZTD_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_] {};
 		unsigned char* const initial_error_output_data = error_output;
-		const size_t initial_error_output_size = ztd_c_array_size(error_output);
+		const size_t initial_error_output_size = ztdc_c_array_size(error_output);
 		{
 			cnc_conversion* raw_conversion = conversion.get();
 			for (std::size_t i = 0; i < opt.input_files.size(); ++i) {

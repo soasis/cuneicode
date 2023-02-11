@@ -35,11 +35,10 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/mcerr.h>
-#include <ztd/cuneicode/open_error.h>
+#include <ztd/cuneicode/open_err.h>
 #include <ztd/cuneicode/registry.h>
 #include <ztd/cuneicode/heap.h>
 #include <ztd/cuneicode/pivot_info.h>
-#include <ztd/cuneicode/inout_result.h>
 
 #include <ztd/idk/charN_t.h>
 #include <ztd/idk/extent.h>
@@ -73,7 +72,7 @@
 /// `__from` and
 /// `__to` parameters, if they are not `nullptr`. If either is `nullptr`, their size is assumed
 /// to be 0.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_c8(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_c8(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion** __out_p_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
@@ -92,7 +91,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 ///
 /// @remarks This call defers to calling cnc_conv_open_n after computing the necessary size from
 /// cnc_conv_open_n.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_c8n(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_c8n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
@@ -113,7 +112,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 ///
 /// @remarks This call defers to calling cnc_conv_open_n after computing the necessary size from
 /// cnc_conv_open_n.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_c8_select(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_c8_select(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_indirect_selection_c8_function* __selection, cnc_conversion** __out_p_conversion,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -135,7 +134,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 ///
 /// @remarks This call defers to calling cnc_conv_open_n after computing the necessary size from
 /// cnc_conv_open_n.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_c8n_select(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_select_c8n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
@@ -162,7 +161,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 /// and
 /// `__to` parameters, if they are not `nullptr`. If either is `nullptr`, their size is assumed to
 /// be 0.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_c8(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_c8(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_conversion** __out_p_conversion, size_t* __p_available_space, unsigned char* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -191,7 +190,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 /// there is not enough space to write out, then this function will provide the amount needed in
 /// `__p_available_space` directly. Otherwise, it will decrement the value pointed to be
 /// `__p_available_space` by the amount of space used.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_c8n(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_c8n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
@@ -222,7 +221,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 /// there is not enough space to write out, then this function will provide the amount needed in
 /// `__p_available_space` directly. Otherwise, it will decrement the value pointed to be
 /// `__p_available_space` by the amount of space used.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_c8_select(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_c8_select(
      cnc_conversion_registry* __registry, const ztd_char8_t* __from, const ztd_char8_t* __to,
      cnc_indirect_selection_c8_function* __selection, cnc_conversion** __out_p_conversion,
      size_t* __p_available_space, void* __space,
@@ -254,7 +253,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 /// there is not enough space to write out, then this function will provide the amount needed in
 /// `__p_available_space` directly. Otherwise, it will decrement the value pointed to be
 /// `__p_available_space` by the amount of space used.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_c8n_select(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_select_c8n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
@@ -264,13 +263,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 
 //////
 /// @copydoc cnc_conv_new_c8
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_conversion** __out_p_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @copydoc cnc_conv_new_c8n
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_n(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
@@ -279,14 +278,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 
 //////
 /// @copydoc cnc_conv_new_c8_select
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_select(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_select(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_indirect_selection_function* __selection, cnc_conversion** __out_p_conversion,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
-/// @copydoc cnc_conv_new_c8n_select
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_new_n_select(
+/// @copydoc cnc_conv_new_select_c8n
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_select_n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_indirect_selection_function* __selection,
@@ -294,14 +293,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_n
 
 //////
 /// @copydoc cnc_conv_open_c8
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_conversion** __out_p_conversion, size_t* __p_available_space, unsigned char* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @copydoc cnc_conv_open_c8n
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_n(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
@@ -311,7 +310,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 
 //////
 /// @copydoc cnc_conv_open_c8_select
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_select(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_select(
      cnc_conversion_registry* __registry, const char* __from, const char* __to,
      cnc_indirect_selection_function* __selection, cnc_conversion** __out_p_conversion,
      size_t* __p_available_space, void* __space,
@@ -319,8 +318,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_o
 
 
 //////
-/// @copydoc cnc_conv_open_c8n_select
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_error cnc_conv_open_n_select(
+/// @copydoc cnc_conv_open_select_c8n
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_select_n(
      cnc_conversion_registry* __registry, size_t __from_size,
      const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
      const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_indirect_selection_function* __selection,
@@ -357,14 +356,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_delete(
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count (and the output stream will automatically be
 /// considered large enough to handle all data, if
-/// `__out_pput_bytes` is not `nullptr`).
-/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
+/// `__p_output_bytes` is not `nullptr`).
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
 /// decrement the value pointed to by
-/// `__out_pput_bytes_size`).
+/// `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
 /// cnc_mcerr_ok is returned.
@@ -374,13 +373,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_delete(
 ///
 /// @remarks The conversion functions take parameters as output parameters (pointers) so that they
 /// can provide information about how much of the input and output is used. Providing a `nullptr`
-/// for both `__p_ouput_bytes_size` and `__out_pput_bytes` serves as a way to validate the input.
-/// Providing only `__out_pput_bytes` but not
-/// `__out_pput_bytes_size` is a way to indicate that the output space is sufficiently large for the
-/// input space. Providing `__out_pput_bytes_size` but not `__out_pput_bytes` is a way to determine
+/// for both `__p_ouput_bytes_size` and `__p_output_bytes` serves as a way to validate the input.
+/// Providing only `__p_output_bytes` but not
+/// `__p_output_bytes_size` is a way to indicate that the output space is sufficiently large for the
+/// input space. Providing `__p_output_bytes_size` but not `__p_output_bytes` is a way to determine
 /// how much data will be written out for a given input without actually performing such a write.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv(
-     cnc_conversion* __conversion, size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes,
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, unsigned char** __p_output_bytes,
      size_t* __p_input_bytes_size, const unsigned char** __p_input_bytes) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -389,14 +388,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv(
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count (and the output stream will automatically be
 /// considered large enough to handle all data, if
-/// `__out_pput_bytes` is not `nullptr`).
-/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
+/// `__p_output_bytes` is not `nullptr`).
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
 /// decrement the value pointed to by
-/// `__out_pput_bytes_size`).
+/// `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
 /// cnc_mcerr_ok is returned.
@@ -410,18 +409,18 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv(
 ///
 /// @remarks The conversion functions take parameters as output parameters (pointers) so that they
 /// can provide information about how much of the input and output is used. Providing a `nullptr`
-/// for both `__p_ouput_bytes_size` and `__out_pput_bytes` serves as a way to validate the input.
-/// Providing only `__out_pput_bytes` but not
-/// `__out_pput_bytes_size` is a way to indicate that the output space is sufficiently large for the
-/// input space. Providing `__out_pput_bytes_size` but not `__out_pput_bytes` is a way to determine
+/// for both `__p_ouput_bytes_size` and `__p_output_bytes` serves as a way to validate the input.
+/// Providing only `__p_output_bytes` but not
+/// `__p_output_bytes_size` is a way to indicate that the output space is sufficiently large for the
+/// input space. Providing `__p_output_bytes_size` but not `__p_output_bytes` is a way to determine
 /// how much data will be written out for a given input without actually performing such a write.
 /// The pivot buffer is used when the conversion cannot be done directly (which is specified through
 /// the cnc_conversion_info structure returned from opening a conversion routine). If the pivot
 /// buffer does not point to a null / empty buffer, and it ends up being too small for the given
 /// conversion, it may produce spurious cnc_mcerr_insufficient_output errors unrelated to the
-/// actual `__out_pput_bytes` buffer passed into the function.
+/// actual `__p_output_bytes` buffer passed into the function.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_pivot(
-     cnc_conversion* __conversion, size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes,
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, unsigned char** __p_output_bytes,
      size_t* __p_input_bytes_size, const unsigned char** __p_input_bytes,
      cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
@@ -431,7 +430,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_pivot(
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count.
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
@@ -441,9 +440,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_pivot(
 /// returned.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv with the
-/// `__out_pput_bytes` argument sent to `nullptr`.
+/// `__p_output_bytes` argument sent to `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_count(
-     cnc_conversion* __conversion, size_t* __out_pput_bytes_size, size_t* __p_input_bytes_size,
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -452,7 +451,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_count(
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count.
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
@@ -466,9 +465,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_count(
 /// cnc_pivot_info will be set to the error value that took place.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv with the
-/// `__out_pput_bytes` argument sent to `nullptr`.
+/// `__p_output_bytes` argument sent to `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_count_pivot(
-     cnc_conversion* __conversion, size_t* __out_pput_bytes_size, size_t* __p_input_bytes_size,
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -484,7 +483,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_count_
 /// pointer within are `nullptr`, than the input is considered empty and `true` is returned.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv with the
-/// `__out_pput_bytes` argument sent to `nullptr`.
+/// `__p_output_bytes` argument sent to `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid(
      cnc_conversion* __conversion, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -506,7 +505,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid(
 /// cnc_pivot_info will be set to the error value that took place.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv with the
-/// `__out_pput_bytes` argument sent to `nullptr`.
+/// `__p_output_bytes` argument sent to `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid_pivot(
      cnc_conversion* __conversion, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -518,10 +517,10 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid_pi
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
 /// decrement the value pointed to by
-/// `__out_pput_bytes_size`).
+/// `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
 /// cnc_mcerr_ok is returned.
@@ -531,13 +530,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_is_valid_pi
 ///
 /// @remarks The conversion functions take parameters as output parameters (pointers) so that they
 /// can provide information about how much of the input and output is used. Providing a `nullptr`
-/// for both `__p_ouput_bytes_size` and `__out_pput_bytes` serves as a way to validate the input.
-/// Providing only `__out_pput_bytes` but not
-/// `__out_pput_bytes_size` is a way to indicate that the output space is sufficiently large for the
-/// input space. Providing `__out_pput_bytes_size` but not `__out_pput_bytes` is a way to determine
+/// for both `__p_ouput_bytes_size` and `__p_output_bytes` serves as a way to validate the input.
+/// Providing only `__p_output_bytes` but not
+/// `__p_output_bytes_size` is a way to indicate that the output space is sufficiently large for the
+/// input space. Providing `__p_output_bytes_size` but not `__p_output_bytes` is a way to determine
 /// how much data will be written out for a given input without actually performing such a write.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_unbounded(
-     cnc_conversion* __conversion, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
+     cnc_conversion* __conversion, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -547,10 +546,10 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_unboun
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
 /// decrement the value pointed to by
-/// `__out_pput_bytes_size`).
+/// `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
 /// cnc_mcerr_ok is returned.
@@ -564,13 +563,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_unboun
 ///
 /// @remarks The conversion functions take parameters as output parameters (pointers) so that they
 /// can provide information about how much of the input and output is used. Providing a `nullptr`
-/// for both `__p_ouput_bytes_size` and `__out_pput_bytes` serves as a way to validate the input.
-/// Providing only `__out_pput_bytes` but not
-/// `__out_pput_bytes_size` is a way to indicate that the output space is sufficiently large for the
-/// input space. Providing `__out_pput_bytes_size` but not `__out_pput_bytes` is a way to determine
+/// for both `__p_ouput_bytes_size` and `__p_output_bytes` serves as a way to validate the input.
+/// Providing only `__p_output_bytes` but not
+/// `__p_output_bytes_size` is a way to indicate that the output space is sufficiently large for the
+/// input space. Providing `__p_output_bytes_size` but not `__p_output_bytes` is a way to determine
 /// how much data will be written out for a given input without actually performing such a write.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_unbounded_pivot(
-     cnc_conversion* __conversion, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
+     cnc_conversion* __conversion, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -579,13 +578,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_unboun
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count (and the output stream will automatically be
 /// considered large enough to handle all data, if
-/// `__out_pput_bytes` is not `nullptr`).
-/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
+/// `__p_output_bytes` is not `nullptr`).
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
-/// decrement the value pointed to by `__out_pput_bytes_size`).
+/// decrement the value pointed to by `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
 /// cnc_mcerr_ok is returned.
@@ -597,14 +596,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_unboun
 /// output: nothing more. The conversion functions take parameters as output parameters (pointers)
 /// so that they can provide information about how much of the input and output is used. Providing a
 /// `nullptr` for both `__p_ouput_bytes_size` and
-/// `__out_pput_bytes` serves as a way to validate the input for one completely unit of work.
+/// `__p_output_bytes` serves as a way to validate the input for one completely unit of work.
 /// Providing only
-/// `__out_pput_bytes` but not `__out_pput_bytes_size` is a way to indicate that the output space is
-/// sufficiently large for the input space. Providing `__out_pput_bytes_size` but not
-/// `__out_pput_bytes` is a way to determine how much data will be written out for a given input
+/// `__p_output_bytes` but not `__p_output_bytes_size` is a way to indicate that the output space is
+/// sufficiently large for the input space. Providing `__p_output_bytes_size` but not
+/// `__p_output_bytes` is a way to determine how much data will be written out for a given input
 /// without actually performing such a write.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one(
-     cnc_conversion* __conversion, size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes,
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, unsigned char** __p_output_bytes,
      size_t* __p_input_bytes_size, const unsigned char** __p_input_bytes) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -613,13 +612,13 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one(
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count (and the output stream will automatically be
 /// considered large enough to handle all data, if
-/// `__out_pput_bytes` is not `nullptr`).
-/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
+/// `__p_output_bytes` is not `nullptr`).
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
-/// decrement the value pointed to by `__out_pput_bytes_size`).
+/// decrement the value pointed to by `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
 /// cnc_mcerr_ok is returned.
@@ -635,14 +634,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one(
 /// output: nothing more. The conversion functions take parameters as output parameters (pointers)
 /// so that they can provide information about how much of the input and output is used. Providing a
 /// `nullptr` for both `__p_ouput_bytes_size` and
-/// `__out_pput_bytes` serves as a way to validate the input for one completely unit of work.
+/// `__p_output_bytes` serves as a way to validate the input for one completely unit of work.
 /// Providing only
-/// `__out_pput_bytes` but not `__out_pput_bytes_size` is a way to indicate that the output space is
-/// sufficiently large for the input space. Providing `__out_pput_bytes_size` but not
-/// `__out_pput_bytes` is a way to determine how much data will be written out for a given input
+/// `__p_output_bytes` but not `__p_output_bytes_size` is a way to indicate that the output space is
+/// sufficiently large for the input space. Providing `__p_output_bytes_size` but not
+/// `__p_output_bytes` is a way to determine how much data will be written out for a given input
 /// without actually performing such a write.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_pivot(
-     cnc_conversion* __conversion, size_t* __out_pput_bytes_size, unsigned char** __out_pput_bytes,
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, unsigned char** __p_output_bytes,
      size_t* __p_input_bytes_size, const unsigned char** __p_input_bytes,
      cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
@@ -652,7 +651,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_pi
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count.
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
@@ -662,9 +661,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_pi
 /// returned.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv_one with the
-/// `__out_pput_bytes` argument sent to `nullptr`.
+/// `__p_output_bytes` argument sent to `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_count(
-     cnc_conversion* __conversion, size_t* __out_pput_bytes_size, size_t* __p_input_bytes_size,
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -673,7 +672,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_co
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes_size A pointer to the size of the output buffer. If this is
+/// @param[in, out] __p_output_bytes_size A pointer to the size of the output buffer. If this is
 /// `nullptr`, then it will not update the count.
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and
@@ -687,9 +686,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_co
 /// cnc_pivot_info will be set to the error value that took place.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv_one with the
-/// `__out_pput_bytes` argument sent to `nullptr`.
+/// `__p_output_bytes` argument sent to `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_count_pivot(
-     cnc_conversion* __conversion, size_t* __out_pput_bytes_size, size_t* __p_input_bytes_size,
+     cnc_conversion* __conversion, size_t* __p_output_bytes_size, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -706,7 +705,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_co
 /// pointer within are `nullptr`, than the input is considered empty and `true` is returned.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv_one with the
-/// `__out_pput_bytes` argument and the `__out_pput_byte_size` argument set to `nullptr` sent to
+/// `__p_output_bytes` argument and the `__out_pput_byte_size` argument set to `nullptr` sent to
 /// `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_one_is_valid(
      cnc_conversion* __conversion, size_t* __p_input_bytes_size,
@@ -730,7 +729,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_one_is_vali
 /// cnc_pivot_info will be set to the error value that took place.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv_one with the
-/// `__out_pput_bytes` argument and the `__out_pput_byte_size` argument set to `nullptr` sent to
+/// `__p_output_bytes` argument and the `__out_pput_byte_size` argument set to `nullptr` sent to
 /// `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_one_is_valid_pivot(
      cnc_conversion* __conversion, size_t* __p_input_bytes_size,
@@ -742,9 +741,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_one_is_vali
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
-/// decrement the value pointed to by `__out_pput_bytes_size`).
+/// decrement the value pointed to by `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and `true`
 /// is returned.
@@ -752,10 +751,10 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conv_one_is_vali
 /// pointer within are `nullptr`, than the input is considered empty and `true` is returned.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv_one with the
-/// `__out_pput_bytes` argument and the `__out_pput_byte_size` argument set to `nullptr` sent to
+/// `__p_output_bytes` argument and the `__out_pput_byte_size` argument set to `nullptr` sent to
 /// `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_unbounded(
-     cnc_conversion* __conversion, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
+     cnc_conversion* __conversion, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
@@ -764,9 +763,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_un
 ///
 /// @param[in] __conversion The cnc_conversion handle indicating the format to be used. Shall not be
 /// `nullptr`.
-/// @param[in, out] __out_pput_bytes A pointer to the pointer of the output buffer. If this or the
+/// @param[in, out] __p_output_bytes A pointer to the pointer of the output buffer. If this or the
 /// pointer within are `nullptr`, than this function will not write output data (it may still
-/// decrement the value pointed to by `__out_pput_bytes_size`).
+/// decrement the value pointed to by `__p_output_bytes_size`).
 /// @param[in, out] __p_input_bytes_size A pointer to the size of the input buffer. If this is
 /// `nullptr` or points to a value equivalent to `0`, then the input is considered empty and `true`
 /// is returned.
@@ -778,10 +777,10 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_un
 /// cnc_pivot_info will be set to the error value that took place.
 ///
 /// @remarks This function is an ease-of-use shortcut for calling cnc_conv_one with the
-/// `__out_pput_bytes` argument and the `__out_pput_byte_size` argument set to `nullptr` sent to
+/// `__p_output_bytes` argument and the `__out_pput_byte_size` argument set to `nullptr` sent to
 /// `nullptr`.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_conv_one_unbounded_pivot(
-     cnc_conversion* __conversion, unsigned char** __out_pput_bytes, size_t* __p_input_bytes_size,
+     cnc_conversion* __conversion, unsigned char** __p_output_bytes, size_t* __p_input_bytes_size,
      const unsigned char** __p_input_bytes, cnc_pivot_info* __p_pivot_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////

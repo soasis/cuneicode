@@ -27,4 +27,21 @@
 //
 // ========================================================================= //
 
-#include <ztd/cuneicode/ibm866.h>
+#include <ztd/cuneicode/version.h>
+
+#include <ztd/cuneicode/mcerr.h>
+
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerr_to_str(
+     cnc_mcerr __err) {
+	switch (__err) {
+	case cnc_mcerr_ok:
+		return "cnc_mcerr_ok";
+	case cnc_mcerr_incomplete_input:
+		return "cnc_mcerr_incomplete_input";
+	case cnc_mcerr_insufficient_output:
+		return "cnc_mcerr_insufficient_output";
+	case cnc_mcerr_invalid_sequence:
+		return "cnc_mcerr_invalid_sequence";
+	}
+	return "cnc_mcerr_(unknown_error_code)";
+}

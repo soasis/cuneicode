@@ -47,11 +47,14 @@ Indirect Liaisons
 
 Indirect encoding paths will not link together arbitrarily long encoding conversion steps to get from one encoding to another: it does not attempt to create a connectivity graph between all encodings (though, wouldn't that be a fun project?). Remember that each intermediate encoding that the data must travel through imposes overhead! So, only one encoding is allowed to be the go-between for encodings.
 
-Unfortunately, not all encodings are recognized as liaison encodings. For example, writing an encoding conversion from ``"UTF-8"`` to ``SHIFT-JIS`` and then from ``SHIFT-JIS`` to ``EUC-JP`` is not an indirect path the library will string together. Right now, is simply will check if you encoding to a Unicode Encoding like ``UTF-32``, and then see if there is a conversion from that Unicode Encoding to your desired destination. The full list of Indirect Liaison encodings (in order of preference) is:
+There is a priority ordering to which encodings are chosen as indirect liaisons or indirect substrates to help encode from one unit of text to the other, and they are as follows:
 
 1. UTF-32
 2. UTF-32 Unchecked
-3. UTF-16
-4. UTF-16 Unchecked
-5. UTF-8
-6. UTF-8 Unchecked
+3. UTF-8
+4. UTF-8 Unchecked
+5. UTF-16
+6. UTF-16 Unchecked
+7. Everything Else.
+
+Indirect encoding conversions use the :cpp:type:`cnc_pivot_info` type that denotes a buffer of space to use as scratch space if any algorithm cannot perform a direct conversion. Pivots can help avoid any implementation-defined, stack-allocated buffer size that might be too large for the inputs used (and thus overflow the stack) or too small for the inputs used (and thus require multiple calls to the conversion algorithm).

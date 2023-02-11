@@ -33,24 +33,18 @@ Registry-Based Conversions
 
 There are two categories of conversion, as discussed in the :doc:`design </design>`. Single conversion, and bulk conversion. The single conversions only do one unit of :doc:`indivisible work </design/indivisible>`. The bulk functions repeatedly perform :doc:`one unit of indivisible work </design/indivisible>`.
 
+
+
 ``cnc_conversion`` Conversion Functions
 ---------------------------------------
 
-.. doxygenfunction:: cnc_conv_pivot
+The conversion functions are split into single conversion (contains a ``_one`` in the name), which perform one unit of indivisible work, and those that are "multi" conversions (without the ``_one`` in the name), which do it in bulk. There is also some functions to check the status of the 
 
-.. doxygenfunction:: cnc_conv
 
-.. doxygenfunction:: cnc_conv_count_pivot
+.. doxygenfunction:: cnc_conv_state_is_complete
 
-.. doxygenfunction:: cnc_conv_count
-
-.. doxygenfunction:: cnc_conv_is_valid_pivot
-
-.. doxygenfunction:: cnc_conv_is_valid
-
-.. doxygenfunction:: cnc_conv_unbounded_pivot
-
-.. doxygenfunction:: cnc_conv_unbounded
+Single Conversion Functions
++++++++++++++++++++++++++++
 
 .. doxygenfunction:: cnc_conv_one_pivot
 
@@ -67,3 +61,23 @@ There are two categories of conversion, as discussed in the :doc:`design </desig
 .. doxygenfunction:: cnc_conv_one_unbounded_pivot
 
 .. doxygenfunction:: cnc_conv_one_unbounded
+
+
+Multi ("Bulk") Conversion Functions
++++++++++++++++++++++++++++++++++++
+
+.. doxygenfunction:: cnc_conv_pivot
+
+.. doxygenfunction:: cnc_conv
+
+.. doxygenfunction:: cnc_conv_count_pivot
+
+.. doxygenfunction:: cnc_conv_count
+
+.. doxygenfunction:: cnc_conv_is_valid_pivot
+
+.. doxygenfunction:: cnc_conv_is_valid
+
+.. doxygenfunction:: cnc_conv_unbounded_pivot
+
+.. doxygenfunction:: cnc_conv_unbounded

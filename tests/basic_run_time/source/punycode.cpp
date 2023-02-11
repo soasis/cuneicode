@@ -47,7 +47,7 @@ namespace {
 		{
 			char destination[1024]             = {};
 			const std::size_t source_size      = source.size();
-			const std::size_t destination_size = ztd_c_array_size(destination);
+			const std::size_t destination_size = ztdc_c_array_size(destination);
 			const char32_t* input              = source.data();
 			std::size_t input_size             = source_size;
 			char* output                       = destination;
@@ -66,7 +66,7 @@ namespace {
 		{
 			char destination[1024]             = {};
 			const std::size_t source_size      = source.size();
-			const std::size_t destination_size = ztd_c_array_size(destination);
+			const std::size_t destination_size = ztdc_c_array_size(destination);
 			const char32_t* input              = source.data();
 			std::size_t input_size             = source_size;
 			char* output                       = destination;
@@ -85,7 +85,7 @@ namespace {
 		{
 			ztd_char32_t destination[1024]     = {};
 			const std::size_t source_size      = expected_idna.size();
-			const std::size_t destination_size = ztd_c_array_size(destination);
+			const std::size_t destination_size = ztdc_c_array_size(destination);
 			const char* input                  = expected_idna.data();
 			std::size_t input_size             = source_size;
 			ztd_char32_t* output               = destination;
@@ -104,7 +104,7 @@ namespace {
 		{
 			ztd_char32_t destination[1024]     = {};
 			const std::size_t source_size      = expected.size();
-			const std::size_t destination_size = ztd_c_array_size(destination);
+			const std::size_t destination_size = ztdc_c_array_size(destination);
 			const char* input                  = expected.data();
 			std::size_t input_size             = source_size;
 			ztd_char32_t* output               = destination;

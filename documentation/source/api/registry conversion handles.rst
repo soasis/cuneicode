@@ -31,7 +31,7 @@
 Registry-Based Conversions: Resource Handles
 ============================================
 
-:cpp:type:`cnc_conversion` is first and foremost a handle to a resource. It must be opened/created like one, and destroyed like one. The ``*_new`` flavor of functions perform the allocation automatically using the :doc:`associated registry's heap </api/registry>`. The ``*_open`` flavor fo functions let the user pass in an area of memory (or probe to find out the exact area of memory) to open the handle into. The ``*_open`` flavor of functions is for particularly advanced users who want maximum control over where the type is placed and allocated and is much more complicated to use: users are recommended to use :cpp:func:`cnc_conv_new` and :cpp:func:`cnc_conv_new_n` where appropriate to save on precision handling and hassle.
+:cpp:type:`cnc_conversion` is first and foremost a handle to a resource. It must be opened/created like one, and destroyed like one. The ``*_new`` flavor of functions perform the allocation automatically using the :cpp:func:`associated registry's heap <cnc_registry_heap>`. The ``*_open`` flavor fo functions let the user pass in an area of memory (or probe to find out the exact area of memory) to open the handle into. The ``*_open`` flavor of functions is for particularly advanced users who want maximum control over where the type is placed and allocated and is much more complicated to use: users are recommended to use :cpp:func:`cnc_conv_new` and :cpp:func:`cnc_conv_new_n` where appropriate to save on precision handling and hassle.
 
 
 
@@ -46,7 +46,7 @@ Registry-Based Conversions: Resource Handles
 
 .. doxygenfunction:: cnc_conv_open_select
 
-.. doxygenfunction:: cnc_conv_open_n_select
+.. doxygenfunction:: cnc_conv_open_select_n
 
 .. doxygenfunction:: cnc_conv_new
 
@@ -54,7 +54,7 @@ Registry-Based Conversions: Resource Handles
 
 .. doxygenfunction:: cnc_conv_new_select
 
-.. doxygenfunction:: cnc_conv_new_n_select
+.. doxygenfunction:: cnc_conv_new_select_n
 
 .. doxygenfunction:: cnc_conv_open_c8
 
@@ -62,7 +62,7 @@ Registry-Based Conversions: Resource Handles
 
 .. doxygenfunction:: cnc_conv_open_c8_select
 
-.. doxygenfunction:: cnc_conv_open_c8n_select
+.. doxygenfunction:: cnc_conv_open_select_c8n
 
 .. doxygenfunction:: cnc_conv_new_c8
 
@@ -70,7 +70,7 @@ Registry-Based Conversions: Resource Handles
 
 .. doxygenfunction:: cnc_conv_new_c8_select
 
-.. doxygenfunction:: cnc_conv_new_c8n_select
+.. doxygenfunction:: cnc_conv_new_select_c8n
 
 .. doxygenfunction:: cnc_conv_close
 

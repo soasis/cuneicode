@@ -30,7 +30,7 @@
 FILE(GLOB_RECURSE ztd.cuneicode.examples.basic.sources
 	LIST_DIRECTORIES FALSE
 	CONFIGURE_DEPENDS
-	source/*.cpp
+	source/**
 )
 
 foreach(basic_source_file ${ztd.cuneicode.examples.basic.sources})

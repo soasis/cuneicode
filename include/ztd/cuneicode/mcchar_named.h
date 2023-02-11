@@ -35,6 +35,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/big5_hkscs.h>
+#include <ztd/cuneicode/amiga_1251.h>
 #include <ztd/cuneicode/ascii.h>
 #include <ztd/cuneicode/euc_cn.h>
 #include <ztd/cuneicode/euc_jp.h>
@@ -42,13 +43,14 @@
 #include <ztd/cuneicode/euc_tw.h>
 #include <ztd/cuneicode/gbk.h>
 #include <ztd/cuneicode/gb18030.h>
-#include <ztd/cuneicode/ibm866.h>
+#include <ztd/cuneicode/ibm_866.h>
 #include <ztd/cuneicode/iso_8859_13.h>
 #include <ztd/cuneicode/iso_8859_14.h>
 #include <ztd/cuneicode/iso_arabic.h>
 #include <ztd/cuneicode/iso_cyrillic.h>
 #include <ztd/cuneicode/iso_greek.h>
 #include <ztd/cuneicode/iso_hebrew.h>
+#include <ztd/cuneicode/kazakh_strk1048.h>
 #include <ztd/cuneicode/koi8_r.h>
 #include <ztd/cuneicode/koi8_u.h>
 #include <ztd/cuneicode/latin1.h>
@@ -63,11 +65,14 @@
 #include <ztd/cuneicode/punycode.h>
 #include <ztd/cuneicode/punycode_idna.h>
 #include <ztd/cuneicode/shift_jis_x0208.h>
+#include <ztd/cuneicode/tatar_ansi.h>
+#include <ztd/cuneicode/tatar_ascii.h>
 #include <ztd/cuneicode/windows_874.h>
 #include <ztd/cuneicode/windows_1250.h>
 #include <ztd/cuneicode/windows_1251.h>
 #include <ztd/cuneicode/windows_1252.h>
 #include <ztd/cuneicode/windows_1253.h>
+#include <ztd/cuneicode/windows_1254.h>
 #include <ztd/cuneicode/windows_1255.h>
 #include <ztd/cuneicode/windows_1257.h>
 #include <ztd/cuneicode/windows_1258.h>

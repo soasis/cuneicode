@@ -27,8 +27,8 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_punycode_idna_H
-#define ZTD_CUNEICODE_punycode_idna_H
+#ifndef ZTD_CUNEICODE_PUNYCODE_IDNA_H
+#define ZTD_CUNEICODE_PUNYCODE_IDNA_H
 
 #pragma once
 

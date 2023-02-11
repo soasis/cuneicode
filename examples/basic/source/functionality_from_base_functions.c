@@ -31,39 +31,51 @@
 
 #include <ztd/idk/size.h>
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <stdbool.h>
+
+bool is_valid_utf16_from_utf8(size_t str_n, const ztd_char8_t str[]) {
+	cnc_mcstate_t state = { 0 };
+	cnc_mcerr err       = cnc_c8snrtoc16sn(NULL, NULL, &str_n, &str, &state);
+	return err == cnc_mcerr_ok;
+}
+
+size_t count_utf16_from_utf8(size_t str_n, const ztd_char8_t str[]) {
+	cnc_mcstate_t state         = { 0 };
+	const size_t utf16_before_n = SIZE_MAX;
+	size_t utf16_after_n        = utf16_before_n;
+	cnc_mcerr err = cnc_c8snrtoc16sn(&utf16_after_n, NULL, &str_n, &str, &state);
+	return err == cnc_mcerr_ok ? utf16_before_n - utf16_after_n : 0;
+}
+
+bool unbounded_conversion_utf16_from_utf8(
+     size_t str_n, const ztd_char8_t str[], char16_t* dest_str) {
+	cnc_mcstate_t state = { 0 };
+	cnc_mcerr err       = cnc_c8snrtoc16sn(NULL, &dest_str, &str_n, &str, &state);
+	return err == cnc_mcerr_ok;
+}
 
 int main() {
+	const ztd_char8_t str[]
+	     = u8"\"Saw a \U0001F9DC \u2014"
+	       u8"didn't catch her\u2026 \U0001F61E\"\n\t- Sniff";
+	const size_t str_n = ztdc_c_array_size(str);
 
-	const ztd_char16_t utf16_text[] = u"🥺🙏";
-	ztd_char8_t utf8_text[9]        = { 0 };
-
-	// Now, actually output it
-	const ztd_char16_t* p_input = utf16_text;
-	ztd_char8_t* p_output       = utf8_text;
-	// ztd_c_array_size INCLUDES the null terminator in the size!
-	size_t input_size   = ztd_c_array_size(utf16_text);
-	size_t output_size  = ztd_c_array_size(utf8_text);
-	cnc_mcstate_t state = { 0 };
-	// call the function with the right parameters!
-	cnc_mcerr err = cnc_c16snrtoc8sn( // formatting
-	     &output_size, &p_output,       // output first
-	     &input_size, &p_input,         // input second
-	     &state);                       // state parameter
-	if (err != cnc_mcerr_ok) {
-		const char* err_str = cnc_mcerr_to_str(err);
-		printf(
-		     "An (unexpected) error occurred and the conversion could not "
-		     "happen! Error string: %s\n",
-		     err_str);
+	if (!is_valid_utf16_from_utf8(str_n, str)) {
+		// input not valid
 		return 1;
 	}
 
-	// requires a capable terminal / output, but will be
-	// UTF-8 text!
-	printf("Converted UTF-8 text: %s\n", (const char*)utf8_text);
+	char16_t utf16_str[CNC_C16_MAX * ztdc_c_array_size(str)];
+	const size_t utf16_str_max_size = ztdc_c_array_size(utf16_str);
+	size_t utf16_str_n              = count_utf16_from_utf8(str_n, str);
+	if (utf16_str_max_size < utf16_str_n) {
+		// buffer too small
+		return 2;
+	}
 
+	if (!unbounded_conversion_utf16_from_utf8(str_n, str, utf16_str)) {
+		// write failed
+		return 3;
+	}
 	return 0;
 }

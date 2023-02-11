@@ -105,7 +105,7 @@ typedef union cnc_mcstate_t {
 	/// @brief Shared data as part of every structure within a cnc_mcstate_t.
 	struct cnc_header_t {
 		//////
-		/// @brief The indactor. Must be set by any custom encoding routine using mcstate_t and
+		/// @brief The indactor. Must be set by any custom encoding routine using cnc_mcstate_t and
 		/// desiring custom completion behavior to CNC_MCSTATE_INDICATOR_RAW.
 		cnc_mcstate_indicator indicator : CHAR_BIT;
 		//////
@@ -142,7 +142,7 @@ typedef union cnc_mcstate_t {
 	/// @brief The raw type for user use.
 	struct __raw_t {
 		//////
-		/// @brief The indactor. Must be set by any custom encoding routine using mcstate_t and
+		/// @brief The indactor. Must be set by any custom encoding routine using cnc_mcstate_t and
 		/// desiring custom completion behavior to CNC_MCSTATE_INDICATOR_RAW.
 		cnc_mcstate_indicator indicator : CHAR_BIT;
 		//////

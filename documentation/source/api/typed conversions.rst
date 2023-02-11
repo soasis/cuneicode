@@ -31,11 +31,15 @@
 Typed Conversions
 =================
 
-Typed conversions are of the form ``{prefix}(s?)n(r?)to{suffix}(s?)n``. The prefix/suffix mapping can be found in the :doc:`design documentation for conversions </design/naming>`.
+Typed conversions are of the form ``{prefix}(s?)n(r?)to{suffix}(s?)n``. The prefix/suffix mapping can be found in the :doc:`design documentation for conversions </design/naming>`. This page covers the canonical conversions, which are from UTF-8/16/32 and the execution/wide execution encodings, to each other.
 
-The "prefix" represents the source data. The "suffix" represents the destination data. The `s` stands for "string", which means a bulk conversion. The `r` in the name stands for "restartable", which means the function takes an `cnc_mcstate_t` pointer. If there `s` is not present in the name, it is a single conversion function. If the `r` is not present in the name, it is the "non-restartable" version (the version that does not take the state).
+The "prefix" represents the source data. The "suffix" represents the destination data. The `s` stands for "string", which means a bulk conversion. The `r` in the name stands for "restartable", which means the function takes an `cnc_mcstate_t` pointer or similar state pointer. If there `s` is not present in the name, it is a single conversion function. If the `r` is not present in the name, it is the "non-restartable" version (the version that does not take the state).
 
-Additional encodings not meant to be in the "core set" supported by a typical C or C++ implementation, and that have definitive names other than the unicode encodings, can be found in the :doc:`encodings documentation</api/encodings>`.
+.. important::
+	
+	Non-restartable functions mean that a automatic storage duration object unique to the function invocation is created for you, before being used. If there is any necessary state left in the object before the function ends, it ends up being discarded and lost if the non-restartable functions are used.
+
+Additional encodings not meant to be in the "core set" supported by a typical C or C++ implementation, and that have definitive names other than the Unicode encodings, can be found in the :doc:`encodings documentation</api/encodings>`.
 
 .. important::
 
@@ -44,7 +48,7 @@ Additional encodings not meant to be in the "core set" supported by a typical C 
 
 .. warning::
 
-	If an encoding conversion goes to or from either the execution encoding or the wide execution encoding, it may touch the locale which may perform a lock or other operations. If multiple funtion calls are used and ``LC_CTYPE`` is changed between any of those function calls without properly clearing the :doc:`cnc_mcstate_t </api/mcstate_t>` object to the initial shift sequence, the behavior of the functions become unspecified.
+	If an encoding conversion goes to or from either the execution encoding or the wide execution encoding, it may touch the locale which may perform a lock or other operations. If multiple function calls are used and ``LC_CTYPE`` is changed between any of those function calls without properly clearing the :doc:`cnc_mcstate_t </api/mcstate_t>` object to the initial shift sequence, the behavior of the functions become unspecified and DANGEROUS.
 
 
 

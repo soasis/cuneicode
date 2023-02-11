@@ -28,7 +28,10 @@
 ..
 .. ========================================================================= ..
 
-``cnc_open_error``
+``cnc_pivot_info``
 ==================
 
-.. doxygenenum:: cnc_open_error
+This type's sole purpose is to provide an intermediate buffer for operations that may require it, rather than relying on any internal and implementation-defined buffering or technique to do a conversion. This can allow for optimal conversion rates, especially among bulk conversions performed by the :doc:`registry-based transcoding APIs </api/registry conversions>`.
+
+.. doxygenstruct:: cnc_pivot_info
+	:members:

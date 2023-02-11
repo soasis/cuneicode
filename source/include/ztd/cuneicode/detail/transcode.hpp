@@ -39,6 +39,9 @@
 
 #include <ztd/idk/assert.hpp>
 
+#include <optional>
+#include <cstddef>
+
 namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_
 
@@ -67,8 +70,8 @@ namespace cnc {
 			_IntermediateChar __intermediate[_IntermediateMax];
 			_IntermediateChar* __intermediate_first = __intermediate;
 			size_t __intermediate_out_size_after    = _IntermediateMax;
-			cnc_mcerr __res_decode                = __xsnrtoisn(&__intermediate_out_size_after,
-			                    &__intermediate_first, &__intermediate_src_len, &__intermediate_src, __p_state);
+			cnc_mcerr __res_decode                  = __xsnrtoisn(&__intermediate_out_size_after,
+			                      &__intermediate_first, &__intermediate_src_len, &__intermediate_src, __p_state);
 			switch (__res_decode) {
 			case cnc_mcerr_invalid_sequence:
 				// error, explode
@@ -189,16 +192,106 @@ namespace cnc {
 
 #define _ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE)                 \
 	if (__p_src == nullptr || *__p_src == nullptr) {                                   \
-		return cnc_mcerr_ok;                                                        \
+		return cnc_mcerr_ok;                                                          \
 	}                                                                                  \
 	ZTD_ASSERT(__p_src_len != nullptr);                                                \
 	const _SRC_TYPE*& __src = *__p_src;                                                \
 	size_t& __src_len       = *__p_src_len;                                            \
 	if (__src_len < 1) {                                                               \
-		return cnc_mcerr_ok;                                                        \
+		return cnc_mcerr_ok;                                                          \
 	}                                                                                  \
 	const bool _IsCounting  = __p_maybe_dst == nullptr || __p_maybe_dst[0] == nullptr; \
 	const bool _IsUnbounded = __p_maybe_dst_len == nullptr
+
+#define _ZTDC_CUNEICODE_SINGLE_BYTE_ENCODING_CODE_POINT_TO_BYTE(                       \
+     _SRC_TYPE, _DEST_TYPE, _BYTE_LOOKUP_FUNC)                                         \
+	_ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE);                  \
+                                                                                       \
+	const _SRC_TYPE __code_point      = (*__src);                                     \
+	const ztd_char32_t __code_point32 = (ztd_char32_t)__code_point;                   \
+                                                                                       \
+	if (__code_point32 <= static_cast<_SRC_TYPE>(0x7F)) {                             \
+		/* ASCII character*/                                                         \
+		if (!_IsUnbounded) {                                                         \
+			if (__p_maybe_dst_len[0] < 1) {                                         \
+				return cnc_mcerr_insufficient_output;                              \
+			}                                                                       \
+			__p_maybe_dst_len[0] -= 1;                                              \
+		}                                                                            \
+		if (!_IsCounting) {                                                          \
+			__p_maybe_dst[0][0] = (_DEST_TYPE)*__src;                               \
+			__p_maybe_dst[0] += 1;                                                  \
+		}                                                                            \
+		__src += 1;                                                                  \
+		__src_len -= 1;                                                              \
+		return cnc_mcerr_ok;                                                         \
+	}                                                                                 \
+                                                                                       \
+	::std::optional<::std::size_t> __maybe_index = _BYTE_LOOKUP_FUNC(__code_point32); \
+	if (__maybe_index) {                                                              \
+		const ::std::size_t __index      = *__maybe_index;                           \
+		const unsigned char __code_unit0 = (unsigned char)(__index + 0x80);          \
+		if (!_IsUnbounded) {                                                         \
+			if (__p_maybe_dst_len[0] < 1) {                                         \
+				return cnc_mcerr_insufficient_output;                              \
+			}                                                                       \
+			__p_maybe_dst_len[0] -= 1;                                              \
+		}                                                                            \
+		if (!_IsCounting) {                                                          \
+			__p_maybe_dst[0][0] = (_DEST_TYPE)__code_unit0;                         \
+			__p_maybe_dst[0] += 1;                                                  \
+		}                                                                            \
+		__src += 1;                                                                  \
+		__src_len -= 1;                                                              \
+		return cnc_mcerr_ok;                                                         \
+	}                                                                                 \
+                                                                                       \
+	return cnc_mcerr_invalid_sequence;
+
+#define _ZTDC_SINGLE_BYTE_ENCODING_BYTE_TO_CODE_POINT(                               \
+     _SRC_TYPE, _DEST_TYPE, _CODE_POINT_LOOKUP_FUNC)                                 \
+	_ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(char);                     \
+                                                                                     \
+	const unsigned char __code_unit0 = ((unsigned char)*__src);                     \
+                                                                                     \
+	if (__code_unit0 <= 0x7F) {                                                     \
+		/* ASCII character */                                                      \
+		if (!_IsUnbounded) {                                                       \
+			if (__p_maybe_dst_len[0] < 1) {                                       \
+				return cnc_mcerr_insufficient_output;                            \
+			}                                                                     \
+			__p_maybe_dst_len[0] -= 1;                                            \
+		}                                                                          \
+		if (!_IsCounting) {                                                        \
+			__p_maybe_dst[0][0] = (ztd_char32_t)*__src;                           \
+			__p_maybe_dst[0] += 1;                                                \
+		}                                                                          \
+		__src += 1;                                                                \
+		__src_len -= 1;                                                            \
+		return cnc_mcerr_ok;                                                       \
+	}                                                                               \
+                                                                                     \
+	::std::size_t __lookup_index = static_cast<::std::size_t>(__code_unit0 - 0x80); \
+	::std::optional<::std::uint_least32_t> __maybe_code_point                       \
+	     = _CODE_POINT_LOOKUP_FUNC(__lookup_index);                                 \
+	if (__maybe_code_point) {                                                       \
+		const ztd_char32_t __code_point = (ztd_char32_t)(*__maybe_code_point);     \
+		if (!_IsUnbounded) {                                                       \
+			if (__p_maybe_dst_len[0] < 1) {                                       \
+				return cnc_mcerr_insufficient_output;                            \
+			}                                                                     \
+			__p_maybe_dst_len[0] -= 1;                                            \
+		}                                                                          \
+		if (!_IsCounting) {                                                        \
+			__p_maybe_dst[0][0] = (_DEST_TYPE)__code_point;                       \
+			__p_maybe_dst[0] += 1;                                                \
+		}                                                                          \
+		__src += 1;                                                                \
+		__src_len -= 1;                                                            \
+		return cnc_mcerr_ok;                                                       \
+	}                                                                               \
+                                                                                     \
+	return cnc_mcerr_invalid_sequence;
 
 	} // namespace __cnc_detail
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_

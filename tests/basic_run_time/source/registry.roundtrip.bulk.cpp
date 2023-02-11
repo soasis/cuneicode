@@ -284,8 +284,8 @@ TEST_CASE(
 	const auto& unicode_input         = full_unicode_range();
 	const auto& basic_source_input    = basic_source_range();
 	cnc_conversion_registry* registry = NULL;
-	cnc_open_error reg_err            = cnc_registry_new(&registry, CNC_REGISTRY_OPTIONS_DEFAULT);
-	REQUIRE(reg_err == CNC_OPEN_ERROR_OK);
+	cnc_open_err reg_err            = cnc_registry_new(&registry, cnc_registry_options_default);
+	REQUIRE(reg_err == cnc_open_err_ok);
 	SECTION("mc") {
 		const ztd_char8_t* from_name  = (const ztd_char8_t*)u8"utf32";
 		const ztd_char8_t* to_name    = (const ztd_char8_t*)u8"execution";
@@ -293,11 +293,11 @@ TEST_CASE(
 		cnc_conversion* to_conv       = NULL;
 		cnc_conversion_info from_info = {};
 		cnc_conversion_info to_info   = {};
-		cnc_open_error from_err
+		cnc_open_err from_err
 		     = cnc_conv_new_c8(registry, from_name, to_name, &from_conv, &from_info);
-		cnc_open_error to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
-		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		REQUIRE(to_err == CNC_OPEN_ERROR_OK);
+		cnc_open_err to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
+		REQUIRE(from_err == cnc_open_err_ok);
+		REQUIRE(to_err == cnc_open_err_ok);
 		compare_bulk_roundtrip_utf32<ztd_char_t>(from_conv, to_conv, basic_source_input);
 		if (cnc_is_execution_encoding_unicode()) {
 			compare_bulk_roundtrip_utf32<ztd_char_t>(from_conv, to_conv, unicode_input);
@@ -312,11 +312,11 @@ TEST_CASE(
 		cnc_conversion* to_conv       = NULL;
 		cnc_conversion_info from_info = {};
 		cnc_conversion_info to_info   = {};
-		cnc_open_error from_err
+		cnc_open_err from_err
 		     = cnc_conv_new_c8(registry, from_name, to_name, &from_conv, &from_info);
-		cnc_open_error to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
-		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		REQUIRE(to_err == CNC_OPEN_ERROR_OK);
+		cnc_open_err to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
+		REQUIRE(from_err == cnc_open_err_ok);
+		REQUIRE(to_err == cnc_open_err_ok);
 		compare_bulk_roundtrip_utf32<ztd_wchar_t>(from_conv, to_conv, basic_source_input);
 		if (cnc_is_wide_execution_encoding_unicode()) {
 			compare_bulk_roundtrip_utf32<ztd_wchar_t>(from_conv, to_conv, unicode_input);
@@ -331,11 +331,11 @@ TEST_CASE(
 		cnc_conversion* to_conv       = NULL;
 		cnc_conversion_info from_info = {};
 		cnc_conversion_info to_info   = {};
-		cnc_open_error from_err
+		cnc_open_err from_err
 		     = cnc_conv_new_c8(registry, from_name, to_name, &from_conv, &from_info);
-		cnc_open_error to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
-		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		REQUIRE(to_err == CNC_OPEN_ERROR_OK);
+		cnc_open_err to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
+		REQUIRE(from_err == cnc_open_err_ok);
+		REQUIRE(to_err == cnc_open_err_ok);
 		compare_bulk_roundtrip_utf32<ztd_char8_t>(from_conv, to_conv, basic_source_input);
 		compare_bulk_roundtrip_utf32<ztd_char8_t>(from_conv, to_conv, unicode_input);
 		cnc_conv_close(from_conv);
@@ -348,11 +348,11 @@ TEST_CASE(
 		cnc_conversion* to_conv       = NULL;
 		cnc_conversion_info from_info = {};
 		cnc_conversion_info to_info   = {};
-		cnc_open_error from_err
+		cnc_open_err from_err
 		     = cnc_conv_new_c8(registry, from_name, to_name, &from_conv, &from_info);
-		cnc_open_error to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
-		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		REQUIRE(to_err == CNC_OPEN_ERROR_OK);
+		cnc_open_err to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
+		REQUIRE(from_err == cnc_open_err_ok);
+		REQUIRE(to_err == cnc_open_err_ok);
 		compare_bulk_roundtrip_utf32<ztd_char16_t>(from_conv, to_conv, basic_source_input);
 		compare_bulk_roundtrip_utf32<ztd_char16_t>(from_conv, to_conv, unicode_input);
 		cnc_conv_close(from_conv);
@@ -365,11 +365,11 @@ TEST_CASE(
 		cnc_conversion* to_conv       = NULL;
 		cnc_conversion_info from_info = {};
 		cnc_conversion_info to_info   = {};
-		cnc_open_error from_err
+		cnc_open_err from_err
 		     = cnc_conv_new_c8(registry, from_name, to_name, &from_conv, &from_info);
-		cnc_open_error to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
-		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		REQUIRE(to_err == CNC_OPEN_ERROR_OK);
+		cnc_open_err to_err = cnc_conv_new_c8(registry, to_name, from_name, &to_conv, &to_info);
+		REQUIRE(from_err == cnc_open_err_ok);
+		REQUIRE(to_err == cnc_open_err_ok);
 		compare_bulk_roundtrip_utf32<ztd_char32_t>(from_conv, to_conv, basic_source_input);
 		compare_bulk_roundtrip_utf32<ztd_char32_t>(from_conv, to_conv, unicode_input);
 		cnc_conv_close(from_conv);

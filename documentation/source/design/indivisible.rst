@@ -38,10 +38,14 @@ An *indivisible unit* is the smallest possible input, as defined by the input en
 - can produce one or more outputs;
 - and/or, perform a transformation of any internal state.
 
-The conversion of these indivisible units is called an *indivisible unit of work*, and they are used to complete all encoding operations. One or more of the following options must hold if an indivisible unit of work is attempted:
+The conversion of these indivisible units is called an *indivisible unit of work*, and they are used to complete all encoding operations. One or more of the following truths must hold if an indivisible unit of work is attempted and completed:
 
 - enough input is consumed to perform an output or change the internal state; 
-- enough input is consumed to output is written from consuming input, or from the internal state which causes the internal state to change;
+- output is written from a (potentially accumulated) internal state;
 - or, an error occurs and both the input and output do not change relative to the last completed indivisible unit of work, if any.
 
-If the third condition happens, then neither the first or the second condition may happen. The state - managed through the mbstate_t pointer - may or may not change during any of these operations, and may be left in an indeterminate state after an error occurs. For the multi unit functions, the process acts as if it completes one indivisible unit of work repeatedly. When an error occurs, only the input successfully consumed and the output successfully written according to the last indivisible unit of work are reflected in the output values: no other values are written.
+If the third condition happens, then neither the first or the second condition may happen. The state - managed through the ``mbstate_t``, ``cnc_mcstate_t``, or similar ``state``-type data pointer - may or may not change during any of these operations, and may be left in an indeterminate state after an error occurs.
+
+Using this concept, we can have multi/"bulk" conversion be defined as the use of multiple successfully completed indivisible units of work. This provides us with a solid base from which to work from as we start working with various different encodings and their constraints.
+
+For the purposes of cuneicode, it primarily deals in taking a pointer (or a pointer-to-pointer) to data and sizes, updating those if and only if an indivisible unit of work is successfully completed. For bulk conversions, it stops at the last successfully completed unit of work.

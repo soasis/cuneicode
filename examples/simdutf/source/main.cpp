@@ -61,9 +61,9 @@ int main(int, char*[]) {
 	     = nullptr;
 	{
 		cnc_conversion_registry* raw_registry = registry.get();
-		cnc_registry_options registry_options = CNC_REGISTRY_OPTIONS_DEFAULT;
-		cnc_open_error err = cnc_registry_new(&raw_registry, registry_options);
-		if (err != CNC_OPEN_ERROR_OK) {
+		cnc_registry_options registry_options = cnc_registry_options_default;
+		cnc_open_err err = cnc_registry_new(&raw_registry, registry_options);
+		if (err != cnc_open_err_ok) {
 			std::cerr << "[error] Could not open a conversion "
 			             "registry (error code: "
 			          << err << ")." << std::endl;
@@ -91,9 +91,9 @@ int main(int, char*[]) {
 		const ztd_char8_t* from_data   = from_code.data();
 		std::size_t to_size            = to_code.size();
 		const ztd_char8_t* to_data     = to_code.data();
-		cnc_open_error err = cnc_conv_new_c8n(registry.get(), from_size,
+		cnc_open_err err = cnc_conv_new_c8n(registry.get(), from_size,
 		     from_data, to_size, to_data, &raw_conversion, &info);
-		if (err != CNC_OPEN_ERROR_OK) {
+		if (err != cnc_open_err_ok) {
 			std::cerr << "[error] Could not open a conversion from \""
 			          << from_code << "\" to \"" << to_code << "\"."
 			          << std::endl;
@@ -126,7 +126,7 @@ Soon, the gossips about strange visitors started. The Visitors protect life, and
 	{
 		// get the necessary buffer size for the conversion
 		const unsigned char* input = (const unsigned char*)utf8_text;
-		size_t input_size          = ztd_c_string_array_size(utf8_text);
+		size_t input_size          = ztdc_c_string_array_size(utf8_text);
 		const size_t initial_output_byte_size = SIZE_MAX;
 		size_t output_byte_size               = initial_output_byte_size;
 		cnc_mcerr err                       = cnc_conv_count(
@@ -144,7 +144,7 @@ Soon, the gossips about strange visitors started. The Visitors protect life, and
 	std::vector<unsigned char> output_buffer(buffer_byte_size);
 	size_t output_size         = output_buffer.size();
 	unsigned char* output      = (unsigned char*)output_buffer.data();
-	size_t input_size          = ztd_c_string_array_size(utf8_text);
+	size_t input_size          = ztdc_c_string_array_size(utf8_text);
 	const unsigned char* input = (const unsigned char*)utf8_text;
 	cnc_mcerr err
 	     = cnc_conv(conversion.get(), &output_size, &output, &input_size, &input);

@@ -36,7 +36,9 @@
 
 #include <ztd/cuneicode/mcstate.h>
 #include <ztd/cuneicode/mcerr.h>
+
 #include <ztd/idk/charN_t.h>
+#include <ztd/idk/restrict.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>

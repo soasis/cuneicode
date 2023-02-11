@@ -42,3 +42,6 @@ These are all the resources that this documentation links to, in alphabetical or
 
 	ICU
 		Unicode Consortium. "International Components for Unicode". April 17th, 2019. URL: `https://github.com/hsivonen/encoding_rs <https://github.com/hsivonen/encoding_rs>`_ The premiere library for not only performing encoding conversions, but performing other Unicode-related algorithms on sequences of text.
+	
+	simdutf
+		Daniel Lemire et. al. "simdutf: Unicode at Gigabytes per Second." January 28th, 2022. URL: `https://github.com/simdutf/simdutf <https://github.com/simdutf/simdutf>`_.

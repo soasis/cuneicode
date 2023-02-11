@@ -65,9 +65,9 @@ TEST_CASE(
 	std::unique_ptr<cnc_conversion_registry, cnc_registry_deleter> registry = nullptr;
 	{
 		cnc_conversion_registry* raw_registry = registry.get();
-		cnc_registry_options registry_options = CNC_REGISTRY_OPTIONS_DEFAULT;
-		cnc_open_error err                    = cnc_registry_new(&raw_registry, registry_options);
-		REQUIRE(err == CNC_OPEN_ERROR_OK);
+		cnc_registry_options registry_options = cnc_registry_options_default;
+		cnc_open_err err                    = cnc_registry_new(&raw_registry, registry_options);
+		REQUIRE(err == cnc_open_err_ok);
 		registry.reset(raw_registry);
 	}
 	// open the conversions with alias names
@@ -84,9 +84,9 @@ TEST_CASE(
 			std::size_t to_size                 = utf32_name.size();
 			const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 			cnc_conversion_registry* __registry = registry.get();
-			cnc_open_error err                  = cnc_conv_new_c8n(
+			cnc_open_err err                  = cnc_conv_new_c8n(
                     __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
-			REQUIRE(err == CNC_OPEN_ERROR_OK);
+			REQUIRE(err == cnc_open_err_ok);
 			std::string_view from_name((const char*)info.from_code_data, info.from_code_size);
 			std::string_view to_name((const char*)info.to_code_data, info.to_code_size);
 			std::string_view indirect_name(
@@ -109,9 +109,9 @@ TEST_CASE(
 			std::size_t to_size                 = utf32_name.size();
 			const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 			cnc_conversion_registry* __registry = registry.get();
-			cnc_open_error err                  = cnc_conv_new_c8n(
+			cnc_open_err err                  = cnc_conv_new_c8n(
                     __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
-			REQUIRE(err == CNC_OPEN_ERROR_OK);
+			REQUIRE(err == cnc_open_err_ok);
 			std::string_view from_name((const char*)info.from_code_data, info.from_code_size);
 			std::string_view to_name((const char*)info.to_code_data, info.to_code_size);
 			std::string_view indirect_name(

@@ -31,50 +31,42 @@
 
 #include <ztd/idk/size.h>
 
-bool is_valid_utf16_from_utf8(size_t str_n, const ztd_char8_t str[]) {
-	cnc_mcstate_t state = {};
-	cnc_mcerr err = cnc_c8snrtoc16sn(nullptr, nullptr, &str_n, &str, &state);
-	return err == cnc_mcerr_ok;
-}
-
-size_t count_utf16_from_utf8(size_t str_n, const ztd_char8_t str[]) {
-	cnc_mcstate_t state         = {};
-	const size_t utf16_before_n = SIZE_MAX;
-	size_t utf16_after_n        = utf16_before_n;
-	cnc_mcerr err
-	     = cnc_c8snrtoc16sn(&utf16_after_n, nullptr, &str_n, &str, &state);
-	return err == cnc_mcerr_ok ? utf16_before_n - utf16_after_n : 0;
-}
-
-bool unbounded_conversion_utf16_from_utf8(
-     size_t str_n, const ztd_char8_t str[], char16_t* dest_str) {
-	cnc_mcstate_t state = {};
-	cnc_mcerr err = cnc_c8snrtoc16sn(nullptr, &dest_str, &str_n, &str, &state);
-	return err == cnc_mcerr_ok;
-}
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 int main() {
-	constexpr const ztd_char8_t str[]
-	     = u8"\"Saw a \U0001F9DC \u2014"
-	       u8"didn't catch her\u2026 \U0001F61E\"\n\t- Sniff";
-	constexpr const size_t str_n        = ztd_c_array_size(str);
-	constexpr size_t utf16_str_max_size = CNC_C16_MAX * ztd_c_array_size(str);
 
-	if (!is_valid_utf16_from_utf8(str_n, str)) {
-		// input not valid
-		return 1;
+	const ztd_char16_t utf16_text[] = u"🥺🙏";
+
+	const ztd_char16_t* count_input_ptr = utf16_text;
+	// ztdc_c_array_size INCLUDES the null terminator in the size!
+	const size_t initial_count_input_size = ztdc_c_array_size(utf16_text);
+	size_t count_input_size               = initial_count_input_size;
+	cnc_mcstate_t count_state             = { 0 };
+	// Use the function but with "nullptr" for the output pointer
+	cnc_mcerr err = cnc_c16snrtoc8sn(
+	     // To get the proper size for this conversion, we use the same
+	     // function but with "NULL" specificers:
+	     NULL, NULL,
+	     // input second
+	     &count_input_size, &count_input_ptr,
+	     // state parameter
+	     &count_state);
+	size_t input_read = (size_t)(initial_count_input_size - count_input_size);
+	if (err != cnc_mcerr_ok) {
+		const char* err_str = cnc_mcerr_to_str(err);
+		fprintf(stderr,
+		     "An (unexpected) error occurred and the counting/validating could "
+		     "not happen!\nThe error happened at code unit %zu in the UTF-16 "
+		     "input.\nError string: %s (code: '%d')\n",
+		     input_read, err_str, (int)err);
 	}
 
-	size_t utf16_str_n = count_utf16_from_utf8(str_n, str);
-	char16_t utf16_str[utf16_str_max_size];
-	if (utf16_str_max_size < utf16_str_n) {
-		// buffer too small
-		return 2;
-	}
+	printf(
+	     "The input UTF-16 is valid and consumed all %zu code units (elements) "
+	     "of input.\n",
+	     input_read);
 
-	if (!unbounded_conversion_utf16_from_utf8(str_n, str, utf16_str)) {
-		// write failed
-		return 3;
-	}
 	return 0;
 }

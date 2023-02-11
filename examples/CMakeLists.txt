@@ -42,6 +42,10 @@ function(ztd_cuneicode_example_options example_target)
 	target_link_libraries(${example_target}
 		PRIVATE
 		ztd::cuneicode)
+	target_include_directories(${example_target}
+		PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/include
+	)
 	if (NOT DEFINED CUNEICODE_EXAMPLE_OPT_TEST)
 		add_test(NAME ${example_target} COMMAND ${example_target})
 	elseif (${CUNEICODE_EXAMPLE_OPT_TEST})

@@ -38,20 +38,20 @@
 int main() {
 	cnc_conversion_registry* registry = NULL;
 	{
-		cnc_open_error err
-		     = cnc_registry_new(&registry, CNC_REGISTRY_OPTIONS_DEFAULT);
-		if (err != CNC_OPEN_ERROR_OK) {
+		cnc_open_err err
+		     = cnc_registry_new(&registry, cnc_registry_options_default);
+		if (err != cnc_open_err_ok) {
 			fprintf(stderr, "[error] could not open a new registry.");
 			return 2;
 		}
 	}
 
 	cnc_conversion* conversion          = NULL;
-	cnc_conversion_info conversion_info = {};
+	cnc_conversion_info conversion_info = { 0 };
 	{
-		cnc_open_error err = cnc_conv_new(registry, "shift-jis-x0208", "utf-8",
-		     &conversion, &conversion_info);
-		if (err != CNC_OPEN_ERROR_OK) {
+		cnc_open_err err = cnc_conv_new(
+		     registry, "punycode", "utf-8", &conversion, &conversion_info);
+		if (err != cnc_open_err_ok) {
 			fprintf(stderr, "[error] could not open a new registry.");
 			cnc_registry_delete(registry);
 			return 2;
@@ -77,16 +77,13 @@ int main() {
 	}
 	fprintf(stdout, "\n");
 
-	const char input_data[]
-	     = "\x61\x6c\x6c\x20\x61\x63\x63\x6f\x72\x64\x69\x6e\x67\x20\x74\x6f\x20"
-	       "\x82\xAF\x82\xA2\x82\xA9\x82\xAD\x2c\x20\x75\x66\x75\x66\x75\x66\x75"
-	       "\x21";
-	unsigned char output_data[ztd_c_array_size(input_data) * 2] = {};
+	const char input_data[] = "all according to , ufufufu!-5r3z2fqepc";
+	unsigned char output_data[ztdc_c_array_size(input_data)] = { 0 };
 
-	const size_t starting_input_size  = ztd_c_string_array_byte_size(input_data);
+	const size_t starting_input_size  = ztdc_c_string_array_byte_size(input_data);
 	size_t input_size                 = starting_input_size;
 	const unsigned char* input        = (const unsigned char*)&input_data[0];
-	const size_t starting_output_size = ztd_c_array_byte_size(output_data);
+	const size_t starting_output_size = ztdc_c_array_byte_size(output_data);
 	size_t output_size                = starting_output_size;
 	unsigned char* output             = (unsigned char*)&output_data[0];
 	cnc_mcerr err

@@ -27,4 +27,48 @@
 //
 // ========================================================================= //
 
-#include <ztd/cuneicode/ibm866.h>
+#ifndef ZTD_CUNEICODE_OPEN_ERR_H
+#define ZTD_CUNEICODE_OPEN_ERR_H
+
+#pragma once
+
+#include <ztd/cuneicode/version.h>
+
+//////
+/// @addtogroup ztd_cuneicode_registry_error_types Registry Error Types
+///
+/// @{
+
+//////
+/// @brief The error that occurred when trying to open or create a conversion resource.
+typedef enum cnc_open_err {
+	//////
+	/// @brief Returned when everything was okay.
+	cnc_open_err_ok = 0,
+	//////
+	/// @brief Returned when there is no conversion path between the specified from and to
+	/// encodings.
+	cnc_open_err_no_conversion_path = -1,
+	//////
+	/// @brief Returned when there iss not enough output space to write into for creating the
+	/// resource.
+	cnc_open_err_insufficient_output = -2,
+	//////
+	/// @brief Returned when there is an invalid parameter passed in for creating the
+	/// resource.
+	cnc_open_err_invalid_parameter = -3,
+	//////
+	/// @brief Returned when a heap-related or allocation-related failure occurred.
+	cnc_open_err_allocation_failure = -4
+} cnc_open_err;
+
+
+//////
+/// @brief Returns a string representing the error code's name.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_open_err_to_str(
+     cnc_open_err __err);
+
+//////
+/// @}
+
+#endif

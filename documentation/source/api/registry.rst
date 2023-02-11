@@ -55,16 +55,18 @@ Conversion Registry
 
 .. doxygenfunction:: cnc_registry_add_multi_c8
 
-.. doxygenfunction:: cnc_registry_add_c8n_multi
+.. doxygenfunction:: cnc_registry_add_multi_c8n
 
 .. doxygenfunction:: cnc_registry_add_single_c8
 
-.. doxygenfunction:: cnc_registry_add_c8n_single
+.. doxygenfunction:: cnc_registry_add_single_c8n
 
 .. doxygenfunction:: cnc_registry_close
 
 .. doxygenfunction:: cnc_registry_delete
 
-.. doxygenfunction:: cnc_pairs_c8_list
+.. doxygenfunction:: cnc_registry_heap
 
-.. doxygenfunction:: cnc_pairs_list
+.. doxygenfunction:: cnc_registry_pairs_list_c8n
+
+.. doxygenfunction:: cnc_registry_pairs_list_n

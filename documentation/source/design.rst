@@ -53,4 +53,5 @@ Finally, to make sure this library is capable of scaling and does not have users
 	design/naming
 	design/single
 	design/bulk
+	design/state
 	design/registry

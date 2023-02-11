@@ -44,15 +44,15 @@
 typedef enum cnc_registry_options {
 	//////
 	/// @brief No options.
-	CNC_REGISTRY_OPTIONS_NONE = 0,
+	cnc_registry_options_none = 0,
 	//////
 	/// @brief Start with an empty registry that contains none of the platorm's default
 	/// conversion
 	/// entries.
-	CNC_REGISTRY_OPTIONS_EMPTY = 1,
+	cnc_registry_options_empty = 1,
 	//////
 	/// @brief Use the default options recommended when starting a registry.
-	CNC_REGISTRY_OPTIONS_DEFAULT = CNC_REGISTRY_OPTIONS_NONE,
+	cnc_registry_options_default = cnc_registry_options_none,
 } cnc_registry_options;
 
 //////

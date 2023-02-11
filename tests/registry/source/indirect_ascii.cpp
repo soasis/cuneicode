@@ -46,17 +46,17 @@ inline namespace cnc_tests_registry_indirect_ascii {
 	void compare_registry_roundtrip(cnc_conversion* conv, const Source& source,
 	     const PivotExpected& pivot_expected, const Expected& expected) {
 		unsigned char pivot_buffer[500] = {};
-		cnc_pivot_info pivot = { ztd_c_array_size(pivot_buffer), pivot_buffer, cnc_mcerr_ok };
+		cnc_pivot_info pivot = { ztdc_c_array_size(pivot_buffer), pivot_buffer, cnc_mcerr_ok };
 		alignas(ztd_char32_t) unsigned char output_buffer[500] = {};
 		unsigned char* output                                  = output_buffer;
-		size_t output_size                                     = ztd_c_array_size(output_buffer);
+		size_t output_size                                     = ztdc_c_array_size(output_buffer);
 		const unsigned char* input = (const unsigned char*)source.data();
 		size_t input_size          = source.size();
 		cnc_mcerr err
 		     = cnc_conv_pivot(conv, &output_size, &output, &input_size, &input, &pivot);
 		std::string_view pivot_view((const ztd_char_t*)pivot.bytes, pivot_expected.size());
 		std::u32string_view output_view((const ztd_char32_t*)output_buffer,
-		     (ztd_c_array_size(output_buffer) - output_size) / sizeof(ztd_char32_t));
+		     (ztdc_c_array_size(output_buffer) - output_size) / sizeof(ztd_char32_t));
 		const bool err_okay    = err == cnc_mcerr_ok;
 		const bool pivot_okay  = pivot_view == pivot_expected;
 		const bool output_okay = output_view == expected;
@@ -161,21 +161,21 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 	std::unique_ptr<cnc_conversion_registry, cnc_registry_deleter> registry = nullptr;
 	{
 		cnc_conversion_registry* raw_registry = registry.get();
-		cnc_registry_options registry_options = CNC_REGISTRY_OPTIONS_DEFAULT;
-		cnc_open_error err                    = cnc_registry_new(&raw_registry, registry_options);
-		REQUIRE(err == CNC_OPEN_ERROR_OK);
+		cnc_registry_options registry_options = cnc_registry_options_default;
+		cnc_open_err err                    = cnc_registry_new(&raw_registry, registry_options);
+		REQUIRE(err == cnc_open_err_ok);
 		registry.reset(raw_registry);
 	}
 	// add new conversion from our (weird) encoding to ASCII, then ASCII to UTF-32
 	{
-		cnc_open_error from_err = cnc_registry_add_single_c8(registry.get(),
+		cnc_open_err from_err = cnc_registry_add_single_c8(registry.get(),
 		     (const ztd_char8_t*)u8"weird-1", (const ztd_char8_t*)u8"ascii",
 		     mcnrtomcn_weird1_ascii, nullptr, nullptr, nullptr);
-		REQUIRE(from_err == CNC_OPEN_ERROR_OK);
-		cnc_open_error to_err = cnc_registry_add_single_c8(registry.get(),
+		REQUIRE(from_err == cnc_open_err_ok);
+		cnc_open_err to_err = cnc_registry_add_single_c8(registry.get(),
 		     (const ztd_char8_t*)u8"ascii", (const ztd_char8_t*)u8"weird-1",
 		     mcnrtomcn_ascii_weird1, nullptr, nullptr, nullptr);
-		REQUIRE(to_err == CNC_OPEN_ERROR_OK);
+		REQUIRE(to_err == cnc_open_err_ok);
 	} // open the should-be-direct conversion
 	std::unique_ptr<cnc_conversion, cnc_conversion_deleter> conversion = nullptr;
 	cnc_conversion_info info                                           = {};
@@ -189,9 +189,9 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 		std::size_t to_size                 = utf32_name.size();
 		const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 		cnc_conversion_registry* __registry = registry.get();
-		cnc_open_error err                  = cnc_conv_new_c8n(
+		cnc_open_err err                  = cnc_conv_new_c8n(
                __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
-		REQUIRE(err == CNC_OPEN_ERROR_OK);
+		REQUIRE(err == cnc_open_err_ok);
 		REQUIRE(info.is_indirect);
 		std::string_view from_name((const char*)info.from_code_data, info.from_code_size);
 		std::string_view indirect_name(

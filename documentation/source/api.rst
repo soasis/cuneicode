@@ -42,14 +42,14 @@ General Structures, Enumerations, and Constants
 	:maxdepth: 1
 	
 	api/mcerr
-	api/open_error
+	api/open_err
 	api/mcstate_t
 	api/constants
 
 
 
-Typed Conversion
-----------------
+Typed Conversions
+-----------------
 
 .. toctree::
 	:maxdepth: 1
@@ -70,6 +70,7 @@ Registry (Untyped) Conversions
 	api/registry_options
 	api/registry_types
 	api/conversion_info
+	api/pivot_info
 	api/registry conversion handles
 	api/registry conversions
 	api/heap

@@ -61,26 +61,35 @@ struct encoding_data {
 };
 
 void print_encoding_list(std::ostream& out, cnc_conversion_registry* registry) {
-	using user_data_t = std::set<encoding_data>;
-	user_data_t existing_conversions {};
+	struct user_data_t {
+		std::set<encoding_data> existing_conversions {};
+		std::set<std::pair<utf8string_view, utf8string_view>> existing_aliases {};
+	} conversion_data {};
 	cnc_conversion_registry_pair_c8_function* on_pairing
-	     = [](size_t from_size, const ztd_char8_t* from, size_t to_size, const ztd_char8_t* to,
-	            void* user_data) {
-		       user_data_t& existing_conversions = *static_cast<user_data_t*>(user_data);
-		       const encoding_data& from_it
-		            = *existing_conversions.insert({ utf8string_view(from, from_size) }).first;
-		       const encoding_data& to_it
-		            = *existing_conversions.insert({ utf8string_view(to, to_size) }).first;
-		       const_cast<encoding_data&>(from_it).from = true;
-		       const_cast<encoding_data&>(to_it).to     = true;
+	     = [](bool is_alias, size_t from_size, const ztd_char8_t* from_ptr, size_t to_size,
+	            const ztd_char8_t* to_ptr, void* user_data_ptr) {
+		       user_data_t& user_data = *static_cast<user_data_t*>(user_data_ptr);
+		       utf8string_view from(from_ptr, from_size);
+		       utf8string_view to(to_ptr, to_size);
+		       if (is_alias) {
+			       user_data.existing_aliases.insert({ from, to });
+		       }
+		       else {
+			       const encoding_data& from_it
+			            = *user_data.existing_conversions.insert({ from }).first;
+			       const encoding_data& to_it
+			            = *user_data.existing_conversions.insert({ to }).first;
+			       const_cast<encoding_data&>(from_it).from = true;
+			       const_cast<encoding_data&>(to_it).to     = true;
+		       }
 	       };
 	out << "Available encodings:" << std::endl;
-	cnc_pairs_c8_list(registry, on_pairing, &existing_conversions);
-	if (existing_conversions.empty()) {
+	cnc_registry_pairs_list_c8n(registry, on_pairing, &conversion_data);
+	if (conversion_data.existing_conversions.empty()) {
 		out << "\t (None)" << std::endl;
 		return;
 	}
-	for (const auto& data : existing_conversions) {
+	for (const auto& data : conversion_data.existing_conversions) {
 		out << "\t" << data.name;
 		if (data.from != data.to) {
 			if (data.from) {
@@ -91,6 +100,9 @@ void print_encoding_list(std::ostream& out, cnc_conversion_registry* registry) {
 			}
 		}
 		out << std::endl;
+	}
+	for (const auto& data : conversion_data.existing_aliases) {
+		std::cout << "\t" << data.first << " " << data.second << " [alias]" << std::endl;
 	}
 }
 

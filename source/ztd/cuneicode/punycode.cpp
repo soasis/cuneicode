@@ -134,7 +134,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 					return cnc_mcerr_ok;
 				}
 				else if (__modified_src
-				     == &__u32_xn_prefix[ztd_c_array_size(__u32_xn_prefix)]) {
+				     == &__u32_xn_prefix[ztdc_c_array_size(__u32_xn_prefix)]) {
 					// it's onto the next stage
 					__p_state->__action_state = ::cnc::__cnc_detail::__pny_encode_state_ascii;
 					__modified_src            = __pny.__input.data();
