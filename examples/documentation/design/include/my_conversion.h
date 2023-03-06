@@ -60,7 +60,7 @@ extern inline bool my_internal_my_to_c32_dump_state(const bool counting_only,
 		switch (p_state->accumulation_count) {
 		case 1:
 			if (!assume_enough_output) {
-				if (p_output_size[0] < 0) {
+				if (p_output_size[0] < 1) {
 					*p_dump_state_err = cnc_mcerr_insufficient_output;
 					return true;
 				}
@@ -77,7 +77,7 @@ extern inline bool my_internal_my_to_c32_dump_state(const bool counting_only,
 		case 2:
 		case 3:
 			if (!assume_enough_output) {
-				if (p_output_size[0] < 0) {
+				if (p_output_size[0] < 1) {
 					*p_dump_state_err = cnc_mcerr_insufficient_output;
 					return true;
 				}
@@ -94,7 +94,7 @@ extern inline bool my_internal_my_to_c32_dump_state(const bool counting_only,
 			return true;
 		case 4:
 			if (!assume_enough_output) {
-				if (p_output_size[0] < 0) {
+				if (p_output_size[0] < 1) {
 					*p_dump_state_err = cnc_mcerr_insufficient_output;
 					return true;
 				}
@@ -123,7 +123,7 @@ extern inline bool my_internal_my_to_c32_dump_state(const bool counting_only,
 		size_t output_size
 		     = assume_enough_output ? C32_MAX_MY : p_output_size[0];
 		for (; p_state->accumulation_count > 0; --p_state->accumulation_count) {
-			if (output_size < 0) {
+			if (output_size < 1) {
 				*p_dump_state_err = cnc_mcerr_insufficient_output;
 				return true;
 			}
