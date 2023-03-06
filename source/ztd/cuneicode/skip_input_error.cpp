@@ -49,7 +49,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -65,7 +65,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -81,7 +81,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -97,7 +97,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_wide_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -124,7 +124,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -149,7 +149,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -165,7 +165,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -183,7 +183,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -199,7 +199,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_wide_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -226,7 +226,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -254,7 +254,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -270,7 +270,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -286,7 +286,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -302,7 +302,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_wide_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -329,7 +329,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -357,7 +357,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -373,7 +373,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -389,7 +389,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -405,7 +405,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_wide_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -432,7 +432,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -460,7 +460,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -476,7 +476,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -492,7 +492,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	return cnc_mcerr_ok;
 }
@@ -508,7 +508,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_wide_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
@@ -535,7 +535,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_
 	if (__current_error == cnc_mcerr_incomplete_input) {
 		return __current_error;
 	}
-	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src, __p_src_len);
+	_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 	if (ztdc_is_execution_encoding_utf8()) {
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
 	}
