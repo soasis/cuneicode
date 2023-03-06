@@ -114,7 +114,7 @@ extern inline bool my_internal_my_to_c32_dump_state(const bool counting_only,
 			*p_dump_state_err = cnc_mcerr_invalid_sequence;
 			return true;
 		}
-	case '.':
+	case '.': {
 		// just write out '.' if they are present
 		// save current progress and only change output if
 		// we have a successful write!
@@ -141,6 +141,7 @@ extern inline bool my_internal_my_to_c32_dump_state(const bool counting_only,
 		p_state->accumulation_count = 0;
 		*p_dump_state_err           = cnc_mcerr_ok;
 		return true;
+	}
 	default:
 		return false;
 	}
@@ -362,7 +363,7 @@ extern inline cnc_mcerr c32_to_my(size_t* p_output_size, char** p_output,
 	bool input_read                 = false;
 
 	if (p_state->accumulation != '\0') {
-	accumulation_writeout:
+	accumulation_writeout:;
 		// we have extra writeouts to do based on what we got!
 		char unused_buffer[MC_MAX_MY];
 		char* output       = counting_only ? &unused_buffer[0] : p_output[0];
