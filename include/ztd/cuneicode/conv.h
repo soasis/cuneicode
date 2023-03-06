@@ -264,22 +264,22 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_ope
 //////
 /// @copydoc cnc_conv_new_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new(
-     cnc_conversion_registry* __registry, const char* __from, const char* __to,
+     cnc_conversion_registry* __registry, const ztd_char_t* __from, const ztd_char_t* __to,
      cnc_conversion** __out_p_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @copydoc cnc_conv_new_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_n(
      cnc_conversion_registry* __registry, size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 
 //////
 /// @copydoc cnc_conv_new_c8_select
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_select(
-     cnc_conversion_registry* __registry, const char* __from, const char* __to,
+     cnc_conversion_registry* __registry, const ztd_char_t* __from, const ztd_char_t* __to,
      cnc_indirect_selection_function* __selection, cnc_conversion** __out_p_conversion,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
@@ -287,14 +287,14 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new
 /// @copydoc cnc_conv_new_select_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_new_select_n(
      cnc_conversion_registry* __registry, size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_indirect_selection_function* __selection,
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)], cnc_indirect_selection_function* __selection,
      cnc_conversion** __out_p_conversion, cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @copydoc cnc_conv_open_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open(
-     cnc_conversion_registry* __registry, const char* __from, const char* __to,
+     cnc_conversion_registry* __registry, const ztd_char_t* __from, const ztd_char_t* __to,
      cnc_conversion** __out_p_conversion, size_t* __p_available_space, unsigned char* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
@@ -302,8 +302,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_ope
 /// @copydoc cnc_conv_open_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_n(
      cnc_conversion_registry* __registry, size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)], cnc_conversion** __out_p_conversion,
      size_t* __p_available_space, void* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 
@@ -311,7 +311,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_ope
 //////
 /// @copydoc cnc_conv_open_c8_select
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_select(
-     cnc_conversion_registry* __registry, const char* __from, const char* __to,
+     cnc_conversion_registry* __registry, const ztd_char_t* __from, const ztd_char_t* __to,
      cnc_indirect_selection_function* __selection, cnc_conversion** __out_p_conversion,
      size_t* __p_available_space, void* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
@@ -321,8 +321,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_ope
 /// @copydoc cnc_conv_open_select_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_select_n(
      cnc_conversion_registry* __registry, size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)], cnc_indirect_selection_function* __selection,
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)], cnc_indirect_selection_function* __selection,
      cnc_conversion** __out_p_conversion, size_t* __p_available_space, void* __space,
      cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
 

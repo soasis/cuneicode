@@ -27,4 +27,4 @@
 //
 // ========================================================================= //
 
-#include <ztd/cuneicode/detail/mcchar_generic.h>
+#include <ztd/cuneicode/mcchar_generic.h>

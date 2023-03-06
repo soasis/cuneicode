@@ -266,11 +266,11 @@ if(ZTD_CUNEICODE_SCRATCH)
 	target_compile_options(scratch
 		PRIVATE
 		${--template-debugging-mode}
-		${--disable-permissive}
 		${--updated-cpp-version-flag}
 		${--warn-pedantic}
 		${--warn-all}
 		${--warn-extra}
-		${--warn-errors})
+		${--warn-errors}
+		)
 	target_compile_features(scratch PRIVATE cxx_std_20)
 endif()

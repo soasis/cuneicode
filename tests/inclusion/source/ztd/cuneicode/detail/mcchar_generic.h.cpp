@@ -27,4 +27,4 @@
 //
 // ========================================================================= //
 
-#include <ztd/idk/charN_t.h>
+#include <ztd/cuneicode/mcchar_generic.h>

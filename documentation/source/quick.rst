@@ -28,24 +28,59 @@
 ..
 .. ========================================================================= ..
 
-🔨 Quick 'n' Dirty Tutorial (In Progress)
-=========================================
-
-.. warning::
-
-	|unfinished_warning|
+Quick 'n' Dirty Tutorial
+========================
 
 
-cuneicode is a C library whose headers work in both C and C++. Its implementation is currently done in C++. To use it, use:
 
-- one of the many CMake methods (`add_subdirectory`, `FetchContent`, or similar)
-- directly add and build all the sources to your project
+Setup
+-----
 
-.. warning::
+Use of this library is officially supported through the use of `CMake <https://cmake.org/>`_. Getting an updated CMake is difficult on non-Windows machines, especially if they come from your system's package manager distribution which tends to be several (dozen?) minor revisions out of date, or an entire major revision behind on CMake. To get a very close to up-to-date CMake, Python maintains an version that works across all systems. You can get it (and the ninja build system) by using the following command in your favorite command line application (assuming Python is already installed):
 
-	Adding sources directly to your project is not guaranteed to work in future major revisions, as certain build steps might generate code in the future.
+.. code-block:: sh
+	:linenos:
 
-Once the library is appropriately included, you can start using cuneicode.
+	python -m pip install --user --update cmake ninja
+
+If you depend on calling these executables using shorthand and not their full path, make sure that the Python "downloaded binaries" folder is contained with the ``PATH`` environment variable. Usually this is already done, but if you have trouble invoking ``cmake --version`` on your typical command line, please see the `Python pip install documentation for more details <https://pip.pypa.io/en/stable/cli/pip_install/>`_ for more information, in particular about the ``--user`` `option <https://pip.pypa.io/en/stable/cli/pip_install/#cmdoption-user>`_.
+
+If you do not have Python or CMake/ninja, you must get a recent enough version `directly from CMake <https://cmake.org/download/>`_ and build/install it and have a suitable build system around for CMake to pick up on (MSBuild from installing `Visual Studio <https://visualstudio.microsoft.com/downloads>`_, make in most GNU distributions / MinGW on Windows on your PATH environment variable, and/or a personal installation of `ninja <https://ninja-build.org/>`_).
+
+
+
+Using CMake
+-----------
+
+Here's a sample of the ``CMakeLists.txt`` to create a new project and pull in ztd.text in the simplest possible way:
+
+.. literalinclude:: ../../examples/documentation/quick/setup/CMakeLists.txt
+	:language: cmake
+	:linenos:
+	:start-after: # === snippet-project-declaration-start
+	:end-before: # === snippet-project-declaration-end
+
+
+This will automatically download and set up all the dependencies ztd.cuneicode needs (in this case, simply ztd.cmake, ztd.platform, and `ztd.idk <https://ztdidk.readthedocs.io/en/latest/>`_ ). You can override how ztd.cuneicode gets these dependencies using the standard FetchContent described in the `CMake FetchContent Documentation <https://cmake.org/cmake/help/latest/module/FetchContent.html#command:fetchcontent_declare>`_. When done configuring, simply use CMake's ``target_link_libraries(…)`` to add it to the code:
+
+.. literalinclude:: ../../examples/documentation/quick/setup/CMakeLists.txt
+	:language: cmake
+	:linenos:
+	:start-after: # === snippet-library-start
+	:end-before: # === snippet-library-end
+
+Once you have everything configured and set up the way you like, you can then use ztd.cuneicode in your code, as shown below:
+
+.. literalinclude:: ../../examples/documentation/quick/setup/source/main.c
+	:language: cpp
+	:linenos:
+	:start-after: // ============================================================================ //
+
+Let's get started by digging into some examples!
+
+.. note::
+	
+	If you would like to see more examples and additional changes besides what is covered below, please do feel free to make requests for them `here <https://github.com/soasis/cuneicode/issues>`_! This is not a very full-on tutorial and there is a lot of functionality that, still, needs explanation!
 
 
 
@@ -54,9 +89,9 @@ Simple Conversions
 
 Simple conversions are provided for UTF-8, UTF-16, UTF-32, :term:`execution encoding`, and :term:`wide execution encoding`. They allow an end-user to use bit-based types.
 
-To convert from UTF-16 to UTF-8, use the appropriately `c8` and `c16`-marked free functions in the library:
+To convert from UTF-16 to UTF-8, use the appropriately ``c8`` and ``c16``-marked free functions in the library:
 
-.. literalinclude:: ../../examples/documentation/quick/source/utf16_to_utf8.c
+.. literalinclude:: ../../examples/documentation/quick/basic/source/utf16_to_utf8.c
 	:language: c
 	:start-after: // ========================================================================= //
 	:linenos:
@@ -76,7 +111,7 @@ Counting
 
 More often than not, the exact amount of input and output might not be known before-hand. Therefore, it may be useful to count how many elements of output would be required before allocating exactly that much space to hold the result. In this case, simply passing ``NULL`` for the data output pointer instead of a real pointer, while providing a non-``NULL`` pointer for the output size argument, will give an accurate reading for the amount of space that is necessary: 
 
-.. literalinclude:: ../../examples/documentation/quick/source/count.utf16_to_utf8.c
+.. literalinclude:: ../../examples/documentation/quick/basic/source/count.utf16_to_utf8.c
 	:language: c
 	:start-after: // ========================================================================= //
 	:linenos:
@@ -89,7 +124,7 @@ Unbounded Output Writing
 
 Sometimes, it is know ahead of time that there is enough space in a given buffer for a given conversion result because the inputs are not at all associated with user input or user-facing anything (e.g., static storage duration string literals with known sizes and elements). If that is the case, then a ``NULL`` value can be passed in for the output size argument, and the function will assume that there is enough space for writing:
 
-.. literalinclude:: ../../examples/documentation/quick/source/count.utf16_to_utf8.c
+.. literalinclude:: ../../examples/documentation/quick/basic/source/count.utf16_to_utf8.c
 	:language: c
 	:start-after: // ========================================================================= //
 	:linenos:
@@ -104,7 +139,7 @@ Validating
 
 Validation is similar to counting, except that the output size argument is ``NULL``. This effectively allows someone to check if the input is not only valid for that encoding, but also if it can be transcoded to the output assuming enough size.
 
-.. literalinclude:: ../../examples/documentation/quick/source/validate.utf16_to_utf8.c
+.. literalinclude:: ../../examples/documentation/quick/basic/source/validate.utf16_to_utf8.c
 	:language: c
 	:start-after: // ========================================================================= //
 	:linenos:
@@ -117,13 +152,13 @@ In many instances, simply validating that text can be converted rather than atte
 Registry-Based Conversions
 --------------------------
 
-Conversion registries in cuneicode provide a way to obtain potentially runtime-defined encodings. It can be added to and removed from by a user, and all access to data (save for those which are defined to access global state such as the ``char``/``execution`` and ``wchar_t``/``wide execution`` encodings) is referenced straight from the objects created and involved and should involve no global, mutable state. This should enable users to create, use, and pass around registry objects freely without the burden of pre-allocated or statically-shared state, resulting in programs that are easier to reason about. Here is an example of converting between the Windows-1251 encoding and the UTF-8 encoding by passing both names to `cnc_conv_new(…)`:
+Conversion registries in cuneicode provide a way to obtain potentially runtime-defined encodings. It can be added to and removed from by a user, and all access to data (save for those which are defined to access global state such as the ``char``/``execution`` and ``wchar_t``/``wide execution`` encodings) is referenced straight from the objects created and involved and should involve no global, mutable state. This should enable users to create, use, and pass around registry objects freely without the burden of pre-allocated or statically-shared state, resulting in programs that are easier to reason about. Here is an example of converting between the Windows-1251 encoding and the UTF-8 encoding by passing both names to ```cnc_conv_new(…)```:
 
-.. literalinclude:: ../../examples/documentation/quick/source/registry_conversion.c
+.. literalinclude:: ../../examples/documentation/quick/basic/source/registry_conversion.c
 	:language: c
 	:start-after: // ========================================================================= //
 	:linenos:
 
-Care must be taken that, upon allocating one of these types, it is deallocated with care. A large number of additional registry functionality is described in the :doc:`registry design documentation </design/registry>` and the :doc:`registry API documentation </api/registry conversions>`, including an example of registering an encoding which contains its own state and must be stored in a `cnc_conv*` handle.
+Care must be taken that, upon allocating one of these types, it is deallocated with care. A large number of additional registry functionality is described in the :doc:`registry design documentation </design/registry>` and the :doc:`registry API documentation </api/registry conversions>`, including an example of registering an encoding which contains its own state and must be stored in a ``cnc_conv*`` handle.
 
 Most importantly in this short example is that there is no direct conversion between Windows-1251 and UTF-8 in the default offerings of cuneicode. Instead, the registry knows how to negotiate a pathway between the registered Windows-1251 encoding (which goes from itself to UTF-32 and back) to UTF-8 (which goes from itself to UTF-32 and back). This automatic handling of indirection is provided by-default and is described in the :doc:`registry design for indirections </design/registry/indirect>`.

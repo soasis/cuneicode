@@ -36,6 +36,7 @@
 
 #include <ztd/cuneicode/max_output.h>
 #include <ztd/cuneicode/mcstate.h>
+#include <ztd/cuneicode/detail/boilerplate.h>
 
 #include <ztd/idk/assert.hpp>
 
@@ -190,22 +191,9 @@ namespace cnc {
 		}                                                                        \
 	}
 
-#define _ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE)                 \
-	if (__p_src == nullptr || *__p_src == nullptr) {                                   \
-		return cnc_mcerr_ok;                                                          \
-	}                                                                                  \
-	ZTD_ASSERT(__p_src_len != nullptr);                                                \
-	const _SRC_TYPE*& __src = *__p_src;                                                \
-	size_t& __src_len       = *__p_src_len;                                            \
-	if (__src_len < 1) {                                                               \
-		return cnc_mcerr_ok;                                                          \
-	}                                                                                  \
-	const bool _IsCounting  = __p_maybe_dst == nullptr || __p_maybe_dst[0] == nullptr; \
-	const bool _IsUnbounded = __p_maybe_dst_len == nullptr
-
 #define _ZTDC_CUNEICODE_SINGLE_BYTE_ENCODING_CODE_POINT_TO_BYTE(                       \
      _SRC_TYPE, _DEST_TYPE, _BYTE_LOOKUP_FUNC)                                         \
-	_ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE);                  \
+	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE);                             \
                                                                                        \
 	const _SRC_TYPE __code_point      = (*__src);                                     \
 	const ztd_char32_t __code_point32 = (ztd_char32_t)__code_point;                   \
@@ -222,8 +210,8 @@ namespace cnc {
 			__p_maybe_dst[0][0] = (_DEST_TYPE)*__src;                               \
 			__p_maybe_dst[0] += 1;                                                  \
 		}                                                                            \
-		__src += 1;                                                                  \
-		__src_len -= 1;                                                              \
+		__p_src[0] +=1;                                                                  \
+		__p_src_len[0] -=1;                                                              \
 		return cnc_mcerr_ok;                                                         \
 	}                                                                                 \
                                                                                        \
@@ -241,8 +229,8 @@ namespace cnc {
 			__p_maybe_dst[0][0] = (_DEST_TYPE)__code_unit0;                         \
 			__p_maybe_dst[0] += 1;                                                  \
 		}                                                                            \
-		__src += 1;                                                                  \
-		__src_len -= 1;                                                              \
+		__p_src[0] +=1;                                                                  \
+		__p_src_len[0] -=1;                                                              \
 		return cnc_mcerr_ok;                                                         \
 	}                                                                                 \
                                                                                        \
@@ -250,7 +238,7 @@ namespace cnc {
 
 #define _ZTDC_SINGLE_BYTE_ENCODING_BYTE_TO_CODE_POINT(                               \
      _SRC_TYPE, _DEST_TYPE, _CODE_POINT_LOOKUP_FUNC)                                 \
-	_ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(char);                     \
+	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(char);                                \
                                                                                      \
 	const unsigned char __code_unit0 = ((unsigned char)*__src);                     \
                                                                                      \
@@ -266,8 +254,8 @@ namespace cnc {
 			__p_maybe_dst[0][0] = (ztd_char32_t)*__src;                           \
 			__p_maybe_dst[0] += 1;                                                \
 		}                                                                          \
-		__src += 1;                                                                \
-		__src_len -= 1;                                                            \
+		__p_src[0] +=1;                                                                \
+		__p_src_len[0] -=1;                                                            \
 		return cnc_mcerr_ok;                                                       \
 	}                                                                               \
                                                                                      \
@@ -286,8 +274,8 @@ namespace cnc {
 			__p_maybe_dst[0][0] = (_DEST_TYPE)__code_point;                       \
 			__p_maybe_dst[0] += 1;                                                \
 		}                                                                          \
-		__src += 1;                                                                \
-		__src_len -= 1;                                                            \
+		__p_src[0] +=1;                                                                \
+		__p_src_len[0] -=1;                                                            \
 		return cnc_mcerr_ok;                                                       \
 	}                                                                               \
                                                                                      \

@@ -100,8 +100,8 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		if (__c0 > 0x7F) {
 			return cnc_mcerr_invalid_sequence;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] +=1;
+		__p_src_len[0] -=1;
 		if (!_IsCounting) {
 			**__p_maybe_dst = static_cast<unsigned char>(__c0);
 			*__p_maybe_dst += 1;
@@ -135,8 +135,8 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		if (__c0 > 0x7F) {
 			return cnc_mcerr_invalid_sequence;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] +=1;
+		__p_src_len[0] -=1;
 		if (!_IsCounting) {
 			**__p_maybe_dst = static_cast<unsigned char>(__c0);
 			*__p_maybe_dst += 1;

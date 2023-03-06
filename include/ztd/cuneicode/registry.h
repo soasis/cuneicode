@@ -179,8 +179,9 @@ typedef bool(cnc_indirect_selection_c8_function)(size_t __from_size,
 //////
 /// @copydoc cnc_indirect_selection_c8_function
 typedef bool(cnc_indirect_selection_function)(size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)], size_t __indirect_size, const char* __indirect);
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)], size_t __indirect_size,
+     const ztd_char_t* __indirect);
 
 //////
 /// @brief The functiont type for closing the state associated with a cnc_conversion object.
@@ -262,8 +263,8 @@ typedef void(cnc_conversion_registry_pair_c8_function)(bool __is_alias, size_t _
 //////
 /// @copydoc cnc_conversion_registry_pair_c8_function
 typedef void(cnc_conversion_registry_pair_function)(bool __is_alias, size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)], void* __user_data);
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)], void* __user_data);
 
 //////
 /// @brief Creates a new registry.
@@ -315,8 +316,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_registry_remove_
 //////
 /// @copydoc cnc_registry_remove_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_registry_remove(
-     cnc_conversion_registry* __registry, const char* __from,
-     const char* __to) ZTD_NOEXCEPT_IF_CXX_I_;
+     cnc_conversion_registry* __registry, const ztd_char_t* __from,
+     const ztd_char_t* __to) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
@@ -343,8 +344,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_registry_remove_
 /// @copydoc cnc_registry_remove_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_registry_remove_n(
      cnc_conversion_registry* __registry, size_t __from_size,
-     const char* __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)]) ZTD_NOEXCEPT_IF_CXX_I_;
+     const ztd_char_t* __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)]) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
@@ -387,7 +388,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 //////
 /// @copydoc cnc_registry_add_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add(
-     cnc_conversion_registry* __registry, const char* __from, const char* __to,
+     cnc_conversion_registry* __registry, const ztd_char_t* __from, const ztd_char_t* __to,
      cnc_conversion_function* __multi_conversion_function,
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -440,8 +441,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 /// @copydoc cnc_registry_add_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_n(
      cnc_conversion_registry* __registry, size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)],
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)],
      cnc_conversion_function* __multi_conversion_function,
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
@@ -467,8 +468,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 //////
 /// @copydoc cnc_registry_add_alias_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_alias(
-     cnc_conversion_registry* __registry, const char* __alias,
-     const char* __original) ZTD_NOEXCEPT_IF_CXX_I_;
+     cnc_conversion_registry* __registry, const ztd_char_t* __alias,
+     const ztd_char_t* __original) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @brief Adds an alias that tells the registry that two names are identical, without needing as
@@ -493,8 +494,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 /// @copydoc cnc_registry_add_alias_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_alias_n(
      cnc_conversion_registry* __registry, size_t __alias_size,
-     const char __alias[ZTD_PTR_EXTENT(__alias_size)], size_t __original_size,
-     const char __original[ZTD_PTR_EXTENT(__original_size)]) ZTD_NOEXCEPT_IF_CXX_I_;
+     const ztd_char_t __alias[ZTD_PTR_EXTENT(__alias_size)], size_t __original_size,
+     const ztd_char_t __original[ZTD_PTR_EXTENT(__original_size)]) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
@@ -531,7 +532,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 //////
 /// @copydoc cnc_registry_add_multi_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_multi(
-     cnc_conversion_registry* __registry, const char* __from, const char* __to,
+     cnc_conversion_registry* __registry, const ztd_char_t* __from, const ztd_char_t* __to,
      cnc_conversion_function* __multi_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
@@ -574,8 +575,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 /// @copydoc cnc_registry_add_multi_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_multi_n(
      cnc_conversion_registry* __registry, size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)],
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)],
      cnc_conversion_function* __multi_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
@@ -615,7 +616,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 //////
 /// @copydoc cnc_registry_add_single_c8
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_single(
-     cnc_conversion_registry* __registry, const char* __from, const char* __to,
+     cnc_conversion_registry* __registry, const ztd_char_t* __from, const ztd_char_t* __to,
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
@@ -657,8 +658,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 /// @copydoc cnc_registry_add_single_c8n
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_single_n(
      cnc_conversion_registry* __registry, size_t __from_size,
-     const char __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
-     const char __to[ZTD_PTR_EXTENT(__to_size)],
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)],
      cnc_conversion_function* __single_conversion_function,
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,

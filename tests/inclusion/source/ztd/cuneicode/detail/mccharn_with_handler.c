@@ -27,39 +27,4 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_STATEMENT_EXPRESSIONS_H
-#define ZTD_CUNEICODE_STATEMENT_EXPRESSIONS_H
-
-#pragma once
-
-#include <ztd/cuneicode/version.h>
-
-#include <ztd/cuneicode.h>
-#include <ztd/cuneicode/result.h>
-
-#include <ztd/idk/size.h>
-
-//////
-/// @addtogroup ztd_cuneicode_statement_expressions Statement Expression-based Convenience Functions
-///
-/// @{
-
-#define cnc_xntoyn(_INPUT_SIZE, _INPUT, _SUFFIX)                  \
-	({                                                           \
-		typeof(_INPUT) __input_ptr          = (_INPUT);         \
-		cnc_single_result(_SUFFIX) __result = { 0 };            \
-		cnc_mcstate_t __state               = { 0 };            \
-		__result.error                      = cnc_cxsntocysn(); \
-		__result;                                               \
-	})
-
-#define cnc_xntomc(_INPUT_SIZE, _INPUT)
-
-#define cnc_Xtomc(_INPUT) cnc_Xntomc(ztdc_c_string_ptr_size(_INPUT), _INPUT)
-
-
-
-//////
-/// @}
-
-#endif
+#include <ztd/cuneicode/detail/mccharn_with_handler.h>

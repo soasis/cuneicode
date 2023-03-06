@@ -52,12 +52,11 @@ then ``ztd.cuneicode`` is for you!
 	:maxdepth: 1
 	:caption: Contents:
 
-	start
 	quick
 	design
 	api
 	definitions
-	known unicode encodings
+	known Unicode encodings
 	future
 	benchmarks
 	license

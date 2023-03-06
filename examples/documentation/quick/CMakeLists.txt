@@ -27,12 +27,5 @@
 #
 # =========================================================================== #
 
-FILE(GLOB_RECURSE ztd.cuneicode.examples.documentation.quick.sources
-	LIST_DIRECTORIES FALSE
-	CONFIGURE_DEPENDS
-	source/**
-)
-
-foreach(example_source_file ${ztd.cuneicode.examples.documentation.quick.sources})
-	ztd_cuneicode_example_simple(${example_source_file} "ztd.cuneicode.examples.documentation.quick")
-endforeach()
+add_subdirectory(basic)
+add_subdirectory(setup)

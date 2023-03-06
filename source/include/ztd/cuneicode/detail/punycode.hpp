@@ -529,7 +529,7 @@ namespace cnc {
 						}
 						// we have no prefix, simply assume the entire input is ASCII.
 						__src -= __pny.__i;
-						__src_len += __pny.__i;
+						__p_src_len[0] += __pny.__i;
 						__p_state->__prefixed = 0u;
 						__p_state->__action_state
 						     = ::cnc::__cnc_detail::__pny_decode_consume_state_has_data;
@@ -600,8 +600,8 @@ namespace cnc {
 					__p_state->__segment_is_digits &= (__is_valid_rle_digit ? 1u : 0u);
 				}
 			}
-			__src_len -= 1;
-			__src += 1;
+			__p_src_len[0] -= 1;
+			__p_src[0] += 1;
 			return cnc_mcerr_ok;
 		}
 

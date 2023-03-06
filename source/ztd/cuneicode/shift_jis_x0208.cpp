@@ -54,7 +54,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 	using code_point = ztd_char32_t;
 	using code_unit  = ztd_char_t;
 
-	_ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(code_point);
+	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(code_point);
 
 	code_point __code = __src[0];
 	if (__code <= 0x80) {
@@ -69,8 +69,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 			__p_maybe_dst[0][0] = static_cast<code_unit>(__code);
 			__p_maybe_dst[0] += 1;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		return cnc_mcerr_ok;
 	}
 	else if (__code == 0x00A5) {
@@ -85,8 +85,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 			__p_maybe_dst[0][0] = static_cast<code_unit>(0x5C);
 			__p_maybe_dst[0] += 1;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		return cnc_mcerr_ok;
 	}
 	else if (__code == 0x203E) {
@@ -101,8 +101,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 			__p_maybe_dst[0][0] = static_cast<code_unit>(0x7E);
 			__p_maybe_dst[0] += 1;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		return cnc_mcerr_ok;
 	}
 	else if (__code >= 0xFF61 && __code <= 0xFF9F) {
@@ -118,8 +118,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 			__p_maybe_dst[0][0]       = static_cast<code_unit>(__intermediate + 0xA1);
 			__p_maybe_dst[0] += 1;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		return cnc_mcerr_ok;
 	}
 
@@ -150,8 +150,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 			__p_maybe_dst[0][1] = static_cast<code_unit>(__second + __second_offset);
 			__p_maybe_dst[0] += 2;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		return cnc_mcerr_ok;
 	}
 
@@ -173,7 +173,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_
 	using code_point = ztd_char32_t;
 	using code_unit  = ztd_char_t;
 
-	_ZTDC_CUNEICODE_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(code_unit);
+	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(code_unit);
 
 	unsigned char __first_byte = static_cast<unsigned char>(__src[0]);
 
@@ -191,8 +191,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_
 			__p_maybe_dst[0][0] = __code;
 			__p_maybe_dst[0] += 1;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		return cnc_mcerr_ok;
 	}
 	else if (__first_byte <= 0xDF && __first_byte >= 0xA1) {
@@ -209,8 +209,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_
 			__p_maybe_dst[0][0] = __code;
 			__p_maybe_dst[0] += 1;
 		}
-		__src += 1;
-		__src_len -= 1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		return cnc_mcerr_ok;
 	}
 	else if ((__first_byte <= 0x9F && __first_byte >= 0x81)
@@ -259,8 +259,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_
 					}
 				}
 			}
-			__src += 2;
-			__src_len -= 2;
+			__p_src[0] += 2;
+			__p_src_len[0] -= 2;
 			return cnc_mcerr_ok;
 		}
 	}

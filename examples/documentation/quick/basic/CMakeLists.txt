@@ -27,26 +27,12 @@
 #
 # =========================================================================== #
 
-# # Tests
-file(GLOB_RECURSE ztd.cuneicode.tests.inclusion_as_c++.sources
+FILE(GLOB_RECURSE ztd.cuneicode.examples.documentation.quick.sources
 	LIST_DIRECTORIES FALSE
 	CONFIGURE_DEPENDS
-	source/*.c source/*.cpp)
+	source/**
+)
 
-add_executable(ztd.cuneicode.tests.inclusion_as_c++ ${ztd.cuneicode.tests.inclusion_as_c++.sources})
-target_compile_options(ztd.cuneicode.tests.inclusion_as_c++
-	PRIVATE
-	${--utf8-literal-encoding}
-	${--utf8-source-encoding}
-	${--disable-permissive}
-	${--updated-cpp-version-flag}
-	${--warn-pedantic}
-	${--warn-all}
-	${--warn-extra}
-	${--warn-errors})
-target_link_libraries(ztd.cuneicode.tests.inclusion_as_c++
-	PRIVATE
-	ztd::cuneicode
-	Catch2::Catch2
-	${CMAKE_DL_LIBS})
-add_test(NAME ztd.cuneicode.tests.inclusion_as_c++ COMMAND ztd.cuneicode.tests.inclusion_as_c++)
+foreach(example_source_file ${ztd.cuneicode.examples.documentation.quick.sources})
+	ztd_cuneicode_example_simple(${example_source_file} "ztd.cuneicode.examples.documentation.quick")
+endforeach()

@@ -51,7 +51,7 @@ namespace cnc {
 
 	namespace __cnc_detail {
 
-		inline constexpr size_t __wchar_t_pointer_size = (sizeof(wchar_t*) * CHAR_BIT);
+		inline constexpr size_t __wchar_t_pointer_size = (sizeof(ztd_wchar_t*) * CHAR_BIT);
 		inline constexpr bool __least64_bit_pointers   = __wchar_t_pointer_size >= 64;
 		inline constexpr bool __least32_bit_pointers   = __wchar_t_pointer_size >= 32;
 

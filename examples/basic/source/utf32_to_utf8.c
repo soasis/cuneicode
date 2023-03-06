@@ -38,7 +38,7 @@
 int main() {
 	const char32_t input_data[] = U"Bark Bark Bark 🐕‍🦺!";
 	char output_data[ztdc_c_array_size(input_data) * 4] = { 0 };
-	cnc_mcstate_t state                                = { 0 };
+	cnc_mcstate_t state                                 = { 0 };
 	// set the "do UB shit if invalid" bit to true
 	cnc_mcstate_set_assume_valid(&state, true);
 	const size_t starting_input_size  = ztdc_c_string_array_size(input_data);
@@ -53,8 +53,8 @@ int main() {
 	const size_t input_read     = starting_input_size - input_size;
 	const size_t output_written = starting_output_size - output_size;
 	const char* const conversion_result_title_str
-	     = (const char*)(has_err ? u8"Conversion failed... 😭"
-	                             : u8"Conversion succeeded 🎉");
+	     = (has_err ? "Conversion failed... \U0001F62D"   // UTF-8 bytes for 😭
+	                : "Conversion succeeded \U0001F389"); // UTF-8 bytes for 🎉
 	const size_t conversion_result_title_str_size
 	     = strlen(conversion_result_title_str);
 	// Use fwrite to prevent conversions / locale-sensitive-probing from

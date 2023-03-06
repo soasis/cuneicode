@@ -27,15 +27,20 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_reuslt_H
-#define ZTD_CUNEICODE_reuslt_H
+#ifndef ZTD_CUNEICODE_RESULT_H
+#define ZTD_CUNEICODE_RESULT_H
 
 #pragma once
 
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/mcerr.h>
+#include <ztd/cuneicode/max_output.h>
+
 #include <ztd/idk/charN_t.h>
+#include <ztd/idk/generic.h>
+#include <ztd/idk/declval.h>
+#include <ztd/idk/typeof.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
@@ -50,12 +55,24 @@
 /// @{
 
 //////
+/// @brief A structure that does not contain the input and output and only the error code and error
+/// count.
+typedef struct cnc_error_result {
+	//////
+	/// @brief The error code.
+	cnc_mcerr error_code;
+	//////
+	/// @brief The number of errors encountered in the input.
+	size_t error_count;
+} cnc_error_result;
+
+//////
 /// @brief A structure for the input and output values of an encoding, decoding, or transcoding
 /// operation using `size_t`-based counts.
 typedef struct cnc_count_result {
 	//////
 	/// @brief The error code.
-	cnc_mcerr error;
+	cnc_mcerr error_code;
 	//////
 	/// @brief The size of the input that was consumed.
 	size_t input_count;
@@ -64,89 +81,43 @@ typedef struct cnc_count_result {
 	size_t output_count;
 } cnc_count_result;
 
-#define ZTD_CNC_SINGLE_RESULT_STRUCT_I_(_NAME, _OUTTYPE, _MAXSIZE) \
-	typedef struct _NAME {                                        \
-		cnc_mcerr error;                                         \
-		size_t input_count;                                      \
-		size_t output_count;                                     \
-		_OUTTYPE output[_MAXSIZE];                               \
+#define ZTD_cnc_xy_single_result_STRUCT_I_(_NAME, _IN_TYPE, _OUT_TYPE, _MAXSIZE) \
+	typedef struct _NAME {                                                      \
+		cnc_mcerr error_code;                                                  \
+		size_t input_count;                                                    \
+		_IN_TYPE const* input;                                                 \
+		size_t output_count;                                                   \
+		_OUT_TYPE output[_MAXSIZE];                                            \
 	} _NAME
 
-#define ZTD_CNC_RESULT_STRUCT_I_(_NAME, _INTYPE, _OUTTYPE) \
-	typedef struct _NAME {                                \
-		cnc_mcerr error;                                 \
-		_INTYPE* input;                                  \
-		_OUTTYPE* output;                                \
+#define ZTD_cnc_xy_result_STRUCT_I_(_NAME, _IN_TYPE, _OUT_TYPE) \
+	typedef struct _NAME {                                     \
+		cnc_mcerr error_code;                                 \
+		size_t input_count;                                   \
+		_IN_TYPE const* input;                                \
+		size_t output_count;                                  \
+		_OUT_TYPE* output;                                    \
 	} _NAME
 
-//////
-/// @brief Produces the expected name out the structure matching the 2 types for the desired name of
-/// the `cnc_*_reuslt` type.
-///
-/// @remarks The affiliation is:
-///
-/// - uc: `unsigned char`
-/// - mc: `char`
-/// - mwc: `wchar_t`
-/// - c8: `char8_t`
-/// - c16: `char16_t`
-/// - c32: `char32_t`
-///
-/// The `unsigned char` / `char8_t` types will technically be identical in C versions, but in C++
-/// `char8_t` is a distinct type. Similarly, `char16_t` and `char32_t` are also typedefs in C, and
-/// so have the very tiny (but not zero) chance of overlapping with other typedefs, meaning it is
-/// not necessarily stable to use _Generic over the inner contents of the input/output of the
-/// structure.
-#define cnc_result(_INNAME, _OUTNAME) cnc_##_INNAME##_OUTNAME##_single_result
+#define ZTD_cnc_xy_single_error_result_STRUCT_I_(_NAME, _IN_TYPE, _OUT_TYPE, _MAXSIZE) \
+	typedef struct _NAME {                                                            \
+		cnc_mcerr error_code;                                                        \
+		size_t error_count;                                                          \
+		size_t input_count;                                                          \
+		_IN_TYPE const* input;                                                       \
+		size_t output_count;                                                         \
+		_OUT_TYPE output[_MAXSIZE];                                                  \
+	} _NAME
 
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(uc, ), unsigned char, unsigned char);
-typedef cnc_result(uc, ) cnc_result(uc, uc);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mc, uc), ztd_char_t, unsigned char);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mwc, uc), ztd_wchar_t, unsigned char);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c8, uc), ztd_char8_t, unsigned char);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c16, uc), ztd_char16_t, unsigned char);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c32, uc), ztd_char32_t, unsigned char);
-
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mc, ), ztd_char_t, ztd_char_t);
-typedef cnc_result(mc, ) cnc_result(mc, mc);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(uc, mc), unsigned char, ztd_char_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mwc, mc), ztd_wchar_t, ztd_char_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c8, mc), ztd_char8_t, ztd_char_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c16, mc), ztd_char16_t, ztd_char_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c32, mc), ztd_char32_t, ztd_char_t);
-
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mwc, ), ztd_wchar_t, ztd_wchar_t);
-typedef cnc_result(mwc, ) cnc_result(mwc, mwc);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(uc, mwc), unsigned char, ztd_wchar_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mc, mwc), ztd_char_t, ztd_wchar_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c8, mwc), ztd_char8_t, ztd_wchar_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c16, mwc), ztd_char16_t, ztd_wchar_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c32, mwc), ztd_char32_t, ztd_wchar_t);
-
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c8, ), ztd_char8_t, ztd_char8_t);
-typedef cnc_result(c8, ) cnc_result(c8, c8);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(uc, c8), unsigned char, ztd_char8_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mc, c8), ztd_char_t, ztd_char8_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mwc, c8), ztd_wchar_t, ztd_char8_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c16, c8), ztd_char16_t, ztd_char8_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c32, c8), ztd_char32_t, ztd_char8_t);
-
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c16, ), ztd_char16_t, ztd_char16_t);
-typedef cnc_result(c16, ) cnc_result(c16, c16);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(uc, c16), unsigned char, ztd_char16_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mc, c16), ztd_char_t, ztd_char16_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mwc, c16), ztd_wchar_t, ztd_char16_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c8, c16), ztd_char8_t, ztd_char16_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c32, c16), ztd_char32_t, ztd_char16_t);
-
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c32, ), ztd_char32_t, ztd_char32_t);
-typedef cnc_result(c32, ) cnc_result(c32, c32);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(uc, c32), unsigned char, ztd_char32_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mc, c32), ztd_char_t, ztd_char32_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(mwc, c32), ztd_wchar_t, ztd_char32_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c8, c32), ztd_char8_t, ztd_char32_t);
-ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c16, c32), ztd_char16_t, ztd_char32_t);
-
+#define ZTD_cnc_xy_error_result_STRUCT_I_(_NAME, _IN_TYPE, _OUT_TYPE) \
+	typedef struct _NAME {                                           \
+		cnc_mcerr error_code;                                       \
+		size_t error_count;                                         \
+		size_t input_count;                                         \
+		_IN_TYPE const* input;                                      \
+		size_t output_count;                                        \
+		_OUT_TYPE* output;                                          \
+	} _NAME
 
 
 //////
@@ -156,27 +127,135 @@ ZTD_CNC_RESULT_STRUCT_I_(cnc_result(c16, c32), ztd_char16_t, ztd_char32_t);
 /// @remarks The affiliation is:
 ///
 /// - uc: `unsigned char`
-/// - mc: `char`
-/// - mwc: `wchar_t`
+/// - mc: `ztd_char_t`
+/// - mwc: `ztd_wchar_t`
 /// - c8: `char8_t`
 /// - c16: `char16_t`
 /// - c32: `char32_t`
 ///
-/// The `unsigned char` / `char8_t` types will technically be identical in C versions, but in C++
-/// `char8_t` is a distinct type. Similarly, `char16_t` and `char32_t` are also typedefs in C, and
-/// so have the very tiny (but not zero) chance of overlapping with other typedefs, meaning it is
-/// not necessarily stable to use _Generic over the inner contents of the input/output of the
-/// structure.
-#define cnc_single_result(_OUTNAME) cnc_##_OUTNAME##_result
+/// The `unsigned char` / `char8_t` types will technically be identical in C versions, but in
+/// C++ `char8_t` is a distinct type. Similarly, `char16_t` and `char32_t` are also typedefs in C,
+/// and so have the very tiny (but not zero) chance of overlapping with other typedefs, meaning it
+/// is not necessarily stable to use ZTDC_CASCADING_GENERIC over the inner contents of the
+/// input/output of the structure.
+#define cnc_xy_single_result(_INNAME, _OUTNAME) cnc_##_INNAME##_OUTNAME##_single_result
+#define cnc_xy_result(_INNAME, _OUTNAME) cnc_##_INNAME##_OUTNAME##_result
 
-ZTD_CNC_SINGLE_RESULT_STRUCT_I_(cnc_single_result(uc), unsigned char, CNC_MC_MAX);
-ZTD_CNC_SINGLE_RESULT_STRUCT_I_(cnc_single_result(mc), ztd_char_t, CNC_MC_MAX);
-ZTD_CNC_SINGLE_RESULT_STRUCT_I_(cnc_single_result(mwc), ztd_wchar_t, CNC_MWC_MAX);
-ZTD_CNC_SINGLE_RESULT_STRUCT_I_(cnc_single_result(c8), ztd_char8_t, CNC_C8_MAX);
-ZTD_CNC_SINGLE_RESULT_STRUCT_I_(cnc_single_result(c16), ztd_char16_t, CNC_C16_MAX);
-ZTD_CNC_SINGLE_RESULT_STRUCT_I_(cnc_single_result(c32), ztd_char32_t, CNC_C32_MAX);
+#define cnc_xy_single_error_result(_INNAME, _OUTNAME) cnc_##_INNAME##_OUTNAME##_single_error_result
+#define cnc_xy_error_result(_INNAME, _OUTNAME) cnc_##_INNAME##_OUTNAME##_error_result
+
+#define ZTD_CNC_ALL_RESULT_STRUCTS_I_(_PREFIX, _SUFFIX, _IN_TYPE, _OUT_TYPE, _MAXSIZE)  \
+	ZTD_cnc_xy_single_result_STRUCT_I_(                                                \
+	     cnc_xy_single_result(_PREFIX, _SUFFIX), _IN_TYPE, _OUT_TYPE, _MAXSIZE);       \
+	ZTD_cnc_xy_result_STRUCT_I_(cnc_xy_result(_PREFIX, _SUFFIX), _IN_TYPE, _OUT_TYPE); \
+	ZTD_cnc_xy_single_error_result_STRUCT_I_(                                          \
+	     cnc_xy_single_error_result(_PREFIX, _SUFFIX), _IN_TYPE, _OUT_TYPE, _MAXSIZE); \
+	ZTD_cnc_xy_error_result_STRUCT_I_(cnc_xy_error_result(_PREFIX, _SUFFIX), _IN_TYPE, _OUT_TYPE)
+
+
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(uc, uc, unsigned char, unsigned char, (CNC_MC_MAX * 2));
+
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mc, mc, ztd_char_t, ztd_char_t, CNC_MC_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mwc, mc, ztd_wchar_t, ztd_char_t, CNC_MC_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c8, mc, ztd_char8_t, ztd_char_t, CNC_MC_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c16, mc, ztd_char16_t, ztd_char_t, CNC_MC_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c32, mc, ztd_char32_t, ztd_char_t, CNC_MC_MAX);
+
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mwc, mwc, ztd_wchar_t, ztd_wchar_t, CNC_MWC_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mc, mwc, ztd_char_t, ztd_wchar_t, CNC_MWC_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c8, mwc, ztd_char8_t, ztd_wchar_t, CNC_MWC_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c16, mwc, ztd_char16_t, ztd_wchar_t, CNC_MWC_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c32, mwc, ztd_char32_t, ztd_wchar_t, CNC_MWC_MAX);
+
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c8, c8, ztd_char8_t, ztd_char8_t, CNC_C8_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mc, c8, ztd_char_t, ztd_char8_t, CNC_C8_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mwc, c8, ztd_wchar_t, ztd_char8_t, CNC_C8_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c16, c8, ztd_char16_t, ztd_char8_t, CNC_C8_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c32, c8, ztd_char32_t, ztd_char8_t, CNC_C8_MAX);
+
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c16, c16, ztd_char16_t, ztd_char16_t, CNC_C16_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mc, c16, ztd_char_t, ztd_char16_t, CNC_C16_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mwc, c16, ztd_wchar_t, ztd_char16_t, CNC_C16_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c8, c16, ztd_char8_t, ztd_char16_t, CNC_C16_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c32, c16, ztd_char32_t, ztd_char16_t, CNC_C16_MAX);
+
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c32, c32, ztd_char32_t, ztd_char32_t, CNC_C32_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mc, c32, ztd_char_t, ztd_char32_t, CNC_C32_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(mwc, c32, ztd_wchar_t, ztd_char32_t, CNC_C32_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c8, c32, ztd_char8_t, ztd_char32_t, CNC_C32_MAX);
+ZTD_CNC_ALL_RESULT_STRUCTS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 
 //////
 /// @}
+
+#define __cnc_single_mc_result(_OUT_TYPE)                               \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_OUT_TYPE), ztd_char_t, \
+	     ZTDC_DECLVAL(cnc_mcmc_single_result), ztd_wchar_t,            \
+	     ZTDC_DECLVAL(cnc_mcmwc_single_result), ztd_char8_t,           \
+	     ZTDC_DECLVAL(cnc_mcc8_single_result), ztd_char16_t,           \
+	     ZTDC_DECLVAL(cnc_mcc16_single_result), ztd_char32_t,          \
+	     ZTDC_DECLVAL(cnc_mcc32_single_result)))
+#define __cnc_single_mwc_result(_OUT_TYPE)                              \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_OUT_TYPE), ztd_char_t, \
+	     ZTDC_DECLVAL(cnc_mwcmc_single_result), ztd_wchar_t,           \
+	     ZTDC_DECLVAL(cnc_mwcmwc_single_result), ztd_char8_t,          \
+	     ZTDC_DECLVAL(cnc_mwcc8_single_result), ztd_char16_t,          \
+	     ZTDC_DECLVAL(cnc_mwcc16_single_result), ztd_char32_t,         \
+	     ZTDC_DECLVAL(cnc_mwcc32_single_result)))
+#define __cnc_single_c8_result(_OUT_TYPE)                               \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_OUT_TYPE), ztd_char_t, \
+	     ZTDC_DECLVAL(cnc_c8mc_single_result), ztd_wchar_t,            \
+	     ZTDC_DECLVAL(cnc_c8mwc_single_result), ztd_char8_t,           \
+	     ZTDC_DECLVAL(cnc_c8c8_single_result), ztd_char16_t,           \
+	     ZTDC_DECLVAL(cnc_c8c16_single_result), ztd_char32_t,          \
+	     ZTDC_DECLVAL(cnc_c8c32_single_result)))
+#define __cnc_single_c16_result(_OUT_TYPE)                              \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_OUT_TYPE), ztd_char_t, \
+	     ZTDC_DECLVAL(cnc_c16mc_single_result), ztd_wchar_t,           \
+	     ZTDC_DECLVAL(cnc_c16mwc_single_result), ztd_char8_t,          \
+	     ZTDC_DECLVAL(cnc_c16c8_single_result), ztd_char16_t,          \
+	     ZTDC_DECLVAL(cnc_c16c16_single_result), ztd_char32_t,         \
+	     ZTDC_DECLVAL(cnc_c16c32_single_result)))
+#define __cnc_single_c32_result(_OUT_TYPE)                              \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_OUT_TYPE), ztd_char_t, \
+	     ZTDC_DECLVAL(cnc_c32mc_single_result), ztd_wchar_t,           \
+	     ZTDC_DECLVAL(cnc_c32mwc_single_result), ztd_char8_t,          \
+	     ZTDC_DECLVAL(cnc_c32c8_single_result), ztd_char16_t,          \
+	     ZTDC_DECLVAL(cnc_c32c16_single_result), ztd_char32_t,         \
+	     ZTDC_DECLVAL(cnc_c32c32_single_result)))
+
+
+#define cnc_xy_single_result_type(_IN_TYPE, _OUT_TYPE)                    \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_IN_TYPE), ztd_char_t,    \
+	     ZTDC_DECLVAL(__cnc_single_mc_result(_OUT_TYPE)), ztd_wchar_t,   \
+	     ZTDC_DECLVAL(__cnc_single_mwc_result(_OUT_TYPE)), ztd_char8_t,  \
+	     ZTDC_DECLVAL(__cnc_single_c8_result(_OUT_TYPE)), ztd_char16_t,  \
+	     ZTDC_DECLVAL(__cnc_single_c16_result(_OUT_TYPE)), ztd_char32_t, \
+	     ZTDC_DECLVAL(__cnc_single_c32_result(_OUT_TYPE))))
+
+#define cnc_xy_result_type(_IN_TYPE, _OUT_TYPE)                        \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_IN_TYPE), ztd_char_t, \
+	     ZTDC_DECLVAL(__cnc_mc_result(_OUT_TYPE)), ztd_wchar_t,       \
+	     ZTDC_DECLVAL(__cnc_mwc_result(_OUT_TYPE)), ztd_char8_t,      \
+	     ZTDC_DECLVAL(__cnc_c8_result(_OUT_TYPE)), ztd_char16_t,      \
+	     ZTDC_DECLVAL(__cnc_c16_result(_OUT_TYPE)), ztd_char32_t,     \
+	     ZTDC_DECLVAL(__cnc_c32_result(_OUT_TYPE))))
+
+#define cnc_xy_single_error_result_type(_IN_TYPE, _OUT_TYPE)                    \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_IN_TYPE), ztd_char_t,          \
+	     ZTDC_DECLVAL(__cnc_mc_single_error_result(_OUT_TYPE)), ztd_wchar_t,   \
+	     ZTDC_DECLVAL(__cnc_mwc_single_error_result(_OUT_TYPE)), ztd_char8_t,  \
+	     ZTDC_DECLVAL(__cnc_c8_single_error_result(_OUT_TYPE)), ztd_char16_t,  \
+	     ZTDC_DECLVAL(__cnc_c16_single_error_result(_OUT_TYPE)), ztd_char32_t, \
+	     ZTDC_DECLVAL(__cnc_c32_single_error_result(_OUT_TYPE))))
+
+#define cnc_xy_error_result_type(_IN_TYPE, _OUT_TYPE)                    \
+	typeof(ZTDC_CASCADING_GENERIC(ZTDC_DECLVAL(_IN_TYPE), ztd_char_t,   \
+	     ZTDC_DECLVAL(__cnc_mc_error_result(_OUT_TYPE)), ztd_wchar_t,   \
+	     ZTDC_DECLVAL(__cnc_mwc_error_result(_OUT_TYPE)), ztd_char8_t,  \
+	     ZTDC_DECLVAL(__cnc_c8_error_result(_OUT_TYPE)), ztd_char16_t,  \
+	     ZTDC_DECLVAL(__cnc_c16_error_result(_OUT_TYPE)), ztd_char32_t, \
+	     ZTDC_DECLVAL(__cnc_c32_error_result(_OUT_TYPE))))
+
 
 #endif

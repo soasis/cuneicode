@@ -114,17 +114,17 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 
 #define UTF_CONVERT_DEFINITION(                                                                                 \
      FROM_N, TO_N, FROM_BIG_SUFFIX, FROM_LIL_SUFFIX, TO_BIG_SUFFIX, TO_LIL_SUFFIX)                              \
-	static cnc_mcerr simdutf_utf##FROM_N##_to_utf##TO_N##_convert(cnc_conversion*,                           \
+	static cnc_mcerr simdutf_utf##FROM_N##_to_utf##TO_N##_convert(cnc_conversion*,                             \
 	     size_t* p_output_bytes_size, unsigned char** p_output_bytes, size_t* p_input_bytes_size,              \
 	     const unsigned char** p_input_bytes, cnc_pivot_info*, void* erased_state) {                           \
 		using from_char_t = std::conditional_t<FROM_N == 8, char, ztd_char##FROM_N##_t>;                      \
 		using to_char_t   = std::conditional_t<TO_N == 8, char, ztd_char##TO_N##_t>;                          \
 		if (p_input_bytes == nullptr || *p_input_bytes == nullptr) {                                          \
-			return cnc_mcerr_ok;                                                                           \
+			return cnc_mcerr_ok;                                                                             \
 		}                                                                                                     \
 		ZTD_ASSERT(p_input_bytes_size != nullptr);                                                            \
 		if (*p_input_bytes_size == 0) {                                                                       \
-			return cnc_mcerr_ok;                                                                           \
+			return cnc_mcerr_ok;                                                                             \
 		}                                                                                                     \
 		cnc_mcstate_t* state              = mcstate_get(erased_state);                                        \
 		const unsigned char*& input_bytes = *p_input_bytes;                                                   \
@@ -148,7 +148,7 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 				input_bytes += input_bytes_size;                                                            \
 				input_bytes_size = 0;                                                                       \
 				*p_output_bytes -= output_written * sizeof(to_char_t);                                      \
-				return cnc_mcerr_ok;                                                                      \
+				return cnc_mcerr_ok;                                                                        \
 			}                                                                                                \
 			else {                                                                                           \
 				simdutf::result result = ztd::endian::native == ztd::endian::big                            \
@@ -166,7 +166,7 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 					input_bytes += input_bytes_size;                                                       \
 					input_bytes_size = 0;                                                                  \
 					*p_output_bytes -= result.count * sizeof(to_char_t);                                   \
-					return cnc_mcerr_ok;                                                                 \
+					return cnc_mcerr_ok;                                                                   \
 				}                                                                                           \
 			}                                                                                                \
 		}                                                                                                     \
@@ -186,8 +186,8 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 			size_t output_size                                                                               \
 			     = is_unbounded_write ? 0 : *p_output_bytes_size / sizeof(to_char_t);                        \
 			size_t input_size = *p_input_bytes_size / sizeof(from_char_t);                                   \
-			cnc_mcerr err   = cnc_c##FROM_N##sntoc##TO_N##sn(                                              \
-			       is_unbounded_write ? &output_size : nullptr, &output, &input_size, &input);               \
+			cnc_mcerr err     = cnc_c##FROM_N##sntoc##TO_N##sn(                                              \
+                    is_unbounded_write ? &output_size : nullptr, &output, &input_size, &input);             \
 			if (!is_unbounded_write) {                                                                       \
 				*p_output_bytes_size = output_size * sizeof(to_char_t);                                     \
 			}                                                                                                \
@@ -203,11 +203,11 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 				size_t& output_bytes_size = *p_output_bytes_size;                                           \
 				const size_t write_size   = ztd::endian::native == ztd::endian::big                         \
 				       ? simdutf::utf##TO_N##_length_from_utf##FROM_N##FROM_BIG_SUFFIX(                     \
-				            (const from_char_t*)input_bytes,                                                \
-				            input_bytes_size / sizeof(const from_char_t))                                   \
+                              (const from_char_t*)input_bytes,                                                \
+                              input_bytes_size / sizeof(const from_char_t))                                   \
 				       : simdutf::utf##TO_N##_length_from_utf##FROM_N##FROM_BIG_SUFFIX(                     \
-				            (const from_char_t*)input_bytes,                                                \
-				            input_bytes_size / sizeof(const from_char_t));                                  \
+                              (const from_char_t*)input_bytes,                                                \
+                              input_bytes_size / sizeof(const from_char_t));                                  \
 				[[maybe_unused]] const size_t write_byte_size                                               \
 				     = (write_size * sizeof(to_char_t));                                                    \
 				ZTD_ASSERT(write_byte_size <= output_bytes_size);                                           \
@@ -215,7 +215,7 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 			}                                                                                                \
 			input_bytes += input_bytes_size;                                                                 \
 			input_bytes_size -= input_bytes_size;                                                            \
-			return cnc_mcerr_ok;                                                                           \
+			return cnc_mcerr_ok;                                                                             \
 		}                                                                                                     \
 		else {                                                                                                \
 			const size_t initial_write_size = ztd::endian::native == ztd::endian::big                        \
@@ -246,7 +246,7 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 				}                                                                                           \
 				input_bytes += input_bytes_size;                                                            \
 				input_bytes_size -= input_bytes_size;                                                       \
-				return cnc_mcerr_ok;                                                                      \
+				return cnc_mcerr_ok;                                                                        \
 			}                                                                                                \
 		}                                                                                                     \
                                                                                                                 \
@@ -255,8 +255,8 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 		const ztd_char##FROM_N##_t* input = (ztd_char##FROM_N##_t*)*p_input_bytes;                            \
 		size_t output_size = is_unbounded_write ? 0 : *p_output_bytes_size / sizeof(to_char_t);               \
 		size_t input_size  = *p_input_bytes_size / sizeof(from_char_t);                                       \
-		cnc_mcerr err    = cnc_c##FROM_N##sntoc##TO_N##sn(                                                  \
-		        is_unbounded_write ? &output_size : nullptr, &output, &input_size, &input);                   \
+		cnc_mcerr err      = cnc_c##FROM_N##sntoc##TO_N##sn(                                                  \
+               is_unbounded_write ? &output_size : nullptr, &output, &input_size, &input);                 \
 		if (!is_unbounded_write) {                                                                            \
 			*p_output_bytes_size = output_size * sizeof(to_char_t);                                          \
 		}                                                                                                     \

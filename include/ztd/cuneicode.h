@@ -37,10 +37,12 @@
 #include <ztd/cuneicode/conv.h>
 #include <ztd/cuneicode/mcchar.h>
 #include <ztd/cuneicode/mcchar_named.h>
+#include <ztd/cuneicode/mcchar_generic.h>
 #include <ztd/cuneicode/mcerr.h>
 #include <ztd/cuneicode/mcstate.h>
 #include <ztd/cuneicode/detection.h>
 #include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/error_handler.h>
 
 #include <ztd/idk/charN_t.h>
 

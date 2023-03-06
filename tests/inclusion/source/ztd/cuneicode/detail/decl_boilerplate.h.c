@@ -27,4 +27,4 @@
 //
 // ========================================================================= //
 
-#include <ztd/cuneicode/detail/mccharsn.h>
+#include <ztd/cuneicode/detail/decl_boilerplate.h>
