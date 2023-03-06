@@ -48,7 +48,7 @@ size_t count_utf16_from_utf8(size_t str_n, const ztd_char8_t str[]) {
 }
 
 bool unbounded_conversion_utf16_from_utf8(
-     size_t str_n, const ztd_char8_t str[], char16_t* dest_str) {
+     size_t str_n, const ztd_char8_t str[], ztd_char16_t* dest_str) {
 	cnc_mcstate_t state = { 0 };
 	cnc_mcerr err       = cnc_c8snrtoc16sn(NULL, &dest_str, &str_n, &str, &state);
 	return err == cnc_mcerr_ok;
@@ -65,7 +65,7 @@ int main() {
 		return 1;
 	}
 
-	char16_t utf16_str[CNC_C16_MAX * ztdc_c_array_size(str)];
+	ztd_char16_t utf16_str[CNC_C16_MAX * ztdc_c_array_size(str)];
 	const size_t utf16_str_max_size = ztdc_c_array_size(utf16_str);
 	size_t utf16_str_n              = count_utf16_from_utf8(str_n, str);
 	if (utf16_str_max_size < utf16_str_n) {

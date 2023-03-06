@@ -91,8 +91,8 @@ int main(int, char*[]) {
 		const ztd_char8_t* from_data   = from_code.data();
 		std::size_t to_size            = to_code.size();
 		const ztd_char8_t* to_data     = to_code.data();
-		cnc_open_err err = cnc_conv_new_c8n(registry.get(), from_size,
-		     from_data, to_size, to_data, &raw_conversion, &info);
+		cnc_open_err err = cnc_conv_new_c8n(registry.get(), from_size, from_data,
+		     to_size, to_data, &raw_conversion, &info);
 		if (err != cnc_open_err_ok) {
 			std::cerr << "[error] Could not open a conversion from \""
 			          << from_code << "\" to \"" << to_code << "\"."
@@ -129,8 +129,8 @@ Soon, the gossips about strange visitors started. The Visitors protect life, and
 		size_t input_size          = ztdc_c_string_array_size(utf8_text);
 		const size_t initial_output_byte_size = SIZE_MAX;
 		size_t output_byte_size               = initial_output_byte_size;
-		cnc_mcerr err                       = cnc_conv_count(
-		                           conversion.get(), &output_byte_size, &input_size, &input);
+		cnc_mcerr err                         = cnc_conv_count(
+               conversion.get(), &output_byte_size, &input_size, &input);
 		if (err != cnc_mcerr_ok) {
 			std::cerr << "[error] Could not perform counting operation on "
 			             "input data from \""
@@ -151,9 +151,9 @@ Soon, the gossips about strange visitors started. The Visitors protect life, and
 	ZTD_ASSERT(err == cnc_mcerr_ok);
 	ZTD_ASSERT(output_size == 0);
 	// write out as a hex sequence
-	const char16_t* it = (const char16_t*)output_buffer.data();
-	const char16_t* last
-	     = (const char16_t*)(output_buffer.data() + output_buffer.size());
+	const ztd_char16_t* it = (const ztd_char16_t*)output_buffer.data();
+	const ztd_char16_t* last
+	     = (const ztd_char16_t*)(output_buffer.data() + output_buffer.size());
 	std::cout << "[info] UTF-16 Result as a Hexadecimal Sequence:" << std::endl;
 	for (; it != last;) {
 		std::cout << "0x" << std::hex << static_cast<int>(*it);
