@@ -35,7 +35,7 @@
 
 #include <ztd/idk/encoding_detection.h>
 
-ZTD_EXTERN_C_I_ ZTD_EXTERN_IF_C_I_ cnc_skip_input_and_replace_error_cxntocyn_t
+ZTD_EXTERN_C_I_ cnc_skip_input_and_replace_error_cxntocyn_t
      cnc_skip_input_and_replace_error_cxntocyn
      = { 0 };
 

@@ -34,7 +34,7 @@
 
 #include <ztd/idk/encoding_detection.h>
 
-ZTD_EXTERN_C_I_ ZTD_EXTERN_IF_C_I_ cnc_replace_error_cxntocyn_t cnc_replace_error_cxntocyn = { 0 };
+ZTD_EXTERN_C_I_ cnc_replace_error_cxntocyn_t cnc_replace_error_cxntocyn = { 0 };
 
 // to_mcn
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_replace_error_c32ntomcn(
