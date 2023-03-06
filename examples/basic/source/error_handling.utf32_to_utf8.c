@@ -36,15 +36,15 @@
 #include <string.h>
 
 int main() {
-	const char32_t input_data[] = U"Bark Bark Bark \xFFFFFFFF🐕‍🦺!";
-	unsigned char output_data[ztdc_c_array_size(input_data) * CNC_C8_MAX] = { 0 };
-	cnc_mcstate_t state                                                   = { 0 };
+	const ztd_char32_t input_data[] = U"Bark Bark Bark \xFFFFFFFF🐕‍🦺!";
+	ztd_char8_t output_data[ztdc_c_array_size(input_data) * CNC_C8_MAX] = { 0 };
+	cnc_mcstate_t state                                                 = { 0 };
 	const size_t starting_input_size  = ztdc_c_string_array_size(input_data);
 	size_t input_size                 = starting_input_size;
-	const char32_t* input             = input_data;
+	const ztd_char32_t* input         = input_data;
 	const size_t starting_output_size = ztdc_c_array_size(output_data);
 	size_t output_size                = starting_output_size;
-	unsigned char* output             = output_data;
+	ztd_char8_t* output               = output_data;
 	cnc_error_result err_result
 	     = cnc_cxsnrtocysn_with_handler(&output_size, &output, &input_size,
 	          &input, &state, cnc_skip_input_and_replace_error_cxntocyn, NULL);

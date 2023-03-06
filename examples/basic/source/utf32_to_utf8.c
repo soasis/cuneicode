@@ -36,14 +36,14 @@
 #include <string.h>
 
 int main() {
-	const char32_t input_data[] = U"Bark Bark Bark 🐕‍🦺!";
+	const ztd_char32_t input_data[] = U"Bark Bark Bark 🐕‍🦺!";
 	char output_data[ztdc_c_array_size(input_data) * 4] = { 0 };
 	cnc_mcstate_t state                                 = { 0 };
 	// set the "do UB shit if invalid" bit to true
 	cnc_mcstate_set_assume_valid(&state, true);
 	const size_t starting_input_size  = ztdc_c_string_array_size(input_data);
 	size_t input_size                 = starting_input_size;
-	const char32_t* input             = input_data;
+	const ztd_char32_t* input         = input_data;
 	const size_t starting_output_size = ztdc_c_array_size(output_data);
 	size_t output_size                = starting_output_size;
 	char* output                      = output_data;
