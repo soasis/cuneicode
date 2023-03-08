@@ -100,7 +100,7 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		check_compiler_flag(extra-constexpr-depth MSVC /constexpr:depth2147483647 GCC -fconstexpr-depth=2147483647 Clang -fconstexpr-depth=2147483647)
 		check_compiler_flag(extra-constexpr-steps MSVC /constexpr:steps2147483647 GCC -fconstexpr-ops-limit=2147483647 Clang -fconstexpr-steps=2147483647)
 		check_compiler_flag(enable-conforming-preprocessor MSVC /Zc:preprocessor)
-		check_compiler_flag(template-debugging-mode GCC -ftemplate-backtrace-limit=0)
+		check_compiler_flag(template-debugging-mode GCC -ftemplate-backtrace-limit=0 Clang -fdoesnotexist GCC -fdoesnotexist)
 
 		# Warning flags
 		check_compiler_flag(warn-pedantic MSVC /permissive- GCC -pedantic)
