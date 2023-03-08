@@ -99,6 +99,7 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		check_compiler_flag(utf8-source-encoding MSVC /source-charset:utf-8 GCC -finput-charset=utf-8)
 		check_compiler_flag(extra-constexpr-depth MSVC /constexpr:depth2147483647 GCC -fconstexpr-depth=2147483647 Clang -fconstexpr-depth=2147483647)
 		check_compiler_flag(extra-constexpr-steps MSVC /constexpr:steps2147483647 GCC -fconstexpr-ops-limit=2147483647 Clang -fconstexpr-steps=2147483647)
+		check_compiler_flag(enable-conforming-preprocessor MSVC /Zc:preprocessor)
 		check_compiler_flag(template-debugging-mode GCC -ftemplate-backtrace-limit=0)
 
 		# Warning flags
@@ -182,6 +183,9 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		${--warn-errors}
 	)
 endif()
+target_compile_options(ztd.cuneicode PUBLIC
+	${--enable-conforming-preprocessor}
+)
 
 install(DIRECTORY include/
 	DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
@@ -271,6 +275,7 @@ if(ZTD_CUNEICODE_SCRATCH)
 		${--warn-all}
 		${--warn-extra}
 		${--warn-errors}
-		)
+		${--enable-conforming-preprocessor}
+	)
 	target_compile_features(scratch PRIVATE cxx_std_20)
 endif()
