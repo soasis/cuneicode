@@ -89,17 +89,17 @@ typedef struct cnc_conversion_heap {
 	/// the returned allocated pointer. The original pointer cannot be used.
 	cnc_reallocate_function* reallocate;
 	//////
-	/// @brief The allocation expanding function. It takes the original allocation, the amount to
-	/// expand the allocation by to its left (descending, lowest memory order) and right
-	/// (ascending, highest memory order), the original pointer, and the original size alongside a
-	/// userdata point. It returns the new pointer and writes out the new size.
-	cnc_allocation_expand_function* shrink;
-	//////
 	/// @brief The allocation shrink function. It takes the original allocation, the amount to
 	/// shrink the allocation by to its left (descending, lowest memory order) and right
 	/// (ascending, highest memory order), the original pointer, and the original size alongside a
 	/// userdata point. It returns the new pointer and writes out the new size.
-	cnc_allocation_shrink_function* expand;
+	cnc_allocation_shrink_function* shrink;
+	//////
+	/// @brief The allocation expanding function. It takes the original allocation, the amount to
+	/// expand the allocation by to its left (descending, lowest memory order) and right
+	/// (ascending, highest memory order), the original pointer, and the original size alongside a
+	/// userdata point. It returns the new pointer and writes out the new size.
+	cnc_allocation_expand_function* expand;
 	//////
 	/// @brief The allocation deallocate function. It takes the original pointer, its size, its
 	/// alignment, and a userdata passed in during heap creation.
