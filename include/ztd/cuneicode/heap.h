@@ -318,7 +318,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_shrink_all
 /// @param[in] __alignment The alignment of the given pointer. Not necessarily required in all cases
 /// for all allocators, but must be provided by the user.
 ///
-/// @remarks The allocation must have come from this heap. If it is does, then it is an error and
+/// @remarks The allocation must have come from this heap. If it does, then it is an error and
 /// the behavior after such an error is committed is undefined. The memory region of the bytes
 /// denoted by [`__ptr`, `__ptr + __ptr_size`) can no longer be accessed after this function
 /// returns; doing so is an error and the behavior after such an error is committed is undefined.
