@@ -34,7 +34,7 @@
 #include <cstdlib>
 #include <cstring>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ char __heap_magic_value = 0;
+char __heap_magic_value = 0;
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_allocate(
      size_t __requested_size, size_t __alignment, size_t* __p_actual_size,
