@@ -28,8 +28,47 @@
 ..
 .. ========================================================================= ..
 
-``cnc_conversion_heap``
-=======================
+Conversion Heap and Functions
+=============================
+
+For the type-erased, registry-based conversions, a heap is used to perform all allocations to ensure the end-user is in control of how much memory is ultimately used, even if they do not have full control over the type-erased data structures. To this end, the :cpp:class:`cnc_conversion_heap` is used, and it is described below in the convenience functions which will pass through the designated ``user_data`` and similar to the specified heap's given functionality.
+
+The default heap uses ``malloc``, ``free``, and ``realloc`` for its implementation, ignoring related alignment and user data parameters. It also performs no attempted shrinking or expanding of any given allocation, single ignoring all parameters and following the specification for performing no action.
+
+
+
+Function Calls
+--------------
+
+.. doxygenfunction:: cnc_heap_allocate
+
+.. doxygenfunction:: cnc_heap_deallocate
+
+.. doxygenfunction:: cnc_heap_reallocate_allocation
+
+.. doxygenfunction:: cnc_heap_expand_allocation
+
+.. doxygenfunction:: cnc_heap_shrink_allocation
+
+
+
+Heap Object
+-----------
 
 .. doxygenstruct:: cnc_conversion_heap
 	:members:
+
+
+
+Types
+-----
+
+.. doxygentypedef:: cnc_heap_allocate_function
+
+.. doxygentypedef:: cnc_heap_deallocate_function
+
+.. doxygentypedef:: cnc_heap_reallocate_allocation_function
+
+.. doxygentypedef:: cnc_heap_expand_allocation_function
+
+.. doxygentypedef:: cnc_heap_shrink_allocation_function

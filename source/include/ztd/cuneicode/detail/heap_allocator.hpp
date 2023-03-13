@@ -90,9 +90,9 @@ namespace cnc {
 				size_type __requested_number_of_bytes
 				     = __requested_number_of_elements * sizeof(value_type);
 				size_type __actual_number_of_bytes;
-				__underlying_pointer __ptr = this->__p_heap->allocate(
-				     __requested_number_of_bytes, static_cast<size_type>(this->alignment()),
-				     &__actual_number_of_bytes, this->__p_heap->user_data);
+				__underlying_pointer __ptr
+				     = cnc_heap_allocate(this->__p_heap, __requested_number_of_bytes,
+				          static_cast<size_type>(this->alignment()), &__actual_number_of_bytes);
 				if (__ptr == nullptr) {
 					throw std::bad_alloc();
 				}
@@ -102,9 +102,8 @@ namespace cnc {
 			void deallocate(pointer __original, size_type __original_number_of_elements) {
 				size_type __original_number_of_bytes
 				     = __original_number_of_elements * sizeof(value_type);
-				__p_heap->deallocate(__underlying_pointer(__original),
-				     __original_number_of_bytes, static_cast<size_type>(this->alignment()),
-				     this->__p_heap->user_data);
+				cnc_heap_deallocate(this->__p_heap, __underlying_pointer(__original),
+				     __original_number_of_bytes, static_cast<size_type>(this->alignment()));
 			}
 
 			friend bool operator==(

@@ -124,7 +124,7 @@ struct __path_key_deleter {
 		constexpr size_t alignment = static_cast<size_t>(
 		     ::cnc::__cnc_detail::__heap_allocator<ztd_char8_t>::alignment());
 		unsigned char* untyped_ptr = static_cast<unsigned char*>(static_cast<void*>(__ptr));
-		__heap->deallocate(untyped_ptr, __key_size, alignment, __heap->user_data);
+		cnc_heap_deallocate(this->__heap, untyped_ptr, __key_size, alignment);
 	}
 };
 

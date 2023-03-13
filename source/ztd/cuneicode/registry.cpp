@@ -254,8 +254,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 	}
 	::cnc::__cnc_detail::__align(alignof(cnc_conversion_registry), sizeof(cnc_conversion_registry),
 	     __target, __available_space, __necessary_space);
-	__target = static_cast<void*>(__p_heap->allocate(
-	     __necessary_space, alignof(cnc_conversion_registry), &__used_space, __p_heap->user_data));
+	__target = static_cast<void*>(cnc_heap_allocate(
+	     __p_heap, __necessary_space, alignof(cnc_conversion_registry), &__used_space));
 	if (__target == nullptr) {
 		return cnc_open_err_allocation_failure;
 	}
