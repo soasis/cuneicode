@@ -67,7 +67,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
 
-	_ZTDC_SINGLE_BYTE_ENCODING_BYTE_TO_CODE_POINT(
+	_ZTDC_CUNEICODE_SINGLE_BYTE_ENCODING_BYTE_TO_CODE_POINT(
 	     ztd_char_t, ztd_char32_t, ::ztd::et::kazakh_strk1048_index_to_code_point);
 }
 

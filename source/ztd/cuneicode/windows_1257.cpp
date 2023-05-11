@@ -50,7 +50,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
 
-	_ZTDC_CUNEICODE_SINGLE_BYTE_ENCODING_CODE_POINT_TO_BYTE(
+	_ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_CODE_POINT_TO_BYTE(
 	     ztd_char32_t, ztd_char_t, ::ztd::et::windows_1257_code_point_to_index);
 }
 
@@ -67,7 +67,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
 
-	_ZTDC_SINGLE_BYTE_ENCODING_BYTE_TO_CODE_POINT(
+	_ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_BYTE_TO_CODE_POINT(
 	     ztd_char_t, ztd_char32_t, ::ztd::et::windows_1257_index_to_code_point);
 }
 

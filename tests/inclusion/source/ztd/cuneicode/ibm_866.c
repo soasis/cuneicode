@@ -27,4 +27,4 @@
 //
 // ========================================================================= //
 
-#include <ztd/cuneicode/ibm_866.h>
+#include <ztd/cuneicode/ibm_866_cyrillic.h>

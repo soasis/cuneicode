@@ -952,11 +952,18 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	_ADD_MCN_NAMED_ENCODING("windows-1257", windows_1257);
 	_ADD_MCN_NAMED_ENCODING("windows-1258", windows_1258);
 
-	_ADD_MCN_NAMED_ENCODING("ibm-866", ibm_866);
+	_ADD_MCN_NAMED_ENCODING("ibm-424", ibm_424_hebrew_bulletin);
+	_ADD_MCN_NAMED_ENCODING("ibm-856", ibm_856_hebrew);
+	_ADD_MCN_NAMED_ENCODING("ibm-866", ibm_866_cyrillic);
+	_ADD_MCN_NAMED_ENCODING("ibm-1006", ibm_1006_urdu);
 
-	_ADD_MCN_NAMED_ENCODING("tatar-ansi", tatar_ansi);
-	_ADD_MCN_NAMED_ENCODING("tatar-ascii", tatar_ascii);
-	_ADD_MCN_NAMED_ENCODING("kazakh_strk1048", tatar_ascii);
+	_ADD_MCN_NAMED_ENCODING("atari st", atari_st);
+
+	_ADD_MCN_NAMED_ENCODING("koi8-u", koi8_u);
+
+	_ADD_MCN_NAMED_ENCODING("tatar ansi", tatar_ansi);
+	_ADD_MCN_NAMED_ENCODING("tatar ascii", tatar_ascii);
+	_ADD_MCN_NAMED_ENCODING("kazakh strk1048", tatar_ascii);
 
 	_ADD_MCN_NAMED_ENCODING_BASIC("punycode", punycode, cnc_pny_decode_state_t,
 	     &cnc_pny_decode_state_is_complete, cnc_pny_encode_state_t,

@@ -61,7 +61,7 @@ typedef void*(cnc_heap_allocate_function)(size_t __requested_size, size_t __alig
 /// @brief A heap deallocate function type. For a description of the parameters, see
 /// @ref cnc_heap_deallocate.
 typedef void(cnc_heap_deallocate_function)(
-     void* __ptr, size_t __ptr_size, size_t __alignment, void* __user_data) ZTD_NOEXCEPT_IF_CXX_I_;
+     void* __ptr, size_t __ptr_size, size_t __alignment, void* __user_data);
 
 //////
 /// @brief A heap reallocate function type. For a description of the parameters, see

@@ -34,8 +34,9 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/big5_hkscs.h>
 #include <ztd/cuneicode/amiga_1251.h>
+#include <ztd/cuneicode/atari_st.h>
+#include <ztd/cuneicode/big5_hkscs.h>
 #include <ztd/cuneicode/ascii.h>
 #include <ztd/cuneicode/euc_cn.h>
 #include <ztd/cuneicode/euc_jp.h>
@@ -43,7 +44,10 @@
 #include <ztd/cuneicode/euc_tw.h>
 #include <ztd/cuneicode/gbk.h>
 #include <ztd/cuneicode/gb18030.h>
-#include <ztd/cuneicode/ibm_866.h>
+#include <ztd/cuneicode/ibm_424_hebrew_bulletin.h>
+#include <ztd/cuneicode/ibm_856_hebrew.h>
+#include <ztd/cuneicode/ibm_866_cyrillic.h>
+#include <ztd/cuneicode/ibm_1006_urdu.h>
 #include <ztd/cuneicode/iso_8859_13.h>
 #include <ztd/cuneicode/iso_8859_14.h>
 #include <ztd/cuneicode/iso_arabic.h>

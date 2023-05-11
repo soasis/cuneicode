@@ -191,7 +191,7 @@ namespace cnc {
 		}                                                                        \
 	}
 
-#define _ZTDC_CUNEICODE_SINGLE_BYTE_ENCODING_CODE_POINT_TO_BYTE(                       \
+#define _ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_CODE_POINT_TO_BYTE(        \
      _SRC_TYPE, _DEST_TYPE, _BYTE_LOOKUP_FUNC)                                         \
 	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE);                             \
                                                                                        \
@@ -210,8 +210,8 @@ namespace cnc {
 			__p_maybe_dst[0][0] = (_DEST_TYPE)*__src;                               \
 			__p_maybe_dst[0] += 1;                                                  \
 		}                                                                            \
-		__p_src[0] +=1;                                                                  \
-		__p_src_len[0] -=1;                                                              \
+		__p_src[0] += 1;                                                             \
+		__p_src_len[0] -= 1;                                                         \
 		return cnc_mcerr_ok;                                                         \
 	}                                                                                 \
                                                                                        \
@@ -229,14 +229,14 @@ namespace cnc {
 			__p_maybe_dst[0][0] = (_DEST_TYPE)__code_unit0;                         \
 			__p_maybe_dst[0] += 1;                                                  \
 		}                                                                            \
-		__p_src[0] +=1;                                                                  \
-		__p_src_len[0] -=1;                                                              \
+		__p_src[0] += 1;                                                             \
+		__p_src_len[0] -= 1;                                                         \
 		return cnc_mcerr_ok;                                                         \
 	}                                                                                 \
                                                                                        \
 	return cnc_mcerr_invalid_sequence;
 
-#define _ZTDC_SINGLE_BYTE_ENCODING_BYTE_TO_CODE_POINT(                               \
+#define _ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_BYTE_TO_CODE_POINT(      \
      _SRC_TYPE, _DEST_TYPE, _CODE_POINT_LOOKUP_FUNC)                                 \
 	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(char);                                \
                                                                                      \
@@ -254,8 +254,8 @@ namespace cnc {
 			__p_maybe_dst[0][0] = (ztd_char32_t)*__src;                           \
 			__p_maybe_dst[0] += 1;                                                \
 		}                                                                          \
-		__p_src[0] +=1;                                                                \
-		__p_src_len[0] -=1;                                                            \
+		__p_src[0] += 1;                                                           \
+		__p_src_len[0] -= 1;                                                       \
 		return cnc_mcerr_ok;                                                       \
 	}                                                                               \
                                                                                      \
@@ -274,11 +274,67 @@ namespace cnc {
 			__p_maybe_dst[0][0] = (_DEST_TYPE)__code_point;                       \
 			__p_maybe_dst[0] += 1;                                                \
 		}                                                                          \
-		__p_src[0] +=1;                                                                \
-		__p_src_len[0] -=1;                                                            \
+		__p_src[0] += 1;                                                           \
+		__p_src_len[0] -= 1;                                                       \
 		return cnc_mcerr_ok;                                                       \
 	}                                                                               \
                                                                                      \
+	return cnc_mcerr_invalid_sequence;
+
+#define _ZTDC_CUNEICODE_SINGLE_BYTE_ENCODING_CODE_POINT_TO_BYTE(                       \
+     _SRC_TYPE, _DEST_TYPE, _BYTE_LOOKUP_FUNC)                                         \
+	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE);                             \
+                                                                                       \
+	const _SRC_TYPE __code_point      = (*__src);                                     \
+	const ztd_char32_t __code_point32 = (ztd_char32_t)__code_point;                   \
+                                                                                       \
+	::std::optional<::std::size_t> __maybe_index = _BYTE_LOOKUP_FUNC(__code_point32); \
+	if (__maybe_index) {                                                              \
+		const ::std::size_t __index      = *__maybe_index;                           \
+		const unsigned char __code_unit0 = (unsigned char)(__index);                 \
+		if (!_IsUnbounded) {                                                         \
+			if (__p_maybe_dst_len[0] < 1) {                                         \
+				return cnc_mcerr_insufficient_output;                              \
+			}                                                                       \
+			__p_maybe_dst_len[0] -= 1;                                              \
+		}                                                                            \
+		if (!_IsCounting) {                                                          \
+			__p_maybe_dst[0][0] = (_DEST_TYPE)__code_unit0;                         \
+			__p_maybe_dst[0] += 1;                                                  \
+		}                                                                            \
+		__p_src[0] += 1;                                                             \
+		__p_src_len[0] -= 1;                                                         \
+		return cnc_mcerr_ok;                                                         \
+	}                                                                                 \
+                                                                                       \
+	return cnc_mcerr_invalid_sequence;
+
+#define _ZTDC_CUNEICODE_SINGLE_BYTE_ENCODING_BYTE_TO_CODE_POINT(                 \
+     _SRC_TYPE, _DEST_TYPE, _CODE_POINT_LOOKUP_FUNC)                             \
+	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(char);                            \
+                                                                                 \
+	const unsigned char __code_unit0 = ((unsigned char)*__src);                 \
+                                                                                 \
+	::std::size_t __lookup_index = static_cast<::std::size_t>(__code_unit0);    \
+	::std::optional<::std::uint_least32_t> __maybe_code_point                   \
+	     = _CODE_POINT_LOOKUP_FUNC(__lookup_index);                             \
+	if (__maybe_code_point) {                                                   \
+		const ztd_char32_t __code_point = (ztd_char32_t)(*__maybe_code_point); \
+		if (!_IsUnbounded) {                                                   \
+			if (__p_maybe_dst_len[0] < 1) {                                   \
+				return cnc_mcerr_insufficient_output;                        \
+			}                                                                 \
+			__p_maybe_dst_len[0] -= 1;                                        \
+		}                                                                      \
+		if (!_IsCounting) {                                                    \
+			__p_maybe_dst[0][0] = (_DEST_TYPE)__code_point;                   \
+			__p_maybe_dst[0] += 1;                                            \
+		}                                                                      \
+		__p_src[0] += 1;                                                       \
+		__p_src_len[0] -= 1;                                                   \
+		return cnc_mcerr_ok;                                                   \
+	}                                                                           \
+                                                                                 \
 	return cnc_mcerr_invalid_sequence;
 
 	} // namespace __cnc_detail
