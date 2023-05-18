@@ -42,6 +42,7 @@
 #include <ztd/cuneicode/detail/conversion.hpp>
 #include <ztd/cuneicode/detail/registry.hpp>
 #include <ztd/cuneicode/detail/buffer_size.h>
+#include <ztd/cuneicode/detail/always_complete.hpp>
 
 #include <ztd/idk/hash.hpp>
 #include <ztd/idk/size.hpp>
@@ -936,13 +937,20 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	     &::__basic_close_function<cnc_mcstate_t>))
 
 	_ADD_MCN_NAMED_ENCODING("ascii", ascii);
-
-	_ADD_MCN_NAMED_ENCODING("shift-jis-x0208", shift_jis_x0208);
+	_ADD_MCN_NAMED_ENCODING("atari st", atari_st);
+	_ADD_MCN_NAMED_ENCODING("atascii", atascii);
 
 	_ADD_MCN_NAMED_ENCODING("gbk", gbk);
 	_ADD_MCN_NAMED_ENCODING("big5-hkscs", big5_hkscs);
 	_ADD_MCN_NAMED_ENCODING("gb18030", gb18030);
 
+	_ADD_MCN_NAMED_ENCODING("kazakh strk1048", tatar_ascii);
+	_ADD_MCN_NAMED_ENCODING("koi8-u", koi8_u);
+	_ADD_MCN_NAMED_ENCODING("koi8-r", koi8_r);
+
+	_ADD_MCN_NAMED_ENCODING("windows-473", windows_1251);
+	_ADD_MCN_NAMED_ENCODING("windows-874", windows_1251);
+	_ADD_MCN_NAMED_ENCODING("windows-1251", windows_1251);
 	_ADD_MCN_NAMED_ENCODING("windows-1251", windows_1251);
 	_ADD_MCN_NAMED_ENCODING("windows-1252", windows_1252);
 	_ADD_MCN_NAMED_ENCODING("windows-1253", windows_1253);
@@ -957,14 +965,29 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	_ADD_MCN_NAMED_ENCODING("ibm-866", ibm_866_cyrillic);
 	_ADD_MCN_NAMED_ENCODING("ibm-1006", ibm_1006_urdu);
 
-	_ADD_MCN_NAMED_ENCODING("atari st", atari_st);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-1-1985", iso_8859_1_1985);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-1-1998", iso_8859_1_1998);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-1", iso_8859_1);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-2", iso_8859_2);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-3", iso_8859_3);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-4", iso_8859_4);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-5", iso_8859_5);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-6", iso_8859_6);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-7", iso_8859_7);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-8", iso_8859_8);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-10", iso_8859_10);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-13", iso_8859_13);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-14", iso_8859_14);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-15", iso_8859_15);
+	_ADD_MCN_NAMED_ENCODING("iso-8859-16", iso_8859_16);
 
-	_ADD_MCN_NAMED_ENCODING("koi8-u", koi8_u);
-
+	_ADD_MCN_NAMED_ENCODING("shift-jis-x0208", shift_jis_x0208);
 	_ADD_MCN_NAMED_ENCODING("tatar ansi", tatar_ansi);
 	_ADD_MCN_NAMED_ENCODING("tatar ascii", tatar_ascii);
-	_ADD_MCN_NAMED_ENCODING("kazakh strk1048", tatar_ascii);
 
+	_ADD_MCN_NAMED_ENCODING_BASIC("petscii", petscii, cnc_petscii_state_t,
+	     &::cnc::__cnc_detail::__always_complete<cnc_petscii_state_t>, cnc_petscii_state_t,
+	     &::cnc::__cnc_detail::__always_complete<cnc_petscii_state_t>);
 	_ADD_MCN_NAMED_ENCODING_BASIC("punycode", punycode, cnc_pny_decode_state_t,
 	     &cnc_pny_decode_state_is_complete, cnc_pny_encode_state_t,
 	     &cnc_pny_encode_state_is_complete);

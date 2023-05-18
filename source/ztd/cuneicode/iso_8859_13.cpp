@@ -33,6 +33,8 @@
 #include <ztd/cuneicode/max_output.h>
 #include <ztd/cuneicode/detail/transcode.hpp>
 
+#include <ztd/encoding_tables/iso_8859_13.tables.hpp>
+
 #include <memory>
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32ntomcn_iso_8859_13(
@@ -46,13 +48,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32ntomcn_i
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_iso_8859_13(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
-     const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
-	(void)__p_maybe_dst_len;
-	(void)__p_maybe_dst;
-	(void)__p_src_len;
-	(void)__p_src;
-	(void)__p_state;
-	return cnc_mcerr_invalid_sequence;
+     const ztd_char32_t** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
+	_ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_BYTE_TO_CODE_POINT(
+	     ztd_char32_t, ztd_char_t, ::ztd::et::iso_8859_13_index_to_code_point);
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcntoc32n_iso_8859_13(
@@ -66,13 +64,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcntoc32n_i
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_iso_8859_13(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
-     const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
-	(void)__p_maybe_dst_len;
-	(void)__p_maybe_dst;
-	(void)__p_src_len;
-	(void)__p_src;
-	(void)__p_state;
-	return cnc_mcerr_invalid_sequence;
+     const char** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
+	_ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_CODE_POINT_TO_BYTE(
+	     ztd_char_t, ztd_char32_t, ::ztd::et::iso_8859_13_code_point_to_index);
 }
 
 

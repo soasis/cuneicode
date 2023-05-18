@@ -33,7 +33,7 @@ Punycode/Punycode (IDNA)
 
 Punycode is a Bootstring Encoding, using configuration and parameters for the Bootstring Algorithm described in `RFC3492 <https://www.rfc-editor.org/rfc/rfc3492>`_. Furthermore, there is an IDNA variant that prepends `"xn--"` to Unicode strings during encoding, and removes it during decoding (and otherwise does nothing). It uses custom states to manage the encodings.
 
-Famously, Punycode is used for both Rust ABI identifier name mangling and in DNS for making Unicode names ASCII-only and clearly-marked as Unicode.
+Famously, Punycode is used for both Rust ABI identifier name mangling and in DNS for making Unicode names ASCII-only and clearly-marked as being derived from non-ASCII characters.
 
 .. doxygenstruct:: cnc_pny_decode_state_t
 

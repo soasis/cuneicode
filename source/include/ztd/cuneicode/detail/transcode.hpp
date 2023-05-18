@@ -238,7 +238,7 @@ namespace cnc {
 
 #define _ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_BYTE_TO_CODE_POINT(      \
      _SRC_TYPE, _DEST_TYPE, _CODE_POINT_LOOKUP_FUNC)                                 \
-	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(char);                                \
+	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE);                           \
                                                                                      \
 	const unsigned char __code_unit0 = ((unsigned char)*__src);                     \
                                                                                      \
@@ -251,7 +251,7 @@ namespace cnc {
 			__p_maybe_dst_len[0] -= 1;                                            \
 		}                                                                          \
 		if (!_IsCounting) {                                                        \
-			__p_maybe_dst[0][0] = (ztd_char32_t)*__src;                           \
+			__p_maybe_dst[0][0] = (_DEST_TYPE)*__src;                             \
 			__p_maybe_dst[0] += 1;                                                \
 		}                                                                          \
 		__p_src[0] += 1;                                                           \
@@ -311,7 +311,7 @@ namespace cnc {
 
 #define _ZTDC_CUNEICODE_SINGLE_BYTE_ENCODING_BYTE_TO_CODE_POINT(                 \
      _SRC_TYPE, _DEST_TYPE, _CODE_POINT_LOOKUP_FUNC)                             \
-	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(char);                            \
+	_CNC_BOILERPLATE_NULLPTR_AND_EMPTY_CHECKS(_SRC_TYPE);                       \
                                                                                  \
 	const unsigned char __code_unit0 = ((unsigned char)*__src);                 \
                                                                                  \
