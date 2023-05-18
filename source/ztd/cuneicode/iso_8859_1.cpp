@@ -107,14 +107,16 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_
 			return cnc_mcerr_insufficient_output;
 		}
 	}
-	ztd_char_t __c0 = *__src;
-	if (static_cast<unsigned char>(__c0) > 0xFFu) {
+	ztd_char_t __c0                           = *__src;
+	unsigned char __uc0                       = static_cast<unsigned char>(__c0);
+	constexpr unsigned char __stop_warning_me = 0xFFu;
+	if (__uc0 > __stop_warning_me) {
 		return cnc_mcerr_invalid_sequence;
 	}
 	__p_src[0] += 1;
 	__p_src_len[0] -= 1;
 	if (!_IsCounting) {
-		**__p_maybe_dst = static_cast<ztd_char32_t>(__c0);
+		**__p_maybe_dst = static_cast<ztd_char32_t>(__uc0);
 		*__p_maybe_dst += 1;
 	}
 	if (!_IsUnbounded) {
