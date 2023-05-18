@@ -68,15 +68,8 @@
 #include <ztd/cuneicode/kazakh_strk1048.h>
 #include <ztd/cuneicode/koi8_r.h>
 #include <ztd/cuneicode/koi8_u.h>
-#include <ztd/cuneicode/latin1.h>
-#include <ztd/cuneicode/latin2.h>
-#include <ztd/cuneicode/latin3.h>
-#include <ztd/cuneicode/latin4.h>
-#include <ztd/cuneicode/latin5.h>
-#include <ztd/cuneicode/latin6.h>
-#include <ztd/cuneicode/latin9.h>
 #include <ztd/cuneicode/mac_roman.h>
-#include <ztd/cuneicode/mac_ukrainian.h>
+#include <ztd/cuneicode/mac_cyrillic.h>
 #include <ztd/cuneicode/petscii.h>
 #include <ztd/cuneicode/petscii_shifted.h>
 #include <ztd/cuneicode/petscii_unshifted.h>

@@ -29,84 +29,78 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/mac_ukrainian.h>
+#include <ztd/cuneicode/mac_cyrillic.h>
 #include <ztd/cuneicode/max_output.h>
 #include <ztd/cuneicode/detail/transcode.hpp>
 
+#include <ztd/encoding_tables/mac_cyrillic.tables.hpp>
+
 #include <memory>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32ntomcn_mac_ukrainian(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32ntomcn_mac_cyrillic(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state    = {};
 	cnc_mcstate_t* __p_state = ::std::addressof(__state);
-	return cnc_c32nrtomcn_mac_ukrainian(
+	return cnc_c32nrtomcn_mac_cyrillic(
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_mac_ukrainian(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_mac_cyrillic(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
-     const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
-	(void)__p_maybe_dst_len;
-	(void)__p_maybe_dst;
-	(void)__p_src_len;
-	(void)__p_src;
-	(void)__p_state;
-	return cnc_mcerr_invalid_sequence;
+     const ztd_char32_t** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
+	_ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_BYTE_TO_CODE_POINT(
+	     ztd_char32_t, ztd_char_t, ::ztd::et::mac_cyrillic_index_to_code_point);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcntoc32n_mac_ukrainian(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcntoc32n_mac_cyrillic(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state    = {};
 	cnc_mcstate_t* __p_state = ::std::addressof(__state);
-	return cnc_mcnrtoc32n_mac_ukrainian(
+	return cnc_mcnrtoc32n_mac_cyrillic(
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_mac_ukrainian(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_mac_cyrillic(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
-     const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
-	(void)__p_maybe_dst_len;
-	(void)__p_maybe_dst;
-	(void)__p_src_len;
-	(void)__p_src;
-	(void)__p_state;
-	return cnc_mcerr_invalid_sequence;
+     const char** __p_src, cnc_mcstate_t*) ZTD_NOEXCEPT_IF_CXX_I_ {
+	_ZTDC_CUNEICODE_SINGLE_ASCII_BYTE_HIGH_BIT_ENCODING_CODE_POINT_TO_BYTE(
+	     ztd_char_t, ztd_char32_t, ::ztd::et::mac_cyrillic_code_point_to_index);
 }
 
 
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32sntomcsn_mac_ukrainian(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32sntomcsn_mac_cyrillic(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state    = {};
 	cnc_mcstate_t* __p_state = ::std::addressof(__state);
-	return cnc_c32snrtomcsn_mac_ukrainian(
+	return cnc_c32snrtomcsn_mac_cyrillic(
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32snrtomcsn_mac_ukrainian(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32snrtomcsn_mac_cyrillic(
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
-	     __p_state, CNC_MC_MAX, decltype(&cnc_c32nrtomcn_mac_ukrainian),
-	     &cnc_c32nrtomcn_mac_ukrainian, ztd_char32_t, ztd_char_t);
+	     __p_state, CNC_MC_MAX, decltype(&cnc_c32nrtomcn_mac_cyrillic),
+	     &cnc_c32nrtomcn_mac_cyrillic, ztd_char32_t, ztd_char_t);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsntoc32sn_mac_ukrainian(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsntoc32sn_mac_cyrillic(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {
 	cnc_mcstate_t __state    = {};
 	cnc_mcstate_t* __p_state = ::std::addressof(__state);
-	return cnc_mcsnrtoc32sn_mac_ukrainian(
+	return cnc_mcsnrtoc32sn_mac_cyrillic(
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsnrtoc32sn_mac_ukrainian(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsnrtoc32sn_mac_cyrillic(
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
-	     __p_state, CNC_MC_MAX, decltype(&cnc_mcnrtoc32n_mac_ukrainian),
-	     &cnc_mcnrtoc32n_mac_ukrainian, ztd_char_t, ztd_char32_t);
+	     __p_state, CNC_MC_MAX, decltype(&cnc_mcnrtoc32n_mac_cyrillic),
+	     &cnc_mcnrtoc32n_mac_cyrillic, ztd_char_t, ztd_char32_t);
 }

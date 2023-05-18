@@ -944,21 +944,10 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	_ADD_MCN_NAMED_ENCODING("big5-hkscs", big5_hkscs);
 	_ADD_MCN_NAMED_ENCODING("gb18030", gb18030);
 
-	_ADD_MCN_NAMED_ENCODING("kazakh strk1048", tatar_ascii);
+	_ADD_MCN_NAMED_ENCODING("kamenicky", kamenicky);
+	_ADD_MCN_NAMED_ENCODING("kazakh strk1048", kazakh_strk1048);
 	_ADD_MCN_NAMED_ENCODING("koi8-u", koi8_u);
 	_ADD_MCN_NAMED_ENCODING("koi8-r", koi8_r);
-
-	_ADD_MCN_NAMED_ENCODING("windows-473", windows_1251);
-	_ADD_MCN_NAMED_ENCODING("windows-874", windows_1251);
-	_ADD_MCN_NAMED_ENCODING("windows-1251", windows_1251);
-	_ADD_MCN_NAMED_ENCODING("windows-1251", windows_1251);
-	_ADD_MCN_NAMED_ENCODING("windows-1252", windows_1252);
-	_ADD_MCN_NAMED_ENCODING("windows-1253", windows_1253);
-	_ADD_MCN_NAMED_ENCODING("windows-1254", windows_1254);
-	_ADD_MCN_NAMED_ENCODING("windows-1255", windows_1255);
-	_ADD_MCN_NAMED_ENCODING("windows-1256", windows_1257);
-	_ADD_MCN_NAMED_ENCODING("windows-1257", windows_1257);
-	_ADD_MCN_NAMED_ENCODING("windows-1258", windows_1258);
 
 	_ADD_MCN_NAMED_ENCODING("ibm-424", ibm_424_hebrew_bulletin);
 	_ADD_MCN_NAMED_ENCODING("ibm-856", ibm_856_hebrew);
@@ -981,9 +970,23 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	_ADD_MCN_NAMED_ENCODING("iso-8859-15", iso_8859_15);
 	_ADD_MCN_NAMED_ENCODING("iso-8859-16", iso_8859_16);
 
+	_ADD_MCN_NAMED_ENCODING("mac_roman", mac_roman);
+	_ADD_MCN_NAMED_ENCODING("mac-cyrillic", mac_cyrillic);
 	_ADD_MCN_NAMED_ENCODING("shift-jis-x0208", shift_jis_x0208);
 	_ADD_MCN_NAMED_ENCODING("tatar ansi", tatar_ansi);
 	_ADD_MCN_NAMED_ENCODING("tatar ascii", tatar_ascii);
+
+	_ADD_MCN_NAMED_ENCODING("windows-473", windows_1251);
+	_ADD_MCN_NAMED_ENCODING("windows-874", windows_1251);
+	_ADD_MCN_NAMED_ENCODING("windows-1251", windows_1251);
+	_ADD_MCN_NAMED_ENCODING("windows-1251", windows_1251);
+	_ADD_MCN_NAMED_ENCODING("windows-1252", windows_1252);
+	_ADD_MCN_NAMED_ENCODING("windows-1253", windows_1253);
+	_ADD_MCN_NAMED_ENCODING("windows-1254", windows_1254);
+	_ADD_MCN_NAMED_ENCODING("windows-1255", windows_1255);
+	_ADD_MCN_NAMED_ENCODING("windows-1256", windows_1257);
+	_ADD_MCN_NAMED_ENCODING("windows-1257", windows_1257);
+	_ADD_MCN_NAMED_ENCODING("windows-1258", windows_1258);
 
 	_ADD_MCN_NAMED_ENCODING_BASIC("petscii", petscii, cnc_petscii_state_t,
 	     &::cnc::__cnc_detail::__always_complete<cnc_petscii_state_t>, cnc_petscii_state_t,

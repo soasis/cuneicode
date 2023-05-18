@@ -27,4 +27,4 @@
 //
 // ========================================================================= //
 
-#include <ztd/cuneicode/latin1.h>
+#include <ztd/cuneicode/mac_cyrillic.h>
