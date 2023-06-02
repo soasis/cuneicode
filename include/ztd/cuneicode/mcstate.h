@@ -178,8 +178,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assu
 /// @brief Gets the internal state for the cnc_mcstate_t object representing its current "assume
 /// valid" state.
 ///
-/// @param[in,out] __state The state to turn validity on for.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_get_assume_valid(
+/// @param[in,out] __state The state to return validity on for.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_assuming_valid(
      const cnc_mcstate_t* __state);
 
 //////

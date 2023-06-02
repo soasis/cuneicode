@@ -131,7 +131,7 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 		size_t& input_bytes_size          = *p_input_bytes_size;                                              \
 		const bool is_counting_only   = p_output_bytes == nullptr || *p_output_bytes == nullptr;              \
 		const bool is_unbounded_write = p_output_bytes_size == nullptr;                                       \
-		const bool assume_valid       = cnc_mcstate_get_assume_valid(state);                                  \
+		const bool assume_valid       = cnc_mcstate_is_assuming_valid(state);                                  \
 		if (!is_counting_only && is_unbounded_write) {                                                        \
 			if (assume_valid) {                                                                              \
 				size_t output_written = ztd::endian::native == ztd::endian::big                             \

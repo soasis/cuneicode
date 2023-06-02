@@ -937,11 +937,13 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	     &::__basic_close_function<cnc_mcstate_t>))
 
 	_ADD_MCN_NAMED_ENCODING("ascii", ascii);
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "ANSI_X3.4-1968", "ascii"));
 	_ADD_MCN_NAMED_ENCODING("atari st", atari_st);
 	_ADD_MCN_NAMED_ENCODING("atascii", atascii);
 
 	_ADD_MCN_NAMED_ENCODING("gbk", gbk);
 	_ADD_MCN_NAMED_ENCODING("big5-hkscs", big5_hkscs);
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "big5", "big5-hkscs"));
 	_ADD_MCN_NAMED_ENCODING("gb18030", gb18030);
 
 	_ADD_MCN_NAMED_ENCODING("kamenicky", kamenicky);
@@ -971,9 +973,16 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	_ADD_MCN_NAMED_ENCODING("iso-8859-16", iso_8859_16);
 
 	_ADD_MCN_NAMED_ENCODING("mac_roman", mac_roman);
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "x-mac-roman", "mac-roman"));
 	_ADD_MCN_NAMED_ENCODING("mac-cyrillic", mac_cyrillic);
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "x-mac-cyrillic", "mac-cyrillic"));
 	_ADD_MCN_NAMED_ENCODING("shift-jis-x0208", shift_jis_x0208);
+	// Shift_JIS aliases to the one available in the WHATWG datbase first and foremost
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "shift-jis", "shift-jis-x0208"));
+
 	_ADD_MCN_NAMED_ENCODING("tatar ansi", tatar_ansi);
+	// Tatar aliases to the ANSI version by-default
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "tatar", "tatar-ansi"));
 	_ADD_MCN_NAMED_ENCODING("tatar ascii", tatar_ascii);
 
 	_ADD_MCN_NAMED_ENCODING("windows-473", windows_1251);
@@ -1004,10 +1013,6 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	     __registry, ::cnc::__cnc_detail::__wide_alias(), ::cnc::__cnc_detail::__wide_name()));
 	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias_c8(
 	     __registry, ::cnc::__cnc_detail::__exec_alias(), ::cnc::__cnc_detail::__exec_name()));
-	// Tatar aliases to the ANSI version by-default
-	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "tatar", "tatar-ansi"));
-	// Shift_JIS aliases to the one available in the WHATWG datbase first and foremost
-	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "shift-jis", "shift-jis-x0208"));
 
 #undef _ADD_MCN_NAMED_ENCODING
 #undef _ADD_MCN_NAMED_ENCODING_BASIC

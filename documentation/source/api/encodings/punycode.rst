@@ -35,9 +35,10 @@ Punycode is a Bootstring Encoding, using configuration and parameters for the Bo
 
 Famously, Punycode is used for both Rust ABI identifier name mangling and in DNS for making Unicode names ASCII-only and clearly-marked as being derived from non-ASCII characters.
 
-.. doxygenstruct:: cnc_pny_decode_state_t
 
-.. doxygenstruct:: cnc_pny_encode_state_t
+
+Transcoding Functions
+---------------------
 
 .. doxygenfunction:: cnc_mcnrtoc32n_punycode
 
@@ -46,3 +47,37 @@ Famously, Punycode is used for both Rust ABI identifier name mangling and in DNS
 .. doxygenfunction:: cnc_mcsnrtoc32sn_punycode
 
 .. doxygenfunction:: cnc_c32snrtomcsn_punycode
+
+
+
+State Type
+----------
+
+.. doxygenstruct:: cnc_pny_decode_state_t
+
+.. doxygenstruct:: cnc_pny_encode_state_t
+
+
+
+State Functions
+---------------
+
+.. doxygenfunction:: cnc_pny_decode_state_set_input_incomplete
+
+.. doxygenfunction:: cnc_pny_encode_state_set_input_incomplete
+
+.. doxygenfunction:: cnc_pny_decode_state_set_input_complete
+
+.. doxygenfunction:: cnc_pny_encode_state_set_input_complete
+
+.. doxygenfunction:: cnc_pny_decode_state_is_input_complete
+
+.. doxygenfunction:: cnc_pny_encode_state_is_input_complete
+
+.. doxygenfunction:: cnc_pny_decode_state_set_assume_valid
+
+.. doxygenfunction:: cnc_pny_encode_state_set_assume_valid
+
+.. doxygenfunction:: cnc_pny_decode_state_is_assuming_valid
+
+.. doxygenfunction:: cnc_pny_encode_state_is_assuming_valid

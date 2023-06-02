@@ -38,7 +38,7 @@
 #include <memory>
 #include <cstring>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_get_assume_valid(
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_assuming_valid(
      const cnc_mcstate_t* __state) {
 	if (__state == nullptr) {
 		return false;

@@ -73,13 +73,16 @@ typedef struct cnc_pny_encode_state_t {
 	size_t __is_initialized : 1;
 	//////
 	/// @brief Private. Do not access.
+	size_t __assume_valid : 1;
+	//////
+	/// @brief Private. Do not access.
 	size_t __idna : 1;
 	//////
 	/// @brief Private. Do not access.
 	size_t __action_state : 2;
 	//////
 	/// @brief Private. Do not access.
-	size_t __padding : (sizeof(size_t) * CHAR_BIT) - 6;
+	size_t __padding : (sizeof(size_t) * CHAR_BIT) - 7;
 	//////
 	/// @brief Private. Do not access.
 	size_t __has_seen_non_basic;
@@ -102,6 +105,9 @@ typedef struct cnc_pny_decode_state_t {
 	size_t input_is_complete : 1;
 	//////
 	/// @brief Private. Do not access.
+	size_t __assume_valid : 1;
+	//////
+	/// @brief Private. Do not access.
 	size_t __is_initialized : 1;
 	//////
 	/// @brief Private. Do not access.
@@ -117,7 +123,7 @@ typedef struct cnc_pny_decode_state_t {
 	size_t __action_state : 2;
 	//////
 	/// @brief Private. Do not access.
-	size_t __padding : (sizeof(size_t) * CHAR_BIT) - 7;
+	size_t __padding : (sizeof(size_t) * CHAR_BIT) - 8;
 	//////
 	/// @brief Private. Do not access.
 	alignas(void*) unsigned char __storage[(sizeof(void*) * 3) + (256 * sizeof(char))
@@ -128,7 +134,7 @@ typedef struct cnc_pny_decode_state_t {
 /// @brief Returns whether or not the given cnc_pny_encode_state_t has no more data that needs to be
 /// output.
 ///
-/// @param[in] __state The state to inspect
+/// @param[in] __state The state to inspect.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_complete(
      const cnc_pny_encode_state_t* __state);
 
@@ -136,25 +142,81 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state
 /// @brief Returns whether or not the given cnc_pny_decode_state_t has no more data that needs to be
 /// output.
 ///
-/// @param[in] __state The state to inspect
+/// @param[in] __state The state to inspect.
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_complete(
+     const cnc_pny_decode_state_t* __state);
+
+//////
+/// @brief Tells the state that input should still be expected.
+///
+/// @param[in, out] __state The state to remove the expectation that input is complete from.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_input_complete(
+     cnc_pny_encode_state_t* __state);
+
+//////
+/// @brief Tells the state that input should still be expected.
+///
+/// @param[in, out] __state The state to remove the expectation that input is complete from.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void
+cnc_pny_decode_state_set_input_incomplete(cnc_pny_decode_state_t* __state);
+
+//////
+/// @brief Tells the state that input should still be expected.
+///
+/// @param[in, out] __state The state to turn off its current completion state.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void
+cnc_pny_encode_state_set_input_incomplete(cnc_pny_encode_state_t* __state);
+
+//////
+/// @brief Returns whether or not the given cnc_pny_decode_state_t is expecting anymore input.
+///
+/// @param[in, out] __state The state to trigger the completion on.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_input_complete(
+     cnc_pny_decode_state_t* __state);
+
+//////
+/// @brief Returns whether or not the given cnc_pny_encode_state_t is expecting anymore input.
+///
+/// @param[in, out] __state The state to inspect.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_input_complete(
+     const cnc_pny_encode_state_t* __state);
+
+//////
+/// @brief Returns whether or not the given cnc_pny_decode_state_t is expecting anymore input.
+///
+/// @param[in, out] __state The state to to inspect.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_input_complete(
      const cnc_pny_decode_state_t* __state);
 
 //////
 /// @brief Returns whether or not the given cnc_pny_encode_state_t has no more data that needs to be
 /// output.
 ///
-/// @param[in, out] __state The state to trigger the completion on.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_input_complete(
-     cnc_pny_encode_state_t* __state);
+/// @param[in, out] __state The state to make operations assume the input is valid.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_assume_valid(
+     cnc_pny_encode_state_t* __state, bool __value);
 
 //////
 /// @brief Returns whether or not the given cnc_pny_decode_state_t has no more data that needs to be
 /// output.
 ///
-/// @param[in, out] __state The state to trigger the completion on.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_input_complete(
-     cnc_pny_decode_state_t* __state);
+/// @param[in, out] __state The state to make operations assume the input is valid.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_assume_valid(
+     cnc_pny_decode_state_t* __state, bool __value);
+
+//////
+/// @brief Returns whether or not the given cnc_pny_encode_state_t is assuming input data is valid.
+///
+/// @param[in, out] __state The state to inspect.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_assuming_valid(
+     const cnc_pny_encode_state_t* __state);
+
+//////
+/// @brief Returns whether or not the given cnc_pny_decode_state_t  is assuming input data is valid.
+///
+/// @param[in, out] __state The state to inspect.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_assuming_valid(
+     const cnc_pny_decode_state_t* __state);
 
 //////
 /// @}
