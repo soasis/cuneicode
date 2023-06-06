@@ -63,12 +63,12 @@ Heap Object
 Types
 -----
 
-.. doxygentypedef:: cnc_heap_allocate_function
+.. doxygentypedef:: cnc_heap_allocate_function_ptr
 
-.. doxygentypedef:: cnc_heap_deallocate_function
+.. doxygentypedef:: cnc_heap_deallocate_function_ptr
 
-.. doxygentypedef:: cnc_heap_reallocate_allocation_function
+.. doxygentypedef:: cnc_heap_reallocate_allocation_function_ptr
 
-.. doxygentypedef:: cnc_heap_expand_allocation_function
+.. doxygentypedef:: cnc_heap_expand_allocation_function_ptr
 
-.. doxygentypedef:: cnc_heap_shrink_allocation_function
+.. doxygentypedef:: cnc_heap_shrink_allocation_function_ptr

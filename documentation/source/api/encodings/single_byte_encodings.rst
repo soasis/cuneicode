@@ -31,10 +31,18 @@
 Single Byte Encodings
 =====================
 
-Here's a list of named function functions that are effectively single-byte encodings, driven by simple algorithms or table-based lookup. The descriptions for these encodings with matching names can be found at `the ztd.text single encoding documentation <https://ztdtext.readthedocs.io/en/latest/api/encodings/single_byte_encoding.html>`_.
+Here's a list of named function functions that are effectively single-byte encodings, driven by simple algorithms or table-based lookup. The descriptions for these encodings with matching names can be found at `the ztd.text single byte encoding documentation <https://ztdtext.readthedocs.io/en/latest/api/encodings/single_byte_encoding.html>`_.
 
 Known Named Encoding Functions
 ------------------------------
+
+.. doxygenfunction:: cnc_mcnrtoc32n_ascii
+
+.. doxygenfunction:: cnc_c32nrtomcn_ascii
+
+.. doxygenfunction:: cnc_mcsnrtoc32sn_ascii
+
+.. doxygenfunction:: cnc_c32snrtomcsn_ascii
 
 .. doxygenfunction:: cnc_mcnrtoc32n_atari_st
 
@@ -43,6 +51,14 @@ Known Named Encoding Functions
 .. doxygenfunction:: cnc_mcsnrtoc32sn_atari_st
 
 .. doxygenfunction:: cnc_c32snrtomcsn_atari_st
+
+.. doxygenfunction:: cnc_mcnrtoc32n_atascii
+
+.. doxygenfunction:: cnc_c32nrtomcn_atascii
+
+.. doxygenfunction:: cnc_mcsnrtoc32sn_atascii
+
+.. doxygenfunction:: cnc_c32snrtomcsn_atascii
 
 .. doxygenfunction:: cnc_mcnrtoc32n_ibm_424_hebrew_bulletin
 

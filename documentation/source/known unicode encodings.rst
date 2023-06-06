@@ -31,6 +31,6 @@
 Known Unicode Encodings
 =======================
 
-The list of known Unicode encodings is identical to the one found in a consuming project for C++ called ztd.cuneicode. That list can be `found here <https://ztdtext.readthedocs.io/en/latest/known%20unicode%20encodings.html>`_.
+The list of known Unicode encodings is identical to the one found in a consuming project for C++ called ztd.text. That list can be `found here <https://ztdtext.readthedocs.io/en/latest/known%20unicode%20encodings.html>`_.
 
 The known Unicode encodings are important because they are evaluated before all other candidates as an intermediate in the service of performing an indirect encoding conversion; not every Unicode encoding is given such an elevated status, though. Only the encodings listed on the :doc:`indirect conversion desing documentation</design/registry/indirect>` are given the elevated encoding status and checked before all else: otherwise, the order of finding and the priority of picking such an indirect conversion is unspecified. A stronger guarantee can be made by using the select-based functions when opening a :doc:`cuneicode conversion routine in the registry </api/registry conversion handles>`.

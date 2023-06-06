@@ -28,13 +28,7 @@
 ..
 .. ========================================================================= ..
 
-🔨 Benchmarks (In Progress)
-===========================
+Benchmarks
+==========
 
-.. warning::
-
-	|unfinished_warning|
-
-It's probably fine for now.
-
-Probably!
+All benchmarks are done in conjunction with the `ztd.text library, and can be found there <https://ztdtext.readthedocs.io/en/latest/benchmarks.html>`_.
