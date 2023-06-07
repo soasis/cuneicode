@@ -31,6 +31,7 @@
 
 #include <ztd/idk/size.h>
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
@@ -41,7 +42,7 @@ int main() {
 		cnc_open_err err
 		     = cnc_registry_new(&registry, cnc_registry_options_default);
 		if (err != cnc_open_err_ok) {
-			fprintf(stderr, "[error] could not open a new registry.");
+			fprintf(stderr, "[error] could not open a new registry");
 			return 1;
 		}
 	}
@@ -52,7 +53,7 @@ int main() {
 		cnc_open_err err = cnc_conv_new(
 		     registry, "shift-jis", "utf-8", &conversion, &conversion_info);
 		if (err != cnc_open_err_ok) {
-			fprintf(stderr, "[error] could not open a new registry.");
+			fprintf(stderr, "[error] could not open a new registry");
 			cnc_registry_delete(registry);
 			return 2;
 		}
@@ -70,10 +71,10 @@ int main() {
 		fwrite(conversion_info.indirect_code_data,
 		     sizeof(*conversion_info.indirect_code_data),
 		     conversion_info.indirect_code_size, stdout);
-		fprintf(stdout, "\").");
+		fprintf(stdout, "\")");
 	}
 	else {
-		fprintf(stdout, "\".");
+		fprintf(stdout, "\"");
 	}
 	fprintf(stdout, "\n");
 
@@ -94,9 +95,9 @@ int main() {
 	const bool has_err          = err != cnc_mcerr_ok;
 	const size_t input_read     = starting_input_size - input_size;
 	const size_t output_written = starting_output_size - output_size;
-	const char* const conversion_result_title_str
-	     = (const char*)(has_err ? u8"Conversion failed... 😭"
-	                             : u8"Conversion succeeded 🎉");
+	const char* const conversion_result_title_str = (has_err
+	          ? "Conversion failed... \xF0\x9F\x98\xAD"   // UTF-8 bytes for 😭
+	          : "Conversion succeeded \xF0\x9F\x8E\x89"); // UTF-8 bytes for 🎉
 	const size_t conversion_result_title_str_size
 	     = strlen(conversion_result_title_str);
 	// Use fwrite to prevent conversions / locale-sensitive-probing from

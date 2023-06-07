@@ -52,9 +52,9 @@ int main() {
 	const bool has_err          = err != cnc_mcerr_ok;
 	const size_t input_read     = starting_input_size - input_size;
 	const size_t output_written = starting_output_size - output_size;
-	const char* const conversion_result_title_str
-	     = (has_err ? "Conversion failed... \U0001F62D"   // UTF-8 bytes for 😭
-	                : "Conversion succeeded \U0001F389"); // UTF-8 bytes for 🎉
+	const char* const conversion_result_title_str = (has_err
+	          ? "Conversion failed... \xF0\x9F\x98\xAD"   // UTF-8 bytes for 😭
+	          : "Conversion succeeded \xF0\x9F\x8E\x89"); // UTF-8 bytes for 🎉
 	const size_t conversion_result_title_str_size
 	     = strlen(conversion_result_title_str);
 	// Use fwrite to prevent conversions / locale-sensitive-probing from
