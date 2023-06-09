@@ -284,6 +284,14 @@ Known Named Encoding Functions
 
 .. doxygenfunction:: cnc_c32snrtomcsn_windows_437_dos_latin_us
 
+.. doxygenfunction:: cnc_mcnrtoc32n_windows_865_dos_nordic
+
+.. doxygenfunction:: cnc_c32nrtomcn_windows_865_dos_nordic
+
+.. doxygenfunction:: cnc_mcsnrtoc32sn_windows_865_dos_nordic
+
+.. doxygenfunction:: cnc_c32snrtomcsn_windows_865_dos_nordic
+
 .. doxygenfunction:: cnc_mcnrtoc32n_windows_874
 
 .. doxygenfunction:: cnc_c32nrtomcn_windows_874

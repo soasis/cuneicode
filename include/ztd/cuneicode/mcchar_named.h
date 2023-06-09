@@ -79,6 +79,7 @@
 #include <ztd/cuneicode/tatar_ansi.h>
 #include <ztd/cuneicode/tatar_ascii.h>
 #include <ztd/cuneicode/windows_437_dos_latin_us.h>
+#include <ztd/cuneicode/windows_865_dos_nordic.h>
 #include <ztd/cuneicode/windows_874.h>
 #include <ztd/cuneicode/windows_1250.h>
 #include <ztd/cuneicode/windows_1251.h>

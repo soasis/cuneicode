@@ -980,14 +980,20 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	// Shift_JIS aliases to the one available in the WHATWG datbase first and foremost
 	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "shift-jis", "shift-jis-x0208"));
 
-	_ADD_MCN_NAMED_ENCODING("tatar ansi", tatar_ansi);
-	// Tatar aliases to the ANSI version by-default
+	_ADD_MCN_NAMED_ENCODING("tatar-ansi", tatar_ansi);
+	// Tatar aliases to the Windows/ANSI version by-default
 	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias(__registry, "tatar", "tatar-ansi"));
-	_ADD_MCN_NAMED_ENCODING("tatar ascii", tatar_ascii);
+	_ADD_MCN_NAMED_ENCODING("tatar-ascii", tatar_ascii);
 
-	_ADD_MCN_NAMED_ENCODING("windows-473", windows_1251);
-	_ADD_MCN_NAMED_ENCODING("windows-874", windows_1251);
-	_ADD_MCN_NAMED_ENCODING("windows-1251", windows_1251);
+	_ADD_MCN_NAMED_ENCODING("windows-473", windows_437_dos_latin_us);
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_alias(__registry, "windows-473-dos-latin-us", "windows-473"));
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_alias(__registry, "windows-473-dos-latin", "windows-473"));
+	_ADD_MCN_NAMED_ENCODING("windows-865", windows_865_dos_nordic);
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_alias(__registry, "windows-865-dos-nordic", "windows-865"));
+	_ADD_MCN_NAMED_ENCODING("windows-874", windows_874);
 	_ADD_MCN_NAMED_ENCODING("windows-1251", windows_1251);
 	_ADD_MCN_NAMED_ENCODING("windows-1252", windows_1252);
 	_ADD_MCN_NAMED_ENCODING("windows-1253", windows_1253);
