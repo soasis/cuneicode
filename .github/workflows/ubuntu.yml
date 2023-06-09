@@ -4,6 +4,7 @@ on: [push]
 
 env:
   CTEST_OUTPUT_ON_FAILURE: 1
+  LC_ALL: C.UTF-8
 
 jobs:
   build:
