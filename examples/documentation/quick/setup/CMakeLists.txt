@@ -63,5 +63,5 @@ target_link_libraries(my_app PRIVATE ztd::cuneicode)
 
 if (ZTD_CUNEICODE_TESTS)
 	add_test(NAME ztd.cuneicode.examples.documentation.quick.my_app
-		COMMAND my_app "Harold")
+		COMMAND my_app "Hárold")
 endif()
