@@ -51,7 +51,8 @@ int main(int argc, char* argv[]) {
 	const size_t name_len_limit    = (name_len * CNC_C8_MAX);
 
 	if (name_len_limit >= utf8_name_max_len) {
-		fprintf(stderr, "A name argument must be given to the program!");
+		fprintf(stderr,
+		     "The name provided tot hsi program was, unfortunately, too big!");
 		return 2;
 	}
 
