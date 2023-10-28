@@ -36,15 +36,12 @@
 
 #include <ztd/cuneicode.h>
 #include <ztd/cuneicode/detail/err.hpp>
+#include <ztd/idk/mbstate_t.hpp>
 #include <ztd/idk/detail/unicode.hpp>
 
 #include <climits>
 #include <cstring>
 #include <cstddef>
-
-#if ZTD_IS_ON(ZTD_LOCALE_DEPENDENT_WIDE_EXECUTION)
-#include <langinfo.h>
-#endif // nl_langinfo
 
 namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_
@@ -55,7 +52,7 @@ namespace cnc {
 		inline constexpr bool __least64_bit_pointers   = __wchar_t_pointer_size >= 64;
 		inline constexpr bool __least32_bit_pointers   = __wchar_t_pointer_size >= 32;
 
-		struct alignas(mbstate_t) __c32_state {
+		struct alignas(ztd_mbstate_t) __c32_state {
 			ztd_char32_t __accumulation : 32;
 			unsigned char __accumulation_count : 8;
 			unsigned char __expected_count : 8;

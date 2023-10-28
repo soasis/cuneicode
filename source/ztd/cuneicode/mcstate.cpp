@@ -61,9 +61,9 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_compl
 	}
 	switch (__state->raw.indicator) {
 	case __mc_s_i_locale:
-#if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
-		return ::std::mbsinit(::std::addressof(__state->__locale.__state0)) != 0
-		     && ::std::mbsinit(::std::addressof(__state->__locale.__state1)) != 0;
+#if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR_H) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR_H)
+		return ZTD_MBSTATE_SCOPE_I_ mbsinit(::std::addressof(__state->__locale.__state0)) != 0
+		     && ZTD_MBSTATE_SCOPE_I_ mbsinit(::std::addressof(__state->__locale.__state1)) != 0;
 #else
 		return true;
 #endif

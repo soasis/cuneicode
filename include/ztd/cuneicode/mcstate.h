@@ -34,6 +34,8 @@
 
 #include <ztd/cuneicode/version.h>
 
+#include <ztd/idk/mbstate_t.h>
+
 #if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
 #include <climits>
@@ -41,18 +43,6 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <limits.h>
-#endif
-#if ZTD_IS_ON(ZTD_CWCHAR)
-#include <cwchar>
-#elif ZTD_IS_ON(ZTD_WCHAR)
-#include <wchar.h>
-#endif
-#if ZTD_IS_ON(ZTD_CUCHAR)
-#include <cuchar>
-#elif ZTD_IS_ON(ZTD_UCHAR)
-ZTD_EXTERN_C_OPEN_I_
-#include <uchar.h>
-ZTD_EXTERN_C_CLOSE_I_
 #endif
 
 typedef union cnc_mcstate_t cnc_mcstate_t;
@@ -117,7 +107,8 @@ typedef union cnc_mcstate_t {
 		/// access.
 		unsigned int __paddding : ((sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT) - 1;
 	} header;
-#if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR) || ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR)
+#if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR_H) || ZTD_IS_ON(ZTD_CUCHAR) \
+     || ZTD_IS_ON(ZTD_UCHAR_H)
 	//////
 	/// @brief Private, do not access.
 	struct __locale_t {
@@ -132,10 +123,10 @@ typedef union cnc_mcstate_t {
 		unsigned int __padding : (((sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT) - 1);
 		//////
 		/// @brief Private, do not access.
-		mbstate_t __state0;
+		ztd_mbstate_t __state0;
 		//////
 		/// @brief Private, do not access.
-		mbstate_t __state1;
+		ztd_mbstate_t __state1;
 	} __locale;
 #endif
 	//////
