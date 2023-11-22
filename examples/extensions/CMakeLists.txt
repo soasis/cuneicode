@@ -34,20 +34,22 @@ FILE(GLOB_RECURSE ztd.cuneicode.examples.extensions.stmt-exprs.sources
 )
 
 foreach(extensions_source_file ${ztd.cuneicode.examples.extensions.stmt-exprs.sources})
-	ztd_cuneicode_example_simple(${extensions_source_file} "ztd.cuneicode.examples.extensions" extensions_target_name)
-	target_compile_options(${extensions_target_name}
-		PRIVATE
-		${--allow-gnu-auto-type}
-		${--allow-gnu-statement-expressions}
-		${--allow-gnu-statement-expression-from-macro-expansion}
-	)
-	target_compile_features(${extensions_target_name}
-		PRIVATE
-		c_std_23)
-	target_compile_features(${extensions_target_name}
-		PRIVATE
-		c_std_23)
-	set_property(TARGET ${extensions_target_name}
-		PROPERTY
-		C_EXTENSIONS ON)
+		ztd_cuneicode_example_simple(${extensions_source_file} "ztd.cuneicode.examples.extensions" extensions_target_name)
+		target_compile_options(${extensions_target_name}
+			PRIVATE
+			${--allow-gnu-auto-type}
+			${--allow-gnu-statement-expressions}
+			${--allow-gnu-statement-expression-from-macro-expansion}
+		)
+		target_compile_features(${extensions_target_name}
+			PRIVATE
+			c_std_23)
+	if (NOT MSVC)
+		target_compile_features(${extensions_target_name}
+			PRIVATE
+			c_std_23)
+		set_property(TARGET ${extensions_target_name}
+			PROPERTY
+			C_EXTENSIONS ON)
+	endif()
 endforeach()
