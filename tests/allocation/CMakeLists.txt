@@ -27,21 +27,31 @@
 #
 # =========================================================================== #
 
-include(FetchContent)
+file(GLOB_RECURSE ztd.cuneicode.tests.allocation.sources
+	LIST_DIRECTORIES FALSE
+	CONFIGURE_DEPENDS
+	source/*.cpp source/*.c)
 
-# # Fetch dependencies
-# Catch2
-FetchContent_Declare(
-	catch2
-	GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-	GIT_SHALLOW ON
-	GIT_TAG devel
+add_executable(ztd.cuneicode.tests.allocation ${ztd.cuneicode.tests.allocation.sources})
+set_target_properties(ztd.cuneicode.tests.allocation PROPERTIES
+	VERSION ${PROJECT_VERSION}
 )
-FetchContent_MakeAvailable(catch2)
-set_property(DIRECTORY "${catch2_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL YES)
+target_compile_options(ztd.cuneicode.tests.allocation
+	PRIVATE
+	${--utf8-literal-encoding}
+	${--utf8-source-encoding}
+	${--disable-permissive}
+	${--updated-cpp-version-flag}
+	${--warn-pedantic}
+	${--warn-all}
+	${--warn-extra}
+	${--warn-errors})
+target_include_directories(ztd.cuneicode.tests.allocation
+	PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+target_link_libraries(ztd.cuneicode.tests.allocation
+	PRIVATE
+	ztd::cuneicode)
 
-#add_subdirectory(allocation)
-add_subdirectory(basic_run_time)
-add_subdirectory(compile_time)
-add_subdirectory(registry)
-add_subdirectory(inclusion)
+add_test(NAME ztd.cuneicode.tests.allocation COMMAND ztd.cuneicode.tests.allocation)

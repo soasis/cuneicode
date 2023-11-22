@@ -27,45 +27,18 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_VERSION_H
-#define ZTD_CUNEICODE_VERSION_H
+#include <ztd/cuneicode/result.h>
 
-#pragma once
+#define MAKE_GENERIC_TYPEDEFS(DECL_NAME)                                          \
+	typedef DECL_NAME(char, char) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__);          \
+	typedef DECL_NAME(char, unsigned char) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__); \
+	typedef DECL_NAME(char, ztd_char_t) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__);    \
+	typedef DECL_NAME(char, ztd_wchar_t) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__);   \
+	typedef DECL_NAME(char, ztd_char8_t) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__);   \
+	typedef DECL_NAME(char, ztd_char16_t) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__);  \
+	typedef DECL_NAME(char, ztd_char32_t) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__)
 
-#include <ztd/version.h>
-
-#include <ztd/idk/statement_expressions.h>
-
-// clang-format off
-
-#if defined(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
-	#if (ZTD_CUNEICODE_EXTENSION_FUNCTIONS != 0)
-		#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_ON
-	#else
-		#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_OFF
-	#endif
-#elif ZTD_IS_ON(ZTD_STMT_EXPR_USABLE)
-	#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_DEFAULT_ON
-#else
-	#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_IS_DEFAULT_OFF
-#endif
-
-#if defined(ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE)
-	#define ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_ ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE
-#else
-	#define ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_ ZTD_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_
-#endif // Intermediate buffer sizing
-
-#if defined(ZTD_CUNEICODE_ABI_NAMESPACE)
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_ inline namespace ZTD_CUNEICODE_ABI_NAMESPACE {
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_ }
-#else
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_ inline namespace __v0 {
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_ }
-#endif
-
-// clang-format on
-
-#include <ztd/cuneicode/detail/api.h>
-
-#endif
+MAKE_GENERIC_TYPEDEFS(cnc_result);
+MAKE_GENERIC_TYPEDEFS(cnc_error_result);
+MAKE_GENERIC_TYPEDEFS(cnc_single_result);
+MAKE_GENERIC_TYPEDEFS(cnc_single_error_result);

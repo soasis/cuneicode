@@ -101,6 +101,7 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		check_compiler_flag(extra-constexpr-steps MSVC /constexpr:steps2147483647 GCC -fconstexpr-ops-limit=2147483647 Clang -fconstexpr-steps=2147483647)
 		check_compiler_flag(enable-conforming-preprocessor MSVC /Zc:preprocessor Clang -fdoesnotexist GCC -fdoesnotexist)
 		check_compiler_flag(template-debugging-mode GCC -ftemplate-backtrace-limit=0)
+		check_compiler_flag(macro-debugging-mode GCC -fmacro-backtrace-limit=0)
 
 		# Warning flags
 		check_compiler_flag(warn-pedantic MSVC /permissive- GCC -pedantic)
@@ -116,6 +117,11 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0)
 			check_compiler_diagnostic(stringop-overflow)
 		endif()
+		# Check for statement expression suppression
+		check_compiler_diagnostic(gnu-auto-type)
+		check_compiler_diagnostic(gnu-statement-expressions)
+		check_compiler_diagnostic(gnu-statement-expression-from-macro-expansion)
+		check_compiler_diagnostic(generic-type-extension)
 	endif()
 endif()
 
@@ -268,15 +274,22 @@ mark_as_advanced(ZTD_CUNEICODE_SCRATCH)
 if(ZTD_CUNEICODE_SCRATCH)
 	add_executable(scratch main.cpp)
 	target_link_libraries(scratch PRIVATE ztd::cuneicode)
+	set_source_files_properties(main.cpp
+		PROPERTIES LANGUAGE C
+	)
 	target_compile_options(scratch
 		PRIVATE
 		${--template-debugging-mode}
+		${--macro-debugging-mode}
 		${--updated-cpp-version-flag}
 		${--warn-pedantic}
 		${--warn-all}
 		${--warn-extra}
 		${--warn-errors}
 		${--enable-conforming-preprocessor}
+		${--allow-gnu-auto-type}
+		${--allow-gnu-statement-expressions}
+		${--allow-gnu-statement-expression-from-macro-expansion}
 	)
-	target_compile_features(scratch PRIVATE cxx_std_20)
+	#target_compile_features(scratch PRIVATE cxx_std_20)
 endif()

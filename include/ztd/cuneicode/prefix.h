@@ -27,45 +27,37 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_VERSION_H
-#define ZTD_CUNEICODE_VERSION_H
+#ifndef ZTD_CUNEICODE_PREFIX_H
+#define ZTD_CUNEICODE_PREFIX_H
 
 #pragma once
 
-#include <ztd/version.h>
+#include <ztd/cuneicode/version.h>
 
-#include <ztd/idk/statement_expressions.h>
+#include <ztd/idk/charN_t.h>
 
-// clang-format off
+#define __cnc_prefix_to_type_uc() unsigned char
+#define __cnc_prefix_to_type_mc() ztd_wchar_t
+#define __cnc_prefix_to_type_mwc() ztd_wchar_t
+#define __cnc_prefix_to_type_c8() ztd_char8_t
+#define __cnc_prefix_to_type_c16() ztd_char16_t
+#define __cnc_prefix_to_type_c32() ztd_char32_t
 
-#if defined(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
-	#if (ZTD_CUNEICODE_EXTENSION_FUNCTIONS != 0)
-		#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_ON
-	#else
-		#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_OFF
-	#endif
-#elif ZTD_IS_ON(ZTD_STMT_EXPR_USABLE)
-	#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_DEFAULT_ON
-#else
-	#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_IS_DEFAULT_OFF
-#endif
-
-#if defined(ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE)
-	#define ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_ ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE
-#else
-	#define ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_ ZTD_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_
-#endif // Intermediate buffer sizing
-
-#if defined(ZTD_CUNEICODE_ABI_NAMESPACE)
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_ inline namespace ZTD_CUNEICODE_ABI_NAMESPACE {
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_ }
-#else
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_ inline namespace __v0 {
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_ }
-#endif
-
-// clang-format on
-
-#include <ztd/cuneicode/detail/api.h>
+//////
+/// @brief Converts the given lowercase prefix name to the type it represents in the system.
+///
+/// @param[in] _PREFIX The identifier that presents the prefix to convert to a type.
+///
+/// @remarks The prefix ↔ type association is as follows:
+///
+/// - uc: `unsigned char` (UTF-8)
+/// - mc: `ztd_char_t` (Execution)
+/// - mwc: `ztd_wchar_t` (Wide Execution)
+/// - c8: `char8_t` (UTF-8)
+/// - c16: `char16_t` (UTF-16)
+/// - c32: `char32_t` (UTF-32)
+///
+/// Use of other prefixes is an error.
+#define cnc_prefix_to_type(_PREFIX) ZTD_CONCAT_TOKENS_I_(__cnc_prefix_to_type_, _PREFIX)()
 
 #endif

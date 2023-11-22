@@ -70,7 +70,7 @@
 #define TAG_TO_TYPE_I_(_TAG) TAG_TO_TYPE_EXPANDED_I_(_TAG)
 
 #define CNC_TYPED_CONVERSION_ERROR_DECL_ROOT_I_(_SHIM_NAME, _SHIM_R_NAME, _SHIM_FROM, _SHIM_TO)   \
-	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result _SHIM_NAME(          \
+	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result_t _SHIM_NAME(        \
 	     size_t* restrict __p_maybe_dst_len, _SHIM_TO* restrict* restrict __p_maybe_dst,         \
 	     size_t* restrict __p_src_len, const _SHIM_FROM* restrict* restrict __p_src,             \
                                                                                                   \
@@ -78,7 +78,7 @@
 	          size_t* restrict, const _SHIM_FROM* restrict* restrict, void* restrict,            \
 	          void* restrict),                                                                   \
 	     void* restrict __p_user_data) ZTD_NOEXCEPT_IF_CXX_I_;                                   \
-	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result _SHIM_R_NAME(        \
+	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result_t _SHIM_R_NAME(      \
 	     size_t* restrict __p_maybe_dst_len, _SHIM_TO* restrict* restrict __p_maybe_dst,         \
 	     size_t* restrict __p_src_len, const _SHIM_FROM* restrict* restrict __p_src,             \
 	     cnc_mcstate_t* restrict __p_state,                                                      \

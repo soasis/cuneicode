@@ -185,9 +185,9 @@
 
 
 #define __cnc_detail_select_error_handler_cxntocyn(__error_handler, __p_maybe_dst, __p_src)    \
-	ZTDC_CASCADING_GENERIC(__error_handler, cnc_skip_input_and_replace_error_cxntocyn_t,      \
+	ZTDC_CASCADING_GENERIC(__error_handler, cnc_skip_input_and_replace_error_t,               \
 	     __cnc_detail_select_error_handler_siare_cxntocxn(__p_maybe_dst, __p_src),            \
-	     cnc_skip_input_error_cxntocyn_t,                                                     \
+	     cnc_skip_input_error_t,                                                              \
 	     __cnc_detail_select_error_handler_sie_cxntocxn(__p_maybe_dst, __p_src),              \
 	     cnc_replace_error_cxntocyn_t,                                                        \
 	     __cnc_detail_select_error_handler_re_cxntocxn(__p_maybe_dst, __p_src), ZTDC_DEFAULT, \

@@ -26,3 +26,32 @@
 # limitations under the License.
 #
 # =========================================================================== #
+
+file(GLOB_RECURSE ztd.cuneicode.tests.compile_time.sources
+	LIST_DIRECTORIES FALSE
+	CONFIGURE_DEPENDS
+	source/*.cpp source/*.c)
+
+add_executable(ztd.cuneicode.tests.compile_time ${ztd.cuneicode.tests.compile_time.sources})
+set_target_properties(ztd.cuneicode.tests.compile_time PROPERTIES
+	VERSION ${PROJECT_VERSION}
+)
+target_compile_options(ztd.cuneicode.tests.compile_time
+	PRIVATE
+	${--utf8-literal-encoding}
+	${--utf8-source-encoding}
+	${--disable-permissive}
+	${--updated-cpp-version-flag}
+	${--warn-pedantic}
+	${--warn-all}
+	${--warn-extra}
+	${--warn-errors})
+target_include_directories(ztd.cuneicode.tests.compile_time PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/../include
+)
+target_link_libraries(ztd.cuneicode.tests.compile_time
+	PRIVATE
+	Catch2::Catch2
+	ztd::cuneicode)
+
+add_test(NAME ztd.cuneicode.tests.compile_time COMMAND ztd.cuneicode.tests.compile_time)

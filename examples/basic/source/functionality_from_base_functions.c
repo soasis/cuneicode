@@ -32,6 +32,8 @@
 #include <ztd/idk/size.h>
 
 #include <stdbool.h>
+#include <stddef.h>
+#include <limits.h>
 
 bool is_valid_utf16_from_utf8(size_t str_n, const ztd_char8_t str[]) {
 	cnc_mcstate_t state = { 0 };

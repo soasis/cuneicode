@@ -27,45 +27,38 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_VERSION_H
-#define ZTD_CUNEICODE_VERSION_H
+#include <ztd/cuneicode.h>
 
-#pragma once
+#include <ztd/idk/size.h>
 
-#include <ztd/version.h>
+#include <stdbool.h>
+#include <stddef.h>
+#include <limits.h>
 
-#include <ztd/idk/statement_expressions.h>
+int main() {
+	const ztd_char8_t str[]
+	     = u8"\"Saw a \U0001F9DC \u2014"
+	       u8"didn't catch her\u2026 \U0001F61E\"\n\t- Sniff";
+	const size_t str_n = ztdc_c_array_size(str);
 
-// clang-format off
+	if (!cnc_cxsntocysn_into_is_valid(c16, str_n, str)) {
+		// input not valid
+		return 1;
+	}
 
-#if defined(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
-	#if (ZTD_CUNEICODE_EXTENSION_FUNCTIONS != 0)
-		#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_ON
-	#else
-		#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_OFF
-	#endif
-#elif ZTD_IS_ON(ZTD_STMT_EXPR_USABLE)
-	#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_DEFAULT_ON
-#else
-	#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_IS_DEFAULT_OFF
-#endif
-
-#if defined(ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE)
-	#define ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_ ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE
-#else
-	#define ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_ ZTD_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_
-#endif // Intermediate buffer sizing
-
-#if defined(ZTD_CUNEICODE_ABI_NAMESPACE)
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_ inline namespace ZTD_CUNEICODE_ABI_NAMESPACE {
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_ }
-#else
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_ inline namespace __v0 {
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_ }
-#endif
-
-// clang-format on
-
-#include <ztd/cuneicode/detail/api.h>
-
-#endif
+	ztd_char16_t utf16_str[CNC_C16_MAX * ztdc_c_array_size(str)];
+	const size_t utf16_str_max_size = ztdc_c_array_size(utf16_str);
+	cnc_count_result_t utf16_str_count_result
+	     = cnc_cxsntocysn_into_count(c16, str_n, str);
+	if (utf16_str_max_size < utf16_str_count_result.output_count) {
+		// buffer too small
+		return 2;
+	}
+	cnc_c8c16_result_t unbounded_result
+	     = cnc_cxsntocys_into_unbounded(utf16_str, str_n, str);
+	if (unbounded_result.error_code != cnc_mcerr_ok) {
+		// write failed
+		return 3;
+	}
+	return 0;
+}

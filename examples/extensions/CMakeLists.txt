@@ -27,21 +27,21 @@
 #
 # =========================================================================== #
 
-include(FetchContent)
-
-# # Fetch dependencies
-# Catch2
-FetchContent_Declare(
-	catch2
-	GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-	GIT_SHALLOW ON
-	GIT_TAG devel
+FILE(GLOB_RECURSE ztd.cuneicode.examples.extensions.stmt-exprs.sources
+	LIST_DIRECTORIES FALSE
+	CONFIGURE_DEPENDS
+	source/**stmt_exprs**
 )
-FetchContent_MakeAvailable(catch2)
-set_property(DIRECTORY "${catch2_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL YES)
 
-#add_subdirectory(allocation)
-add_subdirectory(basic_run_time)
-add_subdirectory(compile_time)
-add_subdirectory(registry)
-add_subdirectory(inclusion)
+foreach(extensions_source_file ${ztd.cuneicode.examples.extensions.stmt-exprs.sources})
+	ztd_cuneicode_example_simple(${extensions_source_file} "ztd.cuneicode.examples.extensions" extensions_target_name)
+	target_compile_options(${extensions_target_name}
+		PRIVATE
+		${--allow-gnu-auto-type}
+		${--allow-gnu-statement-expressions}
+		${--allow-gnu-statement-expression-from-macro-expansion}
+	)
+	target_compile_features(${extensions_target_name}
+		PRIVATE
+		c_std_23)
+endforeach()

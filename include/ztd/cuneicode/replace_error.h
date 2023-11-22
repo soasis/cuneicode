@@ -51,7 +51,7 @@
 typedef struct cnc_replace_error_cxntocyn_t {
 	__cnc_detail_incompatible_key __sjkfhdjoiqniognuikhGmpQGnioQGb;
 } cnc_replace_error_cxntocyn_t;
-ZTD_EXTERN_C_I_ ZTD_EXTERN_IF_C_I_ cnc_replace_error_cxntocyn_t cnc_replace_error_cxntocyn;
+ZTD_EXTERN_C_I_ ZTD_EXTERN_IF_C_I_ cnc_replace_error_cxntocyn_t cnc_replace_error;
 
 //////
 /// @addtogroup ztd_cuneicode_error_handlers Error Handler Functions

@@ -65,9 +65,13 @@ function(ztd_cuneicode_example_simple example_source_file example_prefix)
 	add_executable(${example_name} ${example_source_file})
 
 	ztd_cuneicode_example_options(${example_name})
+	if (${ARGC} GREATER 2)
+		set(${ARGV2} ${example_name} PARENT_SCOPE)
+	endif()
 endfunction(ztd_cuneicode_example_simple)
 
 add_subdirectory(documentation)
 add_subdirectory(basic)
+add_subdirectory(extensions)
 add_subdirectory(simdutf)
 add_subdirectory(cconv)

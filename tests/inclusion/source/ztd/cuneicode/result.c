@@ -27,45 +27,4 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_VERSION_H
-#define ZTD_CUNEICODE_VERSION_H
-
-#pragma once
-
-#include <ztd/version.h>
-
-#include <ztd/idk/statement_expressions.h>
-
-// clang-format off
-
-#if defined(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
-	#if (ZTD_CUNEICODE_EXTENSION_FUNCTIONS != 0)
-		#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_ON
-	#else
-		#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_OFF
-	#endif
-#elif ZTD_IS_ON(ZTD_STMT_EXPR_USABLE)
-	#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_DEFAULT_ON
-#else
-	#define ZTD_CUNEICODE_EXTENSION_FUNCTIONS_I_ ZTD_IS_DEFAULT_OFF
-#endif
-
-#if defined(ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE)
-	#define ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_ ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE
-#else
-	#define ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_ ZTD_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_
-#endif // Intermediate buffer sizing
-
-#if defined(ZTD_CUNEICODE_ABI_NAMESPACE)
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_ inline namespace ZTD_CUNEICODE_ABI_NAMESPACE {
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_ }
-#else
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_ inline namespace __v0 {
-	#define ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_CLOSE_I_ }
-#endif
-
-// clang-format on
-
-#include <ztd/cuneicode/detail/api.h>
-
-#endif
+#include <ztd/cuneicode/result.h>
