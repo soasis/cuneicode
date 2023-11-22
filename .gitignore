@@ -4,6 +4,8 @@
 /install
 /scratch
 
+/main.c
+/main.pre.c
 /main.cpp
 /main.pre.cpp
 /0.output

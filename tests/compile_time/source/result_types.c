@@ -29,6 +29,8 @@
 
 #include <ztd/cuneicode/result.h>
 
+#if ZTD_IS_OFF(ZTD_COMPILER_VCXX) || ZTD_IS_OFF(ZTD_C)
+
 #define MAKE_GENERIC_TYPEDEFS(DECL_NAME)                                          \
 	typedef DECL_NAME(char, char) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__);          \
 	typedef DECL_NAME(char, unsigned char) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__); \
@@ -42,3 +44,5 @@ MAKE_GENERIC_TYPEDEFS(cnc_result);
 MAKE_GENERIC_TYPEDEFS(cnc_error_result);
 MAKE_GENERIC_TYPEDEFS(cnc_single_result);
 MAKE_GENERIC_TYPEDEFS(cnc_single_error_result);
+
+#endif

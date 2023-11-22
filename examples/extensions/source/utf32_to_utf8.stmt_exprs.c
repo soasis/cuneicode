@@ -39,8 +39,8 @@ int main() {
 #if ZTD_IS_ON(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
 	// This only works if we support extension functions!
 	const ztd_char32_t input_data[] = U"Bark Bark Bark 🐕‍🦺!";
-	char output_data[ztdc_c_array_size(input_data) * 4] = { 0 };
-	cnc_mcstate_t state                                 = { 0 };
+	ztd_char8_t output_data[ztdc_c_array_size(input_data) * 4] = { 0 };
+	cnc_mcstate_t state                                        = { 0 };
 	// set the "do UB shit if invalid" bit to true
 	cnc_mcstate_set_assume_valid(&state, true);
 	cnc_c32mc_result_t result = cnc_cxsrtocysn_into(

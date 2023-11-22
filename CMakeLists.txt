@@ -275,10 +275,9 @@ mark_as_advanced(ZTD_CUNEICODE_SCRATCH)
 
 if(ZTD_CUNEICODE_SCRATCH)
 	add_executable(scratch main.cpp)
+	add_executable(scratch_c main.c)
 	target_link_libraries(scratch PRIVATE ztd::cuneicode)
-	set_source_files_properties(main.cpp
-		PROPERTIES LANGUAGE C
-	)
+	target_link_libraries(scratch_c PRIVATE ztd::cuneicode)
 	target_compile_options(scratch
 		PRIVATE
 		${--template-debugging-mode}
@@ -293,5 +292,18 @@ if(ZTD_CUNEICODE_SCRATCH)
 		${--allow-gnu-statement-expressions}
 		${--allow-gnu-statement-expression-from-macro-expansion}
 	)
-	#target_compile_features(scratch PRIVATE cxx_std_20)
+	target_compile_options(scratch_c
+		PRIVATE
+		${--template-debugging-mode}
+		${--macro-debugging-mode}
+		${--updated-cpp-version-flag}
+		${--warn-pedantic}
+		${--warn-all}
+		${--warn-extra}
+		${--warn-errors}
+		${--enable-conforming-preprocessor}
+		${--allow-gnu-auto-type}
+		${--allow-gnu-statement-expressions}
+		${--allow-gnu-statement-expression-from-macro-expansion}
+	)
 endif()
