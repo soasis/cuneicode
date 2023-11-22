@@ -43,7 +43,7 @@ int main() {
 	cnc_mcstate_t state                                        = { 0 };
 	// set the "do UB shit if invalid" bit to true
 	cnc_mcstate_set_assume_valid(&state, true);
-	cnc_c32mc_result_t result = cnc_cxsrtocysn_into(
+	cnc_c32c8_result_t result = cnc_cxsrtocysn_into(
 	     ztdc_c_array_size(output_data), output_data, input_data, &state);
 	const bool has_err = result.error_code != cnc_mcerr_ok;
 	const char* const conversion_result_title_str = (has_err
