@@ -36,6 +36,8 @@
 #include <string.h>
 
 int main() {
+#if ZTD_IS_ON(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
+	// This only works if we support extension functions!
 	const ztd_char32_t input_data[] = U"Bark Bark Bark \xFFFFFFFF🐕‍🦺!";
 	ztd_char8_t output_data[ztdc_c_array_size(input_data) * CNC_C8_MAX] = { 0 };
 	cnc_mcstate_t state                                                 = { 0 };
@@ -66,4 +68,7 @@ int main() {
 	// won't show the last line even if you manually call fflush(…) !
 	fwrite("\n", sizeof(char), 1, stdout);
 	return has_err ? 1 : 0;
+#else
+	return 0;
+#endif
 }

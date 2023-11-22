@@ -45,6 +45,7 @@
 #include <ztd/idk/size.h>
 #include <ztd/idk/null.h>
 #include <ztd/idk/auto.h>
+#include <ztd/idk/typeof.h>
 
 #if ZTD_IS_ON(ZTD_C)
 #include <stdlib.h>
@@ -74,10 +75,10 @@
 #define cnc_cxsnrtocysn_into_with_handler(                                                  \
      _TO_N, _TO, _FROM_N, _FROM, _P_STATE, _ERROR_HANDLER, _USER_DATA)                      \
 	ZTD_STMT_EXPR_BEGIN()                                                                  \
-	typedef typeof(*(_FROM)) __from_t;                                                     \
-	typedef typeof(*(_TO)) __to_t;                                                         \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                                 \
+	typedef ztd_typeof(*(_TO)) __to_t;                                                     \
 	typedef cnc_error_result(__from_t, __to_t) __result_t;                                 \
-	typedef typeof(*_P_STATE) __state_t;                                                   \
+	typedef ztd_typeof(*_P_STATE) __state_t;                                               \
 	__from_t const* const __start_from = (_FROM);                                          \
 	__from_t const* __from             = __start_from;                                     \
 	const size_t __start_from_n        = (_FROM_N);                                        \
@@ -146,10 +147,10 @@
 /// @param[in] _USER_DATA The user data that is passed along to the error handler.
 #define cnc_cxsrtocysn_into_with_handler(_TO_N, _TO, _FROM, _P_STATE, _ERROR_HANDLER, _USER_DATA) \
 	ZTD_STMT_EXPR_BEGIN()                                                                        \
-	typedef typeof(*(_FROM)) __from_t;                                                           \
-	typedef typeof(*(_TO)) __to_t;                                                               \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                                       \
+	typedef ztd_typeof(*(_TO)) __to_t;                                                           \
 	typedef cnc_error_result(__from_t, __to_t) __result_t;                                       \
-	typedef typeof(*_P_STATE) __state_t;                                                         \
+	typedef ztd_typeof(*_P_STATE) __state_t;                                                     \
 	__from_t const* const __start_from = (_FROM);                                                \
 	__from_t const* __from             = __start_from;                                           \
 	const size_t __start_from_n        = ztdc_c_string_ptr_size(__from);                         \
@@ -208,10 +209,10 @@
 /// @param[in] _P_STATE A pointer to the state to use for this conversion.
 #define cnc_cxsnrtocysn_into(_TO_N, _TO, _FROM_N, _FROM, _P_STATE)                           \
 	ZTD_STMT_EXPR_BEGIN()                                                                   \
-	typedef typeof(*(_FROM)) __from_t;                                                      \
-	typedef typeof(*(_TO)) __to_t;                                                          \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                                  \
+	typedef ztd_typeof(*(_TO)) __to_t;                                                      \
 	typedef cnc_result(__from_t, __to_t) __result_t;                                        \
-	typedef typeof(*(_P_STATE)) __state_t;                                                  \
+	typedef ztd_typeof(*(_P_STATE)) __state_t;                                              \
 	__from_t const* const __start_from = (_FROM);                                           \
 	__from_t const* __from             = __start_from;                                      \
 	const size_t __start_from_n        = (_FROM_N);                                         \
@@ -250,10 +251,10 @@
 /// @param[in] _P_STATE A pointer to the state to use for this conversion.
 #define cnc_cxsrtocysn_into(_TO_N, _TO, _FROM, _P_STATE)                                     \
 	ZTD_STMT_EXPR_BEGIN()                                                                   \
-	typedef typeof(*(_FROM)) __from_t;                                                      \
-	typedef typeof(*(_TO)) __to_t;                                                          \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                                  \
+	typedef ztd_typeof(*(_TO)) __to_t;                                                      \
 	typedef cnc_result(__from_t, __to_t) __result_t;                                        \
-	typedef typeof(*(_P_STATE)) __state_t;                                                  \
+	typedef ztd_typeof(*(_P_STATE)) __state_t;                                              \
 	__from_t const* const __start_from = (_FROM);                                           \
 	__from_t const* __from             = __start_from;                                      \
 	const size_t __start_from_n        = ztdc_c_string_ptr_size(__from);                    \
@@ -291,9 +292,9 @@
 /// @param[in] _P_STATE A pointer to the state to use for this conversion.
 #define cnc_cxsnrtocysn_into_is_valid(_TO_PREFIX, _FROM_N, _FROM, _P_STATE)          \
 	ZTD_STMT_EXPR_BEGIN()                                                           \
-	typedef typeof(*(_FROM)) __from_t;                                              \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                          \
 	typedef cnc_prefix_to_type(_TO_PREFIX) __to_t;                                  \
-	typedef typeof(*(_P_STATE)) __state_t;                                          \
+	typedef ztd_typeof(*(_P_STATE)) __state_t;                                      \
 	__from_t const* const __start_from = (_FROM);                                   \
 	__from_t const* __from             = __start_from;                              \
 	const size_t __start_from_n        = (_FROM_N);                                 \
@@ -326,9 +327,9 @@
 /// @param[in] _P_STATE A pointer to the state to use for this conversion.
 #define cnc_cxsrtocysn_into_is_valid(_TO_PREFIX, _FROM, _P_STATE)                    \
 	ZTD_STMT_EXPR_BEGIN()                                                           \
-	typedef typeof(*(_FROM)) __from_t;                                              \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                          \
 	typedef cnc_prefix_to_type(_TO_PREFIX) __to_t;                                  \
-	typedef typeof(*(_P_STATE)) __state_t;                                          \
+	typedef ztd_typeof(*(_P_STATE)) __state_t;                                      \
 	__from_t const* const __start_from = (_FROM);                                   \
 	__from_t const* __from             = __start_from;                              \
 	const size_t __start_from_n        = ztdc_c_string_ptr_size(__from);            \
@@ -360,9 +361,9 @@
 /// @param[in] _P_STATE A pointer to the state to use for this conversion.
 #define cnc_cxsnrtocysn_into_count(_TO_PREFIX, _FROM_N, _FROM, _P_STATE)                   \
 	ZTD_STMT_EXPR_BEGIN()                                                                 \
-	typedef typeof(*(_FROM)) __from_t;                                                    \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                                \
 	typedef cnc_prefix_to_type(_TO_PREFIX) __to_t;                                        \
-	typedef typeof(*(_P_STATE)) __state_t;                                                \
+	typedef ztd_typeof(*(_P_STATE)) __state_t;                                            \
 	typedef cnc_count_result_t __result_t;                                                \
 	__from_t const* const __start_from = (_FROM);                                         \
 	__from_t const* __from             = __start_from;                                    \
@@ -399,9 +400,9 @@
 /// @param[in] _P_STATE A pointer to the state to use for this conversion.
 #define cnc_cxsrtocysn_into_count(_TO_PREFIX, _FROM, _P_STATE)                             \
 	ZTD_STMT_EXPR_BEGIN()                                                                 \
-	typedef typeof(*(_FROM)) __from_t;                                                    \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                                \
 	typedef cnc_prefix_to_type(_TO_PREFIX) __to_t;                                        \
-	typedef typeof(*(_P_STATE)) __state_t;                                                \
+	typedef ztd_typeof(*(_P_STATE)) __state_t;                                            \
 	typedef cnc_count_result_t __result_t;                                                \
 	__from_t const* const __start_from = (_FROM);                                         \
 	__from_t const* __from             = __start_from;                                    \
@@ -436,10 +437,10 @@
 /// @param[in] _P_STATE A pointer to the state to use for this conversion.
 #define cnc_cxsnrtocys_into_unbounded(_TO, _FROM_N, _FROM, _P_STATE)                    \
 	ZTD_STMT_EXPR_BEGIN()                                                              \
-	typedef typeof(*(_FROM)) __from_t;                                                 \
-	typedef typeof(*(_TO)) __to_t;                                                     \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                             \
+	typedef ztd_typeof(*(_TO)) __to_t;                                                 \
 	typedef cnc_result(__from_t, __to_t) __result_t;                                   \
-	typedef typeof(*(_P_STATE)) __state_t;                                             \
+	typedef ztd_typeof(*(_P_STATE)) __state_t;                                         \
 	__from_t const* const __start_from = (_FROM);                                      \
 	__from_t const* __from             = __start_from;                                 \
 	const size_t __start_from_n        = (_FROM_N);                                    \
@@ -479,10 +480,10 @@
 /// @param[in] _P_STATE A pointer to the state to use for this conversion.
 #define cnc_cxsrtocys_into_unbounded(_TO, _FROM, _P_STATE)                              \
 	ZTD_STMT_EXPR_BEGIN()                                                              \
-	typedef typeof(*(_FROM)) __from_t;                                                 \
-	typedef typeof(*(_TO)) __to_t;                                                     \
+	typedef ztd_typeof(*(_FROM)) __from_t;                                             \
+	typedef ztd_typeof(*(_TO)) __to_t;                                                 \
 	typedef cnc_result(__from_t, __to_t) __result_t;                                   \
-	typedef typeof(*(_P_STATE)) __state_t;                                             \
+	typedef ztd_typeof(*(_P_STATE)) __state_t;                                         \
 	__from_t const* const __start_from = (_FROM);                                      \
 	__from_t const* __from             = __start_from;                                 \
 	const size_t __start_from_n        = ztdc_c_string_ptr_size(__from);               \

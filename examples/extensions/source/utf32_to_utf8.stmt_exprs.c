@@ -36,8 +36,8 @@
 #include <string.h>
 
 int main() {
-	// Check if we support the extension functions...
 #if ZTD_IS_ON(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
+	// This only works if we support extension functions!
 	const ztd_char32_t input_data[] = U"Bark Bark Bark 🐕‍🦺!";
 	char output_data[ztdc_c_array_size(input_data) * 4] = { 0 };
 	cnc_mcstate_t state                                 = { 0 };

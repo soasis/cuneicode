@@ -36,6 +36,8 @@
 #include <limits.h>
 
 int main() {
+#if ZTD_IS_ON(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
+	// This only works if we support extension functions!
 	const ztd_char8_t str[]
 	     = u8"\"Saw a \U0001F9DC \u2014"
 	       u8"didn't catch her\u2026 \U0001F61E\"\n\t- Sniff";
@@ -61,4 +63,7 @@ int main() {
 		return 3;
 	}
 	return 0;
+#else
+	return 0;
+#endif
 }

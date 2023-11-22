@@ -44,4 +44,10 @@ foreach(extensions_source_file ${ztd.cuneicode.examples.extensions.stmt-exprs.so
 	target_compile_features(${extensions_target_name}
 		PRIVATE
 		c_std_23)
+	target_compile_features(${extensions_target_name}
+		PRIVATE
+		c_std_23)
+	set_property(TARGET ${extensions_target_name}
+		PROPERTY
+		C_EXTENSIONS ON)
 endforeach()

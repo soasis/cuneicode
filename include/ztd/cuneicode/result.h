@@ -220,7 +220,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 #if ZTD_IS_ON(ZTD_C)
 // clang-format off
 #define __cnc_uc_result(_OUT_TYPE, _PREFIX)                                                                                  \
-	typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_ucc8_,_PREFIX),result_t)),        \
 		default: _Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                          \
 			ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_ucc16_,_PREFIX),result_t)), \
@@ -238,7 +238,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 
 
 #define __cnc_mc_result(_OUT_TYPE, _PREFIX)                                                                                  \
-	typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_mcc8_,_PREFIX),result_t)),        \
 		default: _Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                          \
 			ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_mcc16_,_PREFIX),result_t)), \
@@ -256,7 +256,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 
 
 #define __cnc_mwc_result(_OUT_TYPE, _PREFIX)                                                                                  \
-	typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_mwcc8_,_PREFIX),result_t)),        \
 		default: _Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                          \
 			ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_mwcc16_,_PREFIX),result_t)), \
@@ -274,7 +274,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 
 
 #define __cnc_c8_result(_OUT_TYPE, _PREFIX)                                                                                  \
-	typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_c8c8_,_PREFIX),result_t)),        \
 		default: _Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                          \
 			ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_c8c16_,_PREFIX),result_t)), \
@@ -292,7 +292,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 
 
 #define __cnc_c16_result(_OUT_TYPE, _PREFIX)                                                                                  \
-	typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_c16c8_,_PREFIX),result_t)),        \
 		default: _Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                          \
 			ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_c16c16_,_PREFIX),result_t)), \
@@ -310,7 +310,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 
 
 #define __cnc_c32_result(_OUT_TYPE, _PREFIX)                                                                                  \
-	typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                                 \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_c32c8_,_PREFIX),result_t)),        \
 		default: _Generic(ZTDC_DECLVAL(_OUT_TYPE),                                                                          \
 			ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(ZTD_CONCAT_TOKENS_I_(ZTD_CONCAT_TOKENS_I_(cnc_c32c16_,_PREFIX),result_t)), \
@@ -327,7 +327,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 	)())
 
 #define __cnc_result(_IN_TYPE, _OUT_TYPE)                                                                             \
-	typeof(_Generic(ZTDC_DECLVAL(_IN_TYPE),                                                                          \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_IN_TYPE),                                                                          \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c8_result(_OUT_TYPE, )),                                             \
 		default: _Generic(ZTDC_DECLVAL(_IN_TYPE), ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c16_result(_OUT_TYPE, )), \
 		default: _Generic(ZTDC_DECLVAL(_IN_TYPE), ztd_char32_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c32_result(_OUT_TYPE, )), \
@@ -340,7 +340,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 
 
 #define __cnc_single_result(_IN_TYPE, _OUT_TYPE)                                                                             \
-	typeof(_Generic(ZTDC_DECLVAL(_IN_TYPE),                                                                          \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_IN_TYPE),                                                                          \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c8_result(_OUT_TYPE, single_)),                                             \
 		default: _Generic(ZTDC_DECLVAL(_IN_TYPE), ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c16_result(_OUT_TYPE, single_)), \
 		default: _Generic(ZTDC_DECLVAL(_IN_TYPE), ztd_char32_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c32_result(_OUT_TYPE, single_)), \
@@ -352,7 +352,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 	)())
 
 #define __cnc_single_error_result(_IN_TYPE, _OUT_TYPE)                                                                \
-	typeof(_Generic(ZTDC_DECLVAL(_IN_TYPE),                                                                          \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_IN_TYPE),                                                                          \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c8_result(_OUT_TYPE, single_error_)),                                \
 		default: _Generic(ZTDC_DECLVAL(_IN_TYPE), ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c16_result(_OUT_TYPE, single_error_)), \
 		default: _Generic(ZTDC_DECLVAL(_IN_TYPE), ztd_char32_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c32_result(_OUT_TYPE, single_error_)), \
@@ -364,7 +364,7 @@ ZTD_CNC_ALL_RESULT_DECLS_I_(c16, c32, ztd_char16_t, ztd_char32_t, CNC_C32_MAX);
 	)())
 
 #define __cnc_error_result(_IN_TYPE, _OUT_TYPE)                                                                               \
-	typeof(_Generic(ZTDC_DECLVAL(_IN_TYPE),                                                                                  \
+	ztd_typeof(_Generic(ZTDC_DECLVAL(_IN_TYPE),                                                                                  \
 		ztd_char8_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c8_result(_OUT_TYPE, error_)),                                                     \
 		default: _Generic(ZTDC_DECLVAL(_IN_TYPE), ztd_char16_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c16_result(_OUT_TYPE, error_)), \
 		default: _Generic(ZTDC_DECLVAL(_IN_TYPE), ztd_char32_t: ZTDC_TYPE_SELECT_FUNC(__cnc_c32_result(_OUT_TYPE, error_)), \
