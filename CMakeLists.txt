@@ -105,6 +105,8 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 
 		# Warning flags
 		check_compiler_flag(warn-pedantic MSVC /permissive- GCC -pedantic)
+		check_compiler_flag(no-warn-pedantic MSVC /permissive- GCC -Wno-pedantic)
+		check_compiler_flag(no-pedantic MSVC /permissive- GCC -no-pedantic)
 		check_compiler_flag(warn-all MSVC /W4 GCC -Wall)
 		check_compiler_flag(warn-errors MSVC /WX GCC -Werror)
 		check_compiler_flag(warn-extra GCC -Wextra Clang -Wextra)

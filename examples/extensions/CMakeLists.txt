@@ -37,6 +37,8 @@ foreach(extensions_source_file ${ztd.cuneicode.examples.extensions.stmt-exprs.so
 		ztd_cuneicode_example_simple(${extensions_source_file} "ztd.cuneicode.examples.extensions" extensions_target_name)
 		target_compile_options(${extensions_target_name}
 			PRIVATE
+			${--no-pedantic}
+			${--no-warn-pedantic}
 			${--allow-gnu-auto-type}
 			${--allow-gnu-statement-expressions}
 			${--allow-gnu-statement-expression-from-macro-expansion}
