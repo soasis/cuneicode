@@ -43,9 +43,6 @@ foreach(extensions_source_file ${ztd.cuneicode.examples.extensions.stmt-exprs.so
 			${--allow-gnu-statement-expressions}
 			${--allow-gnu-statement-expression-from-macro-expansion}
 		)
-		target_compile_features(${extensions_target_name}
-			PRIVATE
-			c_std_23)
 	if (NOT MSVC)
 		target_compile_features(${extensions_target_name}
 			PRIVATE
