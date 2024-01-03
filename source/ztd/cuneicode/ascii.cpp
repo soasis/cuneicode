@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -66,8 +66,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 	if (__c0 > static_cast<ztd_char32_t>(0x7F)) {
 		return cnc_mcerr_invalid_sequence;
 	}
-	__p_src[0] +=1;
-	__p_src_len[0] -=1;
+	__p_src[0] += 1;
+	__p_src_len[0] -= 1;
 	if (!_IsCounting) {
 		**__p_maybe_dst = static_cast<ztd_char_t>(__c0);
 		*__p_maybe_dst += 1;
@@ -109,8 +109,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_
 	if (static_cast<unsigned char>(__c0) > 0x7F) {
 		return cnc_mcerr_invalid_sequence;
 	}
-	__p_src[0] +=1;
-	__p_src_len[0] -=1;
+	__p_src[0] += 1;
+	__p_src_len[0] -= 1;
 	if (!_IsCounting) {
 		**__p_maybe_dst = static_cast<ztd_char32_t>(__c0);
 		*__p_maybe_dst += 1;

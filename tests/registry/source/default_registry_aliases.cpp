@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -66,7 +66,7 @@ TEST_CASE(
 	{
 		cnc_conversion_registry* raw_registry = registry.get();
 		cnc_registry_options registry_options = cnc_registry_options_default;
-		cnc_open_err err                    = cnc_registry_new(&raw_registry, registry_options);
+		cnc_open_err err                      = cnc_registry_new(&raw_registry, registry_options);
 		REQUIRE(err == cnc_open_err_ok);
 		registry.reset(raw_registry);
 	}
@@ -84,7 +84,7 @@ TEST_CASE(
 			std::size_t to_size                 = utf32_name.size();
 			const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 			cnc_conversion_registry* __registry = registry.get();
-			cnc_open_err err                  = cnc_conv_new_c8n(
+			cnc_open_err err                    = cnc_conv_new_c8n(
                     __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
 			REQUIRE(err == cnc_open_err_ok);
 			std::string_view from_name((const char*)info.from_code_data, info.from_code_size);
@@ -109,7 +109,7 @@ TEST_CASE(
 			std::size_t to_size                 = utf32_name.size();
 			const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 			cnc_conversion_registry* __registry = registry.get();
-			cnc_open_err err                  = cnc_conv_new_c8n(
+			cnc_open_err err                    = cnc_conv_new_c8n(
                     __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
 			REQUIRE(err == cnc_open_err_ok);
 			std::string_view from_name((const char*)info.from_code_data, info.from_code_size);

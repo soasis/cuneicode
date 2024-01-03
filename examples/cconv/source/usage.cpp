@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -155,7 +155,7 @@ void print_version(void) {
 	             "iconv compatibility."
 	          << std::endl
 	          << R"license(
-	Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+	Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 	Contact: opensource@soasis.org
 
 	Apache License Version 2 Usage

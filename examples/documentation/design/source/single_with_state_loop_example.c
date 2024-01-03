@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -70,7 +70,7 @@ int main() {
 	size_t input_size               = initial_input_size;
 
 	unsigned char output[CNC_C8_MAX * ztdc_c_array_size(input)] = { 0 };
-	unsigned char* output_ptr                                  = output;
+	unsigned char* output_ptr                                   = output;
 	const size_t initial_output_size = ztdc_c_array_size(output);
 	size_t output_size               = initial_output_size;
 

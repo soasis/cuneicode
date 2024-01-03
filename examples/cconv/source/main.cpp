@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -245,7 +245,7 @@ int main(int argc, char* argv[]) {
 			for (std::size_t i = 0; i < opt.input_files.size(); ++i) {
 				input_type& input_file_or_stdin = opt.input_files[i];
 				auto success                    = read_input_into(
-				                        input, input_file_or_stdin, opt.verbose, opt.silent);
+                         input, input_file_or_stdin, opt.verbose, opt.silent);
 				if (success.maybe_return_code) {
 					return *success.maybe_return_code;
 				}

@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -207,7 +207,7 @@ namespace cnc {
 			__p_maybe_dst_len[0] -= 1;                                              \
 		}                                                                            \
 		if (!_IsCounting) {                                                          \
-			__p_maybe_dst[0][0] = (_DEST_TYPE)*__src;                               \
+			__p_maybe_dst[0][0] = (_DEST_TYPE) * __src;                             \
 			__p_maybe_dst[0] += 1;                                                  \
 		}                                                                            \
 		__p_src[0] += 1;                                                             \
@@ -251,7 +251,7 @@ namespace cnc {
 			__p_maybe_dst_len[0] -= 1;                                            \
 		}                                                                          \
 		if (!_IsCounting) {                                                        \
-			__p_maybe_dst[0][0] = (_DEST_TYPE)*__src;                             \
+			__p_maybe_dst[0][0] = (_DEST_TYPE) * __src;                           \
 			__p_maybe_dst[0] += 1;                                                \
 		}                                                                          \
 		__p_src[0] += 1;                                                           \

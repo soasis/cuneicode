@@ -1,7 +1,7 @@
 .. ============================================================================
 ..
 .. ztd.cuneicode
-.. Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+.. Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 .. Contact: opensource@soasis.org
 ..
 .. Commercial License Usage
@@ -37,7 +37,7 @@ This is the list of encodings which have named functions available in cuneicode.
 .. =============================================================================
 ..
 .. ztd.text
-.. Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+.. Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 .. Contact: opensource@soasis.org
 ..
 .. Commercial License Usage

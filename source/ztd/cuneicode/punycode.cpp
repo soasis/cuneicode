@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -364,7 +364,7 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_
 		__p_state->__has_seen_non_basic
 		     += static_cast<uintptr_t>(__is_not_ascii_codepoint(__c32));
 		__pny.__input.push_back(__c32);
-		__p_src_len[0] -=1;
+		__p_src_len[0] -= 1;
 		__p_src[0] += 1;
 	}
 	return cnc_mcerr_ok;

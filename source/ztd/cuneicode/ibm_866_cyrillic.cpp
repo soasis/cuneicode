@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -86,8 +86,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32snrtomcs
      size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
-	     __p_state, CNC_MC_MAX, decltype(&cnc_c32nrtomcn_ibm_866_cyrillic), &cnc_c32nrtomcn_ibm_866_cyrillic,
-	     ztd_char32_t, ztd_char_t);
+	     __p_state, CNC_MC_MAX, decltype(&cnc_c32nrtomcn_ibm_866_cyrillic),
+	     &cnc_c32nrtomcn_ibm_866_cyrillic, ztd_char32_t, ztd_char_t);
 }
 
 ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsntoc32sn_ibm_866_cyrillic(
@@ -103,6 +103,6 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsnrtoc32s
      size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
      const char** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
-	     __p_state, CNC_MC_MAX, decltype(&cnc_mcnrtoc32n_ibm_866_cyrillic), &cnc_mcnrtoc32n_ibm_866_cyrillic,
-	     ztd_char_t, ztd_char32_t);
+	     __p_state, CNC_MC_MAX, decltype(&cnc_mcnrtoc32n_ibm_866_cyrillic),
+	     &cnc_mcnrtoc32n_ibm_866_cyrillic, ztd_char_t, ztd_char32_t);
 }

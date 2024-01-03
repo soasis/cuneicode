@@ -1,7 +1,7 @@
 // ============================================================================
 //
 // ztd.cuneicode
-// Copyright © 2022-2023 JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
+// Copyright © JeanHeyd "ThePhD" Meneide and Shepherd's Oasis, LLC
 // Contact: opensource@soasis.org
 //
 // Commercial License Usage
@@ -52,8 +52,7 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		size_t output_size                                     = ztdc_c_array_size(output_buffer);
 		const unsigned char* input = (const unsigned char*)source.data();
 		size_t input_size          = source.size();
-		cnc_mcerr err
-		     = cnc_conv_pivot(conv, &output_size, &output, &input_size, &input, &pivot);
+		cnc_mcerr err = cnc_conv_pivot(conv, &output_size, &output, &input_size, &input, &pivot);
 		std::string_view pivot_view((const ztd_char_t*)pivot.bytes, pivot_expected.size());
 		std::u32string_view output_view((const ztd_char32_t*)output_buffer,
 		     (ztdc_c_array_size(output_buffer) - output_size) / sizeof(ztd_char32_t));
@@ -100,8 +99,8 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		if (__c0 > 0x7F) {
 			return cnc_mcerr_invalid_sequence;
 		}
-		__p_src[0] +=1;
-		__p_src_len[0] -=1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		if (!_IsCounting) {
 			**__p_maybe_dst = static_cast<unsigned char>(__c0);
 			*__p_maybe_dst += 1;
@@ -135,8 +134,8 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		if (__c0 > 0x7F) {
 			return cnc_mcerr_invalid_sequence;
 		}
-		__p_src[0] +=1;
-		__p_src_len[0] -=1;
+		__p_src[0] += 1;
+		__p_src_len[0] -= 1;
 		if (!_IsCounting) {
 			**__p_maybe_dst = static_cast<unsigned char>(__c0);
 			*__p_maybe_dst += 1;
@@ -162,7 +161,7 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 	{
 		cnc_conversion_registry* raw_registry = registry.get();
 		cnc_registry_options registry_options = cnc_registry_options_default;
-		cnc_open_err err                    = cnc_registry_new(&raw_registry, registry_options);
+		cnc_open_err err                      = cnc_registry_new(&raw_registry, registry_options);
 		REQUIRE(err == cnc_open_err_ok);
 		registry.reset(raw_registry);
 	}
@@ -189,7 +188,7 @@ TEST_CASE("conversion from a custom encoding to UTF-32, through the ASCII encodi
 		std::size_t to_size                 = utf32_name.size();
 		const ztd_char8_t* to_data          = (const ztd_char8_t*)utf32_name.data();
 		cnc_conversion_registry* __registry = registry.get();
-		cnc_open_err err                  = cnc_conv_new_c8n(
+		cnc_open_err err                    = cnc_conv_new_c8n(
                __registry, from_size, from_data, to_size, to_data, &raw_conversion, &info);
 		REQUIRE(err == cnc_open_err_ok);
 		REQUIRE(info.is_indirect);
