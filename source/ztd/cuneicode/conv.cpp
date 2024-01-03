@@ -558,6 +558,7 @@ namespace {
 		__base_conv->__registry                   = __registry;
 		__base_conv->__size                       = __starting_available_space;
 		__base_conv->__properties                 = CNC_CONV_PROPS_NONE;
+		__base_conv->__state_is_complete_function = __entry->__state_is_complete_function;
 		__base_conv->__multi_conversion_function  = __entry->__multi_conversion_function;
 		__base_conv->__single_conversion_function = __entry->__single_conversion_function;
 		__base_conv->__close_function             = __entry->__close_function;
@@ -592,6 +593,7 @@ namespace {
 		__base_conv->__registry                   = __registry;
 		__base_conv->__size                       = __starting_available_space;
 		__base_conv->__properties                 = CNC_CONV_PROPS_INDIRECT;
+		__base_conv->__state_is_complete_function = nullptr;
 		__base_conv->__multi_conversion_function  = &__intermediary_multi_conversion;
 		__base_conv->__single_conversion_function = &__intermediary_single_conversion;
 		__base_conv->__close_function             = &__intermediary_close_function;
@@ -659,12 +661,13 @@ extern cnc_mcerr __cnc_single_from_multi_conversion(cnc_conversion* __conversion
 	if (__p_input_bytes_size == nullptr || __p_input_bytes == nullptr) {
 		return cnc_mcerr_ok;
 	}
-	const unsigned char* __input_bytes = *__p_input_bytes;
-	size_t __input_bytes_size          = *__p_input_bytes_size;
+	const unsigned char*& __input_bytes = *__p_input_bytes;
+	size_t& __input_bytes_size          = *__p_input_bytes_size;
 	if (__input_bytes == nullptr || __input_bytes_size == 0) {
 		return cnc_mcerr_ok;
 	}
-	for (size_t __len = 1; __len <= __input_bytes_size; ++__len) {
+	for (size_t __len = 1;; ++__len) {
+		const size_t __starting_len = __len;
 		cnc_mcerr __err
 		     = __conversion->__multi_conversion_function(__conversion, __p_output_bytes_size,
 		          __p_output_bytes, &__len, &__input_bytes, __p_pivot_info, __user_data);
@@ -672,10 +675,14 @@ extern cnc_mcerr __cnc_single_from_multi_conversion(cnc_conversion* __conversion
 		case cnc_mcerr_incomplete_input:
 			// alright, so we just need more input:
 			// we go A G A N E !
-			continue;
+			if (__len < __input_bytes_size) {
+				continue;
+			}
+			break;
 		default:
 			break;
 		}
+		__input_bytes_size -= (__starting_len - __len);
 		return __err;
 	}
 	// if we reach here, we just simply do not have enough input: bail out
