@@ -47,6 +47,7 @@
 #include <ztd/idk/hash.hpp>
 #include <ztd/idk/size.hpp>
 #include <ztd/idk/encoding_name.hpp>
+#include <ztd/idk/unreachable.hpp>
 
 #include <string_view>
 #include <unordered_map>
@@ -686,7 +687,7 @@ extern cnc_mcerr __cnc_single_from_multi_conversion(cnc_conversion* __conversion
 		return __err;
 	}
 	// if we reach here, we just simply do not have enough input: bail out
-	return cnc_mcerr_incomplete_input;
+	ZTD_UNREACHABLE();
 }
 
 extern cnc_open_err __cnc_add_default_registry_entries(
