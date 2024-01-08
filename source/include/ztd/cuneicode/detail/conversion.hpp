@@ -53,6 +53,7 @@ typedef enum cnc_conv_props {
 
 typedef struct cnc_conversion {
 	size_t __size;
+	size_t __multi_conversion_minimum_byte_size;
 	uint_least32_t __properties;
 	cnc_conversion_registry* __registry;
 	cnc_conversion_function* __single_conversion_function;

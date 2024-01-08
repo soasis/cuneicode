@@ -73,6 +73,7 @@ struct __cnc_registry_entry_key {
 };
 
 struct __cnc_registry_entry_value {
+	size_t __multi_conversion_minimum_byte_size;
 	cnc_conversion_function* __multi_conversion_function;
 	cnc_conversion_function* __single_conversion_function;
 	cnc_state_is_complete_function* __state_is_complete_function;

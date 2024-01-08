@@ -93,7 +93,7 @@ namespace {
 		return __state_is_complete_function(__basic);
 	}
 
-	template <typename _State>
+	template <typename _State, bool _SetAssumeValidToTrue = false>
 	static inline ::std::pair<cnc_open_err, _State*> __core_open_function(cnc_conversion_registry*,
 	     cnc_conversion* __conversion, size_t* __p_available_space, size_t* __p_max_alignment,
 	     void** __p_space) noexcept {
@@ -115,16 +115,19 @@ namespace {
 			return { cnc_open_err_ok, nullptr };
 		}
 		_State* __basic = new (static_cast<void*>(__basic_aligned)) _State();
+		if constexpr (_SetAssumeValidToTrue) {
+			__basic->header.__assume_valid = 1u;
+		}
 		*__p_available_space -= __used_space;
 		*__p_space = __aligned_space;
 		return { cnc_open_err_ok, __basic };
 	}
 
-	template <typename _State>
+	template <typename _State, bool _SetAssumeValidToTrue = false>
 	static inline cnc_open_err __basic_open_function(cnc_conversion_registry* __registry,
 	     cnc_conversion* __conversion, size_t* __p_available_space, size_t* __p_max_alignment,
 	     void** __p_space) noexcept {
-		auto __code_and_ptr = __core_open_function<_State>(
+		auto __code_and_ptr = __core_open_function<_State, _SetAssumeValidToTrue>(
 		     __registry, __conversion, __p_available_space, __p_max_alignment, __p_space);
 		return __code_and_ptr.first;
 	}
@@ -410,10 +413,15 @@ namespace {
 		     = __from->__single_conversion_function;
 		__intermediary->__link0.__state_is_complete_function
 		     = __from->__state_is_complete_function;
-		__intermediary->__link0.__close_function             = __from->__close_function;
-		__intermediary->__link0.__size                       = __link0_size;
-		__intermediary->__link0.__properties                 = CNC_CONV_PROPS_NONE;
-		__intermediary->__link1.__registry                   = __registry;
+		__intermediary->__link0.__close_function = __from->__close_function;
+		__intermediary->__link0.__size           = __link0_size;
+		__intermediary->__link0.__properties     = CNC_CONV_PROPS_NONE;
+		__intermediary->__link0.__multi_conversion_minimum_byte_size
+		     = __from->__multi_conversion_minimum_byte_size;
+		__intermediary->__link1.__registry   = __registry;
+		__intermediary->__link1.__properties = CNC_CONV_PROPS_NONE;
+		__intermediary->__link1.__multi_conversion_minimum_byte_size
+		     = __to->__multi_conversion_minimum_byte_size;
 		__intermediary->__link1.__multi_conversion_function  = __to->__multi_conversion_function;
 		__intermediary->__link1.__single_conversion_function = __to->__single_conversion_function;
 		__intermediary->__link1.__state_is_complete_function = __to->__state_is_complete_function;
@@ -555,10 +563,12 @@ namespace {
 			*__p_available_space = __starting_available_space;
 			return cnc_open_err_insufficient_output;
 		}
-		cnc_conversion* __base_conv               = new (__aligned_target) cnc_conversion();
-		__base_conv->__registry                   = __registry;
-		__base_conv->__size                       = __starting_available_space;
-		__base_conv->__properties                 = CNC_CONV_PROPS_NONE;
+		cnc_conversion* __base_conv = new (__aligned_target) cnc_conversion();
+		__base_conv->__registry     = __registry;
+		__base_conv->__size         = __starting_available_space;
+		__base_conv->__properties   = CNC_CONV_PROPS_NONE;
+		__base_conv->__multi_conversion_minimum_byte_size
+		     = __entry->__multi_conversion_minimum_byte_size;
 		__base_conv->__state_is_complete_function = __entry->__state_is_complete_function;
 		__base_conv->__multi_conversion_function  = __entry->__multi_conversion_function;
 		__base_conv->__single_conversion_function = __entry->__single_conversion_function;
@@ -667,8 +677,9 @@ extern cnc_mcerr __cnc_single_from_multi_conversion(cnc_conversion* __conversion
 	if (__input_bytes == nullptr || __input_bytes_size == 0) {
 		return cnc_mcerr_ok;
 	}
-	for (size_t __len = 1;; ++__len) {
-		const size_t __starting_len = __len;
+	for (size_t __input_bytes_limit = __conversion->__multi_conversion_minimum_byte_size;;
+	     __input_bytes_limit += __conversion->__multi_conversion_minimum_byte_size) {
+		size_t __len = __input_bytes_limit;
 		cnc_mcerr __err
 		     = __conversion->__multi_conversion_function(__conversion, __p_output_bytes_size,
 		          __p_output_bytes, &__len, &__input_bytes, __p_pivot_info, __user_data);
@@ -676,14 +687,14 @@ extern cnc_mcerr __cnc_single_from_multi_conversion(cnc_conversion* __conversion
 		case cnc_mcerr_incomplete_input:
 			// alright, so we just need more input:
 			// we go A G A N E !
-			if (__len < __input_bytes_size) {
+			if (__input_bytes_limit < __input_bytes_size) {
 				continue;
 			}
 			break;
 		default:
 			break;
 		}
-		__input_bytes_size -= (__starting_len - __len);
+		__input_bytes_size -= (__input_bytes_limit - __len);
 		return __err;
 	}
 	// if we reach here, we just simply do not have enough input: bail out
@@ -700,6 +711,7 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	}                                             \
 	static_assert(true, "")
 
+	// Basic core functionality
 	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__exec_name(),
 	     ::cnc::__cnc_detail::__exec_name(),
 	     &__typical_multi_conversion<char, char, decltype(&::cnc_mcsnrtomcsn), &::cnc_mcsnrtomcsn>,
@@ -903,6 +915,91 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	     &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t>,
 	     &::__basic_close_function<cnc_mcstate_t>));
 
+	// Basic unchecked functionality (UTF only)
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf8_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf8_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char8_t, ztd_char8_t, decltype(&::cnc_c8snrtoc8sn),
+	               &::cnc_c8snrtoc8sn>,
+	          &__typical_single_conversion<ztd_char8_t, ztd_char8_t, decltype(&::cnc_c8nrtoc8n),
+	               &::cnc_c8nrtoc8n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf8_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf16_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char8_t, ztd_char16_t, decltype(&::cnc_c8snrtoc16sn),
+	               &::cnc_c8snrtoc16sn>,
+	          &__typical_single_conversion<ztd_char8_t, ztd_char16_t, decltype(&::cnc_c8nrtoc16n),
+	               &::cnc_c8nrtoc16n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf8_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf32_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char8_t, ztd_char32_t, decltype(&::cnc_c8snrtoc32sn),
+	               &::cnc_c8snrtoc32sn>,
+	          &__typical_single_conversion<ztd_char8_t, ztd_char32_t, decltype(&::cnc_c8nrtoc32n),
+	               &::cnc_c8nrtoc32n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf16_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf8_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char16_t, ztd_char8_t, decltype(&::cnc_c16snrtoc8sn),
+	               &::cnc_c16snrtoc8sn>,
+	          &__typical_single_conversion<ztd_char16_t, ztd_char8_t, decltype(&::cnc_c16nrtoc8n),
+	               &::cnc_c16nrtoc8n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf16_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf16_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char16_t, ztd_char16_t,
+	               decltype(&::cnc_c16snrtoc16sn), &::cnc_c16snrtoc16sn>,
+	          &__typical_single_conversion<ztd_char16_t, ztd_char16_t,
+	               decltype(&::cnc_c16nrtoc16n), &::cnc_c16nrtoc16n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf16_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf32_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char16_t, ztd_char32_t,
+	               decltype(&::cnc_c16snrtoc32sn), &::cnc_c16snrtoc32sn>,
+	          &__typical_single_conversion<ztd_char16_t, ztd_char32_t,
+	               decltype(&::cnc_c16nrtoc32n), &::cnc_c16nrtoc32n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf8_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char32_t, ztd_char8_t, decltype(&::cnc_c32snrtoc8sn),
+	               &::cnc_c32snrtoc8sn>,
+	          &__typical_single_conversion<ztd_char32_t, ztd_char8_t, decltype(&::cnc_c32nrtoc8n),
+	               &::cnc_c32nrtoc8n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf16_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char32_t, ztd_char16_t,
+	               decltype(&::cnc_c32snrtoc16sn), &::cnc_c32snrtoc16sn>,
+	          &__typical_single_conversion<ztd_char32_t, ztd_char16_t,
+	               decltype(&::cnc_c32nrtoc16n), &::cnc_c32nrtoc16n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+	_CHECK_ERR_AND_RETURN(
+	     cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_unchecked_name(),
+	          ::cnc::__cnc_detail::__utf32_unchecked_name(),
+	          &__typical_multi_conversion<ztd_char32_t, ztd_char32_t,
+	               decltype(&::cnc_c32snrtoc32sn), &::cnc_c32snrtoc32sn>,
+	          &__typical_single_conversion<ztd_char32_t, ztd_char32_t,
+	               decltype(&::cnc_c32nrtoc32n), &::cnc_c32nrtoc32n>,
+	          &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,
+	          &::__basic_close_function<cnc_mcstate_t>));
+
 #define _ADD_MCN_NAMED_ENCODING_BASIC(                                                             \
      _NAME, _SUFFIX, _DECODE_STATE, _DECODE_COMPLETE_FN, _ENCODE_STATE, _ENCODE_COMPLETE_FN)       \
 	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, (const ztd_char8_t*)(_NAME),            \
@@ -933,7 +1030,7 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	          decltype(&::cnc_mcsnrtoc32sn_##_SUFFIX), &::cnc_mcsnrtoc32sn_##_SUFFIX>,         \
 	     &__typical_single_conversion<ztd_char_t, ztd_char32_t,                                \
 	          decltype(&::cnc_mcnrtoc32n_##_SUFFIX), &::cnc_mcnrtoc32n_##_SUFFIX>,             \
-	     &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t>,              \
+	     &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,        \
 	     &::__basic_close_function<cnc_mcstate_t>));                                           \
 	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(), \
 	     (const ztd_char8_t*)(_NAME),                                                          \
@@ -941,7 +1038,7 @@ extern cnc_open_err __cnc_add_default_registry_entries(
 	          decltype(&::cnc_c32snrtomcsn_##_SUFFIX), &::cnc_c32snrtomcsn_##_SUFFIX>,         \
 	     &__typical_single_conversion<ztd_char32_t, ztd_char_t,                                \
 	          decltype(&::cnc_c32nrtomcn_##_SUFFIX), &::cnc_c32nrtomcn_##_SUFFIX>,             \
-	     &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t>,              \
+	     &::__typical_state_is_complete, &::__basic_open_function<cnc_mcstate_t, true>,        \
 	     &::__basic_close_function<cnc_mcstate_t>))
 
 	_ADD_MCN_NAMED_ENCODING("ascii", ascii);

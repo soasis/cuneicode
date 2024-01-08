@@ -72,7 +72,7 @@ int main(int, char*[]) {
 		registry.reset(raw_registry);
 	}
 
-	if (!cnc_shared_add_simdutf_to_registry(registry.get())) {
+	if (!cnc_shared_add_bulk_simdutf_to_registry(registry.get())) {
 		std::cerr << "[error] Could not add simdutf to "
 		             "the conversion registry."
 		          << std::endl;

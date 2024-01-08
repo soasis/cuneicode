@@ -84,10 +84,10 @@ namespace cnc {
 			}
 			size_t __seq_len = static_cast<size_t>(__ztd_idk_detail_utf8_decode_length(__c0));
 			if constexpr (!_IsUnbounded) {
-				if (*__p_maybe_dst_len < __seq_len) {
+				if (__p_maybe_dst_len[0] < __seq_len) {
 					return cnc_mcerr_insufficient_output;
 				}
-				*__p_maybe_dst_len -= __seq_len;
+				__p_maybe_dst_len[0] -= __seq_len;
 			}
 			if constexpr (!_IsCounting) {
 				if (__seq_len == 1) {
@@ -167,7 +167,7 @@ namespace cnc {
 					__p_maybe_dst[0] += 1;
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 1;
+					__p_maybe_dst_len[0] -= 1;
 				}
 			}
 			else {
@@ -183,7 +183,7 @@ namespace cnc {
 					__p_maybe_dst[0] += 2;
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 2;
+					__p_maybe_dst_len[0] -= 2;
 				}
 			}
 
@@ -207,7 +207,7 @@ namespace cnc {
 				}
 			}
 			if constexpr (!_IsUnbounded) {
-				if (*__p_maybe_dst_len < 1) {
+				if (__p_maybe_dst_len[0] < 1) {
 					return cnc_mcerr_insufficient_output;
 				}
 			}
@@ -223,7 +223,7 @@ namespace cnc {
 				__p_maybe_dst[0] += 1;
 			}
 			if constexpr (!_IsUnbounded) {
-				*__p_maybe_dst_len -= 1;
+				__p_maybe_dst_len[0] -= 1;
 			}
 			return cnc_mcerr_ok;
 		}
@@ -268,10 +268,10 @@ namespace cnc {
 					continue;
 				}
 				if constexpr (!_IsUnbounded) {
-					if (*__p_maybe_dst_len < __res) {
+					if (__p_maybe_dst_len[0] < __res) {
 						return cnc_mcerr_insufficient_output;
 					}
-					*__p_maybe_dst_len -= __res;
+					__p_maybe_dst_len[0] -= __res;
 				}
 				if constexpr (!_IsCounting) {
 					::std::memcpy(__p_maybe_dst[0], (__multibyte_intermediate + 0),
@@ -314,10 +314,10 @@ namespace cnc {
 			++__src_idx;
 			if (__c8 <= 0x7F) {
 				if constexpr (!_IsUnbounded) {
-					if (*__p_maybe_dst_len < 1) {
+					if (__p_maybe_dst_len[0] < 1) {
 						return cnc_mcerr_insufficient_output;
 					}
-					*__p_maybe_dst_len -= 1;
+					__p_maybe_dst_len[0] -= 1;
 				}
 				if constexpr (!_IsCounting) {
 					__p_maybe_dst[0][0] = __c8;
@@ -337,7 +337,7 @@ namespace cnc {
 			}
 
 			if constexpr (!_IsUnbounded) {
-				if (__seq_len > *__p_maybe_dst_len) {
+				if (__p_maybe_dst_len[0] < __seq_len) {
 					return cnc_mcerr_insufficient_output;
 				}
 			}
@@ -355,7 +355,7 @@ namespace cnc {
 				__p_maybe_dst[0] += __seq_len;
 			}
 			if constexpr (!_IsUnbounded) {
-				*__p_maybe_dst_len -= __seq_len;
+				__p_maybe_dst_len[0] -= __seq_len;
 			}
 			__p_src[0] += __seq_len;
 			__p_src_len[0] -= __seq_len;
@@ -388,7 +388,7 @@ namespace cnc {
 					__p_maybe_dst[0] += 1;
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 1;
+					__p_maybe_dst_len[0] -= 1;
 				}
 				__p_src[0] += 1;
 				__p_src_len[0] -= 1;
@@ -429,7 +429,7 @@ namespace cnc {
 					++__p_maybe_dst[0];
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 1;
+					__p_maybe_dst_len[0] -= 1;
 				}
 			}
 			else {
@@ -445,7 +445,7 @@ namespace cnc {
 					__p_maybe_dst[0] += 2;
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 2;
+					__p_maybe_dst_len[0] -= 2;
 				}
 			}
 
@@ -477,10 +477,10 @@ namespace cnc {
 			++__src_idx;
 			if (__c8 <= 0x7F) {
 				if constexpr (!_IsUnbounded) {
-					if (1 > *__p_maybe_dst_len) {
+					if (__p_maybe_dst_len[0] < 1) {
 						return cnc_mcerr_insufficient_output;
 					}
-					*__p_maybe_dst_len -= 1;
+					__p_maybe_dst_len[0] -= 1;
 				}
 				if constexpr (!_IsCounting) {
 					__p_maybe_dst[0][0] = static_cast<ztd_char32_t>(__c8);
@@ -500,7 +500,7 @@ namespace cnc {
 			}
 
 			if constexpr (!_IsUnbounded) {
-				if (1 > *__p_maybe_dst_len) {
+				if (__p_maybe_dst_len[0] < 1) {
 					return cnc_mcerr_insufficient_output;
 				}
 			}
@@ -525,7 +525,7 @@ namespace cnc {
 				__p_maybe_dst[0] += 1;
 			}
 			if constexpr (!_IsUnbounded) {
-				*__p_maybe_dst_len -= 1;
+				__p_maybe_dst_len[0] -= 1;
 			}
 			__p_src[0] += __seq_len;
 			__p_src_len[0] -= __seq_len;
@@ -550,20 +550,18 @@ namespace cnc {
 				}
 			}
 
-			const ztd_char16_t& __c0              = *__src;
-			const bool __c0_is_leading_surrogate  = __ztd_idk_detail_is_lead_surrogate(__c0);
-			const bool __c0_is_trailing_surrogate = __ztd_idk_detail_is_trail_surrogate(__c0);
-			ztd_char32_t __point;
+			const ztd_char16_t& __c0             = *__src;
+			const bool __c0_is_leading_surrogate = __ztd_idk_detail_is_lead_surrogate(__c0);
 			if (__c0_is_leading_surrogate) {
-				if (__src_len < 1) {
+				if (__src_len < 2) {
 					return cnc_mcerr_incomplete_input;
 				}
 				const ztd_char16_t& __c1 = *(__src + 1);
 				if (!__ztd_idk_detail_is_trail_surrogate(__c1)) {
 					return cnc_mcerr_invalid_sequence;
 				}
-				__point             = __ztd_idk_detail_utf16_combine_surrogates(__c0, __c1);
-				size_t __input_size = 1;
+				ztd_char32_t __point = __ztd_idk_detail_utf16_combine_surrogates(__c0, __c1);
+				size_t __input_size  = 1;
 				const ztd_char32_t* __p_input = &__point;
 				cnc_mcerr __intermediate_err
 				     = ::cnc::__cnc_detail::__c32nrtoc8n<_IsCounting, _IsUnbounded, false>(
@@ -576,10 +574,12 @@ namespace cnc {
 				return __intermediate_err;
 			}
 			else {
+				const bool __c0_is_trailing_surrogate
+				     = __ztd_idk_detail_is_trail_surrogate(__c0);
 				if (__c0_is_trailing_surrogate || __c0 > __ztd_idk_detail_last_bmp_value) {
 					return cnc_mcerr_invalid_sequence;
 				}
-				__point                       = static_cast<ztd_char32_t>(__c0);
+				ztd_char32_t __point          = static_cast<ztd_char32_t>(__c0);
 				size_t __input_size           = 1;
 				const ztd_char32_t* __p_input = &__point;
 				cnc_mcerr __intermediate_err
@@ -611,15 +611,14 @@ namespace cnc {
 				}
 			}
 			if constexpr (!_IsUnbounded) {
-				if (*__p_maybe_dst_len < 1) {
+				if (__p_maybe_dst_len[0] < 1) {
 					return cnc_mcerr_insufficient_output;
 				}
 			}
-			const ztd_char16_t& __c0        = *__src;
-			bool __c0_is_leading_surrogate  = __ztd_idk_detail_is_lead_surrogate(__c0);
-			bool __c0_is_trailing_surrogate = __ztd_idk_detail_is_trail_surrogate(__c0);
+			const ztd_char16_t& __c0       = *__src;
+			bool __c0_is_leading_surrogate = __ztd_idk_detail_is_lead_surrogate(__c0);
 			if (__c0_is_leading_surrogate) {
-				if (__src_len < 1) {
+				if (__src_len < 2) {
 					return cnc_mcerr_incomplete_input;
 				}
 				const ztd_char16_t& __c1 = *(__src + 1);
@@ -632,12 +631,13 @@ namespace cnc {
 					(__p_maybe_dst[0]) += 2;
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 2;
+					__p_maybe_dst_len[0] -= 2;
 				}
 				__p_src[0] += 2;
 				__p_src_len[0] -= 2;
 			}
 			else {
+				bool __c0_is_trailing_surrogate = __ztd_idk_detail_is_trail_surrogate(__c0);
 				if (__c0_is_trailing_surrogate || __c0 > __ztd_idk_detail_last_bmp_value) {
 					return cnc_mcerr_invalid_sequence;
 				}
@@ -646,7 +646,7 @@ namespace cnc {
 					__p_maybe_dst[0] += 1;
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 1;
+					__p_maybe_dst_len[0] -= 1;
 				}
 				__p_src[0] += 1;
 				__p_src_len[0] -= 1;
@@ -671,16 +671,15 @@ namespace cnc {
 				}
 			}
 			if constexpr (!_IsUnbounded) {
-				if (*__p_maybe_dst_len < 1) {
+				if (__p_maybe_dst_len[0] < 1) {
 					return cnc_mcerr_insufficient_output;
 				}
 			}
-			const ztd_char16_t& __c0              = *__src;
-			const bool __c0_is_leading_surrogate  = __ztd_idk_detail_is_lead_surrogate(__c0);
-			const bool __c0_is_trailing_surrogate = __ztd_idk_detail_is_trail_surrogate(__c0);
+			const ztd_char16_t& __c0             = *__src;
+			const bool __c0_is_leading_surrogate = __ztd_idk_detail_is_lead_surrogate(__c0);
 			[[maybe_unused]] ztd_char32_t __point;
 			if (__c0_is_leading_surrogate) {
-				if (__src_len < 1) {
+				if (__src_len < 2) {
 					return cnc_mcerr_incomplete_input;
 				}
 				const ztd_char16_t& __c1 = *(__src + 1);
@@ -695,6 +694,8 @@ namespace cnc {
 				__p_src_len[0] -= 2;
 			}
 			else {
+				const bool __c0_is_trailing_surrogate
+				     = __ztd_idk_detail_is_trail_surrogate(__c0);
 				if (__c0_is_trailing_surrogate || __c0 > __ztd_idk_detail_last_bmp_value) {
 					return cnc_mcerr_invalid_sequence;
 				}
@@ -707,7 +708,7 @@ namespace cnc {
 				__p_maybe_dst[0] += 1;
 			}
 			if constexpr (!_IsUnbounded) {
-				*__p_maybe_dst_len -= 1;
+				__p_maybe_dst_len[0] -= 1;
 			}
 			return cnc_mcerr_ok;
 		}
@@ -753,7 +754,7 @@ namespace cnc {
 				}
 			}
 			if constexpr (!_IsUnbounded) {
-				if (*__p_maybe_dst_len < 1) {
+				if (__p_maybe_dst_len[0] < 1) {
 					return cnc_mcerr_insufficient_output;
 				}
 			}
@@ -774,7 +775,7 @@ namespace cnc {
 					__p_maybe_dst[0] += 1;
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 1;
+					__p_maybe_dst_len[0] -= 1;
 				}
 				__p_src[0] += 1;
 				__p_src_len[0] -= 1;
@@ -785,7 +786,7 @@ namespace cnc {
 					__p_maybe_dst[0] += 1;
 				}
 				if constexpr (!_IsUnbounded) {
-					*__p_maybe_dst_len -= 1;
+					__p_maybe_dst_len[0] -= 1;
 				}
 				__p_src[0] += __c_err;
 				__p_src_len[0] -= __c_err;
@@ -835,7 +836,7 @@ namespace cnc {
 				}
 			}
 			if constexpr (!_IsUnbounded) {
-				if (*__p_maybe_dst_len < 1) {
+				if (__p_maybe_dst_len[0] < 1) {
 					return cnc_mcerr_insufficient_output;
 				}
 			}
@@ -854,10 +855,10 @@ namespace cnc {
 					continue;
 				}
 				if constexpr (!_IsUnbounded) {
-					if (*__p_maybe_dst_len < __res) {
+					if (__p_maybe_dst_len[0] < __res) {
 						return cnc_mcerr_insufficient_output;
 					}
-					*__p_maybe_dst_len -= __res;
+					__p_maybe_dst_len[0] -= __res;
 				}
 				if constexpr (!_IsCounting) {
 					::std::memcpy(__p_maybe_dst[0], __multibyte_intermediate,
@@ -981,10 +982,10 @@ namespace cnc {
 				}
 				size_t __c32_written = (__p_c32_intermediate + 1) - __c32_intermediate;
 				if constexpr (!_IsUnbounded) {
-					if (*__p_maybe_dst_len < __c32_written) {
+					if (__p_maybe_dst_len[0] < __c32_written) {
 						return cnc_mcerr_insufficient_output;
 					}
-					*__p_maybe_dst_len -= __c32_written;
+					__p_maybe_dst_len[0] -= __c32_written;
 				}
 				if constexpr (!_IsCounting) {
 					::std::memcpy(__p_maybe_dst[0], (__c32_intermediate + 0),

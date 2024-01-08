@@ -420,6 +420,65 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
 /// during function calls which open new cnc_conversion handles. Can be `nullptr`.
 /// @param[in] __close_function The cnc_close_function to be used for allocating additional space
 /// during function calls which open new cnc_conversion handles. Can be `nullptr`.
+/// @param[in] __multi_conversion_minimum_byte_size The minimum byte size for the number of bytes an
+/// individual element for the conversion functions. For example, for UTF-8 to UTF-16, UTF-8 code
+/// units occupy typically occupy one byte, so this would be `1`. For UTF-16, it would be `2` (or,
+/// precisely, `(16 + (CHAR_BIT - 1)) / CHAR_BIT`), for UTF-32 it would be `4` (or, precisely, `(32
+/// + (CHAR_BIT - 1)) / CHAR_BIT`), and so-on and so-forth.
+///
+/// @remarks This function has identical behavior to cnc_registry_add_n, where the `__from_size`
+/// and `__to_size` arguments are calculated by calling the equivalent of `strlen` on `__from` and
+/// `__to`, respectively. If `__from` or
+/// `__to` are `nullptr`, then the function will assume they are the empty string (and use the
+/// default name in that case).
+///////
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_c8n_multimin(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_conversion_function* __multi_conversion_function,
+     cnc_conversion_function* __single_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function,
+     size_t __multi_conversion_minimum_byte_size) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_registry_add_c8n_multimin
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_n_multimin(
+     cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_conversion_function* __multi_conversion_function,
+     cnc_conversion_function* __single_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function,
+     size_t __multi_conversion_minimum_byte_size) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
+/// registry.
+///
+/// @param[in] __registry The registry to create the new conversion pair in.
+/// @param[in] __from_size The number of code units in the `__from` parameter.
+/// @param[in] __from A pointer to a string encoded in UTF-8 representing the name of the encoding
+/// to convert from. The string need not be null-terminated. Can be `nullptr`.
+/// @param[in] __to_size The number of code units in the `__to` parameter.
+/// @param[in] __to A pointer to a string encoded in UTF-8 representing the name of the encoding to
+/// convert to. The string need not be null-terminated. Can be `nullptr`.
+/// @param[in] __multi_conversion_function The conversion cnc_conversion_function which will perform
+/// a bulk conversion (consumes as much input as is available until exhausted or an error occurs).
+/// Can be `nullptr`, but only if the
+/// `__single_conversion_function` is not `nullptr` as well.
+/// @param[in] __single_conversion_function The conversion cnc_conversion_function which will
+/// perform a singular conversion (consumes only one completely unit of input and produces on
+/// complete unit of output). Can be `nullptr`, but only if the `__multi_conversion_function` is not
+/// `nullptr` as well.
+/// @param[in] __state_is_complete_function A function to use to check if, when the input is empty,
+/// if there is still leftover data to be output from the state.
+/// @param[in] __open_function The cnc_open_function to be used for allocating additional space
+/// during function calls which open new cnc_conversion handles. Can be `nullptr`.
+/// @param[in] __close_function The cnc_close_function to be used for allocating additional space
+/// during function calls which open new cnc_conversion handles. Can be `nullptr`.
 ///
 /// @remarks This function has identical behavior to cnc_registry_add_n, where the `__from_size`
 /// and `__to_size` arguments are calculated by calling the equivalent of `strlen` on `__from` and
@@ -581,6 +640,103 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry
      cnc_state_is_complete_function* __state_is_complete_function,
      cnc_open_function* __open_function,
      cnc_close_function* __close_function) ZTD_NOEXCEPT_IF_CXX_I_;
+
+
+
+//////
+/// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
+/// registry.
+///
+/// @param[in] __registry The registry to create the new conversion pair in.
+/// @param[in] __from_size The number of code units in the `__from` parameter.
+/// @param[in] __from A pointer to a string encoded in UTF-8 representing the encoding to convert
+/// from. The string need not be null-terminated. Can be `nullptr`.
+/// @param[in] __to_size The number of code units in the `__to` parameter.
+/// @param[in] __to A pointer to a string encoded in UTF-8 representing the encoding to convert to.
+/// The string need not be null-terminated. Can be `nullptr`.
+/// @param[in] __multi_conversion_function The conversion cnc_conversion_function which will perform
+/// a bulk conversion (consumes as much input as is available until exhausted or an error occurs).
+/// Can be `nullptr`, but only if the
+/// `__single_conversion_function` is not `nullptr` as well.
+/// @param[in] __state_is_complete_function A function to use to check if, when the input is empty,
+/// if there is still leftover data to be output from the state.
+/// @param[in] __open_function The cnc_open_function to be used for allocating additional space
+/// during function calls which open new cnc_conversion handles. Can be `nullptr`.
+/// @param[in] __close_function The cnc_close_function to be used for allocating additional space
+/// during function calls which open new cnc_conversion handles. Can be `nullptr`.
+/// @param[in] __multi_conversion_minimum_byte_size The minimum byte size for the number of bytes an
+/// individual element for the conversion functions. For example, for UTF-8 to UTF-16, UTF-8 code
+/// units occupy typically occupy one byte, so this would be `1`. For UTF-16, it would be `2` (or,
+/// precisely, `(16 + (CHAR_BIT - 1)) / CHAR_BIT`), for UTF-32 it would be `4` (or, precisely, `(32
+/// + (CHAR_BIT - 1)) / CHAR_BIT`), and so-on and so-forth.
+///
+/// @remarks Identical to calling cnc_registry_add_n, with the `__single_conversion_function`
+/// parameter set to `nullptr`.
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err
+cnc_registry_add_multi_c8n_multimin(cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char8_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char8_t __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_conversion_function* __multi_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function,
+     size_t __multi_conversion_minimum_byte_size) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_registry_add_multi_c8n_multimin
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err
+cnc_registry_add_multi_n_multimin(cnc_conversion_registry* __registry, size_t __from_size,
+     const ztd_char_t __from[ZTD_PTR_EXTENT(__from_size)], size_t __to_size,
+     const ztd_char_t __to[ZTD_PTR_EXTENT(__to_size)],
+     cnc_conversion_function* __multi_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function,
+     size_t __multi_conversion_minimum_byte_size) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
+/// registry.
+///
+/// @param[in] __registry The registry to create the new conversion pair in.
+/// @param[in] __from A pointer to a null-terminated c string encoded in UTF-8 representing the
+/// encoding to convert from. Can be `nullptr`.
+/// @param[in] __to A pointer to a null-terminated c string encoded in UTF-8 representing the
+/// encoding to convert to. Can be `nullptr`.
+/// @param[in] __multi_conversion_function The conversion cnc_conversion_function which will perform
+/// a bulk conversion (consumes as much input as is available until exhausted or an error occurs).
+/// Can be `nullptr`, but only if the
+/// `__single_conversion_function` is not `nullptr` as well.
+/// @param[in] __state_is_complete_function A function to use to check if, when the input is empty,
+/// if there is still leftover data to be output from the state.
+/// @param[in] __open_function The cnc_open_function to be used for allocating additional space
+/// during function calls which open new cnc_conversion handles. Can be `nullptr`.
+/// @param[in] __close_function The cnc_close_function to be used for allocating additional space
+/// during function calls which open new cnc_conversion handles. Can be `nullptr`.
+/// @param[in] __multi_conversion_minimum_byte_size The minimum byte size for the number of bytes an
+/// individual element for the conversion functions. For example, for UTF-8 to UTF-16, UTF-8 code
+/// units occupy typically occupy one byte, so this would be `1`. For UTF-16, it would be `2` (or,
+/// precisely, `(16 + (CHAR_BIT - 1)) / CHAR_BIT`), for UTF-32 it would be `4` (or, precisely, `(32
+/// + (CHAR_BIT - 1)) / CHAR_BIT`), and so-on and so-forth.
+///
+/// @remarks Identical to calling cnc_registry_add_n, with the `__multi_conversion_function`
+/// parameter set to `nullptr`. The `__from_size` and `__to_size` arguments are calculated by
+/// calling the equivalent of `strlen` on
+/// `__from` and `__to`, respectively. If `__from` or `__to` are `nullptr`, then the function will
+/// assume they are the empty string (and use the default name in that case).
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err
+cnc_registry_add_multi_c8_multimin(cnc_conversion_registry* __registry, const ztd_char8_t* __from,
+     const ztd_char8_t* __to, cnc_conversion_function* __multi_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function,
+     size_t __multi_conversion_minimum_byte_size) ZTD_NOEXCEPT_IF_CXX_I_;
+
+//////
+/// @copydoc cnc_registry_add_multi_c8_multimin
+ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_registry_add_multi_multimin(
+     cnc_conversion_registry* __registry, const ztd_char_t* __from, const ztd_char_t* __to,
+     cnc_conversion_function* __multi_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function,
+     size_t __multi_conversion_minimum_byte_size) ZTD_NOEXCEPT_IF_CXX_I_;
 
 //////
 /// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
