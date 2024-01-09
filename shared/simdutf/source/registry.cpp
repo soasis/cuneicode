@@ -290,41 +290,59 @@ UTF_CONVERT_DEFINITION(16, 32, be, le, , );
 		const bool assume_valid       = cnc_mcstate_is_assuming_valid(state);                      \
 		if (!assume_valid) { /* if we can't assume it's valid, we must check validating before     \
 			                   copying... */                                                      \
+			const from_char_t* input  = (const from_char_t*)input_bytes;                          \
 			simdutf::result valid_utf = ztd::endian::native == ztd::endian::big                   \
-			     ? simdutf::validate_utf##N##BIG_SUFFIX##_with_errors(                            \
-			          (const from_char_t*)input_bytes, input_size)                                \
-			     : simdutf::validate_utf##N##LIL_SUFFIX##_with_errors(                            \
-			          (const from_char_t*)input_bytes, input_size);                               \
+			     ? simdutf::validate_utf##N##BIG_SUFFIX##_with_errors(input, input_size)          \
+			     : simdutf::validate_utf##N##LIL_SUFFIX##_with_errors(input, input_size);         \
 			/* perform a partial copy of the data, if needed */                                   \
-			size_t output_bytes_size = valid_utf.count * sizeof(from_char_t);                     \
+			const size_t initial_output_bytes_size = valid_utf.count * sizeof(from_char_t);       \
+			size_t output_bytes_size               = initial_output_bytes_size;                   \
+			size_t available_output_bytes_size     = initial_output_bytes_size;                   \
+			if (!is_unbounded_write) {                                                            \
+				available_output_bytes_size = p_output_bytes_size[0];                            \
+				output_bytes_size                                                                \
+				     = (std::min)(output_bytes_size, available_output_bytes_size);               \
+				p_output_bytes_size[0] -= output_bytes_size;                                     \
+			}                                                                                     \
 			if (!is_counting_only) {                                                              \
-				if (!is_unbounded_write) {                                                       \
-					output_bytes_size = (std::min)(output_bytes_size, *p_output_bytes_size);    \
-					p_output_bytes_size[0] -= output_bytes_size;                                \
-				}                                                                                \
 				std::memcpy(p_output_bytes[0], input_bytes, output_bytes_size);                  \
 				p_output_bytes[0] += output_bytes_size;                                          \
 			}                                                                                     \
 			p_input_bytes_size[0] -= output_bytes_size;                                           \
 			p_input_bytes[0] += output_bytes_size;                                                \
 			if (valid_utf.error != simdutf::error_code::SUCCESS) {                                \
-				return valid_utf.error == simdutf::error_code::TOO_SHORT                         \
-				     ? cnc_mcerr_incomplete_input                                                \
-				     : cnc_mcerr_invalid_sequence;                                               \
+				if constexpr (N == 32) {                                                         \
+					return cnc_mcerr_invalid_sequence;                                          \
+				}                                                                                \
+				else if constexpr (N == 16) {                                                    \
+					return valid_utf.error == simdutf::error_code::SURROGATE                    \
+					          && (input_size % 2 != 0)                                          \
+					     ? cnc_mcerr_incomplete_input                                           \
+					     : cnc_mcerr_invalid_sequence;                                          \
+				}                                                                                \
+				else {                                                                           \
+					return valid_utf.error == simdutf::error_code::TOO_SHORT                    \
+					     ? cnc_mcerr_incomplete_input                                           \
+					     : cnc_mcerr_invalid_sequence;                                          \
+				}                                                                                \
 			}                                                                                     \
-			else {                                                                                \
-				return cnc_mcerr_ok;                                                             \
+			return initial_output_bytes_size > available_output_bytes_size                        \
+			     ? cnc_mcerr_insufficient_output                                                  \
+			     : cnc_mcerr_ok;                                                                  \
+		}                                                                                          \
+		else {                                                                                     \
+			const size_t output_bytes_size = input_bytes_size;                                    \
+			if (!is_unbounded_write) {                                                            \
+				p_output_bytes_size[0] -= input_bytes_size;                                      \
 			}                                                                                     \
+			if (!is_counting_only) { /* just memcpy the whole damn thing, then */                 \
+				std::memcpy(p_output_bytes[0], input_bytes, output_bytes_size);                  \
+				p_output_bytes[0] += output_bytes_size;                                          \
+			}                                                                                     \
+			p_input_bytes_size[0] -= output_bytes_size;                                           \
+			p_input_bytes[0] += output_bytes_size;                                                \
+			return cnc_mcerr_ok;                                                                  \
 		}                                                                                          \
-		size_t output_bytes_size = input_bytes_size;                                               \
-		if (!is_unbounded_write) {                                                                 \
-			p_output_bytes_size[0] -= input_bytes_size;                                           \
-		}                                                                                          \
-		if (!is_counting_only) { /* just memcpy the whole damn thing, then */                      \
-			std::memcpy(p_output_bytes[0], input_bytes, output_bytes_size);                       \
-			p_output_bytes[0] += output_bytes_size;                                               \
-		}                                                                                          \
-		return cnc_mcerr_ok;                                                                       \
 	}                                                                                               \
 	static_assert(true, "")
 
