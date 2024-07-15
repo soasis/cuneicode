@@ -2,7 +2,7 @@
 
 if (TARGET ztd::cuneicode)
 	get_target_property(ZTD_CUNEICODE_INCLUDE_DIRS
-		ztd.cuneicode.single INTERFACE_INCLUDE_DIRECTORIES)
+		ztd.cuneicode INTERFACE_INCLUDE_DIRECTORIES)
 	set_and_check(ZTD_CUNEICODE_INCLUDE_DIRS "${ZTD_CUNEICODE_INCLUDE_DIRS}")
 endif()
 
