@@ -27,8 +27,7 @@
 #
 # =========================================================================== #
 
-cmake_minimum_required(VERSION 3.21.0)
-cmake_policy(VERSION 3.21)
+cmake_minimum_required(VERSION 3.28.0)
 
 # # Project kickstart
 # Includes a bunch of basic flags and utilities shared across projects
@@ -244,9 +243,9 @@ if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 			simdutf
 			GIT_REPOSITORY https://github.com/simdutf/simdutf
 			GIT_SHALLOW    ON
-			GIT_TAG        master)
+			GIT_TAG        master
+			EXCLUDE_FROM_ALL)
 		FetchContent_MakeAvailable(simdutf)
-		set_property(DIRECTORY "${simdutf_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL YES)
 	endfunction()
 	simdutf_dependency_jail()
 	add_subdirectory(shared)

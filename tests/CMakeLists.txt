@@ -36,9 +36,9 @@ FetchContent_Declare(
 	GIT_REPOSITORY https://github.com/catchorg/Catch2.git
 	GIT_SHALLOW ON
 	GIT_TAG devel
+	EXCLUDE_FROM_ALL
 )
 FetchContent_MakeAvailable(catch2)
-set_property(DIRECTORY "${catch2_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL YES)
 
 #add_subdirectory(allocation)
 add_subdirectory(basic_run_time)
