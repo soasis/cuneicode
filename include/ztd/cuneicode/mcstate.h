@@ -107,7 +107,7 @@ typedef union cnc_mcstate_t {
 		/// access.
 		unsigned int __paddding : ((sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT) - 1;
 	} header;
-#if ZTD_IS_ON(ZTD_HEADER_CWCHAR) || ZTD_IS_ON(ZTD_HEADER_WCHAR_H) || ZTD_IS_ON(ZTD_HEADER_UCHAR) \
+#if ZTD_IS_ON(ZTD_HEADER_CWCHAR) || ZTD_IS_ON(ZTD_HEADER_WCHAR_H) || ZTD_IS_ON(ZTD_HEADER_UCHAR_H) \
      || ZTD_IS_ON(ZTD_HEADER_UCHAR_H)
 	//////
 	/// @brief Private, do not access.
