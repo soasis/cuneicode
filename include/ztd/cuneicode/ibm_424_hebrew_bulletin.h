@@ -52,57 +52,61 @@
 
 //////
 /// @see cnc_c32ntomcn
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-cnc_c32ntomcn_ibm_424_hebrew_bulletin(size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32ntomcn_ibm_424_hebrew_bulletin(
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @see cnc_c32nrtomcn
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-cnc_c32nrtomcn_ibm_424_hebrew_bulletin(size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src,
-     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_ibm_424_hebrew_bulletin(
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @see cnc_mcntoc32n
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-cnc_mcntoc32n_ibm_424_hebrew_bulletin(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcntoc32n_ibm_424_hebrew_bulletin(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @see cnc_mcnrtoc32n
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-cnc_mcnrtoc32n_ibm_424_hebrew_bulletin(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src,
-     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_ibm_424_hebrew_bulletin(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src, cnc_mcstate_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 
 
 //////
 /// @see cnc_c32sntomcsn
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-cnc_c32sntomcsn_ibm_424_hebrew_bulletin(size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32sntomcsn_ibm_424_hebrew_bulletin(
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @see cnc_c32snrtomcsn
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-cnc_c32snrtomcsn_ibm_424_hebrew_bulletin(size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src,
-     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32snrtomcsn_ibm_424_hebrew_bulletin(
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @see cnc_mcsntoc32sn
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-cnc_mcsntoc32sn_ibm_424_hebrew_bulletin(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src) ZTD_NOEXCEPT_IF_CXX_I_;
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsntoc32sn_ibm_424_hebrew_bulletin(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @see cnc_mcsnrtoc32sn
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-cnc_mcsnrtoc32sn_ibm_424_hebrew_bulletin(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src,
-     cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_;
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsnrtoc32sn_ibm_424_hebrew_bulletin(
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src, cnc_mcstate_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 
 //////

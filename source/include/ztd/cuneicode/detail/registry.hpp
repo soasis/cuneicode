@@ -157,8 +157,8 @@ struct cnc_conversion_registry {
 	}
 };
 
-extern cnc_open_err __cnc_add_default_registry_entries(
-     cnc_conversion_registry* __registry) ZTD_NOEXCEPT_IF_CXX_I_;
+extern cnc_open_err __cnc_add_default_registry_entries(cnc_conversion_registry* __registry)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 extern __cnc_u8string_view __cnc_resolve_alias(
      cnc_conversion_registry* __registry, __cnc_u8string_view __name);
@@ -167,7 +167,7 @@ extern cnc_open_err __cnc_find_entry(cnc_conversion_registry* __registry,
      __cnc_u8string_view __from_view, __cnc_u8string_view __to_view,
      cnc_indirect_selection_c8_function* __selection,
      const __cnc_registry_entry_value** __p_from_entry,
-     const __cnc_registry_entry_value** __p_to_entry,
-     cnc_conversion_info* __p_info) ZTD_NOEXCEPT_IF_CXX_I_;
+     const __cnc_registry_entry_value** __p_to_entry, cnc_conversion_info* __p_info)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 #endif

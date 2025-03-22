@@ -31,8 +31,8 @@
 
 #include <ztd/cuneicode/mcerr.h>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerr_to_str(
-     cnc_mcerr __err) {
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_mcerr_to_str(cnc_mcerr __err) {
 	switch (__err) {
 	case cnc_mcerr_ok:
 		return "cnc_mcerr_ok";

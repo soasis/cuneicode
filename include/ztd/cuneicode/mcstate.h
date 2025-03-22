@@ -107,8 +107,8 @@ typedef union cnc_mcstate_t {
 		/// access.
 		unsigned int __paddding : ((sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT) - 1;
 	} header;
-#if ZTD_IS_ON(ZTD_CWCHAR) || ZTD_IS_ON(ZTD_WCHAR_H) || ZTD_IS_ON(ZTD_CUCHAR) \
-     || ZTD_IS_ON(ZTD_UCHAR_H)
+#if ZTD_IS_ON(ZTD_HEADER_CWCHAR) || ZTD_IS_ON(ZTD_HEADER_WCHAR_H) || ZTD_IS_ON(ZTD_HEADER_UCHAR) \
+     || ZTD_IS_ON(ZTD_HEADER_UCHAR_H)
 	//////
 	/// @brief Private, do not access.
 	struct __locale_t {
@@ -162,7 +162,8 @@ typedef union cnc_mcstate_t {
 ///
 /// @param[in,out] __state The state to turn validity on for.
 /// @param[in,out] __check_validity Whether or not to check for validity.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assume_valid(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assume_valid(
      cnc_mcstate_t* __state, bool __check_validity);
 
 //////
@@ -170,16 +171,16 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assu
 /// valid" state.
 ///
 /// @param[in,out] __state The state to return validity on for.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_assuming_valid(
-     const cnc_mcstate_t* __state);
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_assuming_valid(const cnc_mcstate_t* __state);
 
 //////
 /// @brief Returns whether or not the given cnc_mcstate_t has no more data that needs to be output.
 ///
 /// @param[in] __state The state object to check is complete/finished and has no pending writes to
 /// do or data to gather.
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_complete(
-     const cnc_mcstate_t* __state);
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_complete(const cnc_mcstate_t* __state);
 
 //////
 /// @}

@@ -52,14 +52,15 @@
 #define CNC_TYPED_CONVERSION_ERROR_DEFN_ROOT_I_(_SHIM_NAME, _SHIM_R_NAME, _SHIM_FROM, _SHIM_TO,   \
      _INTERNAL_NAME, _INTERNAL_R_NAME, _INTERNAL_FROM, _INTERNAL_TO, _STATE_TYPE,                 \
      _STATE_COMPLETION_FUNCTION)                                                                  \
-	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result_t _SHIM_R_NAME(      \
+	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                              \
+	ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result_t _SHIM_R_NAME(                                \
 	     size_t* restrict __p_maybe_dst_len, _SHIM_TO* restrict* restrict __p_maybe_dst,         \
 	     size_t* restrict __p_src_len, const _SHIM_FROM* restrict* restrict __p_src,             \
 	     _STATE_TYPE* restrict __p_state,                                                        \
 	     cnc_mcerr (*__error_handler)(cnc_mcerr, size_t* restrict, _SHIM_TO* restrict* restrict, \
 	          size_t* restrict, const _SHIM_FROM* restrict* restrict, void* restrict,            \
 	          void* restrict),                                                                   \
-	     void* restrict __p_user_data) ZTD_NOEXCEPT_IF_CXX_I_ {                                  \
+	     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {                            \
 		cnc_error_result_t __result = {};                                                       \
 		if (__p_src == NULL || __p_src[0] == NULL || __p_src_len == NULL) {                     \
 			__result.error_code                                                                \
@@ -89,13 +90,14 @@
 		}                                                                                       \
 		return __result;                                                                        \
 	}                                                                                            \
-	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result_t _SHIM_NAME(        \
+	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                              \
+	ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result_t _SHIM_NAME(                                  \
 	     size_t* restrict __p_maybe_dst_len, _SHIM_TO* restrict* restrict __p_maybe_dst,         \
 	     size_t* restrict __p_src_len, const _SHIM_FROM* restrict* restrict __p_src,             \
 	     cnc_mcerr (*__error_handler)(cnc_mcerr, size_t* restrict, _SHIM_TO* restrict* restrict, \
 	          size_t* restrict, const _SHIM_FROM* restrict* restrict, void* restrict,            \
 	          void* restrict),                                                                   \
-	     void* restrict __p_user_data) ZTD_NOEXCEPT_IF_CXX_I_ {                                  \
+	     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {                            \
 		_STATE_TYPE __state = {};                                                               \
 		return _SHIM_R_NAME(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, &__state,   \
 		     __error_handler, __p_user_data);                                                   \
@@ -122,15 +124,17 @@
 
 #define CNC_TYPED_CONVERSION_DEFN_ROOT_I_(_SHIM_NAME, _SHIM_R_NAME, _SHIM_FROM, _SHIM_TO,          \
      _INTERNAL_NAME, _INTERNAL_R_NAME, _INTERNAL_FROM, _INTERNAL_TO)                               \
-	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr _SHIM_NAME(                  \
-	     size_t* __p_maybe_dst_len, _SHIM_TO** __p_maybe_dst, size_t* __p_src_len,                \
-	     const _SHIM_FROM** __p_src) ZTD_NOEXCEPT_IF_CXX_I_ {                                     \
+	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                               \
+	ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr _SHIM_NAME(size_t* __p_maybe_dst_len,                  \
+	     _SHIM_TO** __p_maybe_dst, size_t* __p_src_len, const _SHIM_FROM** __p_src)               \
+	     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {                                                           \
 		return (_INTERNAL_NAME)(__p_maybe_dst_len, (_INTERNAL_TO**)__p_maybe_dst, __p_src_len,   \
 		     (const _INTERNAL_FROM**)__p_src);                                                   \
 	}                                                                                             \
-	ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr _SHIM_R_NAME(                \
-	     size_t* __p_maybe_dst_len, _SHIM_TO** __p_maybe_dst, size_t* __p_src_len,                \
-	     const _SHIM_FROM** __p_src, cnc_mcstate_t* __p_state) ZTD_NOEXCEPT_IF_CXX_I_ {           \
+	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                               \
+	ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr _SHIM_R_NAME(size_t* __p_maybe_dst_len,                \
+	     _SHIM_TO** __p_maybe_dst, size_t* __p_src_len, const _SHIM_FROM** __p_src,               \
+	     cnc_mcstate_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {                                 \
 		return (_INTERNAL_R_NAME)(__p_maybe_dst_len, (_INTERNAL_TO**)__p_maybe_dst, __p_src_len, \
 		     (const _INTERNAL_FROM**)__p_src, __p_state);                                        \
 	}                                                                                             \

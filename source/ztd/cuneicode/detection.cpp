@@ -33,12 +33,14 @@
 
 #include <string_view>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_is_execution_encoding_unicode(
-     void) ZTD_NOEXCEPT_IF_CXX_I_ {
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_is_execution_encoding_unicode(void)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	return ztdc_is_execution_encoding_unicode();
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_is_wide_execution_encoding_unicode(
-     void) ZTD_NOEXCEPT_IF_CXX_I_ {
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_is_wide_execution_encoding_unicode(void)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	return ztdc_is_wide_execution_encoding_unicode();
 }

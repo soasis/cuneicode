@@ -41,16 +41,16 @@
 #include <ztd/idk/encoding_detection.h>
 #include <ztd/idk/detail/unicode.hpp>
 
-#if ZTD_IS_ON(ZTD_CUCHAR)
+#if ZTD_IS_ON(ZTD_HEADER_CUCHAR)
 #include <cuchar>
-#elif ZTD_IS_ON(ZTD_UCHAR_H)
+#elif ZTD_IS_ON(ZTD_HEADER_UCHAR_H)
 ZTD_EXTERN_C_OPEN_I_
 #include <uchar.h>
 ZTD_EXTERN_C_CLOSE_I_
 #endif
-#if ZTD_IS_ON(ZTD_CWCHAR)
+#if ZTD_IS_ON(ZTD_HEADER_CWCHAR)
 #include <cwchar>
-#elif ZTD_IS_ON(ZTD_WCHAR_H)
+#elif ZTD_IS_ON(ZTD_HEADER_WCHAR_H)
 ZTD_EXTERN_C_OPEN_I_
 #include <wchar.h>
 ZTD_EXTERN_C_CLOSE_I_
@@ -241,7 +241,8 @@ namespace cnc {
 					     __p_state);
 				}
 			}
-#if (ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR_H)) && ZTD_IS_OFF(ZTD_PLATFORM_MAC_OS)
+#if (ZTD_IS_ON(ZTD_HEADER_CUCHAR) || ZTD_IS_ON(ZTD_HEADER_UCHAR_H)) \
+     && ZTD_IS_OFF(ZTD_PLATFORM_MAC_OS)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
 					return cnc_mcerr_ok;
@@ -741,7 +742,7 @@ namespace cnc {
 					}
 				}
 			}
-#if ZTD_IS_ON(ZTD_WCHAR_H) || ZTD_IS_ON(ZTD_CWCHAR)
+#if ZTD_IS_ON(ZTD_HEADER_WCHAR_H) || ZTD_IS_ON(ZTD_HEADER_CWCHAR)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
 					return cnc_mcerr_ok;
@@ -823,7 +824,7 @@ namespace cnc {
 					}
 				}
 			}
-#if ZTD_IS_ON(ZTD_WCHAR_H) || ZTD_IS_ON(ZTD_CWCHAR)
+#if ZTD_IS_ON(ZTD_HEADER_WCHAR_H) || ZTD_IS_ON(ZTD_HEADER_CWCHAR)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
 					return cnc_mcerr_ok;
@@ -950,7 +951,8 @@ namespace cnc {
 					     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
 				}
 			}
-#if (ZTD_IS_ON(ZTD_CUCHAR) || ZTD_IS_ON(ZTD_UCHAR_H)) && ZTD_IS_OFF(ZTD_PLATFORM_MAC_OS)
+#if (ZTD_IS_ON(ZTD_HEADER_CUCHAR) || ZTD_IS_ON(ZTD_HEADER_UCHAR_H)) \
+     && ZTD_IS_OFF(ZTD_PLATFORM_MAC_OS)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
 					return cnc_mcerr_ok;

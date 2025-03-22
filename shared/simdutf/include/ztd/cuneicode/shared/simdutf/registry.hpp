@@ -38,7 +38,7 @@
 #include <stdbool.h>
 #endif
 
-extern bool cnc_shared_add_bulk_simdutf_to_registry(
-     cnc_conversion_registry* registry) ZTD_NOEXCEPT_IF_CXX_I_;
+extern bool cnc_shared_add_bulk_simdutf_to_registry(cnc_conversion_registry* registry)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 #endif

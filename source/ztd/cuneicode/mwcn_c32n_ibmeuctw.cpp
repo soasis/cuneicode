@@ -31,9 +31,10 @@
 
 #include <ztd/idk/mbstate_t.hpp>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mwcnrtoc32_ibmeuctwn(
-     size_t* __p_maybe_dst_len, ztd_char32_t* __p_maybe_dst, size_t* __p_src_len,
-     const wchar_t** __p_src, ztd_mbstate_t* __p_state) {
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
+     cnc_mwcnrtoc32_ibmeuctwn(size_t* __p_maybe_dst_len, ztd_char32_t* __p_maybe_dst,
+          size_t* __p_src_len, const wchar_t** __p_src, ztd_mbstate_t* __p_state) {
 	(void)__p_maybe_dst_len;
 	(void)__p_maybe_dst;
 	(void)__p_src_len;

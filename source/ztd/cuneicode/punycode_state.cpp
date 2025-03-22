@@ -32,7 +32,8 @@
 #include <ztd/cuneicode/punycode_state.h>
 #include <ztd/cuneicode/detail/punycode.hpp>
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_complete(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_complete(
      const cnc_pny_encode_state_t* __p_state) {
 	if (__p_state == nullptr || !__p_state->__is_initialized) {
 		return true;
@@ -41,7 +42,8 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state
 	     && __p_state->__action_state == ::cnc::__cnc_detail::__pny_encode_state_complete;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_complete(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_complete(
      const cnc_pny_decode_state_t* __p_state) {
 	if (__p_state == nullptr || !__p_state->__is_initialized) {
 		return true;
@@ -50,52 +52,62 @@ ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state
 	     && __p_state->__action_state == ::cnc::__cnc_detail::__pny_decode_state_complete;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_input_complete(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_input_complete(
      cnc_pny_encode_state_t* __p_state) {
 	__p_state->input_is_complete = true;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_input_complete(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_input_complete(
      cnc_pny_decode_state_t* __p_state) {
 	__p_state->input_is_complete = true;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_input_complete(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_input_complete(
      const cnc_pny_encode_state_t* __p_state) {
 	return __p_state->input_is_complete;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_input_complete(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_input_complete(
      const cnc_pny_decode_state_t* __p_state) {
 	return __p_state->input_is_complete;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void
-cnc_pny_encode_state_set_input_incomplete(cnc_pny_encode_state_t* __p_state) {
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_input_incomplete(
+     cnc_pny_encode_state_t* __p_state) {
 	__p_state->input_is_complete = false;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void
-cnc_pny_decode_state_set_input_incomplete(cnc_pny_decode_state_t* __p_state) {
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_input_incomplete(
+     cnc_pny_decode_state_t* __p_state) {
 	__p_state->input_is_complete = false;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_assume_valid(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_encode_state_set_assume_valid(
      cnc_pny_encode_state_t* __p_state, bool __value) {
 	__p_state->__assume_valid = __value;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_assume_valid(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_pny_decode_state_set_assume_valid(
      cnc_pny_decode_state_t* __p_state, bool __value) {
 	__p_state->__assume_valid = __value;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_assuming_valid(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_encode_state_is_assuming_valid(
      const cnc_pny_encode_state_t* __p_state) {
 	return __p_state->__assume_valid;
 }
 
-ZTD_C_LANGUAGE_LINKAGE_I_ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_assuming_valid(
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_pny_decode_state_is_assuming_valid(
      const cnc_pny_decode_state_t* __p_state) {
 	return __p_state->__assume_valid;
 }
