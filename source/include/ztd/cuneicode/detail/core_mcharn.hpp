@@ -162,6 +162,11 @@ namespace cnc {
 			__p_src[0] += 1;
 			__p_src_len[0] -= 1;
 			if (__c0 <= __ztd_idk_detail_last_bmp_value) {
+				if constexpr (!_IsUnbounded) {
+					if (__p_maybe_dst_len[0] < 1) {
+						return cnc_mcerr_insufficient_output;
+					}
+				}
 				if constexpr (!_IsCounting) {
 					__p_maybe_dst[0][0] = static_cast<ztd_char16_t>(__c0);
 					__p_maybe_dst[0] += 1;
@@ -171,6 +176,11 @@ namespace cnc {
 				}
 			}
 			else {
+				if constexpr (!_IsUnbounded) {
+					if (__p_maybe_dst_len[0] < 2) {
+						return cnc_mcerr_insufficient_output;
+					}
+				}
 				if constexpr (!_IsCounting) {
 					ztd_char32_t __normal = __c0 - __ztd_idk_detail_normalizing_value;
 					ztd_char32_t __lead   = __ztd_idk_detail_first_lead_surrogate
