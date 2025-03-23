@@ -564,7 +564,7 @@ static cnc_mcerr simdutf_utf8_to_utf32_convert(cnc_conversion*, size_t* p_output
 	if (!is_counting_only && is_unbounded_write) {
 		if (assume_valid) {
 			size_t output_written        = ztd::endian::native == ztd::endian::big
-			            ? simdutf::convert_valid_utf8FROM_BIG_SUFFIX##_to_utf32TO_BIG_SUFFIX(
+			            ? simdutf::convert_valid_utf8##FROM_BIG_SUFFIX##_to_utf32TO_BIG_SUFFIX(
                            (const from_char_t*)input_bytes, input_size,
                            (to_char_t*)p_output_bytes[0])
 			            : simdutf::convert_valid_utf8FROM_LIL_SUFFIX##_to_utf32TO_LIL_SUFFIX(
