@@ -18,8 +18,8 @@ jobs:
     
     - name: configure
       run: |
-        cmake -B build/debug   -D ZTD_CUNEICODE_TESTS=ON -D ZTD_CUNEICODE_EXAMPLES=ON -D ZTD_CUNEICODE_GENERATE_SINGLE=ON
-        cmake -B build/release -D ZTD_CUNEICODE_TESTS=ON -D ZTD_CUNEICODE_EXAMPLES=ON -D ZTD_CUNEICODE_GENERATE_SINGLE=ON
+        cmake -B build/debug   -G Ninja -D ZTD_CUNEICODE_TESTS=ON -D ZTD_CUNEICODE_EXAMPLES=ON -D ZTD_CUNEICODE_GENERATE_SINGLE=ON
+        cmake -B build/release -G Ninja -D ZTD_CUNEICODE_TESTS=ON -D ZTD_CUNEICODE_EXAMPLES=ON -D ZTD_CUNEICODE_GENERATE_SINGLE=ON
 
     - name: build
       run: |

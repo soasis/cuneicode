@@ -262,7 +262,6 @@ static inline cnc_open_err mcstate_unchecked_open(cnc_conversion_registry* regis
 
 UTF_CONVERT_DEFINITION(8, 16, , , be, le);
 UTF_CONVERT_DEFINITION(16, 8, be, le, , );
-UTF_CONVERT_DEFINITION(8, 32, , , , );
 UTF_CONVERT_DEFINITION(32, 8, , , , );
 UTF_CONVERT_DEFINITION(32, 16, , , be, le);
 UTF_CONVERT_DEFINITION(16, 32, be, le, , );
@@ -351,6 +350,43 @@ UTF_CONVERT_DEFINITION(16, be, le);
 UTF_CONVERT_DEFINITION(32, , );
 
 #undef UTF_CONVERT_SAME_DEFINITION
+
+static inline cnc_mcerr simdutf_utf8_to_utf32_convert(cnc_conversion*, size_t* p_output_bytes_size,
+     unsigned char** p_output_bytes, size_t* p_input_bytes_size,
+     const unsigned char** p_input_bytes, cnc_pivot_info*, void* erased_state) {
+	using from_char_t = char;
+	using to_char_t   = char32_t;
+	if (p_input_bytes == nullptr || p_input_bytes[0] == nullptr) {
+		return cnc_mcerr_ok;
+	}
+	ZTD_ASSERT(p_input_bytes_size != nullptr);
+	size_t& input_bytes_size = p_input_bytes_size[0];
+	if (input_bytes_size < sizeof(from_char_t)) {
+		return input_bytes_size == 0 ? cnc_mcerr_ok : cnc_mcerr_incomplete_input;
+	}
+	size_t input_size                 = input_bytes_size / sizeof(from_char_t);
+	cnc_mcstate_t* state              = mcstate_get(erased_state);
+	const unsigned char*& input_bytes = p_input_bytes[0];
+	const bool is_counting_only       = p_output_bytes == nullptr || p_output_bytes[0] == nullptr;
+	const bool is_unbounded_write     = p_output_bytes_size == nullptr;
+	const bool assume_valid           = cnc_mcstate_is_assuming_valid(state);
+	if (!is_counting_only && is_unbounded_write) {
+		if (assume_valid) {
+			size_t output_written        = ztd::endian::native == ztd::endian::big
+			            ? simdutf::convert_valid_utf8_to_utf32(
+                           (const from_char_t*)input_bytes, input_size,
+                           (to_char_t*)p_output_bytes[0])
+			            : simdutf::convert_valid_utf8_to_utf32(
+                           (const from_char_t*)input_bytes, input_size,
+                           (to_char_t*)p_output_bytes[0]);
+			const size_t write_byte_size = output_written * sizeof(to_char_t);
+			input_bytes += input_bytes_size;
+			input_bytes_size = 0;
+			p_output_bytes[0] += write_byte_size;
+			return cnc_mcerr_ok;
+		}
+	}
+}
 
 extern bool cnc_shared_add_bulk_simdutf_to_registry(cnc_conversion_registry* registry)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
@@ -539,42 +575,4 @@ extern bool cnc_shared_add_bulk_simdutf_to_registry(cnc_conversion_registry* reg
 		}
 	}
 	return true;
-}
-
-
-static cnc_mcerr simdutf_utf8_to_utf32_convert(cnc_conversion*, size_t* p_output_bytes_size,
-     unsigned char** p_output_bytes, size_t* p_input_bytes_size,
-     const unsigned char** p_input_bytes, cnc_pivot_info*, void* erased_state) {
-	using from_char_t = char;
-	using to_char_t   = char32_t;
-	if (p_input_bytes == nullptr || p_input_bytes[0] == nullptr) {
-		return cnc_mcerr_ok;
-	}
-	ZTD_ASSERT(p_input_bytes_size != nullptr);
-	size_t& input_bytes_size = p_input_bytes_size[0];
-	if (input_bytes_size < sizeof(from_char_t)) {
-		return input_bytes_size == 0 ? cnc_mcerr_ok : cnc_mcerr_incomplete_input;
-	}
-	size_t input_size                 = input_bytes_size / sizeof(from_char_t);
-	cnc_mcstate_t* state              = mcstate_get(erased_state);
-	const unsigned char*& input_bytes = p_input_bytes[0];
-	const bool is_counting_only       = p_output_bytes == nullptr || p_output_bytes[0] == nullptr;
-	const bool is_unbounded_write     = p_output_bytes_size == nullptr;
-	const bool assume_valid           = cnc_mcstate_is_assuming_valid(state);
-	if (!is_counting_only && is_unbounded_write) {
-		if (assume_valid) {
-			size_t output_written        = ztd::endian::native == ztd::endian::big
-			            ? simdutf::convert_valid_utf8##FROM_BIG_SUFFIX##_to_utf32TO_BIG_SUFFIX(
-                           (const from_char_t*)input_bytes, input_size,
-                           (to_char_t*)p_output_bytes[0])
-			            : simdutf::convert_valid_utf8FROM_LIL_SUFFIX##_to_utf32TO_LIL_SUFFIX(
-                           (const from_char_t*)input_bytes, input_size,
-                           (to_char_t*)p_output_bytes[0]);
-			const size_t write_byte_size = output_written * sizeof(to_char_t);
-			input_bytes += input_bytes_size;
-			input_bytes_size = 0;
-			p_output_bytes[0] += write_byte_size;
-			return cnc_mcerr_ok;
-		}
-	}
 }
