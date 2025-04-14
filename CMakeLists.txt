@@ -19,7 +19,7 @@
 #
 # https://www.apache.org/licenses/LICENSE-2.0
 #
-# Unless required by applicable law or agreed to in writing, software
+# Unless required by applicable law or agreed to in writing, softwarebrew
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
@@ -27,7 +27,7 @@
 #
 # =========================================================================== #
 
-cmake_minimum_required(VERSION 3.28.0)
+cmake_minimum_required(VERSION 3.31.0)
 
 # # Project kickstart
 # Includes a bunch of basic flags and utilities shared across projects

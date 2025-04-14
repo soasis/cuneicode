@@ -373,19 +373,105 @@ static inline cnc_mcerr simdutf_utf8_to_utf32_convert(cnc_conversion*, size_t* p
 	if (!is_counting_only && is_unbounded_write) {
 		if (assume_valid) {
 			size_t output_written        = ztd::endian::native == ztd::endian::big
-			            ? simdutf::convert_valid_utf8_to_utf32(
-                           (const from_char_t*)input_bytes, input_size,
-                           (to_char_t*)p_output_bytes[0])
-			            : simdutf::convert_valid_utf8_to_utf32(
-                           (const from_char_t*)input_bytes, input_size,
-                           (to_char_t*)p_output_bytes[0]);
+			            ? simdutf::convert_valid_utf8_to_utf32((const from_char_t*)input_bytes,
+			                   input_size, (to_char_t*)p_output_bytes[0])
+			            : simdutf::convert_valid_utf8_to_utf32((const from_char_t*)input_bytes,
+			                   input_size, (to_char_t*)p_output_bytes[0]);
 			const size_t write_byte_size = output_written * sizeof(to_char_t);
 			input_bytes += input_bytes_size;
 			input_bytes_size = 0;
 			p_output_bytes[0] += write_byte_size;
 			return cnc_mcerr_ok;
 		}
+
+		else {
+			simdutf::result result = ztd::endian::native == ztd::endian::big
+			     ? simdutf::convert_utf8_to_utf32_with_errors((const from_char_t*)input_bytes,
+			            input_size, (to_char_t*)p_output_bytes[0])
+			     : simdutf::convert_utf8_to_utf32_with_errors((const from_char_t*)input_bytes,
+			            input_size, (to_char_t*)p_output_bytes[0]);
+			if (result.error == simdutf::error_code::SUCCESS) {
+				const size_t write_byte_size = result.count * sizeof(to_char_t);
+				input_bytes += input_bytes_size;
+				input_bytes_size = 0;
+				p_output_bytes[0] += write_byte_size;
+				return cnc_mcerr_ok;
+			}
+		}
 	}
+	bool valid_utf8 = assume_valid
+	     ? true
+	     : (ztd::endian::native == ztd::endian::big
+	                 ? simdutf::validate_utf8((const from_char_t*)input_bytes, input_size)
+	                 : simdutf::validate_utf8((const from_char_t*)input_bytes, input_size));
+	if (!valid_utf8) {
+		ztd_char32_t* output     = is_counting_only ? nullptr : (ztd_char32_t*)p_output_bytes[0];
+		const ztd_char8_t* input = (ztd_char8_t*)p_input_bytes[0];
+		size_t output_size = is_unbounded_write ? 0 : *p_output_bytes_size / sizeof(to_char_t);
+		cnc_mcerr err      = cnc_c8snrtoc32sn(
+               is_unbounded_write ? nullptr : &output_size, &output, &input_size, &input, state);
+		if (!is_unbounded_write) {
+			*p_output_bytes_size = output_size * sizeof(to_char_t);
+		}
+		if (!is_counting_only) {
+			p_output_bytes[0] = (unsigned char*)(output);
+		}
+		p_input_bytes_size[0] = input_size * sizeof(from_char_t);
+		p_input_bytes[0]      = (const unsigned char*)(input);
+		return err;
+	}
+	if (is_counting_only) {
+		if (!is_unbounded_write) {
+			size_t& output_bytes_size    = *p_output_bytes_size;
+			const size_t write_size      = ztd::endian::native == ztd::endian::big
+			          ? simdutf::utf32_length_from_utf8((const from_char_t*)input_bytes, input_size)
+			          : simdutf::utf32_length_from_utf8((const from_char_t*)input_bytes, input_size);
+			const size_t write_byte_size = (write_size * sizeof(to_char_t));
+			ZTD_ASSERT(write_byte_size <= output_bytes_size);
+			output_bytes_size -= write_byte_size;
+		}
+		input_bytes += input_bytes_size;
+		input_bytes_size -= input_bytes_size;
+		return cnc_mcerr_ok;
+	}
+	else {
+		const size_t initial_write_size = ztd::endian::native == ztd::endian::big
+		     ? simdutf::utf32_length_from_utf8((const from_char_t*)input_bytes, input_size)
+		     : simdutf::utf32_length_from_utf8((const from_char_t*)input_bytes, input_size);
+		if (is_unbounded_write || *p_output_bytes_size >= initial_write_size) {
+			const size_t write_size = ztd::endian::native == ztd::endian::big
+			     ? simdutf::convert_valid_utf8_to_utf32((const from_char_t*)input_bytes,
+			            input_size, (to_char_t*)p_output_bytes[0])
+			     : simdutf::convert_valid_utf8_to_utf32((const from_char_t*)input_bytes,
+			            input_size, (to_char_t*)p_output_bytes[0]);
+
+
+			const size_t write_byte_size = write_size * sizeof(to_char_t);
+			if (!is_unbounded_write) {
+				ZTD_ASSERT(initial_write_size == write_size);
+				*p_output_bytes_size -= write_byte_size;
+			}
+			p_output_bytes[0] += write_byte_size;
+			input_bytes += input_bytes_size;
+			input_bytes_size -= input_bytes_size;
+			return cnc_mcerr_ok;
+		}
+	}
+
+	ztd_char32_t* output     = is_counting_only ? nullptr : (ztd_char32_t*)p_output_bytes[0];
+	const ztd_char8_t* input = (ztd_char8_t*)p_input_bytes[0];
+	size_t output_size       = is_unbounded_write ? 0 : *p_output_bytes_size / sizeof(to_char_t);
+	cnc_mcerr err            = cnc_c8snrtoc32sn(
+          is_unbounded_write ? nullptr : &output_size, &output, &input_size, &input, state);
+	if (!is_unbounded_write) {
+		*p_output_bytes_size = output_size * sizeof(to_char_t);
+	}
+	if (!is_counting_only) {
+		p_output_bytes[0] = (unsigned char*)(output);
+	}
+	p_input_bytes_size[0] = input_size * sizeof(from_char_t);
+	p_input_bytes[0]      = (const unsigned char*)(input);
+	return err;
 }
 
 extern bool cnc_shared_add_bulk_simdutf_to_registry(cnc_conversion_registry* registry)

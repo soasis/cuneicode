@@ -269,9 +269,10 @@ namespace cnc {
 			const ztd_char32_t*& __src                         = *__p_src;
 			char __multibyte_intermediate[(MB_LEN_MAX * __max_accumulated_writeouts)] {};
 			for (size_t __src_idx = 0; __src_idx < __max_accumulated_writeouts; ++__src_idx) {
+				using namespace std;
 				const ztd_char32_t& __c32 = __src[__src_idx];
-				size_t __res              = ZTD_UCHAR_SCOPE_I_ c32rtomb(
-                         __multibyte_intermediate, __c32, &__p_state->__locale.__state1);
+				size_t __res
+				     = c32rtomb(__multibyte_intermediate, __c32, &__p_state->__locale.__state1);
 				if (__res == ::cnc::__cnc_detail::__stdc_ret_err_invalid) {
 					return cnc_mcerr_invalid_sequence;
 				}
@@ -980,7 +981,8 @@ namespace cnc {
 			ztd_char32_t __c32_intermediate[__max_writeout_attempts] {};
 			ztd_char32_t* __p_c32_intermediate = __c32_intermediate;
 			for (size_t __src_idx = 0; __src_idx < __max_writeout_attempts; ++__src_idx) {
-				size_t __res = ZTD_UCHAR_SCOPE_I_ mbrtoc32(
+				using namespace std;
+				size_t __res = mbrtoc32(
 				     __p_c32_intermediate, __src, __src_len, &__p_state->__locale.__state0);
 				if (__res == ::cnc::__cnc_detail::__stdc_ret_err_invalid) {
 					return cnc_mcerr_invalid_sequence;

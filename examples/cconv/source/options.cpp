@@ -99,7 +99,7 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				opt.from_code = u8arg_value;
 			}
 			else if (bool f_arg_shortform = arg.find("-f=") == 0;
-			         f_arg_shortform || arg.find("--from-code=") == 0) {
+			     f_arg_shortform || arg.find("--from-code=") == 0) {
 				std::size_t remove_prefix = f_arg_shortform ? 3 : 12;
 				u8arg.remove_prefix(remove_prefix);
 				opt.from_code = u8arg;
@@ -119,13 +119,13 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				opt.to_code = u8arg_value;
 			}
 			else if (bool t_arg_shortform = arg.find("-t=") == 0;
-			         t_arg_shortform || arg.find("--to-code=") == 0) {
+			     t_arg_shortform || arg.find("--to-code=") == 0) {
 				std::size_t remove_prefix = f_arg_shortform ? 3 : 10;
 				u8arg.remove_prefix(remove_prefix);
 				opt.to_code = u8arg;
 			}
 			else if (bool c_arg_shortform = arg.find("-c=") == 0;
-			         c_arg_shortform || arg.find("--cache-size=") == 0) {
+			     c_arg_shortform || arg.find("--cache-size=") == 0) {
 				std::size_t remove_prefix = c_arg_shortform ? 3 : 13;
 				u8arg.remove_prefix(remove_prefix);
 				std::optional<unsigned long long> maybe_value
@@ -198,7 +198,7 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 				opt.error_handler = std::move(handler);
 			}
 			else if (bool b_arg_shortform = arg.find("-b=") == 0;
-			         b_arg_shortform || arg.find("--byte-substitution=") == 0) {
+			     b_arg_shortform || arg.find("--byte-substitution=") == 0) {
 				std::size_t remove_prefix = b_arg_shortform ? 3 : 20;
 				u8arg.remove_prefix(remove_prefix);
 				byte_substitution_handler handler {};
@@ -216,12 +216,12 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 		else {
 			if (arg == "-") {
 				// interpret as stdin
-				opt.input_files.push_back(stdin_read);
+				opt.input_files.push_back(input_type(stdin_read));
 			}
 			else {
 				// interpret as a file
 				opt.input_files.push_back(
-				     utf8string(u8arg.data(), u8arg.size()));
+				     input_type(utf8string(u8arg.data(), u8arg.size())));
 			}
 		}
 	}
