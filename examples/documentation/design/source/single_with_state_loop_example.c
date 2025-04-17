@@ -63,7 +63,9 @@ cnc_mcerr my_bulk_mcsnrtoc8sn(size_t* output_size, unsigned char** output,
 	}
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 	const char input[]              = "abc";
 	const char* input_ptr           = input;
 	const size_t initial_input_size = ztdc_c_array_size(input);

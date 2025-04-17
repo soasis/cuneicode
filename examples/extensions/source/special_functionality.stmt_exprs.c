@@ -35,7 +35,9 @@
 #include <stddef.h>
 #include <limits.h>
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 #if ZTD_IS_ON(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
 	// This only works if we support extension functions!
 	const ztd_char8_t str[]

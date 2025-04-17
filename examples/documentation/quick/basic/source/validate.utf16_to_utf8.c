@@ -35,7 +35,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 
 	const ztd_char16_t utf16_text[] = u"🥺🙏";
 

@@ -35,7 +35,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 	const ztd_char32_t input_data[] = U"Bark Bark Bark 🐕‍🦺!";
 	char output_data[ztdc_c_array_size(input_data) * 4] = { 0 };
 	cnc_mcstate_t state                                 = { 0 };

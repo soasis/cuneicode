@@ -61,7 +61,9 @@ cnc_mcerr my_error_handler(cnc_mcerr initial_error, size_t* restrict p_output_si
 	     user_data);
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 	const ztd_char32_t input_data[] = U"Bark Bark Bark \xFFFFFFFF🐕‍🦺!";
 	ztd_char8_t output_data[ztdc_c_array_size(input_data) * CNC_C8_MAX] = { 0 };
 	cnc_mcstate_t state                                                 = { 0 };

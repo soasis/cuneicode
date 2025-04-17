@@ -56,7 +56,9 @@ bool unbounded_conversion_utf16_from_utf8(
 	return err == cnc_mcerr_ok;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 	const ztd_char8_t str[]
 	     = u8"\"Saw a \U0001F9DC \u2014"
 	       u8"didn't catch her\u2026 \U0001F61E\"\n\t- Sniff";

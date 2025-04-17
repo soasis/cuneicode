@@ -180,7 +180,9 @@ static inline cnc_mcerr utf32_to_utf8(cnc_conversion* conversion,
 	return err;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 	cnc_conversion_registry* registry = NULL;
 	{
 		cnc_open_err err

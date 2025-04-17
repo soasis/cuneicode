@@ -33,7 +33,9 @@
 
 #include <stdio.h>
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 	const char input[]              = "abc...def.''ghi'''..";
 	const char* input_ptr           = input;
 	const size_t initial_input_size = ztdc_c_array_size(input);

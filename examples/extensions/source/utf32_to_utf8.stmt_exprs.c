@@ -35,7 +35,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 #if ZTD_IS_ON(ZTD_CUNEICODE_EXTENSION_FUNCTIONS)
 	// This only works if we support extension functions!
 	const ztd_char32_t input_data[] = U"Bark Bark Bark 🐕‍🦺!";

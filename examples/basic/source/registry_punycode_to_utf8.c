@@ -36,7 +36,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-int main() {
+int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
 	cnc_conversion_registry* registry = NULL;
 	{
 		cnc_open_err err
