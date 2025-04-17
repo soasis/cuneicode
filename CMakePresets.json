@@ -108,7 +108,6 @@
 				"FETCHCONTENT_SOURCE_DIR_ZTD.CMAKE": "${sourceDir}/../cmake",
 				"FETCHCONTENT_SOURCE_DIR_ZTD.IDK": "${sourceDir}/../idk",
 				"FETCHCONTENT_SOURCE_DIR_ZTD.ENCODING_TABLES": "${sourceDir}/../encoding_tables",
-				"FETCHCONTENT_SOURCE_DIR_ZTD.PLATFORM": "${sourceDir}/../platform",
 				"CMAKE_CXX_STANDARD": "23",
 				"CMAKE_C_STANDARD": "23"
 			}
