@@ -216,7 +216,8 @@ std::optional<std::string> parse_options(options& opt, int argc, char* argv[]) {
 		else {
 			if (arg == "-") {
 				// interpret as stdin
-				opt.input_files.push_back(input_type(stdin_read));
+				opt.input_files.push_back(
+				     input_type(std::in_place_index<0>, stdin_read));
 			}
 			else {
 				// interpret as a file

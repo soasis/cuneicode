@@ -1366,6 +1366,8 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_open_err cnc_conv_open_n(cnc_conversion_registr
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_close(cnc_conversion* __conversion)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+	if (__conversion == nullptr)
+		return;
 	__conversion->__close_function(__conversion + 1);
 	__conversion->~cnc_conversion();
 }
@@ -1373,8 +1375,13 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_close(cnc_conversion* __conversion)
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_conv_delete(cnc_conversion* __conversion)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+	if (__conversion == nullptr)
+		return;
+	cnc_conversion_registry* __registry                   = __conversion->__registry;
+	const ::std::size_t __cnc_size                        = __conversion->__size;
+	cnc_heap_deallocate_function* const __heap_deallocate = __registry->__heap.deallocate;
+	void* const __heap_user_data                          = __registry->__heap.user_data;
 	::cnc_conv_close(__conversion);
-	const cnc_conversion_heap& __heap = __conversion->__registry->__heap;
-	__heap.deallocate(static_cast<unsigned char*>(static_cast<void*>(__conversion)),
-	     __conversion->__size, alignof(cnc_conversion), __heap.user_data);
+	__heap_deallocate(static_cast<unsigned char*>(static_cast<void*>(__conversion)), __cnc_size,
+	     alignof(cnc_conversion), __heap_user_data);
 }

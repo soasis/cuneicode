@@ -82,7 +82,8 @@ int main(int argc, char* argv[]) {
 		}
 
 		if (opt.input_files.empty()) {
-			opt.input_files.push_back(input_type(stdin_read));
+			opt.input_files.push_back(
+			     input_type(std::in_place_index<0>, stdin_read));
 		}
 
 		if (opt.show_version) {

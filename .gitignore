@@ -3,6 +3,7 @@
 /build
 /install
 /scratch
+/CMakeUserPresets.json
 
 /main.c
 /main.pre.c

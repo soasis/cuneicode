@@ -46,13 +46,14 @@ function(ztd_cuneicode_example_options example_target)
 		PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 	)
+
 	if (NOT DEFINED CUNEICODE_EXAMPLE_OPT_TEST)
 		add_test(NAME ${example_target} COMMAND ${example_target})
 	elseif (${CUNEICODE_EXAMPLE_OPT_TEST})
 		add_test(NAME ${example_target} COMMAND ${example_target})
 	endif()
 	unset(CUNEICODE_EXAMPLE_OPT_TEST)
-endfunction(ztd_cuneicode_example_options)
+endfunction()
 
 function(ztd_cuneicode_example_simple example_source_file example_prefix)
 	get_filename_component(example_name ${example_source_file} NAME_WLE)

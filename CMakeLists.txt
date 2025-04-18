@@ -190,7 +190,15 @@ if(ZTD_CUNEICODE_IS_TOP_LEVEL_PROJECT)
 		${--warn-errors}
 	)
 endif()
-target_compile_options(ztd.cuneicode PUBLIC
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND NOT CMAKE_CXX_COMPILER_VERSION VERSION_LESS 10.0 AND NOT CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 15.0)
+	target_compile_options(ztd.cuneicode
+		PUBLIC
+		-Wno-array-bounds
+		-Wno-maybe-uninitialized
+	)
+endif()
+target_compile_options(ztd.cuneicode
+	PUBLIC
 	${--enable-conforming-preprocessor}
 )
 

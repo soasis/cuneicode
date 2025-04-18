@@ -743,10 +743,12 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_registry_delete(cnc_conversion_registry* _
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__registry == nullptr)
 		return;
-	const cnc_conversion_heap& __heap = __registry->__heap;
+	const cnc_conversion_heap& __heap                     = __registry->__heap;
+	cnc_heap_deallocate_function* const __heap_deallocate = __heap.deallocate;
+	void* const __heap_user_data                          = __heap.user_data;
 	cnc_registry_close(__registry);
-	__heap.deallocate(static_cast<unsigned char*>(static_cast<void*>(__registry)),
-	     sizeof(cnc_conversion_registry), alignof(cnc_conversion_registry), __heap.user_data);
+	__heap_deallocate(static_cast<unsigned char*>(static_cast<void*>(__registry)),
+	     sizeof(cnc_conversion_registry), alignof(cnc_conversion_registry), __heap_user_data);
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
