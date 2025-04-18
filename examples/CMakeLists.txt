@@ -46,7 +46,14 @@ function(ztd_cuneicode_example_options example_target)
 		PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 	)
-
+	if (MINGW)
+		target_compile_options(${example_target}
+			PRIVATE
+			-Wno-format
+			-Wno-format-diag
+			-Wno-format-extra-args
+		)
+	endif()
 	if (NOT DEFINED CUNEICODE_EXAMPLE_OPT_TEST)
 		add_test(NAME ${example_target} COMMAND ${example_target})
 	elseif (${CUNEICODE_EXAMPLE_OPT_TEST})
