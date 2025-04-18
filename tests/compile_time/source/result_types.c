@@ -29,7 +29,7 @@
 
 #include <ztd/cuneicode/result.h>
 
-#if ZTD_IS_OFF(ZTD_COMPILER_VCXX) || ZTD_IS_OFF(ZTD_C)
+#if ZTD_IS_OFF(ZTD_COMPILER_VCXX) && !(ZTD_IS_ON(ZTD_COMPILER_CLANG) && __STDC_VERSION__ < 201800L)
 
 #define MAKE_GENERIC_TYPEDEFS(DECL_NAME)                                          \
 	typedef DECL_NAME(char, char) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__);          \
