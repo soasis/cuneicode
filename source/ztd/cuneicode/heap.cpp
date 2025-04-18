@@ -37,8 +37,9 @@
 char __heap_magic_value = 0;
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_allocate(size_t __requested_size,
-     size_t __alignment, size_t* __p_actual_size, void* __user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* __cnc_default_allocate(size_t __requested_size, size_t __alignment, size_t* __p_actual_size,
+     void* __user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	(void)__user_data;
 	(void)__alignment;
 	if (__requested_size == 0) {
@@ -56,8 +57,9 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_allocate(size_t __requested_siz
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void __cnc_default_deallocate(void* __ptr, size_t __ptr_size,
-     size_t __alignment, void* __user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void __cnc_default_deallocate(void* __ptr, size_t __ptr_size, size_t __alignment, void* __user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	(void)__ptr_size;
 	(void)__user_data;
 	(void)__alignment;
@@ -68,9 +70,9 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void __cnc_default_deallocate(void* __ptr, size_t _
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_reallocate(void* __original,
-     size_t __original_size, size_t __requested_size, size_t __alignment, size_t* __p_actual_size,
-     void* __user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* __cnc_default_reallocate(void* __original, size_t __original_size, size_t __requested_size,
+     size_t __alignment, size_t* __p_actual_size, void* __user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	(void)__user_data;
 	(void)__alignment;
 	if (__requested_size == 0) {
@@ -91,9 +93,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_reallocate(void* __original,
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_expand_allocation(void* __original,
-     size_t __original_size, size_t __alignment, size_t __expand_left, size_t __expand_right,
-     size_t* __p_actual_size, void* __user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* __cnc_default_expand_allocation(void* __original, size_t __original_size, size_t __alignment,
+     size_t __expand_left, size_t __expand_right, size_t* __p_actual_size, void* __user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	(void)__original;
 	(void)__original_size;
 	(void)__alignment;
@@ -105,9 +108,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_expand_allocation(void* __origi
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_shrink_allocation(void* __original,
-     size_t __original_size, size_t __alignment, size_t __reduce_left, size_t __reduce_right,
-     size_t* __p_actual_size, void* __user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* __cnc_default_shrink_allocation(void* __original, size_t __original_size, size_t __alignment,
+     size_t __reduce_left, size_t __reduce_right, size_t* __p_actual_size, void* __user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	(void)__original;
 	(void)__original_size;
 	(void)__alignment;
@@ -119,44 +123,48 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void* __cnc_default_shrink_allocation(void* __origi
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_allocate(cnc_conversion_heap* __heap,
-     size_t __requested_size, size_t __alignment, size_t* __p_actual_size) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* cnc_heap_allocate(cnc_conversion_heap* __heap, size_t __requested_size, size_t __alignment,
+     size_t* __p_actual_size) {
 	return __heap->allocate(__requested_size, __alignment, __p_actual_size, __heap->user_data);
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_reallocate_allocation(cnc_conversion_heap* __heap,
-     void* __original, size_t __original_size, size_t __requested_size, size_t __alignment,
-     size_t* __p_actual_size) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* cnc_heap_reallocate_allocation(cnc_conversion_heap* __heap, void* __original,
+     size_t __original_size, size_t __requested_size, size_t __alignment, size_t* __p_actual_size) {
 	return __heap->reallocate(__original, __original_size, __requested_size, __alignment,
 	     __p_actual_size, __heap->user_data);
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_expand_allocation(cnc_conversion_heap* __heap,
-     void* __original, size_t __original_size, size_t __alignment, size_t __expand_left,
-     size_t __expand_right, size_t* __p_actual_size) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* cnc_heap_expand_allocation(cnc_conversion_heap* __heap, void* __original,
+     size_t __original_size, size_t __alignment, size_t __expand_left, size_t __expand_right,
+     size_t* __p_actual_size) {
 	return __heap->expand(__original, __original_size, __alignment, __expand_left, __expand_right,
 	     __p_actual_size, __heap->user_data);
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_shrink_allocation(cnc_conversion_heap* __heap,
-     void* __original, size_t __original_size, size_t __alignment, size_t __reduce_left,
-     size_t __reduce_right, size_t* __p_actual_size) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* cnc_heap_shrink_allocation(cnc_conversion_heap* __heap, void* __original,
+     size_t __original_size, size_t __alignment, size_t __reduce_left, size_t __reduce_right,
+     size_t* __p_actual_size) {
 	return __heap->shrink(__original, __original_size, __alignment, __reduce_left, __reduce_right,
 	     __p_actual_size, __heap->user_data);
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_heap_deallocate(cnc_conversion_heap* __heap, void* __ptr,
-     size_t __ptr_size, size_t __alignment) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void cnc_heap_deallocate(cnc_conversion_heap* __heap, void* __ptr, size_t __ptr_size,
+     size_t __alignment) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	__heap->deallocate(__ptr, __ptr_size, __alignment, __heap->user_data);
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_conversion_heap cnc_create_default_heap(void)
-     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_conversion_heap cnc_create_default_heap(void) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	cnc_conversion_heap __heap {
 		nullptr,
 		__cnc_default_allocate,
@@ -170,7 +178,8 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_conversion_heap cnc_create_default_heap(void)
 
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(const cnc_conversion_heap* __left,
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+bool cnc_conversion_heap_equals(const cnc_conversion_heap* __left,
      const cnc_conversion_heap* __right) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	return __left->allocate == __right->allocate && __left->reallocate == __right->reallocate
 	     && __left->shrink == __right->shrink && __left->expand == __right->expand
@@ -178,7 +187,8 @@ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(const cnc_conversio
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_not_equals(const cnc_conversion_heap* __left,
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+bool cnc_conversion_heap_not_equals(const cnc_conversion_heap* __left,
      const cnc_conversion_heap* __right) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	return __left->allocate != __right->allocate || __left->reallocate != __right->reallocate
 	     || __left->shrink != __right->shrink || __left->expand != __right->expand

@@ -183,8 +183,9 @@ typedef struct cnc_conversion_heap {
 /// error case and respond identically as if a non-zero `__requested_size` is used and `nullptr` was
 /// returned.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_allocate(cnc_conversion_heap* __heap,
-     size_t __requested_size, size_t __alignment, size_t* __p_actual_size);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* cnc_heap_allocate(cnc_conversion_heap* __heap, size_t __requested_size, size_t __alignment,
+     size_t* __p_actual_size);
 
 
 //////
@@ -212,9 +213,9 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_allocate(cnc_conversion_heap* __heap
 /// @remarks If the return value is nullptr, that means that reallocation failed and the original
 /// pointer was not deallocated.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_reallocate_allocation(cnc_conversion_heap* __heap,
-     void* __original, size_t __original_size, size_t __requested_size, size_t __alignment,
-     size_t* __p_actual_size);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* cnc_heap_reallocate_allocation(cnc_conversion_heap* __heap, void* __original,
+     size_t __original_size, size_t __requested_size, size_t __alignment, size_t* __p_actual_size);
 
 //////
 /// @brief Attempts to expand the given allocation from the provided `__heap`. Calls the `__heap`'s
@@ -256,9 +257,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_reallocate_allocation(cnc_conversion
 /// If `__expand_left` is zero and `__expand_right` is zero, then the function sets
 /// `*__p_actual_size` to 0, returns `nullptr`, and takes no other heap-related action.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_expand_allocation(cnc_conversion_heap* __heap,
-     void* __original, size_t __original_size, size_t __alignment, size_t __expand_left,
-     size_t __expand_right, size_t* __p_actual_size);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* cnc_heap_expand_allocation(cnc_conversion_heap* __heap, void* __original,
+     size_t __original_size, size_t __alignment, size_t __expand_left, size_t __expand_right,
+     size_t* __p_actual_size);
 
 //////
 /// @brief Attempts to shrink the given allocation from the provided `__heap`. Calls the `__heap`'s
@@ -307,9 +309,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_expand_allocation(cnc_conversion_hea
 /// If `__reduce_left` is zero and `__reduce_right` is zero, then the function sets
 /// `*__p_actual_size` to 0, returns `nullptr`, and takes no other heap-related action.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_shrink_allocation(cnc_conversion_heap* __heap,
-     void* __original, size_t __original_size, size_t __alignment, size_t __reduce_left,
-     size_t __reduce_right, size_t* __p_actual_size);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void* cnc_heap_shrink_allocation(cnc_conversion_heap* __heap, void* __original,
+     size_t __original_size, size_t __alignment, size_t __reduce_left, size_t __reduce_right,
+     size_t* __p_actual_size);
 
 //////
 /// @brief Deallocates the given memory using the provided heap. Calls the `__heap`'s `deallocate`
@@ -326,16 +329,17 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void* cnc_heap_shrink_allocation(cnc_conversion_hea
 /// denoted by [`__ptr`, `__ptr + __ptr_size`) can no longer be accessed after this function
 /// returns; doing so is an error and the behavior after such an error is committed is undefined.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_heap_deallocate(cnc_conversion_heap* __heap, void* __ptr,
-     size_t __ptr_size, size_t __alignment) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void cnc_heap_deallocate(cnc_conversion_heap* __heap, void* __ptr, size_t __ptr_size,
+     size_t __alignment) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 
 //////
 /// @brief Creates a default heap to be used. Goes through the globally-available allocator (malloc,
 /// free. etc. or similar known provided free stores).
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_conversion_heap cnc_create_default_heap(void)
-     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_conversion_heap cnc_create_default_heap(void) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @brief Compares whether two cnc_conversion_heaps are the same.
@@ -343,7 +347,8 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_conversion_heap cnc_create_default_heap(void)
 /// @param[in] __left The first heap.
 /// @param[in] __right The second heap.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(const cnc_conversion_heap* __left,
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+bool cnc_conversion_heap_equals(const cnc_conversion_heap* __left,
      const cnc_conversion_heap* __right) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
@@ -352,7 +357,8 @@ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_equals(const cnc_conversio
 /// @param[in] __left The first heap.
 /// @param[in] __right The second heap.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_conversion_heap_not_equals(const cnc_conversion_heap* __left,
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+bool cnc_conversion_heap_not_equals(const cnc_conversion_heap* __left,
      const cnc_conversion_heap* __right) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////

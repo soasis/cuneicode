@@ -32,6 +32,8 @@ jobs:
             os: ubuntu
           - compiler: msvc
             os: macos
+          - compiler: gcc
+            os: windows
     runs-on: ${{matrix.os}}-latest
     env:
       CMAKE_CXX_STANDARD: ${{matrix.cxx_standard}}

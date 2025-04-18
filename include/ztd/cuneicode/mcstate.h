@@ -163,8 +163,8 @@ typedef union cnc_mcstate_t {
 /// @param[in,out] __state The state to turn validity on for.
 /// @param[in,out] __check_validity Whether or not to check for validity.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assume_valid(
-     cnc_mcstate_t* __state, bool __check_validity);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void cnc_mcstate_set_assume_valid(cnc_mcstate_t* __state, bool __check_validity);
 
 //////
 /// @brief Gets the internal state for the cnc_mcstate_t object representing its current "assume
@@ -172,7 +172,7 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assume_valid(
 ///
 /// @param[in,out] __state The state to return validity on for.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_assuming_valid(const cnc_mcstate_t* __state);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE) bool cnc_mcstate_is_assuming_valid(const cnc_mcstate_t* __state);
 
 //////
 /// @brief Returns whether or not the given cnc_mcstate_t has no more data that needs to be output.
@@ -180,7 +180,7 @@ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_assuming_valid(const cnc_mcstat
 /// @param[in] __state The state object to check is complete/finished and has no pending writes to
 /// do or data to gather.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_complete(const cnc_mcstate_t* __state);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE) bool cnc_mcstate_is_complete(const cnc_mcstate_t* __state);
 
 //////
 /// @}

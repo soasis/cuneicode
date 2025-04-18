@@ -32,7 +32,7 @@
 #include <ztd/cuneicode/open_err.h>
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ const char* cnc_open_err_to_str(cnc_open_err __err) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE) const char* cnc_open_err_to_str(cnc_open_err __err) {
 	switch (__err) {
 	case cnc_open_err_ok:
 		return "cnc_open_err_ok";

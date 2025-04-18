@@ -44,10 +44,11 @@
 #include <optional>
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ const ztd_char32_t __u32_xn_prefix[4] = { U'x', U'n', U'-', U'-' };
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+const ztd_char32_t __u32_xn_prefix[4] = { U'x', U'n', U'-', U'-' };
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ const ztd_char_t __xn_prefix[4] = { 'x', 'n', '-', '-' };
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE) const ztd_char_t __xn_prefix[4] = { 'x', 'n', '-', '-' };
 
 namespace {
 	static bool __is_not_ascii_codepoint(ztd_char32_t __codepoint) noexcept {
@@ -69,9 +70,9 @@ namespace {
 } // namespace
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32ntomcn_punycode(size_t* __p_maybe_dst_len,
-     ztd_char_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char32_t** __p_src)
-     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_c32ntomcn_punycode(size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char32_t** __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	cnc_pny_encode_state_t __state    = {};
 	cnc_pny_encode_state_t* __p_state = ::std::addressof(__state);
 	return cnc_c32nrtomcn_punycode(
@@ -79,9 +80,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32ntomcn_punycode(size_t* __p_maybe_
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_punycode(size_t* __p_maybe_dst_len,
-     ztd_char_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char32_t** __p_src,
-     cnc_pny_encode_state_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_c32nrtomcn_punycode(size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_pny_encode_state_t* __p_state)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__p_src == nullptr || *__p_src == nullptr) {
 		return cnc_mcerr_ok;
 	}
@@ -373,9 +375,9 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32nrtomcn_punycode(size_t* __p_maybe
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcntoc32n_punycode(size_t* __p_maybe_dst_len,
-     ztd_char32_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char_t** __p_src)
-     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_mcntoc32n_punycode(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char_t** __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	cnc_pny_decode_state_t __state    = {};
 	cnc_pny_decode_state_t* __p_state = ::std::addressof(__state);
 	return cnc_mcnrtoc32n_punycode(
@@ -383,9 +385,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcntoc32n_punycode(size_t* __p_maybe_
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_punycode(size_t* __p_maybe_dst_len,
-     ztd_char32_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char_t** __p_src,
-     cnc_pny_decode_state_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_mcnrtoc32n_punycode(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char_t** __p_src, cnc_pny_decode_state_t* __p_state)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	return ::cnc::__cnc_detail::__cnc_mcnrtoc32n_punycode_maybe_idna<false>(
 	     __p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src, __p_state);
 }
@@ -393,9 +396,9 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcnrtoc32n_punycode(size_t* __p_maybe
 
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32sntomcsn_punycode(size_t* __p_maybe_dst_len,
-     ztd_char_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char32_t** __p_src)
-     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_c32sntomcsn_punycode(size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char32_t** __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	cnc_pny_encode_state_t __state    = {};
 	cnc_pny_encode_state_t* __p_state = ::std::addressof(__state);
 	return cnc_c32snrtomcsn_punycode(
@@ -403,9 +406,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32sntomcsn_punycode(size_t* __p_mayb
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32snrtomcsn_punycode(size_t* __p_maybe_dst_len,
-     ztd_char_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char32_t** __p_src,
-     cnc_pny_encode_state_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_c32snrtomcsn_punycode(size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_pny_encode_state_t* __p_state)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
 	     __p_state, CNC_MC_MAX, decltype(&cnc_c32nrtomcn_punycode), &cnc_c32nrtomcn_punycode,
 	     ztd_char32_t, ztd_char_t, decltype(&cnc_pny_encode_state_is_complete),
@@ -413,9 +417,9 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_c32snrtomcsn_punycode(size_t* __p_may
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsntoc32sn_punycode(size_t* __p_maybe_dst_len,
-     ztd_char32_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char_t** __p_src)
-     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_mcsntoc32sn_punycode(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char_t** __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	cnc_pny_decode_state_t __state    = {};
 	cnc_pny_decode_state_t* __p_state = ::std::addressof(__state);
 	return cnc_mcsnrtoc32sn_punycode(
@@ -423,9 +427,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsntoc32sn_punycode(size_t* __p_mayb
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_mcsnrtoc32sn_punycode(size_t* __p_maybe_dst_len,
-     ztd_char32_t** __p_maybe_dst, size_t* __p_src_len, const ztd_char_t** __p_src,
-     cnc_pny_decode_state_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_mcsnrtoc32sn_punycode(size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char_t** __p_src, cnc_pny_decode_state_t* __p_state)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	_ZTDC_CUNEICODE_TRANSCODE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
 	     __p_state, CNC_MC_MAX, decltype(&cnc_mcnrtoc32n_punycode), &cnc_mcnrtoc32n_punycode,
 	     ztd_char_t, ztd_char32_t, decltype(&cnc_pny_decode_state_is_complete),

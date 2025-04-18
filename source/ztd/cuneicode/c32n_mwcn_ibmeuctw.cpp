@@ -30,9 +30,9 @@
 #include <ztd/cuneicode.h>
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr
-     cnc_c32rtomwc_ibmeuctw(size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst, size_t* __p_src_len,
-          const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_c32rtomwc_ibmeuctw(size_t* __p_maybe_dst_len, wchar_t** __p_maybe_dst,
+     size_t* __p_src_len, const ztd_char32_t** __p_src, cnc_mcstate_t* __p_state) {
 	(void)__p_maybe_dst_len;
 	(void)__p_maybe_dst;
 	(void)__p_src_len;

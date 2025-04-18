@@ -39,10 +39,10 @@
 #endif // C++
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_is_execution_encoding_unicode(void)
-     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+bool cnc_is_execution_encoding_unicode(void) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_is_wide_execution_encoding_unicode(void)
-     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+bool cnc_is_wide_execution_encoding_unicode(void) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 #endif

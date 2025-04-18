@@ -71,19 +71,20 @@
 
 #define CNC_TYPED_CONVERSION_ERROR_DECL_ROOT_I_(_SHIM_NAME, _SHIM_R_NAME, _SHIM_FROM, _SHIM_TO)   \
 	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                              \
-	ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result_t _SHIM_NAME(                                  \
-	     size_t* restrict __p_maybe_dst_len, _SHIM_TO* restrict* restrict __p_maybe_dst,         \
-	     size_t* restrict __p_src_len, const _SHIM_FROM* restrict* restrict __p_src,             \
+	ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)                                                           \
+	cnc_error_result_t _SHIM_NAME(size_t* restrict __p_maybe_dst_len,                            \
+	     _SHIM_TO* restrict* restrict __p_maybe_dst, size_t* restrict __p_src_len,               \
+	     const _SHIM_FROM* restrict* restrict __p_src,                                           \
                                                                                                   \
 	     cnc_mcerr (*__error_handler)(cnc_mcerr, size_t* restrict, _SHIM_TO* restrict* restrict, \
 	          size_t* restrict, const _SHIM_FROM* restrict* restrict, void* restrict,            \
 	          void* restrict),                                                                   \
 	     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);                             \
 	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                              \
-	ZTD_CUNEICODE_API_LINKAGE_I_ cnc_error_result_t _SHIM_R_NAME(                                \
-	     size_t* restrict __p_maybe_dst_len, _SHIM_TO* restrict* restrict __p_maybe_dst,         \
-	     size_t* restrict __p_src_len, const _SHIM_FROM* restrict* restrict __p_src,             \
-	     cnc_mcstate_t* restrict __p_state,                                                      \
+	ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)                                                           \
+	cnc_error_result_t _SHIM_R_NAME(size_t* restrict __p_maybe_dst_len,                          \
+	     _SHIM_TO* restrict* restrict __p_maybe_dst, size_t* restrict __p_src_len,               \
+	     const _SHIM_FROM* restrict* restrict __p_src, cnc_mcstate_t* restrict __p_state,        \
 	     cnc_mcerr (*__error_handler)(cnc_mcerr, size_t* restrict, _SHIM_TO* restrict* restrict, \
 	          size_t* restrict, const _SHIM_FROM* restrict* restrict, void* restrict,            \
 	          void* restrict),                                                                   \
@@ -99,15 +100,17 @@
 	     cnc_##_SHIM_PREFIX##snrto##_SHIM_SUFFIX##sn##_TAIL##_with_handler,  \
 	     TAG_TO_TYPE_I_(_SHIM_PREFIX), TAG_TO_TYPE_I_(_SHIM_SUFFIX))
 
-#define CNC_TYPED_CONVERSION_DECL_ROOT_I_(_SHIM_NAME, _SHIM_R_NAME, _SHIM_FROM, _SHIM_TO)    \
-	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                         \
-	ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr _SHIM_NAME(size_t* restrict __p_maybe_dst_len,   \
-	     _SHIM_TO* restrict* restrict __p_maybe_dst, size_t* restrict __p_src_len,          \
-	     const _SHIM_FROM* restrict* restrict __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);        \
-	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                         \
-	ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr _SHIM_R_NAME(size_t* restrict __p_maybe_dst_len, \
-	     _SHIM_TO* restrict* restrict __p_maybe_dst, size_t* restrict __p_src_len,          \
-	     const _SHIM_FROM* restrict* restrict __p_src, cnc_mcstate_t* restrict __p_state)   \
+#define CNC_TYPED_CONVERSION_DECL_ROOT_I_(_SHIM_NAME, _SHIM_R_NAME, _SHIM_FROM, _SHIM_TO)  \
+	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                       \
+	ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)                                                    \
+	cnc_mcerr _SHIM_NAME(size_t* restrict __p_maybe_dst_len,                              \
+	     _SHIM_TO* restrict* restrict __p_maybe_dst, size_t* restrict __p_src_len,        \
+	     const _SHIM_FROM* restrict* restrict __p_src) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);      \
+	ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)                                                       \
+	ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)                                                    \
+	cnc_mcerr _SHIM_R_NAME(size_t* restrict __p_maybe_dst_len,                            \
+	     _SHIM_TO* restrict* restrict __p_maybe_dst, size_t* restrict __p_src_len,        \
+	     const _SHIM_FROM* restrict* restrict __p_src, cnc_mcstate_t* restrict __p_state) \
 	     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 #define CNC_TYPED_CONVERSION_DECL_I_(_SHIM_PREFIX, _SHIM_SUFFIX, _TAIL)                     \

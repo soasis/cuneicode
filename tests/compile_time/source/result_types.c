@@ -31,6 +31,8 @@
 
 #if ZTD_IS_OFF(ZTD_COMPILER_VCXX) && !(ZTD_IS_ON(ZTD_COMPILER_CLANG) && __STDC_VERSION__ < 201800L)
 
+// not sure what's going on with Clang and MSVC here, to be completely honest.
+// this is very boring, regular code
 #define MAKE_GENERIC_TYPEDEFS(DECL_NAME)                                          \
 	typedef DECL_NAME(char, char) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__);          \
 	typedef DECL_NAME(char, unsigned char) ZTD_CONCAT_TOKENS_I_(t, __COUNTER__); \

@@ -39,10 +39,11 @@ cnc_skip_input_and_replace_error_t cnc_skip_input_and_replace_error = { 0 };
 
 // to_mcn
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntomcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c32ntomcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
@@ -52,10 +53,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntomc
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntomcn_utf8(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c32ntomcn_utf8(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
@@ -65,10 +67,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntomc
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntomcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char16_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c16ntomcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char16_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
@@ -78,10 +81,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntomc
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntomcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char8_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c8ntomcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
@@ -91,10 +95,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntomcn
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntomcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_wchar_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mwcntomcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_wchar_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		if (ztdc_is_wide_execution_encoding_utf8()) {
@@ -115,9 +120,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntomc
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntomcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mcntomcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
@@ -136,9 +142,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntomcn
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntomcn_utf8(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mcntomcn_utf8(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
@@ -158,10 +165,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntomcn
 
 // to_mwcn
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntomwcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c32ntomwcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
@@ -171,10 +179,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntomw
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntomwcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char16_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c16ntomwcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char16_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
@@ -184,10 +193,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntomw
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntomwcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char8_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c8ntomwcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	(void)__p_src;
 	(void)__p_src_len;
 	if (__current_error != cnc_mcerr_incomplete_input) {
@@ -199,10 +209,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntomwc
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntomwcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_wchar_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mwcntomwcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_wchar_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		if (ztdc_is_wide_execution_encoding_utf8()) {
@@ -223,9 +234,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntomw
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntomwcn(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mcntomwcn(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_wchar_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
@@ -248,10 +260,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntomwc
 
 // to_c8n
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc8n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc8n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
@@ -261,10 +274,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc8
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc8n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char16_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc8n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char16_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
@@ -274,10 +288,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc8
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc8n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char8_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc8n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
@@ -287,10 +302,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc8n
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc8n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_wchar_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc8n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_wchar_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		if (ztdc_is_wide_execution_encoding_utf8()) {
@@ -311,9 +327,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc8
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntoc8n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mcntoc8n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char8_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
@@ -336,10 +353,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntoc8n
 
 // to_c16n
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc16n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc16n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
@@ -349,10 +367,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc1
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc16n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char16_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc16n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char16_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
@@ -362,10 +381,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc1
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc16n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char8_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc16n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
@@ -375,10 +395,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc16
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc16n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_wchar_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc16n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_wchar_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		if (ztdc_is_wide_execution_encoding_utf8()) {
@@ -399,9 +420,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc1
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntoc16n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mcntoc16n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
@@ -424,10 +446,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntoc16
 
 // to_c32n
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc32n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char32_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc32n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char32_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C32(__p_src_len, __p_src);
@@ -437,10 +460,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c32ntoc3
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc32n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char16_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc32n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char16_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C16(__p_src_len, __p_src);
@@ -450,10 +474,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c16ntoc3
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc32n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char8_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc32n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char8_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		_CNC_SKIP_INPUT_ERROR_IMPL_C8(__p_src_len, __p_src);
@@ -463,10 +488,11 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_c8ntoc32
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc32n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_wchar_t** __p_src, void* __p_state,
-     void* restrict __p_user_data) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc32n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_wchar_t** __p_src, void* __p_state, void* restrict __p_user_data)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);
 		if (ztdc_is_wide_execution_encoding_utf8()) {
@@ -487,9 +513,10 @@ ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mwcntoc3
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ cnc_mcerr cnc_skip_input_and_replace_error_mcntoc32n(
-     cnc_mcerr __current_error, size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst,
-     size_t* __p_src_len, const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+cnc_mcerr cnc_skip_input_and_replace_error_mcntoc32n(cnc_mcerr __current_error,
+     size_t* __p_maybe_dst_len, ztd_char32_t** __p_maybe_dst, size_t* __p_src_len,
+     const ztd_char_t** __p_src, void* __p_state, void* restrict __p_user_data)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	if (__current_error != cnc_mcerr_incomplete_input) {
 		_CNC_ERROR_INITIAL_SRC_CHECK_IMPL(__current_error, __p_src_len, __p_src);

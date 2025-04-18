@@ -39,7 +39,8 @@
 #include <cstring>
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_assuming_valid(const cnc_mcstate_t* __state) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+bool cnc_mcstate_is_assuming_valid(const cnc_mcstate_t* __state) {
 	if (__state == nullptr) {
 		return false;
 	}
@@ -47,8 +48,8 @@ ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_assuming_valid(const cnc_mcstat
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assume_valid(
-     cnc_mcstate_t* __state, bool __check_validity) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void cnc_mcstate_set_assume_valid(cnc_mcstate_t* __state, bool __check_validity) {
 	if (__state == nullptr) {
 		return;
 	}
@@ -56,7 +57,7 @@ ZTD_CUNEICODE_API_LINKAGE_I_ void cnc_mcstate_set_assume_valid(
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
-ZTD_CUNEICODE_API_LINKAGE_I_ bool cnc_mcstate_is_complete(const cnc_mcstate_t* __state) {
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE) bool cnc_mcstate_is_complete(const cnc_mcstate_t* __state) {
 	if (__state == nullptr) {
 		return true;
 	}
