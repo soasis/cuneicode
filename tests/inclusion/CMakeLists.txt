@@ -28,26 +28,9 @@
 # =========================================================================== #
 
 # # Tests
-file(GLOB_RECURSE ztd.cuneicode.tests.inclusion.sources
-	LIST_DIRECTORIES FALSE
-	CONFIGURE_DEPENDS
-	source/*.c source/*.cpp)
+include(GenerateInclusionTest)
 
-add_executable(ztd.cuneicode.tests.inclusion ${ztd.cuneicode.tests.inclusion.sources})
-target_compile_options(ztd.cuneicode.tests.inclusion
-	PRIVATE
-	${--utf8-literal-encoding}
-	${--utf8-source-encoding}
-	${--disable-permissive}
-	${--updated-cpp-version-flag}
-	${--warn-pedantic}
-	${--warn-all}
-	${--warn-extra}
-	${--warn-errors})
-target_link_libraries(ztd.cuneicode.tests.inclusion
-	PRIVATE
-	ztd::cuneicode
-	Catch2::Catch2
-	${CMAKE_DL_LIBS}
+generate_inclusion_test(NAME "ztd.cuneicode.tests.inclusion"
+	ROOTS "../../include"
+	LINK_LIBRARIES ztd::cuneicode
 )
-add_test(NAME ztd.cuneicode.tests.inclusion COMMAND ztd.cuneicode.tests.inclusion)
