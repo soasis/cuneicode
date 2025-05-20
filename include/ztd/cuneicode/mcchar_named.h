@@ -89,5 +89,6 @@
 #include <ztd/cuneicode/windows_1255.h>
 #include <ztd/cuneicode/windows_1257.h>
 #include <ztd/cuneicode/windows_1258.h>
+#include <ztd/cuneicode/windows_code_page.h>
 
 #endif

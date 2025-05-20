@@ -132,6 +132,16 @@ namespace {
 		return __code_and_ptr.first;
 	}
 
+	template <uint32_t _CodePageId, bool _SetAssumeValidToTrue = false>
+	static inline cnc_open_err __windows_code_page_open_function(
+	     cnc_conversion_registry* __registry, cnc_conversion* __conversion,
+	     size_t* __p_available_space, size_t* __p_max_alignment, void** __p_space) noexcept {
+		auto __code_and_ptr = __core_open_function<cnc_mcstate_t, _SetAssumeValidToTrue>(
+		     __registry, __conversion, __p_available_space, __p_max_alignment, __p_space);
+		cnc_mcstate_set_win32_code_page(__code_and_ptr.second, _CodePageId);
+		return __code_and_ptr.first;
+	}
+
 	struct __intermediary_cnc_conversion {
 		cnc_conversion __link0;
 		cnc_conversion __link1;
@@ -1125,6 +1135,186 @@ extern cnc_open_err __cnc_add_default_registry_entries(cnc_conversion_registry* 
 	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias_c8(
 	     __registry, ::cnc::__cnc_detail::__exec_alias(), ::cnc::__cnc_detail::__exec_name()));
 
+	// Windows conversions
+#if ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)
+#define _ADD_WINDOWS_CODE_PAGE_MCN(_NAME, _ALIAS, _CODE_PAGE_ID)                                \
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, (const ztd_char8_t*)(_NAME),         \
+	     ::cnc::__cnc_detail::__utf32_name(),                                                  \
+	     &__typical_multi_conversion<char, ztd_char32_t,                                       \
+	          decltype(&::cnc_mcsnrtoc32sn_windows_code_page),                                 \
+	          &::cnc_mcsnrtoc32sn_windows_code_page>,                                          \
+	     &__typical_single_conversion<char, ztd_char32_t,                                      \
+	          decltype(&::cnc_mcnrtoc32n_windows_code_page),                                   \
+	          &::cnc_mcnrtoc32n_windows_code_page>,                                            \
+	     &::__typical_state_is_complete, &::__windows_code_page_open_function<_CODE_PAGE_ID>,  \
+	     &::__basic_close_function<cnc_mcstate_t>));                                           \
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_c8(__registry, ::cnc::__cnc_detail::__utf32_name(), \
+	     (const ztd_char8_t*)(_NAME),                                                          \
+	     &__typical_multi_conversion<ztd_char32_t, char,                                       \
+	          decltype(&::cnc_c32snrtomcsn_windows_code_page),                                 \
+	          &::cnc_c32snrtomcsn_windows_code_page>,                                          \
+	     &__typical_single_conversion<ztd_char32_t, char,                                      \
+	          decltype(&::cnc_c32nrtomcn_windows_code_page),                                   \
+	          &::cnc_c32nrtomcn_windows_code_page>,                                            \
+	     &::__typical_state_is_complete, &::__windows_code_page_open_function<_CODE_PAGE_ID>,  \
+	     &::__basic_close_function<cnc_mcstate_t>));                                           \
+	_CHECK_ERR_AND_RETURN(cnc_registry_add_alias_c8(                                           \
+	     __registry, (const ztd_char8_t*)(_ALIAS), (const ztd_char8_t*)(_NAME)));
+
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-037", "win32-037", 037);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-437", "win32-437", 437);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-500", "win32-500", 500);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-708", "win32-708", 708);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-709", "win32-709", 709);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-710", "win32-710", 710);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-720", "win32-720", 720);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-737", "win32-737", 737);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-775", "win32-775", 775);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-850", "win32-850", 850);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-852", "win32-852", 852);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-855", "win32-855", 855);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-857", "win32-857", 857);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-858", "win32-858", 858);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-860", "win32-860", 860);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-861", "win32-861", 861);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-862", "win32-862", 862);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-863", "win32-863", 863);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-864", "win32-864", 864);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-865", "win32-865", 865);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-866", "win32-866", 866);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-869", "win32-869", 869);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-870", "win32-870", 870);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-874", "win32-874", 874);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-875", "win32-875", 875);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-932", "win32-932", 932);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-936", "win32-936", 936);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-949", "win32-949", 949);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-950", "win32-950", 950);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1026", "win32-1026", 1026);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1047", "win32-1047", 1047);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1140", "win32-1140", 1140);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1141", "win32-1141", 1141);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1142", "win32-1142", 1142);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1143", "win32-1143", 1143);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1144", "win32-1144", 1144);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1145", "win32-1145", 1145);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1146", "win32-1146", 1146);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1147", "win32-1147", 1147);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1148", "win32-1148", 1148);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1149", "win32-1149", 1149);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1200", "win32-1200", 1200);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1201", "win32-1201", 1201);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1250", "win32-1250", 1250);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1251", "win32-1251", 1251);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1252", "win32-1252", 1252);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1253", "win32-1253", 1253);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1254", "win32-1254", 1254);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1255", "win32-1255", 1255);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1256", "win32-1256", 1256);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1257", "win32-1257", 1257);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1258", "win32-1258", 1258);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-1361", "win32-1361", 1361);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10000", "win32-10000", 10000);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10001", "win32-10001", 10001);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10002", "win32-10002", 10002);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10003", "win32-10003", 10003);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10004", "win32-10004", 10004);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10005", "win32-10005", 10005);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10006", "win32-10006", 10006);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10007", "win32-10007", 10007);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10008", "win32-10008", 10008);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10010", "win32-10010", 10010);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10017", "win32-10017", 10017);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10021", "win32-10021", 10021);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10029", "win32-10029", 10029);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10079", "win32-10079", 10079);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10081", "win32-10081", 10081);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-10082", "win32-10082", 10082);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-12000", "win32-12000", 12000);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-12001", "win32-12001", 12001);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20000", "win32-20000", 20000);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20001", "win32-20001", 20001);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20002", "win32-20002", 20002);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20003", "win32-20003", 20003);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20004", "win32-20004", 20004);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20005", "win32-20005", 20005);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20105", "win32-20105", 20105);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20106", "win32-20106", 20106);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20107", "win32-20107", 20107);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20108", "win32-20108", 20108);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20127", "win32-20127", 20127);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20261", "win32-20261", 20261);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20269", "win32-20269", 20269);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20273", "win32-20273", 20273);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20277", "win32-20277", 20277);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20278", "win32-20278", 20278);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20280", "win32-20280", 20280);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20284", "win32-20284", 20284);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20285", "win32-20285", 20285);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20290", "win32-20290", 20290);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20297", "win32-20297", 20297);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20420", "win32-20420", 20420);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20423", "win32-20423", 20423);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20424", "win32-20424", 20424);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20833", "win32-20833", 20833);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20838", "win32-20838", 20838);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20866", "win32-20866", 20866);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20871", "win32-20871", 20871);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20880", "win32-20880", 20880);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20905", "win32-20905", 20905);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20924", "win32-20924", 20924);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20932", "win32-20932", 20932);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20936", "win32-20936", 20936);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-20949", "win32-20949", 20949);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-21025", "win32-21025", 21025);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-21866", "win32-21866", 21866);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28591", "win32-28591", 28591);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28592", "win32-28592", 28592);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28593", "win32-28593", 28593);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28594", "win32-28594", 28594);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28595", "win32-28595", 28595);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28596", "win32-28596", 28596);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28597", "win32-28597", 28597);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28598", "win32-28598", 28598);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28599", "win32-28599", 28599);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28603", "win32-28603", 28603);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-28605", "win32-28605", 28605);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-29001", "win32-29001", 29001);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-38598", "win32-38598", 38598);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50220", "win32-50220", 50220);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50221", "win32-50221", 50221);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50222", "win32-50222", 50222);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50225", "win32-50225", 50225);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50227", "win32-50227", 50227);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50229", "win32-50229", 50229);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50930", "win32-50930", 50930);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50931", "win32-50931", 50931);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50933", "win32-50933", 50933);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50935", "win32-50935", 50935);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50936", "win32-50936", 50936);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50937", "win32-50937", 50937);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-50939", "win32-50939", 50939);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-51932", "win32-51932", 51932);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-51936", "win32-51936", 51936);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-51949", "win32-51949", 51949);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-51950", "win32-51950", 51950);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-52936", "win32-52936", 52936);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-54936", "win32-54936", 54936);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57002", "win32-57002", 57002);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57003", "win32-57003", 57003);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57004", "win32-57004", 57004);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57005", "win32-57005", 57005);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57006", "win32-57006", 57006);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57007", "win32-57007", 57007);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57008", "win32-57008", 57008);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57009", "win32-57009", 57009);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57010", "win32-57010", 57010);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-57011", "win32-57011", 57011);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-65000", "win32-65000", 65000);
+	_ADD_WINDOWS_CODE_PAGE_MCN("win32-code_page-65001", "win32-65001", 65001);
+#endif
+
+#undef _ADD_WINDOWS_CODE_PAGE_MCN
 #undef _ADD_MCN_NAMED_ENCODING
 #undef _ADD_MCN_NAMED_ENCODING_BASIC
 #undef _CHECK_ERR_AND_RETURN

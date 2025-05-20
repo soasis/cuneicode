@@ -64,6 +64,7 @@ void cnc_mcstate_set_win32_code_page(cnc_mcstate_t* __state, uint32_t __win32_co
 	if (__state == nullptr) {
 		return;
 	}
+	__state->__win32_code_page.__indicator = __mc_s_i_win32_code_page;
 	__state->__win32_code_page.__code_page = __win32_code_page_id;
 }
 
