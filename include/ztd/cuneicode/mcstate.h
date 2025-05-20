@@ -82,7 +82,22 @@ typedef enum cnc_mcstate_indicator {
 	CNC_MCSTATE_INDICATOR_RAW = 1,
 	//////
 	/// @brief Reserved, do NOT use.
-	CNC_MCSTATE_INDICATOR___RESERVED1 = 2
+	CNC_MCSTATE_INDICATOR___RESERVED1 = 2,
+	//////
+	/// @brief Reserved, do NOT use.
+	CNC_MCSTATE_INDICATOR___RESERVED2 = 3,
+	//////
+	/// @brief Reserved, do NOT use.
+	CNC_MCSTATE_INDICATOR___RESERVED3 = 4,
+	//////
+	/// @brief Reserved, do NOT use.
+	CNC_MCSTATE_INDICATOR___RESERVED4 = 5,
+	//////
+	/// @brief Reserved, do NOT use.
+	CNC_MCSTATE_INDICATOR___RESERVED5 = 6,
+	//////
+	/// @brief Reserved, do NOT use.
+	CNC_MCSTATE_INDICATOR___RESERVED6 = 7
 } cnc_mcstate_indicator;
 
 //////
@@ -95,7 +110,7 @@ typedef union cnc_mcstate_t {
 	/// @brief Shared data as part of every structure within a cnc_mcstate_t.
 	struct cnc_header_t {
 		//////
-		/// @brief The indactor. Must be set by any custom encoding routine using cnc_mcstate_t
+		/// @brief The indicator. Must be set by any custom encoding routine using cnc_mcstate_t
 		/// and desiring custom completion behavior to CNC_MCSTATE_INDICATOR_RAW.
 		cnc_mcstate_indicator indicator : CHAR_BIT;
 		//////
@@ -130,10 +145,26 @@ typedef union cnc_mcstate_t {
 	} __locale;
 #endif
 	//////
+	/// @brief Private, do not access.
+	struct __win32_code_page_t {
+		//////
+		/// @brief Private, do not access.
+		cnc_mcstate_indicator __indicator : CHAR_BIT;
+		//////
+		/// @brief Private, do not access.
+		unsigned int __assume_valid : 1;
+		//////
+		/// @brief Private, do not access.
+		unsigned int __padding : (((sizeof(cnc_mcstate_indicator) * CHAR_BIT) - CHAR_BIT) - 1);
+		//////
+		/// @brief Private, do not access.
+		uint32_t __code_page;
+	} __win32_code_page;
+	//////
 	/// @brief The raw type for user use.
 	struct __raw_t {
 		//////
-		/// @brief The indactor. Must be set by any custom encoding routine using cnc_mcstate_t
+		/// @brief The indicator. Must be set by any custom encoding routine using cnc_mcstate_t
 		/// and desiring custom completion behavior to CNC_MCSTATE_INDICATOR_RAW.
 		cnc_mcstate_indicator indicator : CHAR_BIT;
 		//////
@@ -161,7 +192,7 @@ typedef union cnc_mcstate_t {
 /// applicable.
 ///
 /// @param[in,out] __state The state to turn validity on for.
-/// @param[in,out] __check_validity Whether or not to check for validity.
+/// @param[in] __check_validity Whether or not to check for validity.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
 void cnc_mcstate_set_assume_valid(cnc_mcstate_t* __state, bool __check_validity);
@@ -173,6 +204,25 @@ void cnc_mcstate_set_assume_valid(cnc_mcstate_t* __state, bool __check_validity)
 /// @param[in,out] __state The state to return validity on for.
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE) bool cnc_mcstate_is_assuming_valid(const cnc_mcstate_t* __state);
+
+//////
+/// @brief Sets internal state for the cnc_mcstate_t object to be a conversion working with a win32
+/// code page identifier.
+///
+/// @param[in,out] __state The state to inspect.
+/// @param[in] __win32_code_page_id Whether or not to check for validity.
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void cnc_mcstate_set_win32_code_page(cnc_mcstate_t* __state, uint32_t __win32_code_page_id);
+
+//////
+/// @brief Gets the internal state for the cnc_mcstate_t object representing its current win32 code
+/// page identifier.
+///
+/// @param[in] __state The state to inspect.
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+uint32_t cnc_mcstate_get_win32_code_page(const cnc_mcstate_t* __state);
 
 //////
 /// @brief Returns whether or not the given cnc_mcstate_t has no more data that needs to be output.

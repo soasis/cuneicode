@@ -35,15 +35,13 @@
 #include <ztd/cuneicode/mcstate.h>
 #include <ztd/idk/static_assert.hpp>
 
-inline constexpr cnc_mcstate_indicator __mc_s_i_locale   = (cnc_mcstate_indicator)0;
-inline constexpr cnc_mcstate_indicator __mc_s_i_raw      = (cnc_mcstate_indicator)1;
-inline constexpr cnc_mcstate_indicator __mc_s_i_punycode = (cnc_mcstate_indicator)2;
-
-static_assert(__mc_s_i_locale == CNC_MCSTATE_INDICATOR___RESERVED0,
-     "mismatch between reserved and internal indicator values (locale)");
-static_assert(__mc_s_i_raw == CNC_MCSTATE_INDICATOR_RAW,
-     "mismatch between reserved and internal indicator values (raw)");
-static_assert(__mc_s_i_punycode == CNC_MCSTATE_INDICATOR___RESERVED1,
-     "mismatch between reserved and internal indicator values (punycode)");
+inline constexpr cnc_mcstate_indicator __mc_s_i_locale
+     = (cnc_mcstate_indicator)CNC_MCSTATE_INDICATOR___RESERVED0;
+inline constexpr cnc_mcstate_indicator __mc_s_i_raw
+     = (cnc_mcstate_indicator)CNC_MCSTATE_INDICATOR_RAW;
+inline constexpr cnc_mcstate_indicator __mc_s_i_punycode
+     = (cnc_mcstate_indicator)CNC_MCSTATE_INDICATOR___RESERVED1;
+inline constexpr cnc_mcstate_indicator __mc_s_i_win32_code_page
+     = (cnc_mcstate_indicator)CNC_MCSTATE_INDICATOR___RESERVED2;
 
 #endif

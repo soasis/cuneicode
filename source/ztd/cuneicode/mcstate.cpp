@@ -35,6 +35,8 @@
 #include <ztd/idk/unreachable.h>
 #include <ztd/idk/size.h>
 
+#include <ztd/idk/detail/windows.hpp>
+
 #include <memory>
 #include <cstring>
 
@@ -54,6 +56,25 @@ void cnc_mcstate_set_assume_valid(cnc_mcstate_t* __state, bool __check_validity)
 		return;
 	}
 	__state->header.__assume_valid = static_cast<unsigned int>(__check_validity ? 1 : 0);
+}
+
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+void cnc_mcstate_set_win32_code_page(cnc_mcstate_t* __state, uint32_t __win32_code_page_id) {
+	if (__state == nullptr) {
+		return;
+	}
+	__state->__win32_code_page.__code_page = __win32_code_page_id;
+}
+
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+uint32_t cnc_mcstate_get_win32_code_page(const cnc_mcstate_t* __state) {
+	if (__state == nullptr) {
+		// this is the canonical zero value so it's not the worst choice....
+		return ::ztd::__idk_detail::__windows::__code_page_active;
+	}
+	return __state->__win32_code_page.__code_page;
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
@@ -84,6 +105,9 @@ ZTD_USE(ZTD_CUNEICODE_API_LINKAGE) bool cnc_mcstate_is_complete(const cnc_mcstat
 			}
 			return true;
 		}
+	}
+	case __mc_s_i_win32_code_page: {
+		return true;
 	}
 	default:
 		break;
