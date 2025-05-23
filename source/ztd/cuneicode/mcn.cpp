@@ -118,19 +118,26 @@ ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
 cnc_mcerr cnc_mcnrtoc16n(size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst,
      size_t* __p_src_len, const char** __p_src, cnc_mcstate_t* __p_state)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
-	if constexpr ((sizeof(ztd_char_t) == sizeof(ztd_char8_t))
+	if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
+	     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t)) && ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)) {
+		return ::cnc_mcnrtomwcn(__p_maybe_dst_len, reinterpret_cast<ztd_wchar_t**>(__p_maybe_dst),
+		     __p_src_len, __p_src, __p_state);
+	}
+	else if constexpr ((sizeof(ztd_char_t) == sizeof(ztd_char8_t))
 	     && (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
 		if (ztdc_is_execution_encoding_utf8()) {
 			return ::cnc_c8nrtoc16n(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
 			     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
 		}
 	}
-	cnc_mcstate_t __substitute_state {};
-	if (__p_state == nullptr)
-		__p_state = &__substitute_state;
-	_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
-	     __p_state, decltype(&cnc_mcnrtoc32n), &cnc_mcnrtoc32n, decltype(&cnc_c32nrtoc16n),
-	     &cnc_c32nrtoc16n);
+	else {
+		cnc_mcstate_t __substitute_state {};
+		if (__p_state == nullptr)
+			__p_state = &__substitute_state;
+		_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
+		     __p_state, decltype(&cnc_mcnrtoc32n), &cnc_mcnrtoc32n, decltype(&cnc_c32nrtoc16n),
+		     &cnc_c32nrtoc16n);
+	}
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)

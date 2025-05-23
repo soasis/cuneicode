@@ -35,6 +35,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/idk/mbstate_t.h>
+#include <ztd/idk/charN_t.h>
 
 #if ZTD_IS_ON(ZTD_CXX)
 #include <cstddef>
@@ -159,6 +160,14 @@ typedef union cnc_mcstate_t {
 		//////
 		/// @brief Private, do not access.
 		uint32_t __code_page;
+		//////
+		/// @brief Private, do not access.
+		union {
+			ztd_wchar_t __wide_accumulator[(sizeof(ztd_mbstate_t) * 2 - sizeof(uint32_t))
+			     / sizeof(ztd_wchar_t)];
+			char __narrow_accumulator[(sizeof(ztd_mbstate_t) * 2 - sizeof(uint32_t))
+			     / sizeof(char)];
+		};
 	} __win32_code_page;
 	//////
 	/// @brief The raw type for user use.

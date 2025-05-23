@@ -40,6 +40,7 @@
 
 #include <ztd/idk/encoding_detection.h>
 #include <ztd/idk/detail/unicode.hpp>
+#include <ztd/idk/detail/windows.hpp>
 
 #if ZTD_IS_ON(ZTD_HEADER_CUCHAR)
 #include <cuchar>
@@ -56,6 +57,15 @@ ZTD_EXTERN_C_OPEN_I_
 ZTD_EXTERN_C_CLOSE_I_
 #endif
 #include <cstring>
+
+// SHOCKINGLY: windows does NOT actually do a conversion from the Multibyte Encoding
+// to UTF-8/16/32 with mbrtoc8/16/32 or c8/16/32rtomb: they weaseled their way out of it by using
+// the "implementation-defined"ness of the execution encoding to simply decide that the encoding is
+// always UTF-8 on the "mb" side of these functions. While this sounds great to certain folk, this
+// is a nightmare for legacy code. The only way to solve this problem is to go through mbrtowc on
+// Windows platforms and hold temporary data. This kind of sucks a LOT, especially since there's no
+// guarantee things will be proper, synchronized units from mbrtowc and back... but that's where
+// we're at right now!
 
 namespace cnc {
 	ZTD_CUNEICODE_INLINE_ABI_NAMESPACE_OPEN_I_
@@ -251,7 +261,90 @@ namespace cnc {
 					     __p_state);
 				}
 			}
-#if (ZTD_IS_ON(ZTD_HEADER_CUCHAR) || ZTD_IS_ON(ZTD_HEADER_UCHAR_H)) \
+#if ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)
+			if constexpr (_SourceChecks) {
+				if (__p_src == nullptr || *__p_src == nullptr) {
+					return cnc_mcerr_ok;
+				}
+			}
+			if constexpr (_SourceChecks) {
+				if (__p_src_len == nullptr || *__p_src_len == 0) {
+					return cnc_mcerr_ok;
+				}
+			}
+			const ztd_char32_t* __initial_src = *__p_src;
+			size_t __initial_src_len          = *__p_src_len;
+			ztd_wchar_t __intermediate_output[CNC_MWC_MAX];
+			size_t __intermediate_output_initial_size = ztdc_c_array_size(__intermediate_output);
+			size_t* __p_intermediate_output_initial_size = &__intermediate_output_initial_size;
+			ztd_wchar_t* __p_intermediate_output         = __intermediate_output;
+			const cnc_mcerr __intermediate_err
+			     = cnc_c32nrtomwcn(__p_intermediate_output_initial_size,
+			          &__p_intermediate_output, __p_src_len, __p_src, __p_state);
+			if (__intermediate_err != cnc_mcerr_ok) {
+				return __intermediate_err;
+			}
+			BOOL __default_char_used = false;
+			CHAR __default_char      = '?';
+			auto __used_defaults
+			     = ::ztd::__idk_detail::__windows::__multibyte_to_widechar_used_char(
+			          ::ztd::__idk_detail::__windows::__code_page_active_thread, &__default_char,
+			          &__default_char_used);
+			const size_t __intermediate_size
+			     = ztdc_c_array_size(__intermediate_output) - __intermediate_output_initial_size;
+			char __win32_blackhole_buffer[CNC_MC_MAX];
+			char* __win32_dst         = !_IsCounting ? *__p_maybe_dst : __win32_blackhole_buffer;
+			const int __win32_dst_len = static_cast<int>(!_IsUnbounded
+			          ? (*__p_maybe_dst_len > static_cast<size_t>(INT_MAX) ? INT_MAX
+			                                                               : *__p_maybe_dst_len)
+			          : INT_MAX);
+			for (size_t __intermediate_input_read = 1;
+			     __intermediate_input_read <= __intermediate_size; ++__intermediate_input_read) {
+				const int __win32_err = ::WideCharToMultiByte(
+				     ::ztd::__idk_detail::__windows::__code_page_active_thread,
+				     WC_ERR_INVALID_CHARS, __intermediate_output,
+				     static_cast<int>(__intermediate_input_read), __win32_dst, __win32_dst_len,
+				     __used_defaults.__p_default_char, __used_defaults.__p_default_char_used);
+				if (__win32_err == 0) {
+					DWORD __last_win32_err = ::GetLastError();
+					if (__last_win32_err == ERROR_NO_UNICODE_TRANSLATION
+					     || __default_char_used) {
+						// we can break early: it was illegal stuff that can't translate
+						__p_src[0]     = __initial_src;
+						__p_src_len[0] = __initial_src_len;
+						return cnc_mcerr_invalid_sequence;
+					}
+					else if (__last_win32_err == ERROR_INSUFFICIENT_BUFFER) {
+						if (!_IsUnbounded) {
+							__p_src[0]     = __initial_src;
+							__p_src_len[0] = __initial_src_len;
+							return cnc_mcerr_insufficient_output;
+						}
+					}
+					else {
+						continue;
+					}
+				}
+				else {
+					// okay, it should be good
+					if (!_IsUnbounded) {
+						if (__p_maybe_dst_len[0] < static_cast<size_t>(__win32_err)) {
+							__p_src[0]     = __initial_src;
+							__p_src_len[0] = __initial_src_len;
+							return cnc_mcerr_insufficient_output;
+						}
+						__p_maybe_dst_len[0] -= static_cast<size_t>(__win32_err);
+					}
+					if (!_IsCounting) {
+						__p_maybe_dst[0] += static_cast<size_t>(__win32_err);
+					}
+					return cnc_mcerr_ok;
+				}
+			}
+			__p_src[0]     = __initial_src;
+			__p_src_len[0] = __initial_src_len;
+			return cnc_mcerr_invalid_sequence;
+#elif (ZTD_IS_ON(ZTD_HEADER_CUCHAR) || ZTD_IS_ON(ZTD_HEADER_UCHAR_H)) \
      && ZTD_IS_OFF(ZTD_PLATFORM_MAC_OS)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
@@ -301,7 +394,7 @@ namespace cnc {
 			     __p_maybe_dst_len, reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
 			     __p_src, __p_state);
 #endif
-		}
+		} // namespace __cnc_detail
 
 		template <bool _IsCounting, bool _IsUnbounded, bool _SourceChecks = true>
 		static inline cnc_mcerr __c8nrtoc8n(size_t* __p_maybe_dst_len,
@@ -818,11 +911,19 @@ namespace cnc {
 			if (ztdc_is_execution_encoding_utf8()) {
 				if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
 				     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
-					if (ztdc_is_wide_execution_encoding_utf16()) {
+					if constexpr (ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)) {
 						return ::cnc::__cnc_detail::__c16nrtoc8n<_IsCounting, _IsUnbounded,
 						     _SourceChecks>(__p_maybe_dst_len,
 						     reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
 						     reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
+					}
+					else {
+						if (ztdc_is_wide_execution_encoding_utf16()) {
+							return ::cnc::__cnc_detail::__c16nrtoc8n<_IsCounting,
+							     _IsUnbounded, _SourceChecks>(__p_maybe_dst_len,
+							     reinterpret_cast<ztd_char8_t**>(__p_maybe_dst), __p_src_len,
+							     reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
+						}
 					}
 				}
 				if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char32_t))
@@ -892,11 +993,19 @@ namespace cnc {
 		     cnc_mcstate_t* __p_state) noexcept {
 			if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char32_t))
 			     && (alignof(ztd_wchar_t) == alignof(ztd_char32_t))) {
-				if (ztdc_is_wide_execution_encoding_utf16()) {
+				if constexpr (ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)) {
 					return ::cnc::__cnc_detail::__c32nrtoc32n<_IsCounting, _IsUnbounded,
 					     _SourceChecks>(__p_maybe_dst_len,
 					     reinterpret_cast<ztd_char32_t**>(__p_maybe_dst), __p_src_len, __p_src,
 					     __p_state);
+				}
+				else {
+					if (ztdc_is_wide_execution_encoding_utf16()) {
+						return ::cnc::__cnc_detail::__c32nrtoc32n<_IsCounting, _IsUnbounded,
+						     _SourceChecks>(__p_maybe_dst_len,
+						     reinterpret_cast<ztd_char32_t**>(__p_maybe_dst), __p_src_len,
+						     __p_src, __p_state);
+					}
 				}
 			}
 			if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
@@ -962,7 +1071,60 @@ namespace cnc {
 					     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
 				}
 			}
-#if (ZTD_IS_ON(ZTD_HEADER_CUCHAR) || ZTD_IS_ON(ZTD_HEADER_UCHAR_H)) \
+#if ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)
+			if constexpr (_SourceChecks) {
+				if (__p_src == nullptr || *__p_src == nullptr) {
+					return cnc_mcerr_ok;
+				}
+			}
+			if constexpr (_SourceChecks) {
+				if (__p_src_len == nullptr || *__p_src_len == 0) {
+					return cnc_mcerr_ok;
+				}
+			}
+			const char* __initial_src      = *__p_src;
+			const size_t __initial_src_len = *__p_src_len;
+			ztd_wchar_t __intermediate_output[CNC_MWC_MAX];
+			size_t __intermediate_output_initial_size = ztdc_c_array_size(__intermediate_output);
+			size_t __intermediate_size                = 0;
+			size_t __input_read_size                  = 1;
+			ztd_wchar_t* __p_intermediate_output      = __intermediate_output;
+			const uint32_t __flags
+			     = ::ztd::__idk_detail::__windows::__multibyte_to_widechar_flags(
+			          ztd::__idk_detail::__windows::__code_page_active_thread);
+			for (; __input_read_size < __initial_src_len; ++__input_read_size) {
+				if (__input_read_size > CNC_MC_MAX) {
+					// can't do much else
+					return cnc_mcerr_invalid_sequence;
+				}
+				const int __win32_err = ::MultiByteToWideChar(
+				     ztd::__idk_detail::__windows::__code_page_active_thread,
+				     static_cast<DWORD>(__flags), __initial_src,
+				     static_cast<int>(__input_read_size), __p_intermediate_output,
+				     static_cast<int>(__intermediate_output_initial_size));
+				if (__win32_err == 0) {
+					if (::GetLastError() == ERROR_NO_UNICODE_TRANSLATION) {
+						return cnc_mcerr_invalid_sequence;
+					}
+				}
+				else {
+					__intermediate_size = static_cast<size_t>(__win32_err);
+					break;
+				}
+			}
+			const ztd_wchar_t* __p_intermediate_input = __intermediate_output;
+			cnc_mcerr __err
+			     = ::cnc::__cnc_detail::__c16nrtoc32n<_IsCounting, _IsUnbounded, false>(
+			          __p_maybe_dst_len, __p_maybe_dst, &__intermediate_size,
+			          reinterpret_cast<const ztd_char16_t**>(&__p_intermediate_input),
+			          __p_state);
+			if (__err != cnc_mcerr_ok) {
+				return __err;
+			}
+			__p_src[0] += __input_read_size;
+			__p_src_len[0] -= __input_read_size;
+			return cnc_mcerr_ok;
+#elif (ZTD_IS_ON(ZTD_HEADER_CUCHAR) || ZTD_IS_ON(ZTD_HEADER_UCHAR_H)) \
      && ZTD_IS_OFF(ZTD_PLATFORM_MAC_OS)
 			if constexpr (_SourceChecks) {
 				if (__p_src == nullptr || *__p_src == nullptr) {
@@ -1039,54 +1201,66 @@ namespace cnc {
 				}
 			}
 			if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
-			     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t))) {
-				if (ztdc_is_wide_execution_encoding_utf16()) {
-					return ::cnc::__cnc_detail::__c16nrtoc32n<_IsCounting, _IsUnbounded,
-					     _SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
-					     reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
-				}
+			     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t))
+			     && ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)) {
+				return ::cnc::__cnc_detail::__c16nrtoc32n<_IsCounting, _IsUnbounded,
+				     _SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+				     reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
 			}
-			constexpr const size_t __max_accumulated_writeouts = 4;
-			constexpr const size_t __initial_multibyte_intermediate_size
-			     = (MB_LEN_MAX * __max_accumulated_writeouts);
+			else {
+				if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
+				     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t))
+				     && ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)) {
+					if (ztdc_is_wide_execution_encoding_utf16()) {
+						return ::cnc::__cnc_detail::__c16nrtoc32n<_IsCounting, _IsUnbounded,
+						     _SourceChecks>(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+						     reinterpret_cast<const ztd_char16_t**>(__p_src), __p_state);
+					}
+				}
+				constexpr const size_t __max_accumulated_writeouts = 4;
+				constexpr const size_t __initial_multibyte_intermediate_size
+				     = (MB_LEN_MAX * __max_accumulated_writeouts);
 
-			if constexpr (_SourceChecks) {
-				if (__p_src == nullptr || *__p_src == nullptr) {
-					return cnc_mcerr_ok;
+				if constexpr (_SourceChecks) {
+					if (__p_src == nullptr || *__p_src == nullptr) {
+						return cnc_mcerr_ok;
+					}
 				}
-			}
-			size_t& __src_len = *__p_src_len;
-			if constexpr (_SourceChecks) {
-				if (__src_len == 0) {
-					return cnc_mcerr_ok;
+				size_t& __src_len = *__p_src_len;
+				if constexpr (_SourceChecks) {
+					if (__src_len == 0) {
+						return cnc_mcerr_ok;
+					}
 				}
+				const ztd_wchar_t*& __src        = *__p_src;
+				const ztd_wchar_t* __initial_src = __src;
+				const size_t __initial_src_len   = __src_len;
+				size_t __multibyte_intermediate_output_size
+				     = __initial_multibyte_intermediate_size;
+				char __multibyte_intermediate[__initial_multibyte_intermediate_size] {};
+				char* __p_multibyte_intermediate_output = __multibyte_intermediate;
+				cnc_mcerr __intermediate_err
+				     = ::cnc::__cnc_detail::__mwcnrtomcn<_IsCounting, _IsUnbounded, false>(
+				          &__multibyte_intermediate_output_size,
+				          &__p_multibyte_intermediate_output, __p_src_len, __p_src, __p_state);
+				if (__intermediate_err != cnc_mcerr_ok) {
+					return __intermediate_err;
+				}
+				size_t __multibyte_intermediate_input_size
+				     = __initial_multibyte_intermediate_size
+				     - __multibyte_intermediate_output_size;
+				const char* __p_multibyte_intermediate_input = __multibyte_intermediate;
+				cnc_mcerr __err
+				     = ::cnc::__cnc_detail::__mcnrtoc32n<_IsCounting, _IsUnbounded, false>(
+				          __p_maybe_dst_len, __p_maybe_dst,
+				          &__multibyte_intermediate_input_size,
+				          &__p_multibyte_intermediate_input, __p_state);
+				if (__err != cnc_mcerr_ok) {
+					__src     = __initial_src;
+					__src_len = __initial_src_len;
+				}
+				return __err;
 			}
-			const ztd_wchar_t*& __src = *__p_src;
-
-			const ztd_wchar_t* __initial_src            = __src;
-			const size_t __initial_src_len              = __src_len;
-			size_t __multibyte_intermediate_output_size = __initial_multibyte_intermediate_size;
-			char __multibyte_intermediate[__initial_multibyte_intermediate_size] {};
-			char* __p_multibyte_intermediate_output = __multibyte_intermediate;
-			cnc_mcerr __intermediate_err
-			     = ::cnc::__cnc_detail::__mwcnrtomcn<_IsCounting, _IsUnbounded, false>(
-			          &__multibyte_intermediate_output_size, &__p_multibyte_intermediate_output,
-			          __p_src_len, __p_src, __p_state);
-			if (__intermediate_err != cnc_mcerr_ok) {
-				return __intermediate_err;
-			}
-			size_t __multibyte_intermediate_input_size
-			     = __initial_multibyte_intermediate_size - __multibyte_intermediate_output_size;
-			const char* __p_multibyte_intermediate_input = __multibyte_intermediate;
-			cnc_mcerr __err
-			     = ::cnc::__cnc_detail::__mcnrtoc32n<_IsCounting, _IsUnbounded, false>(
-			          __p_maybe_dst_len, __p_maybe_dst, &__multibyte_intermediate_input_size,
-			          &__p_multibyte_intermediate_input, __p_state);
-			if (__err != cnc_mcerr_ok) {
-				__src     = __initial_src;
-				__src_len = __initial_src_len;
-			}
-			return __err;
 		}
 
 #define _ZTDC_CUNEICODE_SINGLE_N_DEST_TEMPLATE_BODY(_FN, _DL, _D, _SL, _S, _ST) \

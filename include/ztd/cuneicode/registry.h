@@ -440,7 +440,6 @@ cnc_open_err cnc_registry_add(cnc_conversion_registry* __registry, const ztd_cha
 /// `__to`, respectively. If `__from` or
 /// `__to` are `nullptr`, then the function will assume they are the empty string (and use the
 /// default name in that case).
-///////
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
 cnc_open_err cnc_registry_add_c8n_multimin(cnc_conversion_registry* __registry, size_t __from_size,
@@ -600,12 +599,12 @@ cnc_open_err cnc_registry_add_alias_n(cnc_conversion_registry* __registry, size_
 /// assume they are the empty string (and use the default name in that case).
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
-cnc_open_err
-     cnc_registry_add_multi_c8(cnc_conversion_registry* __registry, const ztd_char8_t* __from,
-          const ztd_char8_t* __to, cnc_conversion_function* __multi_conversion_function,
-          cnc_state_is_complete_function* __state_is_complete_function,
-          cnc_open_function* __open_function, cnc_close_function* __close_function)
-          ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+cnc_open_err cnc_registry_add_multi_c8(cnc_conversion_registry* __registry,
+     const ztd_char8_t* __from, const ztd_char8_t* __to,
+     cnc_conversion_function* __multi_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @copydoc cnc_registry_add_multi_c8
@@ -759,12 +758,12 @@ cnc_open_err cnc_registry_add_multi_c8_multimin(cnc_conversion_registry* __regis
 /// @copydoc cnc_registry_add_multi_c8_multimin
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
-cnc_open_err
-     cnc_registry_add_multi_multimin(cnc_conversion_registry* __registry, const ztd_char_t* __from,
-          const ztd_char_t* __to, cnc_conversion_function* __multi_conversion_function,
-          cnc_state_is_complete_function* __state_is_complete_function,
-          cnc_open_function* __open_function, cnc_close_function* __close_function,
-          size_t __multi_conversion_minimum_byte_size) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+cnc_open_err cnc_registry_add_multi_multimin(cnc_conversion_registry* __registry,
+     const ztd_char_t* __from, const ztd_char_t* __to,
+     cnc_conversion_function* __multi_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function,
+     size_t __multi_conversion_minimum_byte_size) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @brief Adds a new conversion from the specified `__from` and `__to` names to the specified
@@ -792,12 +791,12 @@ cnc_open_err
 /// assume they are the empty string (and use the default name in that case).
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
-cnc_open_err
-     cnc_registry_add_single_c8(cnc_conversion_registry* __registry, const ztd_char8_t* __from,
-          const ztd_char8_t* __to, cnc_conversion_function* __single_conversion_function,
-          cnc_state_is_complete_function* __state_is_complete_function,
-          cnc_open_function* __open_function, cnc_close_function* __close_function)
-          ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+cnc_open_err cnc_registry_add_single_c8(cnc_conversion_registry* __registry,
+     const ztd_char8_t* __from, const ztd_char8_t* __to,
+     cnc_conversion_function* __single_conversion_function,
+     cnc_state_is_complete_function* __state_is_complete_function,
+     cnc_open_function* __open_function, cnc_close_function* __close_function)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 //////
 /// @copydoc cnc_registry_add_single_c8

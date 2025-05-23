@@ -41,12 +41,19 @@ ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
 cnc_mcerr cnc_c16nrtomcn(size_t* __p_maybe_dst_len, char** __p_maybe_dst, size_t* __p_src_len,
      const ztd_char16_t** __p_src, cnc_mcstate_t* __p_state) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
-	cnc_mcstate_t __substitute_state {};
-	if (__p_state == nullptr)
-		__p_state = &__substitute_state;
-	_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
-	     __p_state, decltype(&cnc_c16nrtoc32n), &cnc_c16nrtoc32n, decltype(&cnc_c32nrtomcn),
-	     &cnc_c32nrtomcn);
+	if constexpr ((sizeof(ztd_wchar_t) == sizeof(ztd_char16_t))
+	     && (alignof(ztd_wchar_t) == alignof(ztd_char16_t)) && ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)) {
+		return ::cnc_mwcnrtomcn(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+		     reinterpret_cast<const ztd_wchar_t**>(__p_src), __p_state);
+	}
+	else {
+		cnc_mcstate_t __substitute_state {};
+		if (__p_state == nullptr)
+			__p_state = &__substitute_state;
+		_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
+		     __p_state, decltype(&cnc_c16nrtoc32n), &cnc_c16nrtoc32n, decltype(&cnc_c32nrtomcn),
+		     &cnc_c32nrtomcn);
+	}
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
