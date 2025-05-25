@@ -33,6 +33,9 @@
 
 #include <ztd/cuneicode/mcstate.h>
 
+#include <cstdio>
+#include <cerrno>
+
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
 size_t cnc_fprint_str_mcn(FILE* __file, size_t __str_n, const char* __str)

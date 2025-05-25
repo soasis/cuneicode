@@ -131,14 +131,12 @@ cnc_mcerr cnc_mcnrtoc16n(size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst
 				     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
 			}
 		}
-		else {
-			cnc_mcstate_t __substitute_state {};
-			if (__p_state == nullptr)
-				__p_state = &__substitute_state;
-			_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
-			     __p_src, __p_state, decltype(&cnc_mcnrtoc32n), &cnc_mcnrtoc32n,
-			     decltype(&cnc_c32nrtoc16n), &cnc_c32nrtoc16n);
-		}
+		cnc_mcstate_t __substitute_state {};
+		if (__p_state == nullptr)
+			__p_state = &__substitute_state;
+		_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
+		     __p_state, decltype(&cnc_mcnrtoc32n), &cnc_mcnrtoc32n, decltype(&cnc_c32nrtoc16n),
+		     &cnc_c32nrtoc16n);
 	}
 }
 
