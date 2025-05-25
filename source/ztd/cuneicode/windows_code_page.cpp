@@ -173,7 +173,7 @@ cnc_mcerr cnc_mcnrtoc32n_windows_code_page(size_t* __p_maybe_dst_len, ztd_char32
 	const uint32_t __code_page_id             = cnc_mcstate_get_win32_code_page(__p_state);
 	const uint32_t __flags
 	     = ::ztd::__idk_detail::__windows::__multibyte_to_widechar_flags(__code_page_id);
-	for (; __input_read_size < __initial_src_len; ++__input_read_size) {
+	for (; __input_read_size <= __initial_src_len; ++__input_read_size) {
 		if (__input_read_size > CNC_MC_MAX) {
 			// can't do much else
 			return cnc_mcerr_invalid_sequence;

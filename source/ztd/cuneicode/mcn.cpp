@@ -22,7 +22,7 @@
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
+// See the License for the specific language governing 141 and
 // limitations under the License.
 //
 // ========================================================================= //
@@ -123,20 +123,22 @@ cnc_mcerr cnc_mcnrtoc16n(size_t* __p_maybe_dst_len, ztd_char16_t** __p_maybe_dst
 		return ::cnc_mcnrtomwcn(__p_maybe_dst_len, reinterpret_cast<ztd_wchar_t**>(__p_maybe_dst),
 		     __p_src_len, __p_src, __p_state);
 	}
-	else if constexpr ((sizeof(ztd_char_t) == sizeof(ztd_char8_t))
-	     && (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
-		if (ztdc_is_execution_encoding_utf8()) {
-			return ::cnc_c8nrtoc16n(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
-			     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
-		}
-	}
 	else {
-		cnc_mcstate_t __substitute_state {};
-		if (__p_state == nullptr)
-			__p_state = &__substitute_state;
-		_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len, __p_src,
-		     __p_state, decltype(&cnc_mcnrtoc32n), &cnc_mcnrtoc32n, decltype(&cnc_c32nrtoc16n),
-		     &cnc_c32nrtoc16n);
+		if constexpr ((sizeof(ztd_char_t) == sizeof(ztd_char8_t))
+		     && (alignof(ztd_char_t) == alignof(ztd_char8_t))) {
+			if (ztdc_is_execution_encoding_utf8()) {
+				return ::cnc_c8nrtoc16n(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+				     reinterpret_cast<const ztd_char8_t**>(__p_src), __p_state);
+			}
+		}
+		else {
+			cnc_mcstate_t __substitute_state {};
+			if (__p_state == nullptr)
+				__p_state = &__substitute_state;
+			_ZTDC_CUNEICODE_TRANSCODE_ONE_BODY(__p_maybe_dst_len, __p_maybe_dst, __p_src_len,
+			     __p_src, __p_state, decltype(&cnc_mcnrtoc32n), &cnc_mcnrtoc32n,
+			     decltype(&cnc_c32nrtoc16n), &cnc_c32nrtoc16n);
+		}
 	}
 }
 

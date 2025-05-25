@@ -14,8 +14,8 @@
 //
 // Apache License Version 2 Usage
 // Alternatively, this file may be used under the terms of Apache License
-// Version 2.0 (the "License", cnc_mcstate_t, cnc_mcstate_is_complete); you may not use this file
-// except in compliance with the License. You may obtain a copy of the License at
+// Version 2.0 (the "License"); you may not use this file except in compliance
+// with the License. You may obtain a copy of the License at
 //
 // https://www.apache.org/licenses/LICENSE-2.0
 //

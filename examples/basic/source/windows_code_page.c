@@ -27,8 +27,6 @@
 //
 // ========================================================================= //
 
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <ztd/cuneicode.h>
 
 #include <ztd/idk/size.h>
@@ -41,6 +39,9 @@
 #if ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)
 
 int main(int argc, char* argv[]) {
+	(void)argc;
+	(void)argv;
+
 	const char* const failed_conversion_result_title_str
 	     = "Conversion failed... \xF0\x9F\x98\xAD"; // UTF-8 bytes for 😭
 	const char* const success_conversion_result_title_str
@@ -53,7 +54,7 @@ int main(int argc, char* argv[]) {
 	(void)argv;
 	const ztd_char32_t input_data[]
 	     = U"ସମସ୍ତ ମନୁଷ୍ୟ ଜନ୍ମକାଳରୁ ସ୍ଧୀନ ଏବଂ ମର୍ଯ୍ୟାଦା ଓ ଅଧିକାରରେ ସମାନ. ସେମାନଙ୍କଠାରେ ବୁଦ୍ଧି "
-	       U"ଆଉ ବିବେକ ନିହିତ ଅଛି ଏବଂ ସେମାନଙ୍କୁ ପରସ୍ପର ପ୍ରତି ଭ୍ରାତୃତ୍ ମନୋଭାବରେ ବ୍ୟବହାର କରିବା ଉଚିତ୍";
+	       U"ଆଉ ବିବେକ ନିହିତ ଅଛି ଏବଂ ସେମାନଙ୍କୁ ପରସ୍ପର ପ୍ରତି ଭ୍ରାତୃତ୍ ମନୋଭାବରେ ବ୍ୟବହାର କରିବ ଉଚିତ୍";
 	const uint32_t win32_odia_code_page                                = 57007u;
 	char intermediate_data[ztdc_c_array_size(input_data) * CNC_MC_MAX] = { 0 };
 	cnc_mcstate_t intermediate_state                                   = { 0 };

@@ -246,7 +246,8 @@ if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 		set(SIMDUTF_TOOLS OFF)
 		set(SIMDUTF_SINGLE_HEADER OFF)
 		set(SIMDUTF_TESTS OFF)
-		set(BUILD_TESTING OFF)
+		set(OLD_BUILD_TESTING ${BUILD_TESTING})
+		set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 		FetchContent_Declare(
 			simdutf
 			GIT_REPOSITORY https://github.com/simdutf/simdutf
@@ -254,6 +255,7 @@ if (ZTD_CUNEICODE_EXAMPLES OR ZTD_CUNEICODE_SIMDUTF_SHARED)
 			GIT_TAG        master
 			EXCLUDE_FROM_ALL)
 		FetchContent_MakeAvailable(simdutf)
+		set(BUILD_TESTING ${OLD_BUILD_TESTING} CACHE BOOL "" FORCE)
 	endfunction()
 	simdutf_dependency_jail()
 	add_subdirectory(shared)

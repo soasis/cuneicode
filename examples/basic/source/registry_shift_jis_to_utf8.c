@@ -39,12 +39,13 @@
 int main(int argc, char* argv[]) {
 	(void)argc;
 	(void)argv;
+
 	cnc_conversion_registry* registry = NULL;
 	{
 		cnc_open_err err
 		     = cnc_registry_new(&registry, cnc_registry_options_default);
 		if (err != cnc_open_err_ok) {
-			fprintf(stderr, "[error] could not open a new registry");
+			fprintf(stderr, "[error] could not open a new registry conversion");
 			return 1;
 		}
 	}
@@ -55,7 +56,7 @@ int main(int argc, char* argv[]) {
 		cnc_open_err err = cnc_conv_new(
 		     registry, "shift-jis", "utf-8", &conversion, &conversion_info);
 		if (err != cnc_open_err_ok) {
-			fprintf(stderr, "[error] could not open a new registry");
+			fprintf(stderr, "[error] could not open a new registry conversion");
 			cnc_registry_delete(registry);
 			return 2;
 		}
