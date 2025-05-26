@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 
 #define CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE                         \
 	(((ZTD_CUNEICODE_INTERMEDIATE_BUFFER_SUGGESTED_BYTE_SIZE_I_) < CNC_MC_MAX) \

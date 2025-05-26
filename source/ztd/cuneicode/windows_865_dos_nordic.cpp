@@ -30,7 +30,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/windows_865_dos_nordic.h>
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 #include <ztd/cuneicode/detail/transcode.hpp>
 
 #include <ztd/encoding_tables/windows_865_dos_nordic.tables.hpp>

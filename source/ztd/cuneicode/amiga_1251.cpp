@@ -30,7 +30,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/amiga_1251.h>
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 #include <ztd/cuneicode/detail/transcode.hpp>
 
 #if 0

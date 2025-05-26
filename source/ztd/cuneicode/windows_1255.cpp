@@ -30,7 +30,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/windows_1255.h>
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 #include <ztd/cuneicode/detail/transcode.hpp>
 
 #include <ztd/encoding_tables/windows_1255.tables.hpp>

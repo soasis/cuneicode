@@ -30,7 +30,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/petscii_shifted.h>
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 #include <ztd/cuneicode/detail/always_complete.hpp>
 #include <ztd/cuneicode/detail/transcode.hpp>
 

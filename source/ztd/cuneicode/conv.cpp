@@ -31,7 +31,7 @@
 
 #include <ztd/cuneicode/conv.h>
 #include <ztd/cuneicode/mcchar.h>
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 #include <ztd/cuneicode/pivot_info.h>
 #include <ztd/cuneicode/mcchar_named.h>
 

@@ -30,7 +30,7 @@
 #include <ztd/cuneicode/version.h>
 
 #include <ztd/cuneicode/koi8_r.h>
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 #include <ztd/cuneicode/detail/transcode.hpp>
 
 #include <ztd/encoding_tables/koi8_r.tables.hpp>

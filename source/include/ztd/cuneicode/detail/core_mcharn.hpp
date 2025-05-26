@@ -287,7 +287,7 @@ namespace cnc {
 			BOOL __default_char_used = false;
 			CHAR __default_char      = '?';
 			auto __used_defaults
-			     = ::ztd::__idk_detail::__windows::__multibyte_to_widechar_used_char(
+			     = ::ztd::__idk_detail::__windows::__widechar_to_multibyte_used_char(
 			          ::ztd::__idk_detail::__windows::__code_page_active_thread, &__default_char,
 			          &__default_char_used);
 			const size_t __intermediate_size
@@ -300,6 +300,9 @@ namespace cnc {
 			          : INT_MAX);
 			for (size_t __intermediate_input_read = 1;
 			     __intermediate_input_read <= __intermediate_size; ++__intermediate_input_read) {
+				if (__intermediate_input_read > CNC_MWC_INPUT_MAX) {
+					break;
+				}
 				const int __win32_err = ::WideCharToMultiByte(
 				     ::ztd::__idk_detail::__windows::__code_page_active_thread,
 				     WC_ERR_INVALID_CHARS, __intermediate_output,
@@ -309,10 +312,11 @@ namespace cnc {
 					DWORD __last_win32_err = ::GetLastError();
 					if (__last_win32_err == ERROR_NO_UNICODE_TRANSLATION
 					     || __default_char_used) {
-						// we can break early: it was illegal stuff that can't translate
-						__p_src[0]     = __initial_src;
-						__p_src_len[0] = __initial_src_len;
-						return cnc_mcerr_invalid_sequence;
+						// loop around; we don't know if this is from a partial read (because
+						// of our
+						// artifical limitations) or because it's a genuine error. This is, of
+						// course, the problem with these crappy 1990s/2000s APIs.
+						continue;
 					}
 					else if (__last_win32_err == ERROR_INSUFFICIENT_BUFFER) {
 						if (!_IsUnbounded) {
@@ -326,6 +330,16 @@ namespace cnc {
 					}
 				}
 				else {
+					if (__win32_err == 1) {
+						// double-check if we were screwed over by the conversion: given
+						// Win32's undocumented fuckups around this, the only way to know if
+						// we actually failed is by checking if the single character we output
+						// is equal to a replacement character, and if the replacement
+						// character is NOT present in the original stream. The proper way to
+						// do this is to call GetCPInfoExW and then using a comparison to the
+						// MultiByte stream. But there's so many different things wrong with
+						// it, and it's hard to know.
+					}
 					// okay, it should be good
 					if (!_IsUnbounded) {
 						if (__p_maybe_dst_len[0] < static_cast<size_t>(__win32_err)) {
@@ -1093,7 +1107,7 @@ namespace cnc {
 			     = ::ztd::__idk_detail::__windows::__multibyte_to_widechar_flags(
 			          ztd::__idk_detail::__windows::__code_page_active_thread);
 			for (; __input_read_size <= __initial_src_len; ++__input_read_size) {
-				if (__input_read_size > CNC_MC_MAX) {
+				if (__input_read_size > CNC_MC_INPUT_MAX) {
 					// can't do much else
 					return cnc_mcerr_invalid_sequence;
 				}
@@ -1103,9 +1117,8 @@ namespace cnc {
 				     static_cast<int>(__input_read_size), __p_intermediate_output,
 				     static_cast<int>(__intermediate_output_initial_size));
 				if (__win32_err == 0) {
-					if (::GetLastError() == ERROR_NO_UNICODE_TRANSLATION) {
-						return cnc_mcerr_invalid_sequence;
-					}
+					// not sure; we have to keep looping, unfortunately.
+					continue;
 				}
 				else {
 					__intermediate_size = static_cast<size_t>(__win32_err);

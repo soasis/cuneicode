@@ -32,7 +32,7 @@
 #include <ztd/cuneicode/petscii.h>
 #include <ztd/cuneicode/petscii_shifted.h>
 #include <ztd/cuneicode/petscii_unshifted.h>
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 #include <ztd/cuneicode/detail/always_complete.hpp>
 #include <ztd/cuneicode/detail/transcode.hpp>
 

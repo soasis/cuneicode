@@ -34,7 +34,7 @@
 
 #include <ztd/cuneicode/version.h>
 
-#include <ztd/cuneicode/max_output.h>
+#include <ztd/cuneicode/max_input_output.h>
 #include <ztd/cuneicode/mcerr.h>
 #include <ztd/cuneicode/mcstate.h>
 #include <ztd/cuneicode/result.h>

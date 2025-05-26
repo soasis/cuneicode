@@ -27,8 +27,8 @@
 //
 // ========================================================================= //
 
-#ifndef ZTD_CUNEICODE_MAX_OUTPUT_H
-#define ZTD_CUNEICODE_MAX_OUTPUT_H
+#ifndef ZTD_CUNEICODE_MAX_INPUT_OUTPUT_H
+#define ZTD_CUNEICODE_MAX_INPUT_OUTPUT_H
 
 #pragma once
 
