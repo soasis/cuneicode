@@ -334,7 +334,7 @@ namespace cnc {
 				else {
 					if (::ztd::__idk_detail::__windows::
 					          __widechar_to_multibyte_conversion_failed(__intermediate_output,
-					               __intermediate_input_read, __win32_dst, __p_info)) {
+					               static_cast<size_t>(__win32_err), __win32_dst, __p_info)) {
 						return cnc_mcerr_invalid_sequence;
 					}
 					// okay, it should be good

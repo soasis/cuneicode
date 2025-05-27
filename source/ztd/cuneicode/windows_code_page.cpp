@@ -110,7 +110,8 @@ cnc_mcerr cnc_c32nrtomcn_windows_code_page(size_t* __p_maybe_dst_len, char** __p
 	}
 	else {
 		if (::ztd::__idk_detail::__windows::__widechar_to_multibyte_conversion_failed(
-		         __intermediate_output, __intermediate_size, __win32_dst, __p_info)) {
+		         __intermediate_output, static_cast<size_t>(__win32_err), __win32_dst,
+		         __p_info)) {
 			__p_src[0]     = __initial_src;
 			__p_src_len[0] = __initial_src_len;
 			return cnc_mcerr_invalid_sequence;
@@ -334,7 +335,7 @@ cnc_mcerr cnc_mwcnrtomcn_windows_code_page(size_t* __p_maybe_dst_len, char** __p
 		}
 		else {
 			if (::ztd::__idk_detail::__windows::__widechar_to_multibyte_conversion_failed(
-			         __initial_src, __input_read_size, __win32_dst, __p_info)) {
+			         __initial_src, static_cast<size_t>(__win32_err), __win32_dst, __p_info)) {
 				return cnc_mcerr_invalid_sequence;
 			}
 			if (!__is_unbounded) {
