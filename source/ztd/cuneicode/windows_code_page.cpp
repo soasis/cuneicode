@@ -176,21 +176,31 @@ cnc_mcerr cnc_mcnrtoc32n_windows_code_page(size_t* __p_maybe_dst_len, ztd_char32
 		     static_cast<DWORD>(__flags), __initial_src, static_cast<int>(__input_read_size),
 		     __p_intermediate_output, static_cast<int>(__intermediate_output_initial_size));
 		if (__win32_err == 0) {
-			DWORD __last_win32_err = ::GetLastError();
-			if (__last_win32_err == ERROR_NO_UNICODE_TRANSLATION) {
-				return cnc_mcerr_invalid_sequence;
-			}
+			// not sure; we have to keep looping, unfortunately.
+			continue;
 		}
 		else {
 			__intermediate_size = static_cast<size_t>(__win32_err);
 			break;
 		}
 	}
+	const bool __is_counting  = __p_maybe_dst == nullptr || __p_maybe_dst[0] == nullptr;
+	const bool __is_unbounded = __p_maybe_dst_len == nullptr;
 	const ztd_wchar_t* __p_intermediate_input = __intermediate_output;
-	cnc_mcerr __err = cnc_mwcnrtoc32n(__p_maybe_dst_len, __p_maybe_dst, &__intermediate_size,
-	     &__p_intermediate_input, __p_state);
-	if (__err != cnc_mcerr_ok) {
-		return __err;
+	ztd_char32_t* __initial_dst               = !__is_counting ? *__p_maybe_dst : nullptr;
+	size_t __initial_dst_len                  = !__is_unbounded ? *__p_maybe_dst_len : SIZE_MAX;
+	for (; __intermediate_size != 0;) {
+		cnc_mcerr __err = cnc_mwcnrtoc32n(__p_maybe_dst_len, __p_maybe_dst, &__intermediate_size,
+		     &__p_intermediate_input, __p_state);
+		if (__err != cnc_mcerr_ok) {
+			if (!__is_unbounded) {
+				__p_maybe_dst_len[0] = __initial_dst_len;
+			}
+			if (!__is_counting) {
+				__p_maybe_dst[0] = __initial_dst;
+			}
+			return __err;
+		}
 	}
 	__p_src[0] += __input_read_size;
 	__p_src_len[0] -= __input_read_size;

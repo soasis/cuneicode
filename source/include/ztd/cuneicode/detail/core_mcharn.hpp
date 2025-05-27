@@ -1125,14 +1125,26 @@ namespace cnc {
 					break;
 				}
 			}
-			const ztd_wchar_t* __p_intermediate_input = __intermediate_output;
-			cnc_mcerr __err
-			     = ::cnc::__cnc_detail::__c16nrtoc32n<_IsCounting, _IsUnbounded, false>(
-			          __p_maybe_dst_len, __p_maybe_dst, &__intermediate_size,
-			          reinterpret_cast<const ztd_char16_t**>(&__p_intermediate_input),
-			          __p_state);
-			if (__err != cnc_mcerr_ok) {
-				return __err;
+			const ztd_char16_t* __p_intermediate_input
+			     = reinterpret_cast<const ztd_char16_t*>(&__intermediate_output[0]);
+			ztd_char32_t* __initial_dst = !_IsCounting ? *__p_maybe_dst : nullptr;
+			size_t __initial_dst_len    = !_IsUnbounded ? *__p_maybe_dst_len : SIZE_MAX;
+			for (; __intermediate_size != 0;) {
+				// we may end up with multiple UTF-16 characters out of MultiBytetoWideChar and
+				// all that
+				cnc_mcerr __err
+				     = ::cnc::__cnc_detail::__c16nrtoc32n<_IsCounting, _IsUnbounded, false>(
+				          __p_maybe_dst_len, __p_maybe_dst, &__intermediate_size,
+				          &__p_intermediate_input, __p_state);
+				if (__err != cnc_mcerr_ok) {
+					if (!_IsUnbounded) {
+						__p_maybe_dst_len[0] = __initial_dst_len;
+					}
+					if (!_IsCounting) {
+						__p_maybe_dst[0] = __initial_dst;
+					}
+					return __err;
+				}
 			}
 			__p_src[0] += __input_read_size;
 			__p_src_len[0] -= __input_read_size;
