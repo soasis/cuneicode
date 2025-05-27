@@ -162,10 +162,15 @@ typedef union cnc_mcstate_t {
 		uint32_t __code_page;
 		//////
 		/// @brief Private, do not access.
+		void* __code_page_info;
+		//////
+		/// @brief Private, do not access.
 		union {
-			ztd_wchar_t __wide_accumulator[(sizeof(ztd_mbstate_t) * 2 - sizeof(uint32_t))
+			ztd_wchar_t __wide_accumulator[(sizeof(ztd_mbstate_t) * 2
+			                                    - (sizeof(uint32_t) + sizeof(void*)))
 			     / sizeof(ztd_wchar_t)];
-			char __narrow_accumulator[(sizeof(ztd_mbstate_t) * 2 - sizeof(uint32_t))
+			char __narrow_accumulator[(sizeof(ztd_mbstate_t) * 2
+			                               - (sizeof(uint32_t) + sizeof(void*)))
 			     / sizeof(char)];
 		};
 	} __win32_code_page;

@@ -89,6 +89,7 @@ cnc_mcerr cnc_c32nrtomcn_windows_code_page(size_t* __p_maybe_dst_len, char** __p
 	                                                    ? INT_MAX
 	                                                    : static_cast<int>(*__p_maybe_dst_len))
 	                                        : INT_MAX);
+	CPINFOEXW* __p_info   = (CPINFOEXW*)__p_state->__win32_code_page.__code_page_info;
 	const int __win32_err = ::WideCharToMultiByte(static_cast<UINT>(__code_page_id),
 	     __used_defaults.__flags, __intermediate_output, static_cast<int>(__intermediate_size),
 	     __win32_dst, __win32_dst_len, __used_defaults.__p_default_char,
@@ -108,6 +109,12 @@ cnc_mcerr cnc_c32nrtomcn_windows_code_page(size_t* __p_maybe_dst_len, char** __p
 		}
 	}
 	else {
+		if (::ztd::__idk_detail::__windows::__widechar_to_multibyte_conversion_failed(
+		         __intermediate_output, __intermediate_size, __win32_dst, __p_info)) {
+			__p_src[0]     = __initial_src;
+			__p_src_len[0] = __initial_src_len;
+			return cnc_mcerr_invalid_sequence;
+		}
 		// okay, it should be good
 		if (!__is_unbounded) {
 			if (__p_maybe_dst_len[0] < static_cast<size_t>(__win32_err)) {
@@ -167,6 +174,7 @@ cnc_mcerr cnc_mcnrtoc32n_windows_code_page(size_t* __p_maybe_dst_len, ztd_char32
 	const uint32_t __code_page_id             = cnc_mcstate_get_win32_code_page(__p_state);
 	const uint32_t __flags
 	     = ::ztd::__idk_detail::__windows::__multibyte_to_widechar_flags(__code_page_id);
+	CPINFOEXW* __p_info = (CPINFOEXW*)__p_state->__win32_code_page.__code_page_info;
 	for (; __input_read_size <= __initial_src_len; ++__input_read_size) {
 		if (__input_read_size > CNC_MC_INPUT_MAX) {
 			// can't do much else
@@ -180,6 +188,10 @@ cnc_mcerr cnc_mcnrtoc32n_windows_code_page(size_t* __p_maybe_dst_len, ztd_char32
 			continue;
 		}
 		else {
+			if (::ztd::__idk_detail::__windows::__multibyte_to_widechar_conversion_failed(
+			         __input_read_size, __initial_src, __p_intermediate_output, __p_info)) {
+				return cnc_mcerr_invalid_sequence;
+			}
 			__intermediate_size = static_cast<size_t>(__win32_err);
 			break;
 		}
@@ -286,7 +298,7 @@ cnc_mcerr cnc_mwcnrtomcn_windows_code_page(size_t* __p_maybe_dst_len, char** __p
 	const ztd_wchar_t* __initial_src = *__p_src;
 	const size_t __initial_src_len   = *__p_src_len;
 	char __win32_blackhole_buffer[CNC_MC_MAX];
-	char* __dst = __is_counting ? __win32_blackhole_buffer : *__p_maybe_dst;
+	char* __win32_dst = __is_counting ? __win32_blackhole_buffer : *__p_maybe_dst;
 	const size_t __dst_size
 	     = __is_unbounded ? ztdc_c_array_size(__win32_blackhole_buffer) : *__p_maybe_dst_len;
 	const uint32_t __code_page_id = cnc_mcstate_get_win32_code_page(__p_state);
@@ -294,22 +306,26 @@ cnc_mcerr cnc_mwcnrtomcn_windows_code_page(size_t* __p_maybe_dst_len, char** __p
 	CHAR __default_char           = '?';
 	auto __used_defaults = ::ztd::__idk_detail::__windows::__widechar_to_multibyte_used_char(
 	     __code_page_id, &__default_char, &__default_char_used);
+	CPINFOEXW* __p_info = (CPINFOEXW*)__p_state->__win32_code_page.__code_page_info;
 	for (size_t __input_read_size = 1; __input_read_size <= __initial_src_len;
 	     ++__input_read_size) {
 		if (__input_read_size > CNC_MWC_INPUT_MAX) {
 			break;
 		}
 		const int __win32_err = ::WideCharToMultiByte(static_cast<UINT>(__code_page_id),
-		     __used_defaults.__flags, __initial_src, static_cast<int>(__input_read_size), __dst,
-		     static_cast<int>(__dst_size), __used_defaults.__p_default_char,
+		     __used_defaults.__flags, __initial_src, static_cast<int>(__input_read_size),
+		     __win32_dst, static_cast<int>(__dst_size), __used_defaults.__p_default_char,
 		     __used_defaults.__p_default_char_used);
 		if (__win32_err == 0) {
 			DWORD __last_win32_err = ::GetLastError();
-			if (__last_win32_err == ERROR_NO_UNICODE_TRANSLATION || __default_char_used) {
+			if (__last_win32_err == ERROR_NO_UNICODE_TRANSLATION) {
 				// loop around; we don't know if this is from a partial read (because of our
 				// artifical limitations) or because it's a genuine error. This is, of course,
 				// the problem with these crappy 1990s/2000s APIs.
 				continue;
+			}
+			else if (__default_char_used) {
+				return cnc_mcerr_invalid_sequence;
 			}
 			else if (!__is_unbounded && __last_win32_err == ERROR_INSUFFICIENT_BUFFER) {
 				return cnc_mcerr_insufficient_output;
@@ -317,6 +333,10 @@ cnc_mcerr cnc_mwcnrtomcn_windows_code_page(size_t* __p_maybe_dst_len, char** __p
 			// if it's not one of those, then it's safe to loop around and do it again...
 		}
 		else {
+			if (::ztd::__idk_detail::__windows::__widechar_to_multibyte_conversion_failed(
+			         __initial_src, __input_read_size, __win32_dst, __p_info)) {
+				return cnc_mcerr_invalid_sequence;
+			}
 			if (!__is_unbounded) {
 				if (__p_maybe_dst_len[0] < static_cast<size_t>(__win32_err)) {
 					return cnc_mcerr_insufficient_output;
@@ -375,6 +395,7 @@ cnc_mcerr cnc_mcnrtomwcn_windows_code_page(size_t* __p_maybe_dst_len, ztd_wchar_
 	const uint32_t __code_page_id = cnc_mcstate_get_win32_code_page(__p_state);
 	uint32_t __flags
 	     = ::ztd::__idk_detail::__windows::__multibyte_to_widechar_flags(__code_page_id);
+	CPINFOEXW* __p_info = (CPINFOEXW*)__p_state->__win32_code_page.__code_page_info;
 	for (size_t __input_read_size = 1; __input_read_size <= __initial_src_len;
 	     ++__input_read_size) {
 		if (__input_read_size > CNC_MC_INPUT_MAX) {
@@ -391,6 +412,10 @@ cnc_mcerr cnc_mcnrtomwcn_windows_code_page(size_t* __p_maybe_dst_len, ztd_wchar_
 			continue;
 		}
 		else {
+			if (::ztd::__idk_detail::__windows::__multibyte_to_widechar_conversion_failed(
+			         __input_read_size, __initial_src, __dst, __p_info)) {
+				return cnc_mcerr_invalid_sequence;
+			}
 			if (!__is_unbounded) {
 				if (__p_maybe_dst_len[0] < static_cast<size_t>(__win32_err)) {
 					return cnc_mcerr_insufficient_output;

@@ -298,6 +298,7 @@ namespace cnc {
 			          ? (*__p_maybe_dst_len > static_cast<size_t>(INT_MAX) ? INT_MAX
 			                                                               : *__p_maybe_dst_len)
 			          : INT_MAX);
+			CPINFOEXW* __p_info = (CPINFOEXW*)__p_state->__win32_code_page.__code_page_info;
 			for (size_t __intermediate_input_read = 1;
 			     __intermediate_input_read <= __intermediate_size; ++__intermediate_input_read) {
 				if (__intermediate_input_read > CNC_MWC_INPUT_MAX) {
@@ -305,21 +306,22 @@ namespace cnc {
 				}
 				const int __win32_err = ::WideCharToMultiByte(
 				     ::ztd::__idk_detail::__windows::__code_page_active_thread,
-				     WC_ERR_INVALID_CHARS, __intermediate_output,
+				     __used_defaults.__flags, __intermediate_output,
 				     static_cast<int>(__intermediate_input_read), __win32_dst, __win32_dst_len,
 				     __used_defaults.__p_default_char, __used_defaults.__p_default_char_used);
 				if (__win32_err == 0) {
 					DWORD __last_win32_err = ::GetLastError();
-					if (__last_win32_err == ERROR_NO_UNICODE_TRANSLATION
-					     || __default_char_used) {
+					if (__last_win32_err == ERROR_NO_UNICODE_TRANSLATION) {
 						// loop around; we don't know if this is from a partial read (because
-						// of our
-						// artifical limitations) or because it's a genuine error. This is, of
-						// course, the problem with these crappy 1990s/2000s APIs.
+						// of ourartifical limitations) or because it's a genuine error. This
+						// is, of course, the problem with these crappy 1990s/2000s APIs.
 						continue;
 					}
+					else if (__default_char_used) {
+						return cnc_mcerr_invalid_sequence;
+					}
 					else if (__last_win32_err == ERROR_INSUFFICIENT_BUFFER) {
-						if (!_IsUnbounded) {
+						if constexpr (!_IsUnbounded) {
 							__p_src[0]     = __initial_src;
 							__p_src_len[0] = __initial_src_len;
 							return cnc_mcerr_insufficient_output;
@@ -330,15 +332,10 @@ namespace cnc {
 					}
 				}
 				else {
-					if (__win32_err == 1) {
-						// double-check if we were screwed over by the conversion: given
-						// Win32's undocumented fuckups around this, the only way to know if
-						// we actually failed is by checking if the single character we output
-						// is equal to a replacement character, and if the replacement
-						// character is NOT present in the original stream. The proper way to
-						// do this is to call GetCPInfoExW and then using a comparison to the
-						// MultiByte stream. But there's so many different things wrong with
-						// it, and it's hard to know.
+					if (::ztd::__idk_detail::__windows::
+					          __widechar_to_multibyte_conversion_failed(__intermediate_output,
+					               __intermediate_input_read, __win32_dst, __p_info)) {
+						return cnc_mcerr_invalid_sequence;
 					}
 					// okay, it should be good
 					if (!_IsUnbounded) {
@@ -1106,6 +1103,7 @@ namespace cnc {
 			const uint32_t __flags
 			     = ::ztd::__idk_detail::__windows::__multibyte_to_widechar_flags(
 			          ztd::__idk_detail::__windows::__code_page_active_thread);
+			CPINFOEXW* __p_info = (CPINFOEXW*)__p_state->__win32_code_page.__code_page_info;
 			for (; __input_read_size <= __initial_src_len; ++__input_read_size) {
 				if (__input_read_size > CNC_MC_INPUT_MAX) {
 					// can't do much else
@@ -1121,6 +1119,11 @@ namespace cnc {
 					continue;
 				}
 				else {
+					if (::ztd::__idk_detail::__windows::
+					          __multibyte_to_widechar_conversion_failed(__input_read_size,
+					               __initial_src, __p_intermediate_output, __p_info)) {
+						return cnc_mcerr_invalid_sequence;
+					}
 					__intermediate_size = static_cast<size_t>(__win32_err);
 					break;
 				}
