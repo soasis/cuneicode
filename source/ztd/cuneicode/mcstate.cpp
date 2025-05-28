@@ -66,12 +66,14 @@ void cnc_mcstate_set_win32_code_page(cnc_mcstate_t* __state, uint32_t __win32_co
 	}
 	__state->__win32_code_page.__indicator = __mc_s_i_win32_code_page;
 	__state->__win32_code_page.__code_page = __win32_code_page_id;
+#if ZTD_IS_ON(ZTD_PLATFORM_WINDOWS)
 	CPINFOEXW* __codepage_info
 	     = static_cast<CPINFOEXW*>(__state->__win32_code_page.__code_page_info);
 	if (::ztd::__idk_detail::__windows::__get_codepage_descirptor(
 	         __win32_code_page_id, &__codepage_info)) {
 		__state->__win32_code_page.__code_page_info = static_cast<void*>(__codepage_info);
 	}
+#endif
 }
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
