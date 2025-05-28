@@ -53,16 +53,17 @@ int main(int argc, char* argv[]) {
 	     = strlen(failed_conversion_result_title_str);
 	(void)argc;
 	(void)argv;
-	const ztd_char32_t input_data[]
-	     = U"ଜାତି, ଭାଷା ଓ ସାହିତ୍ୟର ପରିଚୟ ଏବଂ ସ୍ୱାଭିମାନ ଏକ ସଂଗେ ଯୋଡା";
-	const uint32_t win32_odia_code_page                                = 57007u;
-	char intermediate_data[ztdc_c_array_size(input_data) * CNC_MC_MAX] = { 0 };
-	cnc_mcstate_t intermediate_state                                   = { 0 };
+	const ztd_char32_t input_data[]     = U"ଜତି, ଭଷ ଓ ସାହିତ୍ୟର ପରିଚୟ ଏବଂ ଏକ ସଂଗେ ଯୋଡ";
+	const uint32_t win32_odia_code_page = 57007u;
 
+	cnc_mcstate_t intermediate_state = { 0 };
 	cnc_mcstate_set_win32_code_page(&intermediate_state, win32_odia_code_page);
+
 	const size_t starting_input_size = ztdc_c_string_array_size(input_data);
 	size_t input_size                = starting_input_size;
 	const ztd_char32_t* input        = input_data;
+
+	char intermediate_data[ztdc_c_array_size(input_data) * CNC_MC_MAX] = { 0 };
 	const size_t starting_intermediate_size
 	     = ztdc_c_array_size(intermediate_data);
 	size_t intermediate_size = starting_intermediate_size;
@@ -146,7 +147,7 @@ int main(int argc, char* argv[]) {
 	printf("Output conversion result:\n");
 	cnc_print_str_c32n(output_written, output_data);
 	printf("\nOriginal Input:\n");
-	cnc_print_str_c32n(ztdc_c_array_size(input_data), input_data);
+	cnc_print_str_c32n(ztdc_c_string_array_size(input_data), input_data);
 	printf("\n\n");
 
 	return 0;

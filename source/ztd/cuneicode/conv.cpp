@@ -441,22 +441,28 @@ namespace {
 		return cnc_open_err_ok;
 	}
 
-	static inline cnc_mcerr __intermediary_multi_conversion(cnc_conversion*,
+	static inline cnc_mcerr __intermediary_multi_conversion(cnc_conversion* __conv,
 	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
 	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
 	     void* __state) noexcept {
 		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
+		cnc_pivot_info __empty_pivot_info      = { 0, nullptr, cnc_mcerr_ok };
+		__intermediary_states __states         = __intermediary_state(__state);
+#if 0
+		/* We cannot use this as-is; we'd need to do something more sophisticated to "drill down"    \
+		and get an accurate conversion count for these default conversion styles after performing \
+		a (failed) second half of the bulk conversion. We dot he single-style conversion here,    \
+		instead. */
 		constexpr const size_t __intermediate_pivot_buffer_max
-		     = CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
+		= CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
 		unsigned char __intermediate_pivot_buffer[__intermediate_pivot_buffer_max] {};
 		cnc_pivot_info __backup_pivot_info
-		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, cnc_mcerr_ok };
+			= { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, cnc_mcerr_ok };
 		cnc_pivot_info* __target_p_pivot_info
-		     = !__using_provided_pivot_info || __p_pivot_info->bytes == nullptr
-		     ? &__backup_pivot_info
-		     : __p_pivot_info;
-		cnc_pivot_info __empty_pivot_info = { 0, nullptr, cnc_mcerr_ok };
-		__intermediary_states __states    = __intermediary_state(__state);
+			= !__using_provided_pivot_info || __p_pivot_info->bytes == nullptr
+			? &__backup_pivot_info
+			: __p_pivot_info;
+		
 		for (;;) {
 			size_t __start_bytes_in_count         = *__p_bytes_in_count;
 			size_t __intermediate_bytes_out_count = __target_p_pivot_info->bytes_size;
@@ -487,8 +493,8 @@ namespace {
 			if (__link0res != cnc_mcerr_ok && __link0res != cnc_mcerr_insufficient_output) {
 				// something bad happened: revert potential writes to the
 				// progress variables
-				*__p_bytes_in_count = __start_bytes_in_count;
-				*__p_bytes_in       = __start_bytes_in;
+				__p_bytes_in_count[0] = __start_bytes_in_count;
+				__p_bytes_in[0]       = __start_bytes_in;
 				if (__using_provided_pivot_info) {
 					__p_pivot_info->error = __link0res;
 				}
@@ -510,20 +516,11 @@ namespace {
 				return __link1res;
 			}
 		}
-
 		if (__using_provided_pivot_info) {
 			__p_pivot_info->error = cnc_mcerr_ok;
 		}
-		return cnc_mcerr_ok;
-	}
-
-	static inline cnc_mcerr __intermediary_single_conversion(cnc_conversion*,
-	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
-	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
-	     void* __state) noexcept {
-		const bool __using_provided_pivot_info = __p_pivot_info != nullptr;
-		const size_t __intermediate_pivot_buffer_max
-		     = CNC_DEFAULT_CONVERSION_INTERMEDIATE_BUFFER_SIZE;
+#else
+		constexpr const size_t __intermediate_pivot_buffer_max = CNC_MC_MAX * 2;
 		unsigned char __intermediate_pivot_buffer[__intermediate_pivot_buffer_max] {};
 		cnc_pivot_info __backup_pivot_info
 		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, cnc_mcerr_ok };
@@ -531,10 +528,72 @@ namespace {
 		     = !__using_provided_pivot_info || __p_pivot_info->bytes == nullptr
 		     ? &__backup_pivot_info
 		     : __p_pivot_info;
-		cnc_pivot_info __empty_pivot_info                      = { 0, nullptr, cnc_mcerr_ok };
-		__intermediary_states __states                         = __intermediary_state(__state);
-		[[maybe_unused]] size_t __start_bytes_in_count         = *__p_bytes_in_count;
-		[[maybe_unused]] const unsigned char* __start_bytes_in = *__p_bytes_in;
+
+		for (;;) {
+			size_t __intermediate_bytes_out_count         = __target_p_pivot_info->bytes_size;
+			unsigned char* __intermediate_bytes_out       = __target_p_pivot_info->bytes;
+			const size_t __initial_bytes_in_count         = __p_bytes_in_count[0];
+			const unsigned char* const __initial_bytes_in = __p_bytes_in[0];
+			cnc_mcerr __link0res
+			     = __states.__intermediary_state->__link0.__single_conversion_function(
+			          &__states.__intermediary_state->__link0, &__intermediate_bytes_out_count,
+			          &__intermediate_bytes_out, __p_bytes_in_count, __p_bytes_in,
+			          &__empty_pivot_info, __states.__link0_state);
+			if (__link0res != cnc_mcerr_ok) {
+				if (__using_provided_pivot_info) {
+					__p_pivot_info->error = __link0res;
+				}
+				return __link0res;
+			}
+			if (__using_provided_pivot_info) {
+				__p_pivot_info->error = cnc_mcerr_ok;
+			}
+			size_t __intermediate_bytes_in_count
+			     = __target_p_pivot_info->bytes_size - __intermediate_bytes_out_count;
+			const unsigned char* __intermediate_bytes_in = __target_p_pivot_info->bytes;
+			cnc_mcerr __link1res
+			     = __states.__intermediary_state->__link1.__single_conversion_function(
+			          &__states.__intermediary_state->__link1, __p_bytes_out_count,
+			          __p_bytes_out, &__intermediate_bytes_in_count, &__intermediate_bytes_in,
+			          &__empty_pivot_info, __states.__link1_state);
+			if (__link1res != cnc_mcerr_ok) {
+				// revert any changes
+				__p_bytes_in_count[0] = __initial_bytes_in_count;
+				__p_bytes_in[0]       = __initial_bytes_in;
+				return __link1res;
+			}
+			if (*__p_bytes_in_count == 0) {
+				if (!__states.__intermediary_state->__link0.__state_is_complete_function(
+				         __conv, __states.__link0_state)) {
+					continue;
+				}
+				if (!__states.__intermediary_state->__link1.__state_is_complete_function(
+				         __conv, __states.__link1_state)) {
+					continue;
+				}
+				// we are done, then
+				break;
+			}
+		}
+#endif
+		return cnc_mcerr_ok;
+	}
+
+	static inline cnc_mcerr __intermediary_single_conversion(cnc_conversion*,
+	     size_t* __p_bytes_out_count, unsigned char** __p_bytes_out, size_t* __p_bytes_in_count,
+	     const unsigned char** __p_bytes_in, cnc_pivot_info* __p_pivot_info,
+	     void* __state) noexcept {
+		const bool __using_provided_pivot_info       = __p_pivot_info != nullptr;
+		const size_t __intermediate_pivot_buffer_max = CNC_MC_MAX * 2;
+		unsigned char __intermediate_pivot_buffer[__intermediate_pivot_buffer_max] {};
+		cnc_pivot_info __backup_pivot_info
+		     = { __intermediate_pivot_buffer_max, __intermediate_pivot_buffer, cnc_mcerr_ok };
+		cnc_pivot_info* __target_p_pivot_info
+		     = !__using_provided_pivot_info || __p_pivot_info->bytes == nullptr
+		     ? &__backup_pivot_info
+		     : __p_pivot_info;
+		cnc_pivot_info __empty_pivot_info       = { 0, nullptr, cnc_mcerr_ok };
+		__intermediary_states __states          = __intermediary_state(__state);
 		size_t __intermediate_bytes_out_count   = __target_p_pivot_info->bytes_size;
 		unsigned char* __intermediate_bytes_out = __target_p_pivot_info->bytes;
 		cnc_mcerr __link0res

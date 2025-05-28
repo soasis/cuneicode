@@ -106,8 +106,7 @@ int main(int argc, char* argv[]) {
 	const size_t failed_conversion_result_title_str_size
 	     = strlen(failed_conversion_result_title_str);
 
-	const ztd_char8_t input_data[]
-	     = u8"ଜାତି, ଭାଷା ଓ ସାହିତ୍ୟର ପରିଚୟ ଏବଂ ସ୍ୱାଭିମାନ ଏକ ସଂଗେ ଯୋଡା";
+	const ztd_char32_t input_data[] = U"ଜତି, ଭଷ ଓ ସାହିତ୍ୟର ପରିଚୟ ଏବଂ ଏକ ସଂଗେ ଯୋଡ";
 
 	char intermediate_data[ztdc_c_array_size(input_data) * CNC_MC_MAX] = { 0 };
 	const size_t starting_input_byte_size = sizeof(input_data);
@@ -206,7 +205,7 @@ int main(int argc, char* argv[]) {
 	printf("Output conversion result:\n");
 	cnc_print_str_c8n(output_bytes_written / sizeof(*output_data), output_data);
 	printf("\nOriginal Input:\n");
-	cnc_print_str_c8n(ztdc_c_array_size(input_data), input_data);
+	cnc_print_str_c8n(ztdc_c_string_array_size(input_data), input_data);
 	printf("\n\n");
 
 	cnc_conv_delete(conversion);
