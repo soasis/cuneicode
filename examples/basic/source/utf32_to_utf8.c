@@ -28,6 +28,7 @@
 // ========================================================================= //
 
 #include <ztd/cuneicode.h>
+#include <ztd/cuneicode/io.h>
 
 #include <ztd/idk/size.h>
 
@@ -69,10 +70,11 @@ int main(int argc, char* argv[]) {
 	     (size_t)(input_read), (size_t)(sizeof(*input) * CHAR_BIT),
 	     (size_t)(output_written), (size_t)(sizeof(*output) * CHAR_BIT));
 	fprintf(stdout, "%s Conversion Result:\n", has_err ? "Partial" : "Complete");
-	fwrite(output_data, sizeof(*output_data), output_written, stdout);
+	// print as UTF-8
+	cnc_print_str_mcn_utf8(output_size, output_data);
 	// the stream (may be) line-buffered, so make sure an extra "\n" is written
 	// out this is actually critical for some forms of stdout/stderr mirrors; they
 	// won't show the last line even if you manually call fflush(…) !
-	fwrite("\n", sizeof(char), 1, stdout);
+	fprintf(stdout, "\n");
 	return has_err ? 1 : 0;
 }

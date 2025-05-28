@@ -66,6 +66,20 @@ size_t cnc_print_str_mc(const char* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+size_t cnc_fprint_str_mcn_utf8(FILE* __file, size_t __str_n, const char* __str)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+size_t cnc_fprint_str_mc_utf8(FILE* __file, const char* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+size_t cnc_print_str_mcn_utf8(size_t __str_n, const char* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+size_t cnc_print_str_mc_utf8(const char* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
+
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
 size_t cnc_fprint_str_mwcn(FILE* __file, size_t __str_n, const ztd_wchar_t* __str)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX);
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
@@ -122,13 +136,14 @@ size_t cnc_print_str_c32(const ztd_char32_t* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX)
 
 ZTD_EXTERN_C_CLOSE_I_
 
-#define cnc_fprint_strn(_FILE, _STR_SIZE, _STR)                                           \
-	_ZTDC_CASCADING_GENERIC(char, cnc_fprint_str_mcn(_FILE, _STR), ztd_wchar_t,          \
-	     cnc_fprint_str_mwcn(_FILE, _STR), ztd_char8_t, cnc_fprint_str_c8n(_FILE, _STR), \
-	     ztd_char16_t, cnc_fprint_str_c16n(_FILE, _STR), ztd_char32_t,                   \
-	     cnc_fprint_str_c32n(_FILE, _STR))
+#define cnc_fprint_strn(_FILE, _STR_SIZE, _STR)                                                    \
+	_ZTDC_CASCADING_GENERIC(*_STR, char, cnc_fprint_str_mcn(_FILE, _STR_SIZE, _STR), ztd_wchar_t, \
+	     cnc_fprint_str_mwcn(_FILE, _STR_SIZE, _STR), ztd_char8_t,                                \
+	     cnc_fprint_str_c8n(_FILE, _STR_SIZE, _STR), ztd_char16_t,                                \
+	     cnc_fprint_str_c16n(_FILE, _STR_SIZE, _STR), ztd_char32_t,                               \
+	     cnc_fprint_str_c32n(_FILE, _STR_SIZE, _STR))
 #define cnc_fprint_str(_FILE, _STR)                                                     \
-	_ZTDC_CASCADING_GENERIC(char, cnc_fprint_str_mc(_FILE, _STR), ztd_wchar_t,         \
+	_ZTDC_CASCADING_GENERIC(*_STR, char, cnc_fprint_str_mc(_FILE, _STR), ztd_wchar_t,  \
 	     cnc_fprint_str_mwc(_FILE, _STR), ztd_char8_t, cnc_fprint_str_c8(_FILE, _STR), \
 	     ztd_char16_t, cnc_fprint_str_c16(_FILE, _STR), ztd_char32_t,                  \
 	     cnc_fprint_str_c32(_FILE, _STR))

@@ -106,13 +106,9 @@ int main(int argc, char* argv[]) {
 	const size_t failed_conversion_result_title_str_size
 	     = strlen(failed_conversion_result_title_str);
 
-#if 0
 	const ztd_char8_t input_data[]
-	     = u8"ସମସ୍ତ ମନୁଷ୍ୟ ଜନ୍ମକାଳରୁ ସ୍ଧୀନ ଏବଂ ମର୍ଯ୍ୟାଦା ଓ ଅଧିକାରରେ ସମାନ. ସେମାନଙ୍କଠାରେ ବୁଦ୍ଧି "
-	       u8"ଆଉ ବିବେକ ନିହିତ ଅଛି ଏବଂ ସେମାନଙ୍କୁ ପରସ୍ପର ପ୍ରତି ଭ୍ରାତୃତ୍ ମନୋଭାବରେ ବ୍ୟବହାର କରିବ ଉଚିତ୍";
-#else
-	const ztd_char8_t input_data[] = u8"\0\0\0";
-#endif
+	     = u8"ଜାତି, ଭାଷା ଓ ସାହିତ୍ୟର ପରିଚୟ ଏବଂ ସ୍ୱାଭିମାନ ଏକ ସଂଗେ ଯୋଡା";
+
 	char intermediate_data[ztdc_c_array_size(input_data) * CNC_MC_MAX] = { 0 };
 	const size_t starting_input_byte_size = sizeof(input_data);
 	size_t input_byte_size                = starting_input_byte_size;
@@ -207,12 +203,11 @@ int main(int argc, char* argv[]) {
 		     (size_t)(sizeof(*output_data) * CHAR_BIT));
 	}
 
-	fprintf(stdout, "Output conversion result:\n");
-	cnc_fprint_str_c8n(stdout, ztdc_c_array_size(input_data), input_data);
-	fprintf(stdout, "\nOriginal Input:\n");
-	cnc_fprint_str_c8n(
-	     stdout, output_bytes_written / sizeof(*output_data), output_data);
-	fprintf(stdout, "\n\n");
+	printf("Output conversion result:\n");
+	cnc_print_str_c8n(output_bytes_written / sizeof(*output_data), output_data);
+	printf("\nOriginal Input:\n");
+	cnc_print_str_c8n(ztdc_c_array_size(input_data), input_data);
+	printf("\n\n");
 
 	cnc_conv_delete(conversion);
 	cnc_conv_delete(conversion_reverse);

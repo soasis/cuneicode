@@ -28,6 +28,7 @@
 // ========================================================================= //
 
 #include <ztd/cuneicode.h>
+#include <ztd/cuneicode/io.h>
 
 #include <ztd/idk/size.h>
 
@@ -53,8 +54,7 @@ int main(int argc, char* argv[]) {
 	(void)argc;
 	(void)argv;
 	const ztd_char32_t input_data[]
-	     = U"ସମସ୍ତ ମନୁଷ୍ୟ ଜନ୍ମକାଳରୁ ସ୍ଧୀନ ଏବଂ ମର୍ଯ୍ୟାଦା ଓ ଅଧିକାରରେ ସମାନ. ସେମାନଙ୍କଠାରେ ବୁଦ୍ଧି "
-	       U"ଆଉ ବିବେକ ନିହିତ ଅଛି ଏବଂ ସେମାନଙ୍କୁ ପରସ୍ପର ପ୍ରତି ଭ୍ରାତୃତ୍ ମନୋଭାବରେ ବ୍ୟବହାର କରିବ ଉଚିତ୍";
+	     = U"ଜାତି, ଭାଷା ଓ ସାହିତ୍ୟର ପରିଚୟ ଏବଂ ସ୍ୱାଭିମାନ ଏକ ସଂଗେ ଯୋଡା";
 	const uint32_t win32_odia_code_page                                = 57007u;
 	char intermediate_data[ztdc_c_array_size(input_data) * CNC_MC_MAX] = { 0 };
 	cnc_mcstate_t intermediate_state                                   = { 0 };
@@ -142,6 +142,12 @@ int main(int argc, char* argv[]) {
 		     (size_t)(sizeof(*intermediate) * CHAR_BIT),
 		     (size_t)(output_written), (size_t)(sizeof(*output) * CHAR_BIT));
 	}
+
+	printf("Output conversion result:\n");
+	cnc_print_str_c32n(output_written, output_data);
+	printf("\nOriginal Input:\n");
+	cnc_print_str_c32n(ztdc_c_array_size(input_data), input_data);
+	printf("\n\n");
 
 	return 0;
 }

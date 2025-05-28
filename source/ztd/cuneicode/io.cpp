@@ -80,6 +80,28 @@ size_t cnc_print_str_mc(const char* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 
 ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
 ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+size_t cnc_fprint_str_mcn_utf8(FILE* __file, size_t __str_n, const char* __str)
+     ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+	return cnc_fprint_str_c8n(__file, __str_n, (const ztd_char8_t*)__str);
+}
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+size_t cnc_fprint_str_mc_utf8(FILE* __file, const char* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+	return cnc_fprint_str_c8(__file, (const ztd_char8_t*)__str);
+}
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+size_t cnc_print_str_mcn_utf8(size_t __str_n, const char* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+	return cnc_fprint_str_c8n(stdout, __str_n, (const ztd_char8_t*)__str);
+}
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
+size_t cnc_print_str_mc_utf8(const char* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
+	return cnc_fprint_str_c8(stdout, (const ztd_char8_t*)__str);
+}
+
+ZTD_USE(ZTD_C_LANGUAGE_LINKAGE)
+ZTD_USE(ZTD_CUNEICODE_API_LINKAGE)
 size_t cnc_fprint_str_mwcn(FILE* __file, size_t __str_n, const ztd_wchar_t* __str)
      ZTD_USE(ZTD_NOEXCEPT_IF_CXX) {
 	// convert to UTF-8 first

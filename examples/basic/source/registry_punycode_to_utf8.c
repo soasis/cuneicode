@@ -28,6 +28,7 @@
 // ========================================================================= //
 
 #include <ztd/cuneicode.h>
+#include <ztd/cuneicode/io.h>
 
 #include <ztd/idk/size.h>
 
@@ -62,17 +63,15 @@ int main(int argc, char* argv[]) {
 	}
 
 	fprintf(stdout, "Opened a conversion from \"");
-	fwrite(conversion_info.from_code_data,
-	     sizeof(*conversion_info.from_code_data), conversion_info.from_code_size,
-	     stdout);
+	cnc_fprint_str_c8n(
+	     stdout, conversion_info.from_code_size, conversion_info.from_code_data);
 	fprintf(stdout, "\" to \"");
-	fwrite(conversion_info.to_code_data, sizeof(*conversion_info.to_code_data),
-	     conversion_info.to_code_size, stdout);
+	cnc_fprint_str_c8n(
+	     stdout, conversion_info.to_code_size, conversion_info.to_code_data);
 	if (conversion_info.is_indirect) {
 		fprintf(stdout, "\" (through \"");
-		fwrite(conversion_info.indirect_code_data,
-		     sizeof(*conversion_info.indirect_code_data),
-		     conversion_info.indirect_code_size, stdout);
+		cnc_fprint_str_c8n(stdout, conversion_info.indirect_code_size,
+		     conversion_info.indirect_code_data);
 		fprintf(stdout, "\")");
 	}
 	else {
@@ -109,7 +108,7 @@ int main(int argc, char* argv[]) {
 	     (size_t)(input_read), (size_t)(sizeof(*input) * CHAR_BIT),
 	     (size_t)(output_written), (size_t)(sizeof(*output) * CHAR_BIT));
 	fprintf(stdout, "%s Conversion Result:\n", has_err ? "Partial" : "Complete");
-	fwrite(output_data, sizeof(*output_data), output_written, stdout);
+	cnc_print_str_c8n(output_written, output_data);
 	// the stream (may be) line-buffered, so make sure an extra "\n" is written
 	// out this is actually critical for some forms of stdout/stderr mirrors; they
 	// won't show the last line even if you manually call fflush(…) !
