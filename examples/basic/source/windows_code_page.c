@@ -104,8 +104,8 @@ int main(int argc, char* argv[]) {
 		     (size_t)(sizeof(*intermediate) * CHAR_BIT));
 	}
 
-	ztd_char32_t output_data[ztdc_c_array_size(input_data)] = { 0 };
-	cnc_mcstate_t state                                     = { 0 };
+	ztd_char32_t output_data[ztdc_c_array_size(input_data) * 4] = { 0 };
+	cnc_mcstate_t state                                         = { 0 };
 	cnc_mcstate_set_win32_code_page(&state, win32_odia_code_page);
 	size_t intermediate_input_size    = intermediate_written;
 	const char* intermediate_input    = intermediate_data;

@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
 		     (size_t)(sizeof(*intermediate_data) * CHAR_BIT));
 	}
 
-	ztd_char8_t output_data[ztdc_c_array_size(input_data)] = { 0 };
+	ztd_char8_t output_data[ztdc_c_array_size(input_data) * 4] = { 0 };
 	size_t intermediate_input_byte_size = intermediate_bytes_written;
 	const unsigned char* intermediate_input_bytes
 	     = (const unsigned char*)intermediate_data;
