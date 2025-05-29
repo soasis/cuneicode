@@ -203,7 +203,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	printf("Output conversion result:\n");
-	cnc_print_str_c32n(output_bytes_written / sizeof(*output_data), output_data);
+	cnc_print_str_c32n(output_bytes_written / sizeof(ztd_char32_t),
+	     (const ztd_char32_t*)(&output_data[0]));
 	printf("\nOriginal Input:\n");
 	cnc_print_str_c32n(ztdc_c_string_array_size(input_data), input_data);
 	printf("\n\n");
