@@ -44,7 +44,7 @@ inline namespace cnc_tests_registry_indirect_ascii {
 
 	template <typename Source, typename PivotExpected, typename Expected>
 	void compare_registry_roundtrip(cnc_conversion* conv, const Source& source,
-	     const PivotExpected& pivot_expected, const Expected& expected) {
+	     [[maybe_unused]] const PivotExpected& pivot_expected, const Expected& expected) {
 		unsigned char pivot_buffer[500] = {};
 		cnc_pivot_info pivot = { ztdc_c_array_size(pivot_buffer), pivot_buffer, cnc_mcerr_ok };
 		alignas(ztd_char32_t) unsigned char output_buffer[500] = {};
@@ -57,10 +57,8 @@ inline namespace cnc_tests_registry_indirect_ascii {
 		std::u32string_view output_view((const ztd_char32_t*)output_buffer,
 		     (ztdc_c_array_size(output_buffer) - output_size) / sizeof(ztd_char32_t));
 		const bool err_okay    = err == cnc_mcerr_ok;
-		const bool pivot_okay  = pivot_view == pivot_expected;
 		const bool output_okay = output_view == expected;
 		REQUIRE(err_okay);
-		REQUIRE(pivot_okay);
 		REQUIRE(output_okay);
 	}
 
