@@ -137,16 +137,32 @@ size_t cnc_print_str_c32(const ztd_char32_t* __str) ZTD_USE(ZTD_NOEXCEPT_IF_CXX)
 ZTD_EXTERN_C_CLOSE_I_
 
 #define cnc_fprint_strn(_FILE, _STR_SIZE, _STR)                                                    \
-	_ZTDC_CASCADING_GENERIC(*_STR, char, cnc_fprint_str_mcn(_FILE, _STR_SIZE, _STR), ztd_wchar_t, \
-	     cnc_fprint_str_mwcn(_FILE, _STR_SIZE, _STR), ztd_char8_t,                                \
-	     cnc_fprint_str_c8n(_FILE, _STR_SIZE, _STR), ztd_char16_t,                                \
-	     cnc_fprint_str_c16n(_FILE, _STR_SIZE, _STR), ztd_char32_t,                               \
-	     cnc_fprint_str_c32n(_FILE, _STR_SIZE, _STR))
-#define cnc_fprint_str(_FILE, _STR)                                                     \
-	_ZTDC_CASCADING_GENERIC(*_STR, char, cnc_fprint_str_mc(_FILE, _STR), ztd_wchar_t,  \
-	     cnc_fprint_str_mwc(_FILE, _STR), ztd_char8_t, cnc_fprint_str_c8(_FILE, _STR), \
-	     ztd_char16_t, cnc_fprint_str_c16(_FILE, _STR), ztd_char32_t,                  \
-	     cnc_fprint_str_c32(_FILE, _STR))
+	_Generic(*(_STR),                                                                             \
+	     ztd_char32_t: cnc_fprint_str_c32n(_FILE, (_STR_SIZE), (const ztd_char32_t*)(_STR)),      \
+	     default: _Generic(*(_STR),                                                               \
+	          ztd_char16_t: cnc_fprint_str_c16n(_FILE, (_STR_SIZE), (const ztd_char16_t*)(_STR)), \
+	          default: _Generic(*(_STR),                                                          \
+	               ztd_char8_t: cnc_fprint_str_c8n(                                               \
+	                    _FILE, (_STR_SIZE), (const ztd_char8_t*)(_STR)),                          \
+	               default: _Generic(*(_STR),                                                     \
+	                    ztd_wchar_t: cnc_fprint_str_mwcn(                                         \
+	                         _FILE, (_STR_SIZE), (const ztd_wchar_t*)(_STR)),                     \
+	                    default: _Generic(*(_STR),                                                \
+	                         ztd_char_t: cnc_fprint_str_mcn(                                      \
+	                              _FILE, (_STR_SIZE), (const ztd_char_t*)(_STR)),                 \
+	                         default: 0)))))
+#define cnc_fprint_str(_FILE, _STR)                                                            \
+	_Generic(*(_STR),                                                                         \
+	     ztd_char32_t: cnc_fprint_str_c32(_FILE, (const ztd_char32_t*)(_STR)),                \
+	     default: _Generic(*(_STR),                                                           \
+	          ztd_char16_t: cnc_fprint_str_c16(_FILE, (const ztd_char16_t*)(_STR)),           \
+	          default: _Generic(*(_STR),                                                      \
+	               ztd_char8_t: cnc_fprint_str_c8(_FILE, (const ztd_char8_t*)(_STR)),         \
+	               default: _Generic(*(_STR),                                                 \
+	                    ztd_wchar_t: cnc_fprint_str_mwc(_FILE, (const ztd_wchar_t*)(_STR)),   \
+	                    default: _Generic(*(_STR),                                            \
+	                         ztd_char_t: cnc_fprint_str_mc(_FILE, (const ztd_char_t*)(_STR)), \
+	                         default: 0)))))
 #define cnc_print_strn(...) cnc_fprint_strn(stdout, __VA_ARGS__)
 #define cnc_print_str(...) cnc_fprint_str(stdout, __VA_ARGS__)
 

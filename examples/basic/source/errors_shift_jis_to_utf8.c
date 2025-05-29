@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
 	                                             : "\xe2\x9d\x8e"),
 	     (unsigned int)((unsigned char)input_data[input_read]));
 	fprintf(stdout, "%s Conversion Result:\n", has_err ? "Partial" : "Complete");
-	cnc_print_str_c32n(output_written, output_data);
+	cnc_print_strn(output_written, output_data);
 	// the stream (may be) line-buffered, so make sure an extra "\n" is written
 	// out this is actually critical for some forms of stdout/stderr mirrors; they
 	// won't show the last line even if you manually call fflush(…) !

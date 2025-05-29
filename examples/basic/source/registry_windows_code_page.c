@@ -203,9 +203,9 @@ int main(int argc, char* argv[]) {
 	}
 
 	printf("Output conversion result:\n");
-	cnc_print_str_c8n(output_bytes_written / sizeof(*output_data), output_data);
+	cnc_print_str_c32n(output_bytes_written / sizeof(*output_data), output_data);
 	printf("\nOriginal Input:\n");
-	cnc_print_str_c8n(ztdc_c_string_array_size(input_data), input_data);
+	cnc_print_str_c32n(ztdc_c_string_array_size(input_data), input_data);
 	printf("\n\n");
 
 	cnc_conv_delete(conversion);
