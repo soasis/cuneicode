@@ -16,6 +16,9 @@ jobs:
           - ubuntu
           - windows
           - macos
+        image_version:
+          - latest
+          - 2025
         compiler:
           - msvc
           - gcc
@@ -34,7 +37,14 @@ jobs:
             os: macos
           - compiler: gcc
             os: windows
-    runs-on: ${{matrix.os}}-latest
+          # workarounds for shitty hard requirements in MSVC STL
+          - os: ubuntu
+            image_version: 2025
+          - os: macos
+            image_version: 2025
+          - os: windows
+            image_version: latest
+    runs-on: ${{matrix.os}}-${{matrix.image_version}}
     env:
       CMAKE_CXX_STANDARD: ${{matrix.cxx_standard}}
       CMAKE_C_STANDARD: ${{matrix.c_standard}}
