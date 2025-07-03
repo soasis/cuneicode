@@ -989,6 +989,8 @@ namespace cnc {
 					     __res * sizeof(*__multibyte_intermediate));
 					__p_maybe_dst[0] += __res;
 				}
+				__p_src[0] += __res;
+				__p_src_len[0] -= __res;
 				break;
 			}
 			return cnc_mcerr_ok;
