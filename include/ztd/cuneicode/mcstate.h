@@ -166,12 +166,17 @@ typedef union cnc_mcstate_t {
 		//////
 		/// @brief Private, do not access.
 		union {
-			ztd_wchar_t __wide_accumulator[(sizeof(ztd_mbstate_t) * 2
-			                                    - (sizeof(uint32_t) + sizeof(void*)))
+#define _ZTD_STATE_SIZE \
+	((ptrdiff_t)(sizeof(ztd_mbstate_t) * 2) - (ptrdiff_t)(sizeof(uint32_t) + sizeof(void*)))
+			ztd_wchar_t __wide_accumulator[(_ZTD_STATE_SIZE > (ptrdiff_t)sizeof(ztd_wchar_t)
+			                                         ? (size_t)_ZTD_STATE_SIZE
+			                                         : sizeof(ztd_wchar_t))
 			     / sizeof(ztd_wchar_t)];
-			char __narrow_accumulator[(sizeof(ztd_mbstate_t) * 2
-			                               - (sizeof(uint32_t) + sizeof(void*)))
+			char __narrow_accumulator[(_ZTD_STATE_SIZE > (ptrdiff_t)sizeof(char)
+			                                    ? (size_t)_ZTD_STATE_SIZE
+			                                    : sizeof(char))
 			     / sizeof(char)];
+#undef _ZTD_STATE_SIZE
 		};
 	} __win32_code_page;
 	//////
